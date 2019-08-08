@@ -1,0 +1,3 @@
+rootProject.name = 'raect_native_jimi'
+
+include ':app'
