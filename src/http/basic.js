@@ -4,47 +4,41 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-08 18:02:30
+ * @LastEditTime: 2019-08-09 10:26:48
  */
 
-import { NativeModules, NativeEventEmitter } from 'react-native';
+import {
+    NativeModules,
+    NativeEventEmitter
+} from 'react-native';
+import {
+    getObject
+} from '../libs/utils';
 // 初始化几米圈方法
-const { JMRNEngineManager } = NativeModules;
+const {
+    JMRNEngineManager
+} = NativeModules;
 const jmRNEngineManagerListener = new NativeEventEmitter(JMRNEngineManager);
 
 /**
  * 全局唯一标识
  */
-const guids=()=>{
+const guids = () => {
     const S4 = () => {
         return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
     };
     return (
         S4() +
-            S4() +
-            '-' +
-            S4() +
-            '-' +
-            S4() +
-            '-' +
-            S4() +
-            '-' +
-            S4()
+        S4() +
+        '-' +
+        S4() +
+        '-' +
+        S4() +
+        '-' +
+        S4() +
+        '-' +
+        S4()
     );
-};
-
-/**
- * 区分ios和安卓返回的数据转为对象
- * @param  {object} data 需要被转换的字符串
- */
-export const getObject = (data)=> {
-    var obj = '';
-    if (typeof data != 'object') {
-        obj = JSON.parse(data);
-    } else {
-        obj = data;
-    }
-    return obj;
 };
 
 
@@ -59,8 +53,7 @@ jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSEventMethod, (r
 
     try {
         this[methods[0]][methods[1]](obj.data);
-    } 
-    catch (error) {
+    } catch (error) {
         console.log(error);
     }
 });
@@ -69,7 +62,14 @@ jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSEventMethod, (r
 jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSCameraState, (reminder) => {
     let obj = getObject(reminder);
     this[obj.callback](obj.data);
-}); 
+});
+
+
+//实时视频信息监听事件
+jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSCameraInfo, (reminder) => {
+    let obj = getObject(reminder);
+    this[obj.callback](obj.data);
+});
 
 
 /**
@@ -83,10 +83,10 @@ export const httpApp = (url, params) => {
 
     let obj = {};
     //判断是否方法类型，是则变成字符串
-    for(let key in params){
-        if(typeof params[key] == 'function'){
-            obj[key] = `${callbackName}.`+key;
-        }else{
+    for (let key in params) {
+        if (typeof params[key] == 'function') {
+            obj[key] = `${callbackName}.` + key;
+        } else {
             obj[key] = params[key];
         }
     }
@@ -98,35 +98,35 @@ export const httpApp = (url, params) => {
     this[callbackName] = {
         // 请求成功
         onSuccess: (res) => {
-            let obj = getObject(res);
-            params.onSuccess(obj);
+            let data = getObject(res);
+            params.onSuccess(data);
         },
         // 请求失败
         onFail: (res) => {
-            let obj = getObject(res);
-            params.onFail(obj);
+            let data = getObject(res);
+            params.onFail(data);
         },
         // 请求失败或成功
         onComplete: (res) => {
-            let obj = getObject(res);
-            params.onComplete(obj);
+            let data = getObject(res);
+            params.onComplete(data);
         },
         // 上传进度变化
-        onProgressUpdate:()=>{
-            let obj = getObject(res);
-            params.onProgressUpdate(obj);
+        onProgressUpdate: () => {
+            let data = getObject(res);
+            params.onProgressUpdate(data);
         },
         // 上传中
-        onStatue:(res)=>{
-            let obj = getObject(res);
-            params.onStatue(obj);
+        onStatue: (res) => {
+            let data = getObject(res);
+            params.onStatue(data);
         },
         // 上传完成
-        onDone:(res)=>{
-            let obj = getObject(res);
-            params.onDone(obj);
+        onDone: (res) => {
+            let data = getObject(res);
+            params.onDone(data);
         },
-        onWillClosePage:()=>{
+        onWillClosePage: () => {
             params.onWillClosePage();
         }
     };
@@ -137,13 +137,13 @@ export const httpApp = (url, params) => {
  * @param {String} url 请求地址
  * @param {Object} params 传参
  */
-const getParams = (url,params)=>{
+const getParams = (url, params) => {
     const body = {
-        command:url,
+        command: url,
     };
-    if(params.data){
-        body.data = params.data ;
-    } 
+    if (params.data) {
+        body.data = params.data;
+    }
     return body;
 };
 
@@ -152,14 +152,14 @@ const getParams = (url,params)=>{
  * @param {String} url 请求地址
  * @param {Object} params 传参
  */
-const otherInterface = (url,params) =>{
-    const body = getParams(url,params);
+const otherInterface = (url, params) => {
+    const body = getParams(url, params);
     const bodyJson = JSON.stringify(body);
-    JMRNEngineManager.requestMethod(params.url,bodyJson);
-    this[params.name] = (res)=>{
+    JMRNEngineManager.requestMethod(params.url, bodyJson);
+    this[params.name] = (res) => {
         let obj = getObject(res);
         params.callback && params.callback(obj);
-    };   
+    };
 };
 
 
@@ -168,11 +168,13 @@ const otherInterface = (url,params) =>{
  * @param {String} url 请求地址
  * @param {Object} params 传参
  */
-export const httpBlue = (url,params)=>{
-    let data = {...params};
+export const httpBlue = (url, params) => {
+    let data = {
+        ...params
+    };
     data.url = 'jm_dev_blue.command';
     data.name = 'jmDeviceBlueCallback';
-    otherInterface(url,params);
+    otherInterface(url, params);
 };
 
 /**
@@ -180,11 +182,13 @@ export const httpBlue = (url,params)=>{
  * @param {String} url 请求地址
  * @param {Object} params 传参
  */
-export const httpWifi = (url,params)=>{
-    let data = {...params};
+export const httpWifi = (url, params) => {
+    let data = {
+        ...params
+    };
     data.url = 'jm_dev_wifi.command';
     data.name = 'jmDeviceWifiCallback';
-    otherInterface(url,params);
+    otherInterface(url, params);
 };
 
 /**
@@ -192,16 +196,48 @@ export const httpWifi = (url,params)=>{
  * @param {String} url 请求地址
  * @param {Object} params 传参
  */
-export const httpWs = (url,params)=>{
-    let data = {...params};
+export const httpWs = (url, params) => {
+    let data = {
+        ...params
+    };
     data.url = 'jm_webSocket.command';
     data.name = 'jmWebSocketCallback';
-    otherInterface(url,params);
+    otherInterface(url, params);
 };
+
+
+/**
+ * 实时视频状态回调
+ * @param {String} url 请求地址
+ * @param {Object} params 传参
+ */
+export const httpCameraState = (url, params) => {
+    let data = {
+        ...params
+    };
+    data.url = 'jm_player.command';
+    data.name = 'getCameraState';
+    otherInterface(url, params);
+};
+
+/**
+ * 实时视频信息回调
+ * @param {String} url 请求地址
+ * @param {Object} params 传参
+ */
+export const httpCameraInfo = (url, params) => {
+    let data = {
+        ...params
+    };
+    data.url = 'jm_player.command';
+    data.name = 'getCameraInfo';
+    otherInterface(url, params);
+};
+
 
 /**
  * 关闭小程序
  */
-export const close =()=>{
+export const close = () => {
     JMRNEngineManager.goExit();
 };
