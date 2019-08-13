@@ -3,8 +3,243 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-08 16:34:47
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-08-12 14:04:36
  */
 
- 
+import {
+    NativeModules,
+    NativeEventEmitter
+} from 'react-native';
+import {
+    getObject
+} from '../libs/utils';
+// 初始化几米圈方法
+const {
+    JMRNEngineManager
+} = NativeModules;
+const jmRNEngineManagerListener = new NativeEventEmitter(JMRNEngineManager);
+
+/**
+ * 全局唯一标识
+ */
+const guids = () => {
+    const S4 = () => {
+        return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
+    };
+    return (
+        S4() +
+        S4() +
+        '-' +
+        S4() +
+        '-' +
+        S4() +
+        '-' +
+        S4() +
+        '-' +
+        S4()
+    );
+};
+
+
+//基础事件回调
+jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSEventMethod, (reminder) => {
+    let obj = JSON.parse(reminder);
+    let methods = obj.callback.split('.');
+    //蓝牙特殊处理回调
+    if (methods[0] === 'jmDeviceBlueCallback') {
+        methods[1] = 'onCallBack';
+    }
+
+    try {
+        this[methods[0]][methods[1]](obj.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+//实时视频状态监听事件
+jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSCameraState, (reminder) => {
+    let obj = getObject(reminder);
+    this[obj.callback](obj.data);
+});
+
+
+//实时视频信息监听事件
+jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSCameraInfo, (reminder) => {
+    let obj = getObject(reminder);
+    this[obj.callback](obj.data);
+});
+
+
+/**
+ * 请求APP统一方法
+ * @param {String} url 请求方法名字
+ * @param {Object} params 传参
+ */
+export const httpApp = (url, params) => {
+    console.log(params);
+    // 生成回调的名称，同一页面不能出现两个相同的回调名，因此回调名采用uuid
+    const callbackName = guids();
+
+    let obj = {};
+    //判断是否方法类型，是则变成字符串
+    for (let key in params) {
+        if (typeof params[key] == 'function') {
+            obj[key] = `${callbackName}.` + key;
+        } else {
+            obj[key] = params[key];
+        }
+    }
+
+    const bodyJson = JSON.stringify(obj);
+    console.log(bodyJson);
+    JMRNEngineManager.requestMethod(url, bodyJson);
+
+    // 定义回调
+    this[callbackName] = {
+        // 请求成功
+        onSuccess: (res) => {
+            let data = getObject(res);
+            params.onSuccess(data);
+        },
+        // 请求失败
+        onFail: (res) => {
+            let data = getObject(res);
+            params.onFail(data);
+        },
+        // 请求失败或成功
+        onComplete: (res) => {
+            let data = getObject(res);
+            params.onComplete(data);
+        },
+        // 上传进度变化
+        onProgressUpdate: () => {
+            let data = getObject(res);
+            params.onProgressUpdate(data);
+        },
+        // 上传中
+        onStatue: (res) => {
+            let data = getObject(res);
+            params.onStatue(data);
+        },
+        // 上传完成
+        onDone: (res) => {
+            let data = getObject(res);
+            params.onDone(data);
+        },
+        onWillClosePage: () => {
+            params.onWillClosePage();
+        }
+    };
+};
+
+/**
+ * 特殊接口获取参数方法(未测试)
+ * @param {String} url 请求地址
+ * @param {Object} params 传参
+ */
+const getParams = (url, params) => {
+    const body = {
+        command: url,
+    };
+    if (params.data) {
+        body.data = params.data;
+    }
+    return body;
+};
+
+/**
+ * 其他特殊的接口的通用方法，比如wifi，蓝牙等等(未测试)
+ * @param {String} url 请求地址
+ * @param {Object} params 传参
+ */
+const otherInterface = (url, params) => {
+    const body = getParams(url, params);
+    const bodyJson = JSON.stringify(body);
+    JMRNEngineManager.requestMethod(params.url, bodyJson);
+    this[params.name] = (res) => {
+        let obj = getObject(res);
+        params.callback && params.callback(obj);
+    };
+};
+
+
+/**
+ * 蓝牙请求方法(未测试)
+ * @param {String} url 请求地址
+ * @param {Object} params 传参
+ */
+export const httpBlue = (url, params) => {
+    let data = {
+        ...params
+    };
+    data.url = 'jm_dev_blue.command';
+    data.name = 'jmDeviceBlueCallback';
+    otherInterface(url, params);
+};
+
+/**
+ * wifi请求方法(未测试)
+ * @param {String} url 请求地址
+ * @param {Object} params 传参
+ */
+export const httpWifi = (url, params) => {
+    let data = {
+        ...params
+    };
+    data.url = 'jm_dev_wifi.command';
+    data.name = 'jmDeviceWifiCallback';
+    otherInterface(url, params);
+};
+
+/**
+ * webSocket请求方法(未测试)
+ * @param {String} url 请求地址
+ * @param {Object} params 传参
+ */
+export const httpWs = (url, params) => {
+    let data = {
+        ...params
+    };
+    data.url = 'jm_webSocket.command';
+    data.name = 'jmWebSocketCallback';
+    otherInterface(url, params);
+};
+
+
+/**
+ * 实时视频状态回调
+ * @param {String} url 请求地址
+ * @param {Object} params 传参
+ */
+export const httpCameraState = (url, params) => {
+    let data = {
+        ...params
+    };
+    data.url = 'jm_player.command';
+    data.name = 'getCameraState';
+    otherInterface(url, params);
+};
+
+/**
+ * 实时视频信息回调
+ * @param {String} url 请求地址
+ * @param {Object} params 传参
+ */
+export const httpCameraInfo = (url, params) => {
+    let data = {
+        ...params
+    };
+    data.url = 'jm_player.command';
+    data.name = 'getCameraInfo';
+    otherInterface(url, params);
+};
+
+
+/**
+ * 关闭小程序
+ */
+export const close = () => {
+    JMRNEngineManager.goExit();
+};

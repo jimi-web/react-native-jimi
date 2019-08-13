@@ -4,13 +4,12 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:05:25
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-13 09:24:35
+ * @LastEditTime: 2019-08-13 14:02:01
  */
 import themeDefault from './themeDefault';
 
 
 const Theme = {
-
     /**
      * 
      * @param {Object} Theme 重新设置样式表
@@ -19,6 +18,7 @@ const Theme = {
         Object.assign(this,Theme);
     }
 };
+
 Theme.set(themeDefault);
 
 module.exports = Theme;
