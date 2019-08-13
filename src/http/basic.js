@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-09 10:26:48
+ * @LastEditTime: 2019-08-12 14:04:36
  */
 
 import {
@@ -78,6 +78,7 @@ jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSCameraInfo, (re
  * @param {Object} params 传参
  */
 export const httpApp = (url, params) => {
+    console.log(params);
     // 生成回调的名称，同一页面不能出现两个相同的回调名，因此回调名采用uuid
     const callbackName = guids();
 
@@ -92,6 +93,7 @@ export const httpApp = (url, params) => {
     }
 
     const bodyJson = JSON.stringify(obj);
+    console.log(bodyJson);
     JMRNEngineManager.requestMethod(url, bodyJson);
 
     // 定义回调

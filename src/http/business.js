@@ -4,12 +4,12 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-09 10:44:33
+ * @LastEditTime: 2019-08-13 10:02:13
  */
 import {
     httpApp
 } from './basic';
-
+import gps from '../libs/coversionPoint';
 /**
  * 后台请求通用方法封装
  * @param {Object} params 后台需要的参数
@@ -100,5 +100,30 @@ export const httpExit = (callback) => {
         onWillClosePage: () => {
             callback();
         }
+    });
+};
+
+/**
+ * 获取当前手机位置
+ * @param {string} type 地图经纬度类型
+ */
+export const httpLocationGet = (type) =>{
+    return new Promise(function (resolve, reject) {
+        httpApp('jm_location.get', {
+            type:type,
+            onSuccess: (res) => {
+                let data = res;
+                data = gps.GPSToChina(data.lat,data.lng);
+                resolve(data); 
+            },
+            // 请求失败
+            onFail: () => {
+                reject();
+            },
+            // 请求失败或成功
+            onComplete: () => {
+                //
+            },
+        }); 
     });
 };
