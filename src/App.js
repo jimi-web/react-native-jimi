@@ -1,23 +1,21 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: liujinyuan
+ * @Date: 2019-08-05 17:05:47
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-08-12 11:01:56
  */
-
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TopView,Theme} from './components/index';
+import {StyleSheet,Text, View} from 'react-native';
+import {TopView} from './components/index';
+import {Root} from './router/index';
 export default class App extends Component{
     render() {
         return (
             <View style={{flex:1}}>
                 <TopView>
-                    <View style={styles.container}>
-                        <Text style={styles.welcome}>Welcome to React Native!</Text>
-                    </View>
+                    <Root/>
                 </TopView>
             </View>
         );
