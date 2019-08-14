@@ -3,16 +3,18 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:28:59
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-12 10:18:19
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-08-13 14:01:50
  */
 
 import TopView from './overlay/TopView';
 import Theme from './themes/index';
+import Button from './button/button';
 
 const Circle = {
     TopView,
-    Theme
+    Theme,
+    Button
 };
 
 module.exports =  Circle;

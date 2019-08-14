@@ -3,17 +3,22 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-08 16:51:19
+<<<<<<< HEAD
  * @LastEditors: xieruizhi
  * @LastEditTime: 2019-08-13 10:52:07
+=======
+ * @LastEditors: liujinyuann
+ * @LastEditTime: 2019-08-13 14:07:29
+>>>>>>> 2e573fc27c3fb582e7e3af1dfc2c1e69abb31317
  */
 /**
  * @format
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 import {AppRegistry,StyleSheet,Text,Platform} from 'react-native';
-// import App from './src/App';
+import App from './src/App';
 
-import App from './src/view/map/google/position';
+// import App from './src/view/map/google/position';
 // import App from './src/view/map/google/test';
 
 // import {name as appName} from './app.json';
