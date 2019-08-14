@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-08 15:26:04
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-08-13 14:25:14
  */
 
 import React, {Component} from 'react';
@@ -76,7 +76,6 @@ export default class TopView extends Component {
         );
     }
 }
-
 
 const styles = StyleSheet.create({
     overlay: {

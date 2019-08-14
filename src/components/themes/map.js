@@ -4,10 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 10:17:53
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-12 16:45:34
+ * @LastEditTime: 2019-08-14 14:07:42
  */
 
-import {StyleSheet} from 'react-native';
+import {StyleSheet,Platform} from 'react-native';
+
 
 const MapStyles =  StyleSheet.create({
     map:{
@@ -35,8 +36,25 @@ const MapStyles =  StyleSheet.create({
         zIndex:100
     },
     markerImg:{
-        width:20,
-        height:20
+        width:25,
+        height:25
+    },
+    infoWindow:{
+        backgroundColor:'#fff',
+        paddingLeft:10,
+        width:250
+    },
+    infoWindowItem:{
+        flexDirection: 'row',
+        fontSize:12,
+        paddingBottom:10
+    },
+    infoWindowTitle:{
+        color:'#333'
+    },
+    infoWindowValue:{
+        color:'#717171',
+        width:Platform.OS?180:200
     }
 });
 

@@ -3,13 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-08 16:51:19
-<<<<<<< HEAD
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-13 10:52:07
-=======
- * @LastEditors: liujinyuann
- * @LastEditTime: 2019-08-13 14:07:29
->>>>>>> 2e573fc27c3fb582e7e3af1dfc2c1e69abb31317
+ * @LastEditTime: 2019-08-13 14:13:50
  */
 /**
  * @format

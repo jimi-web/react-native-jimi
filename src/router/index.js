@@ -3,15 +3,14 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-12 10:59:17
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-08-14 14:13:43
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
 
 import {TabContainer} from './TabNav';
-
-
+import Position from '../view/map/index';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -56,6 +55,10 @@ const AppNavigator = createStackNavigator(
                     }
                 }),
         },
+        Position:{
+            screen:Position,
+            navigationOptions:getOptions('定位')
+        }
     });
 
 
