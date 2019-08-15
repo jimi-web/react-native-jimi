@@ -4,16 +4,17 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-14 16:31:10
+ * @LastEditTime: 2019-08-15 14:31:44
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
-import MapStyles from '../../../components/themes/map';
+import MapStyles from '../style/map';
 import MapView,{Marker,Callout} from 'react-native-maps';
 import {httpApp} from '../../../http/basic';
 import {httpLocationGet} from '../../../http/business';
 import gps from '../../../libs/coversionPoint';
 import PropTypes from 'prop-types';
+import { hidden } from 'ansi-colors';
 
 
 export default class Position extends Component { 
@@ -31,7 +32,10 @@ export default class Position extends Component {
         ChangePositionBtn:PropTypes.object,//切换车和我的位置的按钮属性
         markerInfoWindow:PropTypes.object,//infoWindow
         getMarkerPoint:PropTypes.func,//获取定位信息
-        customItem:PropTypes.element,//在地图上自定义其他元素
+        customItem:PropTypes.func,//在地图上自定义其他元素
+        roadBtnStyle:PropTypes.object,//路况样式
+        mapTypeBtnStyle:PropTypes.object,//地图类型样式
+        phonePointBtnStyle:PropTypes.object,//我的位置样式
     };
     
     static defaultProps = {
@@ -72,7 +76,10 @@ export default class Position extends Component {
         markerInfoWindow:{
             isCustom:false,
         },
-        customItem:null
+        customItem:null,
+        roadBtnStyle:MapStyles.btn,
+        mapTypeBtnStyle:MapStyles.btn,
+        phonePointBtnStyle:MapStyles.phonePointBtn
     };
 
     constructor(props) {
@@ -96,8 +103,6 @@ export default class Position extends Component {
             timeInterval:null,//计时器
             locationData:null,//定位的所有数据
         };
-
-        
     }
 
     componentWillUnmount() {
@@ -132,15 +137,15 @@ export default class Position extends Component {
                     {this.myMarker()}
                 </MapView>
                 {/* 按钮功能 */}
-                <TouchableOpacity style={[MapStyles.btn,MapStyles.roadBtn]}  activeOpacity={1} onPress={() => this.setState({isRoad:!this.state.isRoad})}>
+                <TouchableOpacity style={[MapStyles.btn,MapStyles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({isRoad:!this.state.isRoad})}>
                     <Image style={MapStyles.btnImg} source={this.state.isRoad?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
                 </TouchableOpacity>
-                <TouchableOpacity style={[MapStyles.btn,MapStyles.MapTypeBtn]}   activeOpacity={1} onPress={this.setMapType}>
+                <TouchableOpacity style={[MapStyles.btn,MapStyles.mapTypeBtn,this.props.mapTypeBtnStyle]}   activeOpacity={1} onPress={this.setMapType}>
                     <Image style={MapStyles.btnImg} source={this.state.mapType==='standard'?require('../../../assets/map/layer.png'):require('../../../assets/map/home_icon_live-action.png')} />
                 </TouchableOpacity>   
                 {
                     this.state.phonePoint.latitude === null?null:
-                        <TouchableOpacity style={MapStyles.phonePointBtn}  activeOpacity={1}  onPress={this.changeMarker}> 
+                        <TouchableOpacity style={[MapStyles.phonePointBtn,this.props.phonePointBtnStyle]}  activeOpacity={1}  onPress={this.changeMarker}> 
                             <Image style={MapStyles.btnImg} source={this.state.isMyPosition? this.props.ChangePositionBtn.positionImg :this.props.ChangePositionBtn.markerImg} />
                         </TouchableOpacity>
                 }
@@ -153,10 +158,10 @@ export default class Position extends Component {
      * 设置中心点缩放
      */
     regionChange = (data) =>{
-        console.log(data,558);
-        
-        //初始化时不设置,会与可视化冲突
-        this.state.region = data;
+        //避免与气泡冲突
+        if(this.state.isInit){
+            this.state.region = data;
+        }
     }
 
     /**
@@ -191,15 +196,11 @@ export default class Position extends Component {
         },()=>{
             //切换设置中心位置
             let region = type ? this.state.phonePoint : this.state.markerPoint;
-            console.log(region,555);
-            
             this.setState({
                 region:{
                     ...this.state.region,
                     ...region
                 }
-            },()=>{
-                console.log(this.state.region,900);
             });
             
             //气泡切换暂时停用,多次点击会产生偏移
@@ -243,7 +244,6 @@ export default class Position extends Component {
                 latitude: data.lat,
                 longitude: data.lng
             };
-            console.log(point,999);
             this.setState({
                 phonePoint:point,
             });
@@ -263,7 +263,6 @@ export default class Position extends Component {
                 latitude:data.latitude,
                 longitude: data.longitude,
             };
-            console.log(point,678);
             this.setState({
                 markerPoint:point,
                 locationData:data       
@@ -329,7 +328,7 @@ export default class Position extends Component {
     markerInfo= ()=>{
         return <View style={MapStyles.infoWindow}>
             <View style={MapStyles.infoWindowItem}>
-                <Text>{this.state.locationData.imei}</Text>
+                <Text style={MapStyles.imei}>{this.state.locationData.imei}</Text>
             </View>
             <View style={MapStyles.infoWindowItem}>
                 <Text style={MapStyles.infoWindowTitle}>速       度:</Text>
@@ -347,10 +346,11 @@ export default class Position extends Component {
                 <Text style={MapStyles.infoWindowTitle}>通讯时间:</Text>
                 <Text style={MapStyles.infoWindowValue}> {this.state.locationData.otherPosTime}</Text>
             </View>    
-            <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>地       址:</Text>
-                <Text style={MapStyles.infoWindowValue}> {this.state.locationData.address}</Text>
-            </View>            
+            <View style={[MapStyles.infoWindowItem]}>
+                <Text style={MapStyles.infoWindowTitle}>地        址:</Text>
+                <Text style={MapStyles.infoWindowValue}> {this.state.locationData.address}{'\n'}                                                        
+                </Text>
+            </View>     
         </View>;
     }
 

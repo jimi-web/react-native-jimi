@@ -4,14 +4,16 @@
  * @Author: xieruizhi
  * @Date: 2019-08-08 16:51:19
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-13 14:13:50
+ * @LastEditTime: 2019-08-14 17:14:06
  */
 /**
  * @format
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
+import React from 'react';
 import {AppRegistry,StyleSheet,Text,Platform} from 'react-native';
 import App from './src/App';
+import _ from 'lodash';
 
 // import App from './src/view/map/google/position';
 // import App from './src/view/map/google/test';

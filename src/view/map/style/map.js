@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 10:17:53
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-14 14:07:42
+ * @LastEditTime: 2019-08-15 14:28:50
  */
 
 import {StyleSheet,Platform} from 'react-native';
@@ -26,7 +26,7 @@ const MapStyles =  StyleSheet.create({
     roadBtn:{
         top:30
     },
-    MapTypeBtn:{
+    mapTypeBtn:{
         top:75
     },
     phonePointBtn:{
@@ -36,25 +36,30 @@ const MapStyles =  StyleSheet.create({
         zIndex:100
     },
     markerImg:{
-        width:25,
-        height:25
+        width:23,
+        height:23
     },
     infoWindow:{
+        paddingTop:10,
         backgroundColor:'#fff',
         paddingLeft:10,
-        width:250
+        width:250,
     },
     infoWindowItem:{
         flexDirection: 'row',
         fontSize:12,
-        paddingBottom:10
+        paddingBottom:10,
     },
     infoWindowTitle:{
-        color:'#333'
+        color:'#333',
     },
     infoWindowValue:{
         color:'#717171',
         width:Platform.OS?180:200
+    },
+    imei:{
+        fontSize:14,
+        color:'#03B8A6'
     }
 });
 

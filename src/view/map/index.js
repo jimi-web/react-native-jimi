@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-14 16:38:56
+ * @LastEditTime: 2019-08-15 14:35:10
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text} from 'react-native';
@@ -45,7 +45,8 @@ export default class Map extends Component {
                 ChangePositionBtn={car}
                 mylocationOperation={my}
                 customItem = {this.customItem}
-                markerInfoWindow={markerInfoWindow}
+                mapTypeBtnStyle={styles.set}
+                // markerInfoWindow={markerInfoWindow}
             >  
             </Position>
         );
@@ -78,7 +79,7 @@ export default class Map extends Component {
             otherPosTime:'2019-08-09 10:37:42',
             posType:'WIFI',
             gpsSpeed:'10',
-            address:'深圳市宝安区留仙一路高新奇b栋几米物联有限公司'
+            address:'深圳市宝安区留仙一路高新奇b栋几米物联有限公司gubuygyhiuhuihui'
         });
     }     
 }
@@ -95,5 +96,10 @@ const styles =  StyleSheet.create({
         width:50,
         height:50,
         backgroundColor:'#000' 
+    },
+    set:{
+        position:'absolute',
+        right:40,
+        zIndex:100,
     }
 });
