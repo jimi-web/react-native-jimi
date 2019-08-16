@@ -4,11 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-15 14:35:10
+ * @LastEditTime: 2019-08-16 09:54:41
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text} from 'react-native';
-
+import TopView from '../../components/overlay/TopView';
 import Position from './google/position';
 export default class Map extends Component {
     constructor(props) {
@@ -36,20 +36,35 @@ export default class Map extends Component {
         };
 
         return (
-            <Position
-                getMarkerPoint={this.getPoint}
-                isRoad={true}
-                mapType={'standard'}
-                markerOperation={obj}
-                refreshTime = {20000}
-                ChangePositionBtn={car}
-                mylocationOperation={my}
-                customItem = {this.customItem}
-                mapTypeBtnStyle={styles.set}
-                // markerInfoWindow={markerInfoWindow}
-            >  
-            </Position>
+            <View style={{flex:1}}>
+                <Position
+                    getMarkerPoint={this.getPoint}
+                    isRoad={true}
+                    mapType={'standard'}
+                    markerOperation={obj}
+                    refreshTime = {20000}
+                    ChangePositionBtn={car}
+                    mylocationOperation={my}
+                    customItem = {this.customItem}
+                    mapTypeBtnStyle={styles.set}
+                    // markerInfoWindow={markerInfoWindow}
+                >  
+                </Position>
+            </View>  
         );
+    }
+
+    componentDidMount() {
+        console.log(TopView);
+        
+        let overView = <View><Text>asdasdasdasd</Text></View>;
+        TopView.add(overView);
+    }
+
+    _children = ()=>{
+        return <View>
+            <Text>dasdasdasdasd</Text>
+        </View>;
     }
 
     /**
