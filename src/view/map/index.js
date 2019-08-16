@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-16 09:54:41
+ * @LastEditTime: 2019-08-16 10:28:16
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text} from 'react-native';
@@ -55,8 +55,6 @@ export default class Map extends Component {
     }
 
     componentDidMount() {
-        console.log(TopView);
-        
         let overView = <View><Text>asdasdasdasd</Text></View>;
         TopView.add(overView);
     }
