@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-12 14:36:06
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-12 14:36:42
+ * @LastEditTime: 2019-08-13 15:18:09
  */
 
 import React, {Component} from 'react';
@@ -30,7 +30,6 @@ export default class Home extends Component{
 const styles = StyleSheet.create({
     main:{
         justifyContent:'center',
-        alignItems:'center',
         flex:1,
     }
 });

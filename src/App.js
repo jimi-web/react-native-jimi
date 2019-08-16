@@ -4,20 +4,22 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:05:47
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-13 14:06:54
+ * @LastEditTime: 2019-08-15 17:25:45
  */
 import React, {Component} from 'react';
 import {StyleSheet,Text, View} from 'react-native';
 import {TopView} from './components/index';
 import {Root} from './router/index';
+import store from './store/index';
+import { Provider } from 'react-redux';
 export default class App extends Component{
     render() {
         return (
-            <View style={{flex:1}}>
+            <Provider store={store}>
                 <TopView>
                     <Root/>
                 </TopView>
-            </View>
+            </Provider>
         );
     }
 }

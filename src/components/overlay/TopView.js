@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-08 15:26:04
+ * @LastEditTime: 2019-08-13 15:52:05
  */
 
 import React, {Component} from 'react';
@@ -57,7 +57,6 @@ export default class TopView extends Component {
 
     render(){
         const {elements} = this.state;
-        console.log(this.props.children,11111111);
         return (
             <View style={{flex:1}}>
                 <Animated.View style={{flex:1}}> 
@@ -84,8 +83,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: 0,
-        right: 0,
-        bottom: 0,
         color:'#fff',
     },
 });
