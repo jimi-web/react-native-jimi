@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-12 16:08:59
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-15 17:08:45
+ * @LastEditTime: 2019-08-16 10:11:47
  */
 
 
@@ -26,6 +26,8 @@ export default class Button extends TouchableOpacity {
         type: 'default',
         size: 'md',
     };
+
+    
     constructor(props){
         super(props);
         this.state = {

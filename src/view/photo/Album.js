@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-14 17:30:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-15 18:15:25
+ * @LastEditTime: 2019-08-16 10:15:25
  */
 
 import React, {Component} from 'react';
@@ -59,7 +59,7 @@ class Album extends Component{
                 <View>
                     <Image source={albumGaryIcon}/>
                     <Text>{'本地相册'}</Text>
-                    <Text>{'远程相册'}</Text>
+                    <Text>{photoFile.photoList}</Text>
                 </View>
                 <View>
                     <Image source={albumGaryIcon}/>

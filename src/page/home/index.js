@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-13 16:00:46
+ * @LastEditTime: 2019-08-16 10:11:06
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet} from 'react-native';
@@ -23,7 +23,7 @@ export default class Home extends Component{
             <View style={styles.mainStyle}>
                 <View style={styles.itemStyle}>
                     <Button title={'相册'} onPress={() => {this.props.navigation.push('Photo');}} />
-                    {/* <Button title={'相册'} onPress={() => {this.props.navigation.push('Photo');}} /> */}
+                    <Button title={'定位'} onPress={()=>{this.props.navigation.push('Position');}} />
                 </View>
             </View>
         );

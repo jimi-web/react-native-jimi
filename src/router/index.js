@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-13 15:37:45
+ * @LastEditTime: 2019-08-16 10:11:38
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -13,6 +13,7 @@ import {TabContainer} from './TabNav';
 import {Photo} from '../view/index';
 
 
+import Position from '../view/map/index';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -57,6 +58,10 @@ const AppNavigator = createStackNavigator(
         Photo:{
             screen:Photo,
             navigationOptions:getOptions('相册')
+        },
+        Position:{
+            screen:Position,
+            navigationOptions:getOptions('定位')
         }
     });
 

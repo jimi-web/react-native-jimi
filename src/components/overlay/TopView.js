@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-13 15:52:05
+ * @LastEditTime: 2019-08-16 10:15:21
  */
 
 import React, {Component} from 'react';
@@ -54,6 +54,27 @@ export default class TopView extends Component {
         DeviceEventEmitter.removeAllListeners('removeOverlay');
         DeviceEventEmitter.removeAllListeners('removeAllOverlay');
     }
+    add(e) {
+        let {elements} = this.state;
+        elements.push(e);
+        this.setState({elements});
+    }
+  
+    remove(e) {
+        let {elements} = this.state;
+        for (let i = elements.length - 1; i >= 0; --i) {
+            if (elements[i].key === e.key) {
+                elements.splice(i, 1);
+                if(elements >= 0)
+                    break;
+            }
+        }
+        this.setState({elements});
+    }
+  
+    removeAll() {
+        this.setState({elements: []});
+    }
 
     render(){
         const {elements} = this.state;
@@ -75,7 +96,6 @@ export default class TopView extends Component {
         );
     }
 }
-
 
 const styles = StyleSheet.create({
     overlay: {
