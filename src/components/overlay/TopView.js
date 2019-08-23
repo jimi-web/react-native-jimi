@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-13 14:25:14
+ * @LastEditTime: 2019-08-21 09:55:10
  */
 
 import React, {Component} from 'react';
@@ -17,16 +17,16 @@ export default class TopView extends Component {
     
     static add (element) {
         let key = ++keyIndex;
-        DeviceEventEmitter.emit('addOverlay',{key,element});
+        DeviceEventEmitter.emit('jmAddOverlay',{key,element});
         return key;
     }
     
     static remove (key) {
-        DeviceEventEmitter.emit('removeOverlay',{key,element});
+        DeviceEventEmitter.emit('jmRemoveOverlay',{key,element});
     }
     
     static removeAll() {
-        DeviceEventEmitter.emit('removeAllOverlay', {});
+        DeviceEventEmitter.emit('jmRemoveAllOverlay', {});
     }
     constructor(props){
         super(props);
@@ -40,9 +40,9 @@ export default class TopView extends Component {
             registerTopViewHandler(this);
             return;
         }
-        DeviceEventEmitter.addListener('addOverlay', e => this.add(e));
-        DeviceEventEmitter.addListener('removeOverlay', e => this.remove(e));
-        DeviceEventEmitter.addListener('removeAllOverlay', e => this.removeAll(e));
+        DeviceEventEmitter.addListener('jmAddOverlay', e => this.add(e));
+        DeviceEventEmitter.addListener('jmRemoveOverlay', e => this.remove(e));
+        DeviceEventEmitter.addListener('jmRemoveAllOverlay', e => this.removeAll(e));
     }
     componentWillUnmount() {
         let {unregisterTopViewHandler} = this.context;
@@ -50,9 +50,9 @@ export default class TopView extends Component {
             unregisterTopViewHandler(this);
             return;
         }
-        DeviceEventEmitter.removeAllListeners('addOverlay');
-        DeviceEventEmitter.removeAllListeners('removeOverlay');
-        DeviceEventEmitter.removeAllListeners('removeAllOverlay');
+        DeviceEventEmitter.removeAllListeners('jmAddOverlay');
+        DeviceEventEmitter.removeAllListeners('jmRemoveOverlay');
+        DeviceEventEmitter.removeAllListeners('jmRemoveAllOverlay');
     }
 
     render(){

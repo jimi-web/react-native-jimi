@@ -4,12 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-16 10:28:16
+ * @LastEditTime: 2019-08-22 17:00:04
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text} from 'react-native';
 import TopView from '../../components/overlay/TopView';
 import Position from './google/position';
+// import Position from './baidu/position';
 export default class Map extends Component {
     constructor(props) {
         super(props);
@@ -39,7 +40,7 @@ export default class Map extends Component {
             <View style={{flex:1}}>
                 <Position
                     getMarkerPoint={this.getPoint}
-                    isRoad={true}
+                    trafficEnabled={true}
                     mapType={'standard'}
                     markerOperation={obj}
                     refreshTime = {20000}
@@ -47,7 +48,7 @@ export default class Map extends Component {
                     mylocationOperation={my}
                     customItem = {this.customItem}
                     mapTypeBtnStyle={styles.set}
-                    // markerInfoWindow={markerInfoWindow}
+                    markerInfoWindow={markerInfoWindow}
                 >  
                 </Position>
             </View>  
@@ -55,8 +56,8 @@ export default class Map extends Component {
     }
 
     componentDidMount() {
-        let overView = <View><Text>asdasdasdasd</Text></View>;
-        TopView.add(overView);
+        // let overView = <View><Text>asdasdasdasd</Text></View>;
+        // TopView.add(overView);
     }
 
     _children = ()=>{
@@ -84,6 +85,7 @@ export default class Map extends Component {
     }
 
     getPoint=(callBack)=>{
+
         callBack({
             imei:'355137100102921',
             latitude:22.54605355,

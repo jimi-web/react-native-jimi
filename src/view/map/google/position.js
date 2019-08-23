@@ -4,23 +4,19 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-15 14:41:23
+ * @LastEditTime: 2019-08-19 14:42:54
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
-import MapStyles from '../style/map';
+import MapStyles from '../style/position';
 import MapView,{Marker,Callout} from 'react-native-maps';
-import {httpApp} from '../../../http/basic';
 import {httpLocationGet} from '../../../http/business';
-import gps from '../../../libs/coversionPoint';
 import PropTypes from 'prop-types';
-import { hidden } from 'ansi-colors';
 
 
 export default class Position extends Component { 
-    
     static propTypes = {
-        isRoad:PropTypes.bool,//是否开启路况
+        trafficEnabled:PropTypes.bool,//是否开启路况
         isRefresh:PropTypes.bool,//是否刷新
         refreshTime:PropTypes.number,
         mapType: PropTypes.oneOf(['standard', 'satellite']),//地图类型
@@ -39,7 +35,7 @@ export default class Position extends Component {
     };
     
     static defaultProps = {
-        isRoad:false,
+        trafficEnabled:false,
         mapType:'standard',
         initialRegion:{
             latitude: 22.596904,
@@ -87,7 +83,7 @@ export default class Position extends Component {
         this.state = {
             // 初始化中心点
             region:this.props.region,
-            isRoad:this.props.isRoad,//路况是否开启
+            trafficEnabled:this.props.trafficEnabled,//路况是否开启
             mapType:this.props.mapType,//地图类型
             // 当前手机位置
             phonePoint:{
@@ -124,7 +120,7 @@ export default class Position extends Component {
                     loadingEnabled={true}
                     minZoomLevel={0}
                     maxZoomLevel={20}
-                    showsTraffic={this.state.isRoad}
+                    showsTraffic={this.state.trafficEnabled}
                     onRegionChange={this.regionChange}
                     showsIndoors={true}
                     showsCompass={false}
@@ -145,7 +141,7 @@ export default class Position extends Component {
                             <Image style={MapStyles.btnImg} source={this.state.isMyPosition? this.props.ChangePositionBtn.positionImg :this.props.ChangePositionBtn.markerImg} />
                         </TouchableOpacity>
                 }
-                {this.props.customItem()}                        
+                {this.props.customItem ?this.props.customItem :null}                        
             </View>
         );
     }
