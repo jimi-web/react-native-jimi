@@ -3,13 +3,12 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-13 10:02:13
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-08-14 10:34:23
  */
-import {
-    httpApp
-} from './basic';
+import { httpApp } from './basic';
 import gps from '../libs/coversionPoint';
+import {getObject} from '../libs/utils';
 /**
  * 后台请求通用方法封装
  * @param {Object} params 后台需要的参数
@@ -33,7 +32,7 @@ const request = (params, requestParams) => {
                 reject(res);
             },
             onComplete: (res) => {
-
+                //
             }
         });
     });
@@ -114,7 +113,7 @@ export const httpLocationGet = (type) =>{
             onSuccess: (res) => {
                 let data = res;
                 data = gps.GPSToChina(data.lat,data.lng);
-                resolve(data); 
+                resolve(data);
             },
             // 请求失败
             onFail: () => {
@@ -127,3 +126,58 @@ export const httpLocationGet = (type) =>{
         }); 
     });
 };
+
+
+/**
+ * 获取小程序位置
+ */
+export const httpSamllLocation = () =>{
+    return new Promise(function (resolve, reject) {
+        httpApp('jm_file.getSmallAppPath',{
+            onSuccess:(res)=>{
+                console.log(res,1);
+                const data = getObject(res);
+                resolve(data);
+            },
+            onFail:()=>{
+                reject();
+            },
+            onComplete:()=>{
+                //
+            }
+        });
+    });
+};
+
+
+/**
+ * 
+ * @param {String} url 文件夹位置，需手动添加文件夹：imei+'/Media/'
+ */
+export const getFileList = (url) =>{
+    return new Promise(function (resolve, reject) {
+        httpApp('jm_file.getFileList',{
+            onSuccess:(res)=>{
+                if(res){
+                    const data = getObject(res);
+                    this.setState({
+                        filePath:data.files,
+                    },()=>{
+                        this.fileListSplit(data.files);
+                    });
+                    
+                }
+            },
+            onFail:()=>{
+                //  
+            },
+            onComplete:()=>{
+                //
+            }
+        },{
+            filePath:url
+        });
+    });
+};
+
+

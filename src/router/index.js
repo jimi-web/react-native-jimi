@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-22 17:04:27
+ * @LastEditTime: 2019-08-23 09:27:59
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -38,9 +38,6 @@ const AppNavigator = createStackNavigator(
     {
         TabContainer:{
             screen:TabContainer,
-            params:{
-                product: 'Playstation' 
-            },
             navigationOptions: ({ navigation }) => (
                 {
                     title:'首页',
@@ -54,6 +51,10 @@ const AppNavigator = createStackNavigator(
                         fontWeight: 'bold',
                     }
                 }),
+        },
+        Photo:{
+            screen:Photo,
+            navigationOptions:getOptions('相册')
         },
         Position:{
             screen:Position,

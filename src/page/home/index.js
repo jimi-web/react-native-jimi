@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-14 17:00:34
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-08-16 10:11:06
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet} from 'react-native';
@@ -20,18 +20,25 @@ export default class Home extends Component{
     
     render(){
         return (
-            <View style={styles.main}>
-                <Button title={'相册'} />
-                <Button title={'定位'} onPress={()=>{this.props.navigation.push('Position');}} />
+            <View style={styles.mainStyle}>
+                <View style={styles.itemStyle}>
+                    <Button title={'相册'} onPress={() => {this.props.navigation.push('Photo');}} />
+                    <Button title={'定位'} onPress={()=>{this.props.navigation.push('Position');}} />
+                </View>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    main:{
-        justifyContent:'center',
-        alignItems:'center',
+    mainStyle:{
         flex:1,
+        padding:20
+    },
+    itemStyle:{
+        width:100,
+        justifyContent:'space-between',
+        paddingTop:50,
+        flexDirection:'row'
     }
 });

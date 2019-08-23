@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-21 09:55:10
+ * @LastEditTime: 2019-08-23 09:27:16
  */
 
 import React, {Component} from 'react';
@@ -54,10 +54,30 @@ export default class TopView extends Component {
         DeviceEventEmitter.removeAllListeners('jmRemoveOverlay');
         DeviceEventEmitter.removeAllListeners('jmRemoveAllOverlay');
     }
+    add(e) {
+        let {elements} = this.state;
+        elements.push(e);
+        this.setState({elements});
+    }
+  
+    remove(e) {
+        let {elements} = this.state;
+        for (let i = elements.length - 1; i >= 0; --i) {
+            if (elements[i].key === e.key) {
+                elements.splice(i, 1);
+                if(elements >= 0)
+                    break;
+            }
+        }
+        this.setState({elements});
+    }
+  
+    removeAll() {
+        this.setState({elements: []});
+    }
 
     render(){
         const {elements} = this.state;
-        console.log(this.props.children,11111111);
         return (
             <View style={{flex:1}}>
                 <Animated.View style={{flex:1}}> 
@@ -83,8 +103,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: 0,
-        right: 0,
-        bottom: 0,
         color:'#fff',
     },
 });

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 09:45:53
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-12 15:08:52
+ * @LastEditTime: 2019-08-14 17:16:43
  */
 
 import React, {Component} from 'react';
@@ -58,7 +58,7 @@ const tabNav  = createBottomTabNavigator(
                     break;
                 }
                 return <View style={{justifyContent:'center',flex:1}}>
-                    <Image source={tabIcon}/>
+                    <Image style={{width:23,height:23,marginLeft:'auto',marginRight:'auto'}} source={tabIcon}/>
                     <Text style={{textAlign:'center',fontSize:10}}>{tabName}</Text>
                 </View>;
                 

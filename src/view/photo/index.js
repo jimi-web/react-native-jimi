@@ -4,31 +4,43 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:48:01
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-12 15:20:10
+ * @LastEditTime: 2019-08-16 09:42:56
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet} from 'react-native';
-
-export default class Home extends Component{
+import {httpSamllLocation} from '../../http/business';
+import Album from './Album';
+export default class Photo extends Component{
     constructor(props){
         super(props);
         this.state = {
+            
         };
     }
+    componentDidMount(){
+        this.getSamllLocation();
+    }
     
+    /**
+     * 获取小程序为位置
+     */
+    getSamllLocation = () => {
+        httpSamllLocation().then(res => {
+            console.log(res,'小程序位置');
+        });
+        
+    }
     render(){
         return (
-            <View style={styles.main}>
-                <Text style={{color:'#000',fontSize:20}}>{'相册'}</Text>
+            <View style={{flex:1}}>
+                <Album />
             </View>
         );
     }
+    
+
 }
 
 const styles = StyleSheet.create({
-    main:{
-        justifyContent:'center',
-        alignItems:'center',
-        flex:1,
-    }
+    
 });
