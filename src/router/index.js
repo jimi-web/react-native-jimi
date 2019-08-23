@@ -4,13 +4,15 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-23 09:27:59
+ * @LastEditTime: 2019-08-23 09:44:47
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
 
 import {TabContainer} from './TabNav';
-import Position from '../view/map/google/track';
+import Photo from '../view/photo/index';
+import Position from '../view/map/index';
+import Track from '../view/map/google/track';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -59,6 +61,10 @@ const AppNavigator = createStackNavigator(
         Position:{
             screen:Position,
             navigationOptions:getOptions('定位')
+        },
+        Track:{
+            screen:Track,
+            navigationOptions:getOptions('轨迹')
         }
     });
 

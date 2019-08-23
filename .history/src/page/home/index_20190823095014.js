@@ -26,6 +26,10 @@ export default class Home extends Component{
                     <Button style={styles.btn} title={'定位'} onPress={()=>{this.props.navigation.push('Position');}} />
                     <Button style={styles.btn} title={'轨迹'} onPress={()=>{this.props.navigation.push('Track');}} />
                 </View>
+                <View style={styles.itemStyle}>
+                    
+                </View>
+               
             </View>
         );
     }
