@@ -3,11 +3,11 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:05:47
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-23 09:26:54
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-08-23 10:22:38
  */
 import React, {Component} from 'react';
-import {StyleSheet,Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {TopView} from './components/index';
 import {Root} from './router/index';
 import store from './store/index';

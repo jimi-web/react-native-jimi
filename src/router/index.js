@@ -3,14 +3,15 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-23 09:27:59
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-08-23 09:36:20
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
 
 import {TabContainer} from './TabNav';
 import Position from '../view/map/google/track';
+import Photo from '../view/photo/index';
 
 const getOptions = (title) => {
     let headerTitle = {};
