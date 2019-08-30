@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-23 09:44:47
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-08-26 16:54:28
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-29 16:45:13
+ * @LastEditTime: 2019-08-30 14:00:18
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text} from 'react-native';

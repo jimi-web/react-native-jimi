@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:48:01
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-16 09:42:56
+ * @LastEditTime: 2019-08-26 10:00:46
  */
 import React, {Component} from 'react';
-import {View,Text,StyleSheet} from 'react-native';
+import {View,StyleSheet} from 'react-native';
 import {httpSamllLocation} from '../../http/business';
 import Album from './Album';
 export default class Photo extends Component{
