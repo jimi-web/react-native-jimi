@@ -961,13 +961,6 @@ basic-auth@~2.0.0:
   dependencies:
     safe-buffer "5.1.2"
 
-beeshell@^2.0.11:
-  version "2.0.11"
-  resolved "https://registry.npm.taobao.org/beeshell/download/beeshell-2.0.11.tgz#90ed9356312676973db819ef9b8035bc7ea9cbdd"
-  integrity sha1-kO2TVjEmdpc9uBnvm4A1vH6py90=
-  dependencies:
-    moment "^2.24.0"
-
 big-integer@^1.6.7:
   version "1.6.44"
   resolved "https://registry.npmjs.org/big-integer/-/big-integer-1.6.44.tgz#4ee9ae5f5839fc11ade338fea216b4513454a539"
@@ -2838,11 +2831,6 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment@^2.24.0:
-  version "2.24.0"
-  resolved "https://registry.npm.taobao.org/moment/download/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
-  integrity sha1-DQVdU/UFKqZTyfbraLtdEr9cK1s=
-
 morgan@^1.9.0:
   version "1.9.1"
   resolved "https://registry.npmjs.org/morgan/-/morgan-1.9.1.tgz#0a8d16734a1d9afbc824b99df87e738e58e2da59"
@@ -3456,10 +3444,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-baidu-map-jm@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.npm.taobao.org/react-native-baidu-map-jm/download/react-native-baidu-map-jm-1.1.2.tgz#b98da8d6e872b8baff10d147af19c2f9a592e84e"
-  integrity sha1-uY2o1uhyuLr/ENFHrxnC+aWS6E4=
+react-native-baidu-map-jm@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/react-native-baidu-map-jm/download/react-native-baidu-map-jm-1.1.4.tgz?cache=0&sync_timestamp=1566799615628&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-baidu-map-jm%2Fdownload%2Freact-native-baidu-map-jm-1.1.4.tgz#362ce6afa904e9e42c3982d4bf6985a577091101"
+  integrity sha1-Nizmr6kE6eQsOYLUv2mFpXcJEQE=
 
 "react-native-deprecated-custom-components@github:facebookarchive/react-native-custom-components":
   version "0.1.1"

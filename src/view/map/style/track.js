@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-21 16:53:52
+ * @LastEditTime: 2019-08-27 14:52:06
  */
 import {StyleSheet,Dimensions} from 'react-native';
 
@@ -176,7 +176,8 @@ const MapStyles =  StyleSheet.create({
         position:'absolute',
         bottom:0,
         width:width
-    }
+    },
+    
 });
 
 export default MapStyles;

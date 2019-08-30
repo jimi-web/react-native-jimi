@@ -4,13 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-22 17:00:04
+ * @LastEditTime: 2019-08-29 16:45:13
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text} from 'react-native';
 import TopView from '../../components/overlay/TopView';
-import Position from './google/position';
-// import Position from './baidu/position';
+// import Position from './google/position';
+import Position from './baidu/position';
 export default class Map extends Component {
     constructor(props) {
         super(props);
@@ -36,23 +36,22 @@ export default class Map extends Component {
             markerInfo:this.markerInfo
         };
 
-        return (
-            <View style={{flex:1}}>
-                <Position
-                    getMarkerPoint={this.getPoint}
-                    trafficEnabled={true}
-                    mapType={'standard'}
-                    markerOperation={obj}
-                    refreshTime = {20000}
-                    ChangePositionBtn={car}
-                    mylocationOperation={my}
-                    customItem = {this.customItem}
-                    mapTypeBtnStyle={styles.set}
-                    markerInfoWindow={markerInfoWindow}
-                >  
-                </Position>
-            </View>  
-        );
+        return <View style={{flex:1}}>
+            <Position
+                getMarkerPoint={this.getPoint}
+                trafficEnabled={false}
+                mapType={'standard'}
+                markerOperation={obj}
+                refreshTime = {20000}
+                ChangePositionBtn={car}
+                mylocationOperation={my}
+                customItem = {this.customItem}
+                mapTypeBtnStyle={styles.set}
+                // markerInfoWindow={markerInfoWindow}
+            >  
+            </Position>
+        </View>;  
+        
     }
 
     componentDidMount() {
@@ -79,13 +78,12 @@ export default class Map extends Component {
      * 
      */
     markerInfo = ()=>{
-        return <View>
+        return <View style={{width:100,backgroundColor:'#fff'}}>
             <Text>1111111111111111</Text>
         </View>;        
     }
 
     getPoint=(callBack)=>{
-
         callBack({
             imei:'355137100102921',
             latitude:22.54605355,

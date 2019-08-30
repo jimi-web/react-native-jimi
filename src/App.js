@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:05:47
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-23 09:26:54
+ * @LastEditTime: 2019-08-26 14:41:20
  */
 import React, {Component} from 'react';
 import {StyleSheet,Text, View} from 'react-native';
@@ -12,6 +12,7 @@ import {TopView} from './components/index';
 import {Root} from './router/index';
 import store from './store/index';
 import { Provider } from 'react-redux';
+
 export default class App extends Component{
     render() {
         return (
