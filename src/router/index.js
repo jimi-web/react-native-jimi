@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-26 16:54:28
+ * @LastEditTime: 2019-08-27 09:32:38
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
