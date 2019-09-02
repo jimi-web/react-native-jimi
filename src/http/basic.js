@@ -4,16 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-12 14:04:36
+ * @LastEditTime: 2019-08-30 11:51:04
  */
 
 import {
     NativeModules,
     NativeEventEmitter
 } from 'react-native';
-import {
-    getObject
-} from '../libs/utils';
 // 初始化几米圈方法
 const {
     JMRNEngineManager
@@ -71,6 +68,17 @@ jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSCameraInfo, (re
     this[obj.callback](obj.data);
 });
 
+/**
+ * 区分ios和安卓返回的数据转为对象
+ * @param  {object} data 需要被转换的字符串
+ */
+export const getObject = (data)=> {
+    if(!data){
+        return null;
+    }
+    var obj = typeof data === 'string'?obj = JSON.parse(data):data;
+    return obj;
+};
 
 /**
  * 请求APP统一方法
@@ -78,9 +86,14 @@ jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSCameraInfo, (re
  * @param {Object} params 传参
  */
 export const httpApp = (url, params) => {
-    console.log(params);
+    // console.log(params);
     // 生成回调的名称，同一页面不能出现两个相同的回调名，因此回调名采用uuid
-    const callbackName = guids();
+    // const callbackName = guids();
+
+    // 生成回调的名称，同一页面不能出现两个相同的回调名，因此回调名采用Symbol
+    const callbackName = Symbol().toString('callBack');
+    //请求成功、请求失败、请求完成、上传进度变化、上传中、上传完成
+    const funName = ['onSuccess', 'onFail', 'onComplete', 'onProgressUpdate', 'onStatue', 'onDone', 'onWillClosePage'];
 
     let obj = {};
     //判断是否方法类型，是则变成字符串
@@ -97,41 +110,16 @@ export const httpApp = (url, params) => {
     JMRNEngineManager.requestMethod(url, bodyJson);
 
     // 定义回调
-    this[callbackName] = {
-        // 请求成功
-        onSuccess: (res) => {
-            let data = getObject(res);
-            params.onSuccess(data);
-        },
-        // 请求失败
-        onFail: (res) => {
-            let data = getObject(res);
-            params.onFail(data);
-        },
-        // 请求失败或成功
-        onComplete: (res) => {
-            let data = getObject(res);
-            params.onComplete(data);
-        },
-        // 上传进度变化
-        onProgressUpdate: () => {
-            let data = getObject(res);
-            params.onProgressUpdate(data);
-        },
-        // 上传中
-        onStatue: (res) => {
-            let data = getObject(res);
-            params.onStatue(data);
-        },
-        // 上传完成
-        onDone: (res) => {
-            let data = getObject(res);
-            params.onDone(data);
-        },
-        onWillClosePage: () => {
-            params.onWillClosePage();
-        }
-    };
+    let callName = {};
+    for (let i = 0; i < funName.length; i++) {
+        Object.assign(callName, {
+            [funName[i]]: (res) => {
+                let data = getObject(res);
+                params[funName[i]](data);
+            }
+        });
+    }
+    this[callbackName] = callName;
 };
 
 /**

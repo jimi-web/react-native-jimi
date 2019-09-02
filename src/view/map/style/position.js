@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 10:17:53
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-15 14:28:50
+ * @LastEditTime: 2019-08-29 17:54:20
  */
 
 import {StyleSheet,Platform} from 'react-native';
@@ -33,17 +33,23 @@ const MapStyles =  StyleSheet.create({
         position:'absolute',
         left:20,
         bottom:30,
-        zIndex:100
+        zIndex:100,
+
     },
     markerImg:{
         width:23,
         height:23
     },
     infoWindow:{
-        paddingTop:10,
+        padding:15,
         backgroundColor:'#fff',
-        paddingLeft:10,
-        width:250,
+        width:260,
+    },
+    infoWindowShadow:{
+        shadowColor: '#000000',
+        shadowOffset: {h: 10, w: 10},
+        shadowRadius: 5,
+        shadowOpacity: 0.1,
     },
     infoWindowItem:{
         flexDirection: 'row',
@@ -55,7 +61,7 @@ const MapStyles =  StyleSheet.create({
     },
     infoWindowValue:{
         color:'#717171',
-        width:Platform.OS?180:200
+        width:Platform.OS?170:200
     },
     imei:{
         fontSize:14,

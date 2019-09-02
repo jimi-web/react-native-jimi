@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:05:47
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-23 10:22:38
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-08-30 14:00:10
  */
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
@@ -12,6 +12,7 @@ import {TopView} from './components/index';
 import {Root} from './router/index';
 import store from './store/index';
 import { Provider } from 'react-redux';
+
 export default class App extends Component{
     render() {
         return (

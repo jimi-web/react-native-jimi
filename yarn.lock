@@ -3444,10 +3444,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-baidu-map-jm@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.npm.taobao.org/react-native-baidu-map-jm/download/react-native-baidu-map-jm-1.1.2.tgz#b98da8d6e872b8baff10d147af19c2f9a592e84e"
-  integrity sha1-uY2o1uhyuLr/ENFHrxnC+aWS6E4=
+react-native-baidu-map-jm@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/react-native-baidu-map-jm/download/react-native-baidu-map-jm-1.1.4.tgz?cache=0&sync_timestamp=1566799615628&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-baidu-map-jm%2Fdownload%2Freact-native-baidu-map-jm-1.1.4.tgz#362ce6afa904e9e42c3982d4bf6985a577091101"
+  integrity sha1-Nizmr6kE6eQsOYLUv2mFpXcJEQE=
 
 "react-native-deprecated-custom-components@github:facebookarchive/react-native-custom-components":
   version "0.1.1"

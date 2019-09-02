@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-22 17:41:24
+ * @LastEditTime: 2019-08-26 18:20:50
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions,DeviceEventEmitter,Animated} from 'react-native';
@@ -18,8 +18,11 @@ let selectDate = new Date();
 let daysCounts = [
     [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
     [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-]; //每个月的日子总数
+];//每个月的日子总数
+let getDay = [];
 export default class Datepicker {
+    static finalResult = new Date().Format('YYYY-MM-DD hh:mm:ss')
+
     /**
      * 是否闰年
      * @param {String} year 
@@ -36,6 +39,9 @@ export default class Datepicker {
         if (day > daysCount) {
             day = daysCount;
         }
+        getDay = [];
+        for (let i = 1; i <= daysCount; ++i) getDay.push(i);
+        console.log(getDay);
         
         date.setMonth(month);
         date.setDate(day);
@@ -43,11 +49,7 @@ export default class Datepicker {
         date.setMinutes(min);
         selectDate = date;
 
-        console.log('111223343');
-        
-        // console.log(selectDate);
-        // console.log(new Date(selectDate).Format('YYYY-MM-DD hh:mm'));
-        
+        this.finalResult = new Date(selectDate).Format('YYYY-MM-DD hh:mm:ss');
     }
 
     /**
@@ -63,6 +65,7 @@ export default class Datepicker {
      for (let i = 0; i <= 24; ++i) hours.push(i);
      let mins = [];
      for (let i = 0; i <= 60; ++i) mins.push(i);
+    
 
      //获取当前默认
      selectDate = params.date ? new Date(params.date) : new Date();
@@ -71,11 +74,9 @@ export default class Datepicker {
          day = selectDate.getDate(),
          hour = selectDate.getHours(),
          min =selectDate.getMinutes();
-
-
+     getDay = [];
      let daysCount = daysCounts[this.isLeapYear(year) ? 1 : 0][month];
-     let days = [];
-     for (let i = 1; i <= daysCount; ++i) days.push(i);
+     for (let i = 1; i <= daysCount; ++i) getDay.push(i);
      let overlayView = <Overlay.View side='bottom' modal={false}>
          <View style={styles.datepicker}>
              <View style={styles.header}>
@@ -88,7 +89,7 @@ export default class Datepicker {
                  <Text style={{color:'#000',fontSize:17}}>选择时间</Text>
                  <TouchableOpacity activeOpacity={1} onPress={()=>{
                      this.hide();
-                     params.onConfirm && params.onConfirm();
+                     params.onConfirm && params.onConfirm(this.finalResult);
                  }} >
                      <Text style={styles.headerText}>确定</Text>
                  </TouchableOpacity>
@@ -114,9 +115,9 @@ export default class Datepicker {
                      style={styles.wheelItem}
                      itemStyle={styles.itemStyle}
                      holeStyle= {styles.holeStyle}
-                     items={days}
-                     index={days.indexOf(day)}
-                     onChange={index => this.onDateChange(year, month, days[index],hour,min)}
+                     items={getDay}
+                     index={getDay.indexOf(day)}
+                     onChange={index => this.onDateChange(year, month, getDay[index],hour,min)}
                  />
                  <Wheel
                      style={styles.wheelItem}
@@ -124,7 +125,7 @@ export default class Datepicker {
                      holeStyle= {styles.holeStyle}
                      items={hours}
                      index={hours.indexOf(hour)}
-                     onChange={index => this.onDateChange(year, month, day,this.hours[index],min)}
+                     onChange={index => this.onDateChange(year, month, day,hours[index],min)}
                  />
                  <Wheel
                      style={styles.wheelItem}
@@ -141,9 +142,18 @@ export default class Datepicker {
      showSelectTime = Overlay.show(overlayView);
  };
 
+ /**
+  * 数组截图
+  */
+ //  static Arrslice(min,max,arr) {
+ //      let getArr = max ? arr.slice(arr.indexOf(min),arr.indexOf(max)+1) : arr.slice(arr.indexOf(min));
+ //      return getArr;
+ //  }
+
  static hide(){
      Overlay.hide(showSelectTime);
  }
+ 
 }
 const styles = StyleSheet.create({
     datepicker:{
@@ -180,8 +190,8 @@ const styles = StyleSheet.create({
     },
     holeStyle:{
         height:35,
-        fontSize:23,
-        color:'#03B8A6'
+        // fontSize:23,
+        // color:'#03B8A6'
     },
     overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0)',

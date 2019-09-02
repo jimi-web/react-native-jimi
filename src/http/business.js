@@ -3,12 +3,11 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-14 10:34:23
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-08-29 16:41:37
  */
-import { httpApp } from './basic';
-import gps from '../libs/coversionPoint';
-import {getObject} from '../libs/utils';
+import { httpApp,getObject } from './basic';
+
 /**
  * 后台请求通用方法封装
  * @param {Object} params 后台需要的参数
@@ -112,7 +111,6 @@ export const httpLocationGet = (type) =>{
             type:type,
             onSuccess: (res) => {
                 let data = res;
-                data = gps.GPSToChina(data.lat,data.lng);
                 resolve(data);
             },
             // 请求失败

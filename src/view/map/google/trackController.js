@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-23 09:25:20
+ * @LastEditTime: 2019-08-26 17:01:00
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
@@ -15,8 +15,7 @@ import {ActionSheet,Overlay,SegmentedBar,ListRow,Label} from 'teaset';
 import Datepicker from './datepicker';
 let showPullTime = null;
 let showSelectTime = null;
-
-export default class Track extends Component { 
+export default class Track extends Component {
 
     constructor(props) {
         super(props);
@@ -33,14 +32,14 @@ export default class Track extends Component {
             },{
                 key:'今天',
                 value:3
-            }]
-
+            }],
+            activeIndex:3
         };
 
     }
 
     componentDidMount() {
-     
+        
     }
 
     render(){
@@ -116,10 +115,12 @@ export default class Track extends Component {
                         indicatorLineWidth={3} 
                         indicatorWidth={26}
                         indicatorPositionPadding={-8}
+                        activeIndex={this.state.activeIndex}
+                        onChange={index => this.onBarChange(index)}
                     >
                         {
                             this.state.timeType.map((item,index)=>{
-                                return <SegmentedBar.Item title={item.key} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle} />;
+                                return <SegmentedBar.Item title={item.key} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle}  />;
                             })
                         }
                     </SegmentedBar>
@@ -132,7 +133,12 @@ export default class Track extends Component {
                         </View>
                     }  accessory='indicator'
                     onPress={()=>{
-                        Datepicker.show();
+                        Datepicker.show({
+                            onConfirm:(res)=>{
+                                console.log(res);
+                                console.log('结果');
+                            }
+                        });
                     }}
                     />
                     <ListRow title={
@@ -158,20 +164,36 @@ export default class Track extends Component {
         </Overlay.View>
           ;
         showPullTime = Overlay.show(overlayView);
+    } 
+
+    /**
+     * 切换事件
+     */
+    onBarChange = (index)=>{
+        // let getDate = this.getDates(new Date('2019-8-10'));
+        // console.log(getDate);
+        
+    
+        // console.log(getDate.indexOf(getDate[3]));
+        // console.log(getDate.slice(0,getDate.indexOf(getDate[3])));
+    }
+
+    /**
+     * 获取本周
+     */
+    getDates = (currentTime) =>{
+        var currentDate = new Date(currentTime);
+        var timesStamp = currentDate.getTime();
+        var currenDay = currentDate.getDay();
+        var dates = [];
+        for (var i = 0; i < 7; i++) {
+            dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7)).toLocaleDateString().replace(/\//g, '-'));
+        }
+        return dates;
     }
 
 
-    // /**
-    //  * 显示时间
-    //  */
-    // showSelectTime = () =>{
-    //     let overlayView = <Overlay.View side='bottom' modal={false}>
-    //         <View style={MapStyles.selectTime}>
-    //             <WheelExample />
-    //         </View>
-            
-    //     </Overlay.View>;
-    //     showSelectTime = Overlay.show(overlayView);
-    // }
-    
+
+
+
 }
