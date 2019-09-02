@@ -4,13 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-26 18:20:50
+ * @LastEditTime: 2019-09-02 11:50:21
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions,DeviceEventEmitter,Animated} from 'react-native';
 import {Theme, Wheel,Overlay} from 'teaset';
 import PropTypes from 'prop-types';
-import '../../../libs/time';
+import '../../libs/time';
 
 const {width} = Dimensions.get('window');
 let showSelectTime = null;
@@ -66,7 +66,6 @@ export default class Datepicker {
      let mins = [];
      for (let i = 0; i <= 60; ++i) mins.push(i);
     
-
      //获取当前默认
      selectDate = params.date ? new Date(params.date) : new Date();
      let year = selectDate.getFullYear(), 

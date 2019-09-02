@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-30 11:06:55
+ * @LastEditTime: 2019-09-02 17:26:58
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -14,7 +14,7 @@ import mapUtils from '../mapUtils';
 import PropTypes from 'prop-types';
 
 
-export default class Position extends mapUtils { 
+export default class BaiduPosition extends mapUtils { 
     static propTypes = {
         ...mapUtils.propTypes,
     };
@@ -44,22 +44,22 @@ export default class Position extends mapUtils {
                     }}
                 >  
                     {
-                        this.state.markerPoint ?
+                        this.state.markerPoint.latitude ?
                             <Overlay.Marker
                                 tag={0}
                                 location={this.state.markerPoint}
-                                icon={require('../../../assets/map/oldMan.png')}
+                                icon={this.props.markerOperation.image}
+                                rotate={this.state.locationData.rotate}
                             />
                             :
                             null
                     }
                     {
-                        this.state.phonePoint ?
+                        this.state.phonePoint.latitude ?
                             <Overlay.Marker
                                 tag={1}
-
                                 location={this.state.phonePoint}
-                                icon={require('../../../assets/map/phone.png')}
+                                icon={this.props.mylocationOperation.image}
                             />
                             :
                             null

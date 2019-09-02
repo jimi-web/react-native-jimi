@@ -4,14 +4,14 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-19 18:13:01
+ * @LastEditTime: 2019-09-02 10:27:35
  */
 
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
 import MapView,{Marker} from 'react-native-maps';
 import MapStyles from '../style/track';
-import Controller from './trackController';
+import Controller from './TrackController';
 
 export default class Track extends Component { 
     constructor(props) {

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-29 18:28:21
+ * @LastEditTime: 2019-09-02 17:28:14
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
@@ -29,9 +29,11 @@ export default class mapUtils extends Component {
         markerInfoWindow:PropTypes.object,//infoWindow
         roadBtnStyle:PropTypes.object,//路况样式
         mapTypeBtnStyle:PropTypes.object,//地图类型样式
-        phonePointBtnStyle:PropTypes.object,//我的位置样式
     };
-    
+    static ChangePositionBtn = {
+        markerImg:require('./../../assets/map/equipment.png'),
+        myPositionImg:require('./../../assets/map/old.png')
+    };
     static defaultProps = {
         trafficEnabled:false,
         mapType:'standard',
@@ -56,8 +58,10 @@ export default class mapUtils extends Component {
             left: 200 
         },
         ChangePositionBtn:{
+            isShow:true,
+            style:MapStyles.phonePointBtn,
             markerImg:require('./../../assets/map/equipment.png'),
-            positionImg:require('./../../assets/map/old.png')
+            myPositionImg:require('./../../assets/map/old.png')
         },
         isRefresh:true,
         refreshTime:15000,
@@ -67,7 +71,6 @@ export default class mapUtils extends Component {
         customItem:null,
         roadBtnStyle:MapStyles.btn,
         mapTypeBtnStyle:MapStyles.btn,
-        phonePointBtnStyle:MapStyles.phonePointBtn
     };
 
     constructor(props) {
@@ -95,6 +98,11 @@ export default class mapUtils extends Component {
             isInit:false,//判断出否初始化结束
             timeInterval:null,//计时器
             locationData:null,//定位的所有数据
+            ChangePositionBtn:{
+                isShow:this.props.ChangePositionBtn.style ? true :this.props.ChangePositionBtn.isShow ? true : false,
+                markerImg:this.props.ChangePositionBtn.markerImg ? this.props.ChangePositionBtn.markerImg : require('./../../assets/map/equipment.png'),
+                myPositionImg:this.props.ChangePositionBtn.myPositionImg ? this.props.ChangePositionBtn.markerImg : require('./../../assets/map/old.png')                
+            }
         };
     }
 
@@ -108,11 +116,16 @@ export default class mapUtils extends Component {
      */
     onMapReady(type){
         this.getMarker(type);
-        this.getPhonePoint(type);
+        if(this.state.ChangePositionBtn.isShow){
+            this.getPhonePoint(type);
+        }
+        
         if(this.props.isRefresh){
             this.state.timeInterval = setInterval(() => {
-                this.getMarker();
-                this.getPhonePoint(type);
+                this.getMarker(type);
+                if(this.state.ChangePositionBtn.isShow){
+                    this.getPhonePoint(type);
+                }
             },this.props.refreshTime);
         }
     }
@@ -141,7 +154,6 @@ export default class mapUtils extends Component {
                     ...region
                 }
             });
-            
             //google气泡切换暂时停用,多次点击会产生偏移
             // let openName = type ? 'myMarker' :'markers';
             // this.showInfoWindow(openName);//显示气泡
@@ -166,6 +178,9 @@ export default class mapUtils extends Component {
                 latitude: data.lat,
                 longitude: data.lng
             };
+
+            console.log(point);
+            
             this.setState({
                 phonePoint:point,
             });
@@ -176,35 +191,60 @@ export default class mapUtils extends Component {
      * 获取标记
      */
     getMarker = (type)=> {
-        this.props.getMarkerPoint((data)=>{
-            //如果和上次地址一样则不渲染
-            if(this.state.markerPoint.latitude === data.latitude && this.state.markerPoint.longitude === data.longitude){
-                return;
-            }
-            let point = {
-                latitude:data.latitude,
-                longitude: data.longitude,
-            };
-            this.setState({
-                markerPoint:point,
-                locationData:data       
-            },()=>{
-                if(type == 'WGS84'){
-                    this.showInfoWindow('markers');
-                }
-                //仅初始化会可视化两点坐标
-                if(!this.state.isInit){ 
-                    this.setState({
-                        isInit:true,
-                        region:{
-                            ...this.state.region,
-                            ...point
-                        }
-                    });
-                }
+        if(this.props.getMarkerPoint){
+            this.props.getMarkerPoint((data)=>{
+                this.drawMarker(data,type);
             });
-        });
+        }else {
+            let data = {
+                imei:'555137100102921',
+                latitude:22.54605355,
+                longitude:114.02597366,
+                gpsTime:'2019-08-09 10:37:42',
+                otherPosTime:'2019-08-09 10:37:42',
+                posType:'WIFI',
+                gpsSpeed:'10',
+                address:'深圳市宝安区留仙一路高新奇b栋几米物联有限公司gubuygyhiuhuihui'
+            };
+
+            this.drawMarker(data,type);
+        }
+
     };
+
+    /**
+     * 绘制marker
+     */
+    drawMarker = (data,type)=>{
+        //如果和上次地址一样则不渲染
+        if(this.state.markerPoint.latitude === data.latitude && this.state.markerPoint.longitude === data.longitude){
+            return;
+        }
+        let point = {
+            latitude:data.latitude,
+            longitude: data.longitude,
+        };
+        console.log(point);
+        this.setState({
+            markerPoint:point,
+            locationData:data       
+        },()=>{
+            if(type == 'WGS84'){
+                this.showInfoWindow('markers');
+            }
+            //仅初始化会可视化两点坐标
+            if(!this.state.isInit){ 
+                this.setState({
+                    isInit:true,
+                    region:{
+                        ...this.state.region,
+                        ...point
+                    }
+                });
+            }
+        });
+    }
+
 
     /**
      * 标记的气泡
@@ -261,16 +301,16 @@ export default class mapUtils extends Component {
      * @param {String} mapType  地图类型，1百度地图
      */
     phonePointBtn = (mapType)=> {
-        return this.state.phonePoint.latitude === null?null:
-            <TouchableOpacity style={[MapStyles.phonePointBtn,this.props.phonePointBtnStyle]}  activeOpacity={1}  
+        return  this.state.ChangePositionBtn.isShow ? this.state.phonePoint.latitude === null?null:
+            <TouchableOpacity style={[MapStyles.phonePointBtn,this.props.ChangePositionBtn.style?this.props.ChangePositionBtn.style:null]}  activeOpacity={1}  
                 onPress={()=>{
                     this.changeMarker();
                     if(mapType){
                         this.InfoWindowFunc.update();
                     }
                 }}> 
-                <Image style={MapStyles.btnImg} source={this.state.isMyPosition? this.props.ChangePositionBtn.positionImg :this.props.ChangePositionBtn.markerImg} />
-            </TouchableOpacity>;
+                <Image style={MapStyles.btnImg} source={this.state.isMyPosition? this.state.ChangePositionBtn.myPositionImg :this.state.ChangePositionBtn.markerImg} />
+            </TouchableOpacity>:null;
     }
 
     /**
@@ -279,5 +319,4 @@ export default class mapUtils extends Component {
     customOverlay = ()=> {
         return this.props.customItem ?this.props.customItem() :null;
     }
-
 }

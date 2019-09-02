@@ -4,31 +4,35 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-29 16:41:37
+ * @LastEditTime: 2019-08-30 15:41:13
  */
 import { httpApp,getObject } from './basic';
+import {Toast} from 'teaset';
 
 /**
  * 后台请求通用方法封装
- * @param {Object} params 后台需要的参数
- * @param {Object} requestParams 请求需要的参数，无需传后台的，url，method，key
+ * @param {Object} params 后台需要的参数url，method，key
  */
-const request = (params, requestParams) => {
+const jmAjax = (params) => {
     return new Promise((resolve, reject) => {
         httpApp('jm_net.request', {
-            url: requestParams.url,
-            method: requestParams.method,
-            data: JSON.stringify(params),
+            url: params.url,
+            method: params.method,
+            data: JSON.stringify(params.data),
             // 提交参数的数据方式,这里以json的形式
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             onSuccess: (res) => {
-                resolve(res);
+                if(res.code === 0){
+                    resolve(res);
+                }else {
+                    Toast.fail('请求失败');
+                }
             },
             onFail: (res) => {
-                reject(res);
+                Toast.fail('请求失败');
             },
             onComplete: (res) => {
                 //
@@ -37,42 +41,42 @@ const request = (params, requestParams) => {
     });
 };
 
-/**
- * Get请求
- * @param {String} url  请求地址
- * @param {Oject} params 参数
- * @param {String} key  imei的字段名
- */
-export const httpServiceGet = (url, params) => {
-    return new Promise((resolve, reject) => {
-        request(params, {
-            url: url,
-            method: 'GET',
-        }).then((succeed, failure) => {
-            resolve(succeed);
-            resolve(failure);
-        });
-    });
-};
+// /**
+//  * Get请求
+//  * @param {String} url  请求地址
+//  * @param {Oject} params 参数
+//  * @param {String} key  imei的字段名
+//  */
+// export const httpServiceGet = (url, params) => {
+//     return new Promise((resolve, reject) => {
+//         request(params, {
+//             url: url,
+//             method: 'GET',
+//         }).then((succeed, failure) => {
+//             resolve(succeed);
+//             resolve(failure);
+//         });
+//     });
+// };
 
 
-/**
- * delete请求
- * @param {String} url  请求地址
- * @param {Oject} params 参数
- * @param {String} key  imei的字段名
- */
-export const httpServiceDelete = (url, params) => {
-    return new Promise((resolve, reject) => {
-        request(params, {
-            url: url,
-            method: 'DELETE',
-        }).then((succeed, failure) => {
-            resolve(succeed);
-            resolve(failure);
-        });
-    });
-};
+// /**
+//  * delete请求
+//  * @param {String} url  请求地址
+//  * @param {Oject} params 参数
+//  * @param {String} key  imei的字段名
+//  */
+// export const httpServiceDelete = (url, params) => {
+//     return new Promise((resolve, reject) => {
+//         request(params, {
+//             url: url,
+//             method: 'DELETE',
+//         }).then((succeed, failure) => {
+//             resolve(succeed);
+//             resolve(failure);
+//         });
+//     });
+// };
 
 
 /**

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-30 11:51:04
+ * @LastEditTime: 2019-08-30 17:52:51
  */
 
 import {
@@ -16,27 +16,6 @@ const {
     JMRNEngineManager
 } = NativeModules;
 const jmRNEngineManagerListener = new NativeEventEmitter(JMRNEngineManager);
-
-/**
- * 全局唯一标识
- */
-const guids = () => {
-    const S4 = () => {
-        return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
-    };
-    return (
-        S4() +
-        S4() +
-        '-' +
-        S4() +
-        '-' +
-        S4() +
-        '-' +
-        S4() +
-        '-' +
-        S4()
-    );
-};
 
 
 //基础事件回调
@@ -80,6 +59,24 @@ export const getObject = (data)=> {
     return obj;
 };
 
+export const guids = () => {
+    const S4 = () => {
+        return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
+    };
+    return (
+        S4() +
+        S4() +
+        '-' +
+        S4() +
+        '-' +
+        S4() +
+        '-' +
+        S4() +
+        '-' +
+        S4()
+    );
+};
+
 /**
  * 请求APP统一方法
  * @param {String} url 请求方法名字
@@ -88,10 +85,10 @@ export const getObject = (data)=> {
 export const httpApp = (url, params) => {
     // console.log(params);
     // 生成回调的名称，同一页面不能出现两个相同的回调名，因此回调名采用uuid
-    // const callbackName = guids();
+    const callbackName = guids();
 
     // 生成回调的名称，同一页面不能出现两个相同的回调名，因此回调名采用Symbol
-    const callbackName = Symbol().toString('callBack');
+    // const callbackName = Symbol().toString();
     //请求成功、请求失败、请求完成、上传进度变化、上传中、上传完成
     const funName = ['onSuccess', 'onFail', 'onComplete', 'onProgressUpdate', 'onStatue', 'onDone', 'onWillClosePage'];
 

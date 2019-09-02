@@ -3,16 +3,18 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-26 16:54:28
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-09-02 13:57:04
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
 
 import {TabContainer} from './TabNav';
 import Photo from '../view/photo/index';
-import Position from '../view/map/index';
-import Track from '../view/map/google/track';
+// import Position from '../view/map/index';
+import Position from '../examples/Position/index';
+
+import Track from '../view/map/google/Track';
 
 const getOptions = (title) => {
     let headerTitle = {};

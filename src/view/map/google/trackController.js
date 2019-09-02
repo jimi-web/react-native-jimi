@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-26 17:01:00
+ * @LastEditTime: 2019-09-02 11:50:56
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
@@ -12,7 +12,7 @@ import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
 
 import MapStyles from '../style/track';
 import {ActionSheet,Overlay,SegmentedBar,ListRow,Label} from 'teaset';
-import Datepicker from './datepicker';
+import Datepicker from '../../../components/datepicker/Datepicker';
 let showPullTime = null;
 let showSelectTime = null;
 export default class Track extends Component {
