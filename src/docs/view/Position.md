@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-03 13:49:27
+ * @LastEditTime: 2019-09-03 13:51:48
  -->
 # `Position` 地图定位
 
@@ -40,7 +40,8 @@
 | baiduHeatMapEnabled     | bool  | false    | 是否打开热力图
 | mapType                 | number| 1        | 地图类型：标准地图=1、卫星地图=2
 | zoom                    | number| 10       | 地图缩放级别
-| center                  | object| null     | 地图中心位置，{latitude: 0, longitude: 0}王球儿王企鹅群翁王企鹅无企鹅王企鹅佛山市的范德萨发票独守空房破损的看法破第三个独守空房肯定是破防空洞双排扣范德萨咖啡店【说刀法【是大佛【平顶山佛【拍            摄的佛【第三批佛【破防【排第三佛挡杀佛【多方
+| center                  | object| null     213213耳温枪翁群无二王球儿多撒多所付撒付所多付所多付所多发所多付所多付所多付所多付所多付多多多多多多多多多多多多多多多多多多多多多多多多多多
+| 地图中心位置，{latitude: 0, longitude: 0}王球儿王企鹅群翁王企鹅无企鹅王企鹅佛山市的范德萨发票独守空房破损的看法破第三个独守空房肯定是破防空洞双排扣范德萨咖啡店【说刀法【是大佛【平顶山佛【拍            摄的佛【第三批佛【破防【排第三佛挡杀佛【多方
 | buildingsEnabled        | bool  | true     | 是否显示3D楼块效果
 | overlookEnabled         | bool  | true     | 是否打开俯仰角效果
 | visualRange             | array | []       | 地图可是范围
