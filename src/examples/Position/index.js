@@ -4,11 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-02 18:27:41
+ * @LastEditTime: 2019-09-03 09:54:28
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text} from 'react-native';
-import Position from '../../view/map/index';
+import {Jimi} from 'react-native-jimi';
 
 export default class Map extends Component {
     constructor(props) {
@@ -34,7 +34,7 @@ export default class Map extends Component {
         };
 
         return <View style={{flex:1}}>
-            <Position.Baidu
+            <Jimi.BaiduPosition
                 getMarkerPoint={this.getPoint}
                 trafficEnabled={false}
                 mapType={'standard'}
@@ -46,7 +46,7 @@ export default class Map extends Component {
                 mapTypeBtnStyle={styles.set}
                 // markerInfoWindow={markerInfoWindow}
             >
-            </Position.Baidu>
+            </Jimi.BaiduPosition>
         </View>;  
     }
 
