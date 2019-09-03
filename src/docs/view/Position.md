@@ -1,20 +1,20 @@
 
+
 # `Position` 地图定位
 
 只有元素名字不一样，其他属性都相同  
 `<Jimi.BaiduPosition />` 谷歌地图  
 `<Jimi.GooglePosition />` 百度地图  
 
-##Props
+## Props
 | Prop | Type | required | Default | Note |
 |---|---|---|---|---|
 |mapType|String| false | 'standard'|地图类型 <br>- standard: 标准 <br>- satellite: 卫星| 
-|initialRegion|Object|false | {<br>　　latitude: 22.596904,<br>　　longitude:113.936674,<br>　latitudeDelta:0.0922,<br>　　longitudeDelta:0.0421<br>}|地图初始化地区 | 
+|initialRegion|Object|false | 有默认属性 |地图初始化地区 | 
 |trafficEnabled|Bool|false | false|是否打开路况图层 <br>true && false| 
 |isRefresh|Bool|false | true|是否刷新定位信息 <br>true && false|
 |refreshTime|Number|false | 15000|定位信息更新时间|
-|markerOperation|Object|false | 有默认属性 |标记点属性<br>{<br>style:{width:100,height:100},<br>image:require('./../../assets/map/oldMan.png')<br>}|
-|markerOperation|Object|false | 有默认属性 |标记点属性,只有谷歌地图能自定义样式 style，百度传无效 <br>{ <brstyle:{width:100,height:100},<br>image:require('./../../assets/map/oldMan.png')<br>}|
+|markerOperation|Object|false | 有默认属性 |标记点属性,只有谷歌地图能自定义样式 style，百度传无效<br>{<br>style:{width:100,height:100},<br>image:require('./../../assets/map/oldMan.png')<br>}|
 |mylocationOperation|Object|false | 有默认属性 |我的位置点属性,只有谷歌地图能自定义样式 style，百度传无效 <br>{ <br>style:{width:100,height:100},<br>image:require('./../../assets/map/oldMan.png')<br>}|
 |ChangePositionBtn|Object|false | 有默认属性 |我的位置和自定义标记的图标设置<br>-style: 自定义样式<br>-markerImg: 自定义标记图标 <br>-myPositionImg: 自定义我的位置图标<br>{<br>style:{width:100,height:100}<br>   　　markerImg:require('./../../assets/map/equipment.png'),<br>myPositionImg:require('./../../assets/map/old.png')<br>}|
 |getMarkerPoint|Function|false | 使用几米圈模板接口 | 设置定位信息，具体方法写法参考下面例子|
@@ -23,7 +23,7 @@
 |roadBtnStyle|Object|false | 有默认样式 |设置路况图标样式 <br> {width:100,height:100}|
 |mapTypeBtnStyle|Object|false | 有默认样式 |设置地图图标样式 <br> {width:100,height:100}|
 
-##Demo
+## Demo
 例子一，默认定位
 ```
 import React, {Component} from 'react';
