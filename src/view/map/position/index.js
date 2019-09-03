@@ -4,16 +4,16 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-02 17:28:14
+ * @LastEditTime: 2019-09-03 10:10:20
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
-import MapStyles from './style/position';
-import gps from '../../libs/coversionPoint';
-import {httpLocationGet} from './../../http/business';
+import MapStyles from '../style/position';
+import gps from '../../../libs/coversionPoint';
+import {httpLocationGet} from '../../../http/business';
 import PropTypes from 'prop-types';
 
-export default class mapUtils extends Component { 
+export default class MapUtils extends Component { 
     static propTypes = {
         trafficEnabled:PropTypes.bool,//是否开启路况
         isRefresh:PropTypes.bool,//是否刷新
@@ -30,10 +30,6 @@ export default class mapUtils extends Component {
         roadBtnStyle:PropTypes.object,//路况样式
         mapTypeBtnStyle:PropTypes.object,//地图类型样式
     };
-    static ChangePositionBtn = {
-        markerImg:require('./../../assets/map/equipment.png'),
-        myPositionImg:require('./../../assets/map/old.png')
-    };
     static defaultProps = {
         trafficEnabled:false,
         mapType:'standard',
@@ -45,11 +41,11 @@ export default class mapUtils extends Component {
         },
         markerOperation:{
             style:MapStyles.markerImg,
-            image:require('./../../assets/map/oldMan.png'),
+            image:require('../../../assets/map/oldMan.png'),
         },
         mylocationOperation:{
             style:MapStyles.markerImg,
-            image:require('./../../assets/map/phone.png'),
+            image:require('../../../assets/map/phone.png'),
         },
         edgePadding:{ 
             top: 200, 
@@ -60,8 +56,8 @@ export default class mapUtils extends Component {
         ChangePositionBtn:{
             isShow:true,
             style:MapStyles.phonePointBtn,
-            markerImg:require('./../../assets/map/equipment.png'),
-            myPositionImg:require('./../../assets/map/old.png')
+            markerImg:require('../../../assets/map/equipment.png'),
+            myPositionImg:require('../../../assets/map/old.png')
         },
         isRefresh:true,
         refreshTime:15000,
@@ -100,8 +96,8 @@ export default class mapUtils extends Component {
             locationData:null,//定位的所有数据
             ChangePositionBtn:{
                 isShow:this.props.ChangePositionBtn.style ? true :this.props.ChangePositionBtn.isShow ? true : false,
-                markerImg:this.props.ChangePositionBtn.markerImg ? this.props.ChangePositionBtn.markerImg : require('./../../assets/map/equipment.png'),
-                myPositionImg:this.props.ChangePositionBtn.myPositionImg ? this.props.ChangePositionBtn.markerImg : require('./../../assets/map/old.png')                
+                markerImg:this.props.ChangePositionBtn.markerImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/equipment.png'),
+                myPositionImg:this.props.ChangePositionBtn.myPositionImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/old.png')                
             }
         };
     }
@@ -283,7 +279,7 @@ export default class mapUtils extends Component {
      */
     roadBtn = ()=> {
         return <TouchableOpacity style={[MapStyles.btn,MapStyles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled})}>
-            <Image style={MapStyles.btnImg} source={this.state.trafficEnabled?require('./../../assets/map/road_active.png'):require('./../../assets/map/road.png')} />
+            <Image style={MapStyles.btnImg} source={this.state.trafficEnabled?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
         </TouchableOpacity>;
     }
 
@@ -292,7 +288,7 @@ export default class mapUtils extends Component {
      */
     mapTypeBtn = ()=> {
         return <TouchableOpacity style={[MapStyles.btn,MapStyles.mapTypeBtn,this.props.mapTypeBtnStyle]}   activeOpacity={1} onPress={this.setMapType}>
-            <Image style={MapStyles.btnImg} source={this.state.mapType==='standard'?require('./../../assets/map/layer.png'):require('./../../assets/map/home_icon_live-action.png')} />
+            <Image style={MapStyles.btnImg} source={this.state.mapType==='standard'?require('../../../assets/map/layer.png'):require('../../../assets/map/home_icon_live-action.png')} />
         </TouchableOpacity>; 
     }
 

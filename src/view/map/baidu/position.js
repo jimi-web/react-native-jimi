@@ -4,23 +4,23 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-02 17:26:58
+ * @LastEditTime: 2019-09-03 10:11:26
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
 import {MapView,Overlay,Geolocation} from 'react-native-baidu-map-jm';
 import MapStyles from '../style/position';
-import mapUtils from '../mapUtils';
+import MapUtils from '../position/index';
 import PropTypes from 'prop-types';
 
 
-export default class BaiduPosition extends mapUtils { 
+export default class BaiduPosition extends MapUtils { 
     static propTypes = {
-        ...mapUtils.propTypes,
+        ...MapUtils.propTypes,
     };
     
     static defaultProps = {
-        ...mapUtils.defaultProps,
+        ...MapUtils.defaultProps,
     };
 
     constructor(props) {
