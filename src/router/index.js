@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-02 18:34:18
+ * @LastEditTime: 2019-09-03 10:48:41
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -13,8 +13,7 @@ import {TabContainer} from './TabNav';
 import Photo from '../view/photo/index';
 // import Position from '../view/map/index';
 import Position from '../examples/Position/index';
-
-import Track from '../view/map/google/Track';
+import Track from '../view/map/baidu/Track';
 
 const getOptions = (title) => {
     let headerTitle = {};

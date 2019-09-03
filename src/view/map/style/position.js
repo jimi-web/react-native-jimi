@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 10:17:53
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-02 16:30:44
+ * @LastEditTime: 2019-09-03 10:37:44
  */
 
 import {StyleSheet,Platform} from 'react-native';
@@ -17,6 +17,8 @@ const MapStyles =  StyleSheet.create({
     btn:{
         position:'absolute',
         right:20,
+        width:35,
+        height:35,
         zIndex:100,
     },
     btnImg:{
@@ -25,13 +27,9 @@ const MapStyles =  StyleSheet.create({
     },
     roadBtn:{
         top:30,
-        width:35,
-        height:35,
     },
     mapTypeBtn:{
         top:75,
-        width:35,
-        height:35,
     },
     phonePointBtn:{
         position:'absolute',

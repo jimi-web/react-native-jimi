@@ -1,16 +1,9 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: xieruizhi
- * @Date: 2019-09-02 14:09:39
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-03 09:48:07
- -->
+
 # `Position` 地图定位
 
-只有元素名字不一样，其他属性都相同
-`<Jimi.BaiduPosition />` 谷歌地图
-`<Jimi.GooglePosition />` 百度地图
+只有元素名字不一样，其他属性都相同  
+`<Jimi.BaiduPosition />` 谷歌地图  
+`<Jimi.GooglePosition />` 百度地图  
 
 ##Props
 | Prop | Type | required | Default | Note |

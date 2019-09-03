@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-27 14:52:06
+ * @LastEditTime: 2019-09-03 10:42:01
  */
 import {StyleSheet,Dimensions} from 'react-native';
 
@@ -12,10 +12,6 @@ const {width} = Dimensions.get('window');
 
 
 const MapStyles =  StyleSheet.create({
-    container:{
-        flex:1,
-        
-    },  
     map:{
         backgroundColor:'red'
     },
@@ -177,7 +173,9 @@ const MapStyles =  StyleSheet.create({
         bottom:0,
         width:width
     },
-    
+    mapTypeBtn:{
+        top:30
+    }
 });
 
 export default MapStyles;

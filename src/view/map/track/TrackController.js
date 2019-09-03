@@ -4,12 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-02 11:50:56
+ * @LastEditTime: 2019-09-03 11:49:17
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
-// import { SlideModal,Tab } from 'beeshell';
-
 import MapStyles from '../style/track';
 import {ActionSheet,Overlay,SegmentedBar,ListRow,Label} from 'teaset';
 import Datepicker from '../../../components/datepicker/Datepicker';
@@ -33,7 +31,9 @@ export default class Track extends Component {
                 key:'今天',
                 value:3
             }],
-            activeIndex:3
+            activeIndex:3,
+            startDate:new Date(new Date(new Date().Format('yyyy/MM/dd')+' 00:00:00').getTime()).Format('YYYY-MM-DD hh:mm:ss'),//开始时间
+            endDate:new Date().Format('YYYY-MM-DD hh:mm:ss'),//开始时间
         };
 
     }
@@ -120,7 +120,7 @@ export default class Track extends Component {
                     >
                         {
                             this.state.timeType.map((item,index)=>{
-                                return <SegmentedBar.Item title={item.key} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle}  />;
+                                return <SegmentedBar.Item title={item.key} key={'SegmentedBar'+index} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle}  />;
                             })
                         }
                     </SegmentedBar>
@@ -129,7 +129,7 @@ export default class Track extends Component {
                     <ListRow title={
                         <View style={MapStyles.listRow}>
                             <Text style={MapStyles.listRowTitle}>开始时间</Text>
-                            <Text style={MapStyles.listRowValue}>2018.05.14 08:00:00</Text>
+                            <Text style={MapStyles.listRowValue}>{this.state.startDate}</Text>
                         </View>
                     }  accessory='indicator'
                     onPress={()=>{
@@ -144,7 +144,7 @@ export default class Track extends Component {
                     <ListRow title={
                         <View style={[MapStyles.listRow]}>
                             <Text style={MapStyles.listRowTitle}>结束时间</Text>
-                            <Text style={MapStyles.listRowValue}>2018.05.14 08:00:00</Text>
+                            <Text style={MapStyles.listRowValue}>{this.state.endDate}</Text>
                         </View>
                     }  accessory='indicator'
                     style={MapStyles.endTime}
@@ -192,7 +192,41 @@ export default class Track extends Component {
         return dates;
     }
 
-
+    changeDate = (index) => {
+        const today = new Date(new Date().Format('yyyy/MM/dd')+' 00:00:00').getTime();//今天0点的毫秒数
+        const dayTime = 24 * 60 * 60 * 1000;//一天的毫秒
+        const weekNumber = new Date().getDay();//今天是本周第几天
+        let startDate = new Date(today).Format('YYYY-MM-DD hh:mm:ss');
+        let endDate = new Date().Format('YYYY-MM-DD hh:mm:ss');
+        switch (index) {
+        case 0:
+            const startTime = today - dayTime * (weekNumber + 7);
+            startDate = new Date(startTime).Format('yyyy-MM-dd hh:mm:ss');
+            const endTime = today - dayTime * weekNumber - 1000;
+            endDate = new Date(endTime).Format('yyyy-MM-dd hh:mm:ss');
+            break;
+        case 1:
+            const startTimeWeek = today - dayTime * weekNumber;
+            startDate = new Date(startTimeWeek).Format('yyyy-MM-dd hh:mm:ss');
+            break;
+        case 2:
+            const startTimeToday = today - dayTime;
+            startDate = new Date(startTimeToday).Format('yyyy-MM-dd hh:mm:ss');
+            const endTimeDay = new Date(new Date().Format('yyyy/MM/dd')+' 00:00:00').getTime() - 1000;
+            endDate = new Date(endTimeDay).Format('YYYY-MM-DD hh:mm:ss');
+            break;
+        case 3:
+            startDate = new Date(today).Format('YYYY-MM-DD hh:mm:ss');
+            endDate = new Date().Format('YYYY-MM-DD hh:mm:ss');
+            break;
+        }
+        // console.log(startDate,endDate,index,111);
+        // this.setState({
+        //     startDate,
+        //     endDate,
+        //     activeIndex:index
+        // });
+    }
 
 
 
