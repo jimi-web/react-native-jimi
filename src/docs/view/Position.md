@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-03 12:01:12
+ * @LastEditTime: 2019-09-03 13:43:24
  -->
 # `Position` 地图定位
 
@@ -14,9 +14,9 @@
 
 ##Props
 | Prop | Type | required | Default | Note
-|------|:----:|:--------:|:-------:|-----
+|------|:----:|:--------:|:-------:| -----
 |mapType|String| false | 'standard'|地图类型 <br>- standard: 标准 <br>- satellite: 卫星
-|initialRegion|Object|false | {<br>　　latitude: 22.596904,<br>　　longitude:113.936674,<br>　　latitudeDelta:0.0922,<br>　　longitudeDelta:0.0421<br>}|地图初始化地区
+|initialRegion|Object|false | {<br>latitude: 22.596904,<br>longitude:113.936674,<br>latitudeDelta:0.0922,<br>longitudeDelta:0.0421<br>}|地图初始化地区
 |trafficEnabled|Bool|false | false|是否打开路况图层 <br>true && false
 |isRefresh|Bool|false | true|是否刷新定位信息 <br>true && false
 |refreshTime|Number|false | 15000|定位信息更新时间
@@ -35,7 +35,7 @@
 #### MapView Props 属性
 | Prop                    | Type  | Default  | Description
 | ----------------------- |:-----:| :-------:| -------
-| zoomControlsVisible     | bool  | true     | 是否显示缩放控件<br>Android only
+| zoomControlsVisible     |bool| true     | 是否显示缩放控件<br>Android only
 | trafficEnabled          | bool  | false    | 是否打开路况图层
 | baiduHeatMapEnabled     | bool  | false    | 是否打开热力图
 | mapType                 | number| 1        | 地图类型：标准地图=1、卫星地图=2
