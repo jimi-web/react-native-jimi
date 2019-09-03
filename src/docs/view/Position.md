@@ -4,13 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-02 17:32:01
+ * @LastEditTime: 2019-09-03 09:48:07
  -->
-# `<Position />` 地图定位
+# `Position` 地图定位
 
 只有元素名字不一样，其他属性都相同
-`<Position.Google />` 谷歌地图
-`<Position.Baidu />` 百度地图
+`<Jimi.BaiduPosition />` 谷歌地图
+`<Jimi.GooglePosition />` 百度地图
 
 ##Props
 | Prop | Type | required | Default | Note |
@@ -35,7 +35,7 @@
 ```
 import React, {Component} from 'react';
 import {View} from 'react-native';
-import {Position} from 'react-native-jimi';
+import {Jimi} from 'react-native-jimi';
 export default class Map extends Component {
     constructor(props) {
         super(props);
@@ -43,7 +43,7 @@ export default class Map extends Component {
 
     render(){
         return <View style={{flex:1}}>
-            <Position.Google /> 
+            <Jimi.BaiduPosition/>
         </View>;  
     }	
 
@@ -57,7 +57,7 @@ export default class Map extends Component {
 ```
 import React, {Component} from 'react';
 import {View,StyleSheet,Text} from 'react-native';
-import {Position} from 'react-native-jimi';
+import {Jimi} from 'react-native-jimi';
 
 export default class Map extends Component {
     constructor(props) {
@@ -66,13 +66,11 @@ export default class Map extends Component {
     render(){
         let obj= {
             // style:styles.marker,
-            image:require('../../assets/map/oldMan.png'),
+            image:require('../../assets/map/icon_car.png'),
         };
 
         let car = {
-            style:{width:50,height:50,backgroundColor:'red'},
-            markerImg:require('../../assets/map/oldMan.png'),
-            myPositionImg:require('../../assets/map/oldMan.png')
+            isShow:false
         };
 
         let my = {
@@ -85,7 +83,7 @@ export default class Map extends Component {
         };
 
         return <View style={{flex:1}}>
-            <Position.Baidu
+            <Jimi.BaiduPosition
                 getMarkerPoint={this.getPoint}
                 trafficEnabled={false}
                 mapType={'standard'}
@@ -95,18 +93,20 @@ export default class Map extends Component {
                 mylocationOperation={my}
                 customItem = {this.customItem}
                 mapTypeBtnStyle={styles.set}
-                markerInfoWindow={markerInfoWindow}
-            > 
-            </Position.Baidu>
+                // markerInfoWindow={markerInfoWindow}
+            >
+            </Jimi.BaiduPosition>
         </View>;  
     }
 
+    
     componentDidMount() {
   
     }
 
+
     /**
-     * 在地图上自定义元素内容
+     * 在地图上自定义样式
      */
     customItem = ()=>{
         return <View style={styles.customItem}>
@@ -125,8 +125,7 @@ export default class Map extends Component {
     /**
      * 接口自定义
      */
-    getPoint=(setLocationData)=>{	
-	    //模拟数据，以下为模板
+    getPoint=(setLocationData)=>{
         let data = {
             imei:'355137100102921',
             latitude:22.54605355,
@@ -138,7 +137,6 @@ export default class Map extends Component {
             address:'深圳市宝安区留仙一路高新奇b栋几米物联有限公司gubuygyhiuhuihui',
             rotate:120.00,
         };
-		//设置数据
         setLocationData(data);
     }     
 }

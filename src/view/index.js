@@ -4,15 +4,17 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-02 14:05:46
+ * @LastEditTime: 2019-09-03 09:37:07
  */
 
 import Photo from './photo/index';
-import Position from './map/index';
+import BaiduPosition from '../view/map/baidu/Position';
+import GooglePosition from '../view/map/google/Position';
 
 const Jimi = {
     Photo,
-    Position,
+    BaiduPosition,
+    GooglePosition
 };
 
 module.exports = Jimi;
