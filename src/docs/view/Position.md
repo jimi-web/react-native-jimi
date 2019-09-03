@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-03 14:01:36
+ * @LastEditTime: 2019-09-03 14:04:12
  -->
 # `Position` 地图定位
 
@@ -12,8 +12,8 @@
 `<Jimi.BaiduPosition />` 谷歌地图
 `<Jimi.GooglePosition />` 百度地图
 
-##Props
-| Prop             | Type      | required           | Default         | Note
+## Props 
+| Prop             | Type      | required           | Default         | Note 
 |------------------|:---------:|:------------------:|:---------------:| -----
 |mapType           |String     | false              | 'standard'      |地图类型 <br>- standard: 标准 <br>- satellite: 卫星
 <!-- |initialRegion|Object|false | {<br>latitude: 22.596904,<br>longitude:113.936674,<br>latitudeDelta:0.0922,<br>longitudeDelta:0.0421<br>}|地图初始化地区
