@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-03 14:04:12
+ * @LastEditTime: 2019-09-03 14:04:59
  -->
 # `Position` 地图定位
 
@@ -16,7 +16,7 @@
 | Prop             | Type      | required           | Default         | Note 
 |------------------|:---------:|:------------------:|:---------------:| -----
 |mapType           |String     | false              | 'standard'      |地图类型 <br>- standard: 标准 <br>- satellite: 卫星
-<!-- |initialRegion|Object|false | {<br>latitude: 22.596904,<br>longitude:113.936674,<br>latitudeDelta:0.0922,<br>longitudeDelta:0.0421<br>}|地图初始化地区
+|initialRegion|Object|false | {<br>latitude: 22.596904,<br>longitude:113.936674,<br>latitudeDelta:0.0922,<br>longitudeDelta:0.0421<br>}|地图初始化地区
 |trafficEnabled|Bool|false | false|是否打开路况图层 <br>true && false
 |isRefresh|Bool|false | true|是否刷新定位信息 <br>true && false
 |refreshTime|Number|false | 15000|定位信息更新时间
@@ -28,7 +28,7 @@
 |customItem|Function|false | 有默认属性| 在地图上自定义其他元素
 |markerInfoWindow|Object|false | 有默认属性|自定义inforWindow属性<br>- isCustom:是否自定义(百度地图无需传)<br>- markerInfo:自定义内容<br>{<br>isCustom:false,<br>markerInfo:()=>{}<br>}|-
 |roadBtnStyle|Object|false | 有默认样式 |设置路况图标样式 <br> {width:100,height:100}
-|mapTypeBtnStyle|Object|false | 有默认样式 |设置地图图标样式 <br> {width:100,height:100} -->
+|mapTypeBtnStyle|Object|false | 有默认样式 |设置地图图标样式 <br> {width:100,height:100}
 
 
 ## 尝试
