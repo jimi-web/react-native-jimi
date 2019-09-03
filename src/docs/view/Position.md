@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-03 09:48:07
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-03 11:54:58
  -->
 # `Position` 地图定位
 
@@ -29,6 +29,31 @@
 |markerInfoWindow|Object|false | 有默认属性|自定义inforWindow属性<br>- isCustom:是否自定义(百度地图无需传)<br>- markerInfo:自定义内容<br>{<br>　　isCustom:false,<br>　　markerInfo:()=>{}<br>}|
 |roadBtnStyle|Object|false | 有默认样式 |设置路况图标样式 <br> {width:100,height:100}|
 |mapTypeBtnStyle|Object|false | 有默认样式 |设置地图图标样式 <br> {width:100,height:100}|
+
+
+## 尝试
+#### MapView Props 属性
+| Prop                    | Type  | Default  | Description
+| ----------------------- |:-----:| :-------:| -------
+| zoomControlsVisible     | bool  | true     | 是否显示缩放控件<br>Android only
+| trafficEnabled          | bool  | false    | 是否打开路况图层
+| baiduHeatMapEnabled     | bool  | false    | 是否打开热力图
+| mapType                 | number| 1        | 地图类型：标准地图=1、卫星地图=2
+| zoom                    | number| 10       | 地图缩放级别
+| center                  | object| null     | 地图中心位置，{latitude: 0, longitude: 0}
+| buildingsEnabled        | bool  | true     | 是否显示3D楼块效果
+| overlookEnabled         | bool  | true     | 是否打开俯仰角效果
+| visualRange             | array | []       | 地图可是范围
+| correctPerspective      | object| undefined| 是否支持透视效果，Android only
+| onMapStatusChangeStart  | func  | undefined| 回调：地图状态开始更改，Android only
+| onMapStatusChange       | func  | undefined| 回调：地图状态改变
+| onMapStatusChangeFinish | func  | undefined| 回调：地图状态改变完成，Android only
+| onMapLoaded             | func  | undefined| 回调：地图已加载完成
+| onMapClick              | func  | undefined| 回调：地图点击
+| onMapDoubleClick        | func  | undefined| 回调：双击地图
+| onMarkerClick           | func  | undefined| 回调：点击Marker
+| onMapPoiClick           | func  | undefined| 回调：点中底图标注
+| onBubbleOfMarkerClick   | func  | undefined| 回调：点击气泡，Android only
 
 ##Demo
 例子一，默认定位
