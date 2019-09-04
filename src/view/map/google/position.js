@@ -4,23 +4,23 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-03 10:11:21
+ * @LastEditTime: 2019-09-04 13:47:55
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
 import MapStyles from '../style/position';
-import MapUtils from '../position/index';
+import PositionUtils from '../position/index';
 import MapView,{Marker,Callout} from 'react-native-maps';
 import PropTypes from 'prop-types';
 
 
-export default class GooglePosition extends MapUtils { 
+export default class GooglePosition extends PositionUtils { 
     static propTypes = {
-        ...MapUtils.propTypes,
+        ...PositionUtils.propTypes,
     };
     
     static defaultProps = {
-        ...MapUtils.defaultProps,
+        ...PositionUtils.defaultProps,
     };
 
     constructor(props) {

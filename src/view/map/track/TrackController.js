@@ -4,15 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-03 11:49:17
+ * @LastEditTime: 2019-09-04 13:38:22
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
 import MapStyles from '../style/track';
 import {ActionSheet,Overlay,SegmentedBar,ListRow,Label} from 'teaset';
 import Datepicker from '../../../components/datepicker/Datepicker';
-let showPullTime = null;
-let showSelectTime = null;
 export default class Track extends Component {
 
     constructor(props) {
@@ -32,15 +30,13 @@ export default class Track extends Component {
                 value:3
             }],
             activeIndex:3,
-            startDate:new Date(new Date(new Date().Format('yyyy/MM/dd')+' 00:00:00').getTime()).Format('YYYY-MM-DD hh:mm:ss'),//开始时间
-            endDate:new Date().Format('YYYY-MM-DD hh:mm:ss'),//开始时间
+            startDate:new Date(new Date(new Date().Format('yyyy/MM/dd')+' 00:00').getTime()).Format('YYYY-MM-DD hh:mm'),//开始时间
+            endDate:new Date().Format('YYYY-MM-DD hh:mm'),//开始时间
+            isShowPullTime:false, //是否显示选择时间弹框
+            selectTimeType:0,//选择时间类型，0为开始时间，1为选择时间 
         };
-
     }
 
-    componentDidMount() {
-        
-    }
 
     render(){
         return (
@@ -48,7 +44,11 @@ export default class Track extends Component {
                 <View style={MapStyles.details}>
                     <View style={MapStyles.time}>
                         <Text style={MapStyles.timeText}>2019.05.24 00:60</Text>
-                        <TouchableOpacity activeOpacity={1} style={MapStyles.timeIcon} onPress={this.showPullTime}>
+                        <TouchableOpacity activeOpacity={1} style={MapStyles.timeIcon} onPress={()=>{
+                            this.setState({
+                                isShowPullTime:true
+                            });
+                        }}>
                             <Image  source={require('../../../assets/track/edit_time.png')} />
                         </TouchableOpacity>
                     </View>
@@ -84,8 +84,134 @@ export default class Track extends Component {
                         <Image style={{width:5,height:8}} source={require('../../../assets/track/feather-chevron-arrow.png')} />
                     </TouchableOpacity>                                                                  
                 </View>
+                {
+                    this.state.isShowPullTime ? this.showPullTime() : null
+                }
+                <Datepicker onConfirm={this.datepickerOnConfirm}></Datepicker>
             </View>
         );
+    }
+
+
+    /**
+     * 显示时间选择器
+     */
+    showPullTime = ()=>{
+        return <View style={MapStyles.slideModalTime}>
+            <View style={MapStyles.tab}> 
+                <SegmentedBar 
+                    indicatorType={'customWidth'} 
+                    indicatorLineColor={'#03B8A6'} 
+                    indicatorLineWidth={3} 
+                    indicatorWidth={26}
+                    indicatorPositionPadding={-8}
+                    activeIndex={this.state.activeIndex}
+                    onChange={index => this.onBarChange(index)}
+                >
+                    {
+                        this.state.timeType.map((item,index)=>{
+                            return <SegmentedBar.Item title={item.key} key={'SegmentedBar'+index} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle}  />;
+                        })
+                    }
+                </SegmentedBar>
+            </View>
+            <View style={MapStyles.slideModalTimeContent}>
+                <ListRow title={
+                    <View style={MapStyles.listRow}>
+                        <Text style={MapStyles.listRowTitle}>开始时间</Text>
+                        <Text style={MapStyles.listRowValue}>{this.state.startDate}</Text>
+                    </View>
+                }  accessory='indicator'
+                onPress={()=>{
+                    this.isDatepickerShow(this.state.startDate,0);
+                }}
+                />
+                <ListRow title={
+                    <View style={[MapStyles.listRow]}>
+                        <Text style={MapStyles.listRowTitle}>结束时间</Text>
+                        <Text style={MapStyles.listRowValue}>{this.state.endDate}</Text>
+                    </View>
+                }  accessory='indicator'
+                onPress={()=>{
+                    this.isDatepickerShow(this.state.endDate,1);
+                }}
+                style={MapStyles.endTime}
+                />
+                <View style={MapStyles.btn}>
+                    <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.cancel]} onPress={()=>{
+                        this.setState({
+                            isShowPullTime:false
+                        });
+                    }} >
+                        <Text style={[MapStyles.btnItemText]}>取消</Text>
+                    </TouchableOpacity>  
+                    <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.confirm]}  >
+                        <Text style={[MapStyles.btnItemText,{color:'#fff'}]}>确认</Text>
+                    </TouchableOpacity>  
+                </View>
+            </View>
+        </View>;
+    } 
+
+    /**
+     *时间选择确定事件
+     */
+    datepickerOnConfirm = (value)=> {
+        console.log(value);
+        console.log('value');
+    }
+
+    /**
+     * 选择时间类型
+     * @param {String} defaultValue 选择时间默认值
+     * @param {Number} selectTimeType 是开始时间还是结束时间
+     */
+    isDatepickerShow = (defaultValue,selectTimeType)=>{
+        Datepicker.show({
+            defaultValue:defaultValue
+        });
+        this.setState({
+            selectTimeType:selectTimeType
+        });
+    }
+
+    /**
+     * 切换事件
+     */
+    onBarChange = (index) => {
+        const today = new Date(new Date().Format('yyyy/MM/dd')+' 00:00').getTime();//今天0点的毫秒数
+        const dayTime = 24 * 60 * 60 * 1000;//一天的毫秒
+        const weekNumber = new Date().getDay()-1;//今天是本周第几天
+        let startDate = new Date(today).Format('YYYY-MM-DD hh:mm');
+        let endDate = new Date().Format('YYYY-MM-DD hh:mm');
+        switch (index) {
+        case 0:
+            const startTime = today - dayTime * (weekNumber + 7);
+            startDate = new Date(startTime).Format('yyyy-MM-dd hh:mm');
+            const endTime = today - dayTime * weekNumber - 1000;
+            endDate = new Date(endTime).Format('yyyy-MM-dd hh:mm');
+            break;
+        case 1:
+            const startTimeWeek = today - dayTime * weekNumber;
+            startDate = new Date(startTimeWeek).Format('yyyy-MM-dd hh:mm');
+            break;
+        case 2:
+            const startTimeToday = today - dayTime;
+            startDate = new Date(startTimeToday).Format('yyyy-MM-dd hh:mm');
+            const endTimeDay = new Date(new Date().Format('yyyy/MM/dd')+' 00:00').getTime() - 1000;
+            endDate = new Date(endTimeDay).Format('YYYY-MM-DD hh:mm');
+            break;
+        case 3:
+            startDate = new Date(today).Format('YYYY-MM-DD hh:mm');
+            endDate = new Date().Format('YYYY-MM-DD hh:mm');
+            break;
+        }
+        
+        this.setState({
+            startDate:startDate,
+            endDate:endDate,
+            activeIndex:index
+        });
     }
 
     /**
@@ -101,133 +227,5 @@ export default class Track extends Component {
         let cancelItem = {title: '取消'};
         ActionSheet.show(items, cancelItem);
     }
-
-    /**
-     * 显示时间选择器
-     */
-    showPullTime = ()=>{
-        let overlayView = <Overlay.View side='bottom' modal={false}>
-            <View style={MapStyles.slideModalTime}>
-                <View style={MapStyles.tab}> 
-                    <SegmentedBar 
-                        indicatorType={'customWidth'} 
-                        indicatorLineColor={'#03B8A6'} 
-                        indicatorLineWidth={3} 
-                        indicatorWidth={26}
-                        indicatorPositionPadding={-8}
-                        activeIndex={this.state.activeIndex}
-                        onChange={index => this.onBarChange(index)}
-                    >
-                        {
-                            this.state.timeType.map((item,index)=>{
-                                return <SegmentedBar.Item title={item.key} key={'SegmentedBar'+index} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle}  />;
-                            })
-                        }
-                    </SegmentedBar>
-                </View>
-                <View style={MapStyles.slideModalTimeContent}>
-                    <ListRow title={
-                        <View style={MapStyles.listRow}>
-                            <Text style={MapStyles.listRowTitle}>开始时间</Text>
-                            <Text style={MapStyles.listRowValue}>{this.state.startDate}</Text>
-                        </View>
-                    }  accessory='indicator'
-                    onPress={()=>{
-                        Datepicker.show({
-                            onConfirm:(res)=>{
-                                console.log(res);
-                                console.log('结果');
-                            }
-                        });
-                    }}
-                    />
-                    <ListRow title={
-                        <View style={[MapStyles.listRow]}>
-                            <Text style={MapStyles.listRowTitle}>结束时间</Text>
-                            <Text style={MapStyles.listRowValue}>{this.state.endDate}</Text>
-                        </View>
-                    }  accessory='indicator'
-                    style={MapStyles.endTime}
-                    />
-                    <View style={MapStyles.btn}>
-                        <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.cancel]} onPress={()=>{
-                            Overlay.hide(showPullTime);
-                        }} >
-                            <Text style={[MapStyles.btnItemText]}>取消</Text>
-                        </TouchableOpacity>  
-                        <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.confirm]}  >
-                            <Text style={[MapStyles.btnItemText,{color:'#fff'}]}>确认</Text>
-                        </TouchableOpacity>  
-                    </View>
-                </View>
-            </View>
-        </Overlay.View>
-          ;
-        showPullTime = Overlay.show(overlayView);
-    } 
-
-    /**
-     * 切换事件
-     */
-    onBarChange = (index)=>{
-        // let getDate = this.getDates(new Date('2019-8-10'));
-        // console.log(getDate);
-        
-    
-        // console.log(getDate.indexOf(getDate[3]));
-        // console.log(getDate.slice(0,getDate.indexOf(getDate[3])));
-    }
-
-    /**
-     * 获取本周
-     */
-    getDates = (currentTime) =>{
-        var currentDate = new Date(currentTime);
-        var timesStamp = currentDate.getTime();
-        var currenDay = currentDate.getDay();
-        var dates = [];
-        for (var i = 0; i < 7; i++) {
-            dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7)).toLocaleDateString().replace(/\//g, '-'));
-        }
-        return dates;
-    }
-
-    changeDate = (index) => {
-        const today = new Date(new Date().Format('yyyy/MM/dd')+' 00:00:00').getTime();//今天0点的毫秒数
-        const dayTime = 24 * 60 * 60 * 1000;//一天的毫秒
-        const weekNumber = new Date().getDay();//今天是本周第几天
-        let startDate = new Date(today).Format('YYYY-MM-DD hh:mm:ss');
-        let endDate = new Date().Format('YYYY-MM-DD hh:mm:ss');
-        switch (index) {
-        case 0:
-            const startTime = today - dayTime * (weekNumber + 7);
-            startDate = new Date(startTime).Format('yyyy-MM-dd hh:mm:ss');
-            const endTime = today - dayTime * weekNumber - 1000;
-            endDate = new Date(endTime).Format('yyyy-MM-dd hh:mm:ss');
-            break;
-        case 1:
-            const startTimeWeek = today - dayTime * weekNumber;
-            startDate = new Date(startTimeWeek).Format('yyyy-MM-dd hh:mm:ss');
-            break;
-        case 2:
-            const startTimeToday = today - dayTime;
-            startDate = new Date(startTimeToday).Format('yyyy-MM-dd hh:mm:ss');
-            const endTimeDay = new Date(new Date().Format('yyyy/MM/dd')+' 00:00:00').getTime() - 1000;
-            endDate = new Date(endTimeDay).Format('YYYY-MM-DD hh:mm:ss');
-            break;
-        case 3:
-            startDate = new Date(today).Format('YYYY-MM-DD hh:mm:ss');
-            endDate = new Date().Format('YYYY-MM-DD hh:mm:ss');
-            break;
-        }
-        // console.log(startDate,endDate,index,111);
-        // this.setState({
-        //     startDate,
-        //     endDate,
-        //     activeIndex:index
-        // });
-    }
-
-
 
 }

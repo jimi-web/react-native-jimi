@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:12:32
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-13 10:38:19
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-09-04 11:54:10
  */
 
 const mainColor = '#03B8A6';
@@ -34,4 +34,9 @@ export default {
     buttonBorderColorDanger:'#FF3535',
 
     buttonBorderWidth: 1,
+
+    //Text
+    TextColorDefault:'#000',
+    TextColorPrimary:mainColor,
+    TextColorDanger:'#FF3535',
 };

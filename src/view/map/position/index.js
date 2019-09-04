@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-03 10:10:20
+ * @LastEditTime: 2019-09-04 14:10:19
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
@@ -13,7 +13,7 @@ import gps from '../../../libs/coversionPoint';
 import {httpLocationGet} from '../../../http/business';
 import PropTypes from 'prop-types';
 
-export default class MapUtils extends Component { 
+export default class PositionUtils extends Component { 
     static propTypes = {
         trafficEnabled:PropTypes.bool,//是否开启路况
         isRefresh:PropTypes.bool,//是否刷新

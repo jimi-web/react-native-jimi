@@ -4,23 +4,23 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-03 10:11:26
+ * @LastEditTime: 2019-09-04 14:05:38
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
 import {MapView,Overlay,Geolocation} from 'react-native-baidu-map-jm';
 import MapStyles from '../style/position';
-import MapUtils from '../position/index';
+import PositionUtils from '../position/index';
 import PropTypes from 'prop-types';
 
 
-export default class BaiduPosition extends MapUtils { 
+export default class BaiduPosition extends PositionUtils { 
     static propTypes = {
-        ...MapUtils.propTypes,
+        ...PositionUtils.propTypes,
     };
     
     static defaultProps = {
-        ...MapUtils.defaultProps,
+        ...PositionUtils.defaultProps,
     };
 
     constructor(props) {
@@ -37,7 +37,7 @@ export default class BaiduPosition extends MapUtils {
                     mapType={this.state.mapType === 'standard' ? 1 : 2}
                     style={MapStyles.map}
                     zoom={18}
-                    center={this.state.region?this.state.region:this.state.initialRegion}
+                    center={this.state.region?this.state.region:this.props.initialRegion}
                     trafficEnabled={this.state.trafficEnabled}
                     onMapLoaded={()=>{
                         this.onMapReady('BD09');
