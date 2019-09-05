@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:12:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-04 11:54:10
+ * @LastEditTime: 2019-09-05 11:51:29
  */
 
 const mainColor = '#03B8A6';

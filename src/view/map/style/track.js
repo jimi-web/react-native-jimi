@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-03 10:42:01
+ * @LastEditTime: 2019-09-04 16:05:19
  */
 import {StyleSheet,Dimensions} from 'react-native';
 
@@ -34,11 +34,14 @@ const MapStyles =  StyleSheet.create({
     timeText:{
         fontSize:18,
         color:'#000000',
-        marginRight:20
     },
+    selectTimeIcon:{
+        paddingLeft:20,
+        paddingRight:20,
+    },  
     timeIcon:{
-        width:14,
-        height:14 
+        width:20,
+        height:20 
     },
     speed:{
         flex:1,
@@ -173,9 +176,11 @@ const MapStyles =  StyleSheet.create({
         bottom:0,
         width:width
     },
-    mapTypeBtn:{
-        top:30
+    startEndImg :{
+        width:20,
+        height:34
     }
+    
 });
 
 export default MapStyles;

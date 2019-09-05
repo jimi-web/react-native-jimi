@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:33:49
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-04 14:17:37
+ * @LastEditTime: 2019-09-05 10:25:27
  */
 import {StyleSheet} from 'react-native';
 const Styles =  StyleSheet.create({
@@ -27,7 +27,11 @@ const Styles =  StyleSheet.create({
     },
     mapTypeBtn:{
         top:63,
-    },    
+    }, 
+    deviceMarker:{
+        width:35,
+        height:35
+    }  
 });
 
 export default Styles;

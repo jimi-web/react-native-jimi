@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-04 14:10:19
+ * @LastEditTime: 2019-09-05 14:19:51
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
@@ -189,7 +189,8 @@ export default class PositionUtils extends Component {
     getMarker = (type)=> {
         if(this.props.getMarkerPoint){
             this.props.getMarkerPoint((data)=>{
-                this.drawMarker(data,type);
+                let res = data;
+                this.drawMarker(res,type);
             });
         }else {
             let data = {
@@ -202,7 +203,7 @@ export default class PositionUtils extends Component {
                 gpsSpeed:'10',
                 address:'深圳市宝安区留仙一路高新奇b栋几米物联有限公司gubuygyhiuhuihui'
             };
-
+            
             this.drawMarker(data,type);
         }
 
@@ -212,6 +213,7 @@ export default class PositionUtils extends Component {
      * 绘制marker
      */
     drawMarker = (data,type)=>{
+
         //如果和上次地址一样则不渲染
         if(this.state.markerPoint.latitude === data.latitude && this.state.markerPoint.longitude === data.longitude){
             return;
@@ -220,11 +222,15 @@ export default class PositionUtils extends Component {
             latitude:data.latitude,
             longitude: data.longitude,
         };
-        console.log(point);
+       
         this.setState({
             markerPoint:point,
             locationData:data       
         },()=>{
+            console.log(point);
+            console.log(data);
+            console.log('有数据没有');
+
             if(type == 'WGS84'){
                 this.showInfoWindow('markers');
             }

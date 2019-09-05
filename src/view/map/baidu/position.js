@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-04 14:05:38
+ * @LastEditTime: 2019-09-05 10:10:14
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -46,7 +46,7 @@ export default class BaiduPosition extends PositionUtils {
                     {
                         this.state.markerPoint.latitude ?
                             <Overlay.Marker
-                                tag={0}
+                                tag={1}
                                 location={this.state.markerPoint}
                                 icon={this.props.markerOperation.image}
                                 rotate={this.state.locationData.rotate}
@@ -57,7 +57,7 @@ export default class BaiduPosition extends PositionUtils {
                     {
                         this.state.phonePoint.latitude ?
                             <Overlay.Marker
-                                tag={1}
+                                tag={2}
                                 location={this.state.phonePoint}
                                 icon={this.props.mylocationOperation.image}
                             />
@@ -67,11 +67,12 @@ export default class BaiduPosition extends PositionUtils {
                     <Overlay.InfoWindow
                         ref={(e)=>{this.InfoWindowFunc=e;}}
                         style={[{position:'relative',backgroundColor:'#fff0',height:400,width:300}]}
-                        tag={0}
+                        tag={1}
                         visible={this.state.locationData ?true:false}
                     >
                         <View style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
                             {
+                               
                                 this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.state.locationData ?this.markerInfo():null
                             }
                         </View>

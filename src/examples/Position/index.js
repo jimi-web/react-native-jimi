@@ -4,11 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-03 09:54:28
+ * @LastEditTime: 2019-09-05 14:19:59
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text} from 'react-native';
-import {Jimi} from 'react-native-jimi';
+import {Jimi} from '../../index';
 
 export default class Map extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ export default class Map extends Component {
         };
 
         let car = {
-            isShow:false
+            isShow:true
         };
 
         let my = {
