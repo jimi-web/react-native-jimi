@@ -4,12 +4,12 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-04 13:47:55
+ * @LastEditTime: 2019-09-10 10:59:10
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
 import MapStyles from '../style/position';
-import PositionUtils from '../position/index';
+import PositionUtils from './index';
 import MapView,{Marker,Callout} from 'react-native-maps';
 import PropTypes from 'prop-types';
 
@@ -36,7 +36,7 @@ export default class GooglePosition extends PositionUtils {
                     }}
                     style={MapStyles.map}
                     onMapReady={()=>{
-                        this.onMapReady('WGS84');
+                        this.onMapReady(1);
                     }}
                     provider={Platform.OS === 'ios'?undefined:'google'}
                     initialRegion={this.props.initialRegion}
@@ -133,7 +133,7 @@ export default class GooglePosition extends PositionUtils {
                 coordinate={this.state.markerPoint}
             >
                 <Image 
-                    style={[this.props.markerOperation.style ? this.props.markerOperation.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.rotate+'deg'}]}]} 
+                    style={[this.props.markerOperation.style ? this.props.markerOperation.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction+'deg'}]}]} 
                     source={this.props.markerOperation.image? this.props.markerOperation.image :require('../../../assets/map/oldMan.png') }/>
                 <Callout tooltip={this.props.isCustom}>
                     {this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.markerInfo()}

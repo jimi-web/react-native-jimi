@@ -4,13 +4,14 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-05 14:19:51
+ * @LastEditTime: 2019-09-10 10:25:45
  */
 import React, {Component} from 'react';
-import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
+import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
-import {httpLocationGet} from '../../../http/business';
+import {httpLocationGet,jmAjax} from '../../../http/business';
+import {map} from '../../../api/index';
 import PropTypes from 'prop-types';
 
 export default class PositionUtils extends Component { 
@@ -98,7 +99,8 @@ export default class PositionUtils extends Component {
                 isShow:this.props.ChangePositionBtn.style ? true :this.props.ChangePositionBtn.isShow ? true : false,
                 markerImg:this.props.ChangePositionBtn.markerImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/equipment.png'),
                 myPositionImg:this.props.ChangePositionBtn.myPositionImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/old.png')                
-            }
+            },
+            userMapType:0,//0为百度，1为谷歌
         };
     }
 
@@ -111,19 +113,23 @@ export default class PositionUtils extends Component {
      * @param {String} type  坐标类型
      */
     onMapReady(type){
-        this.getMarker(type);
-        if(this.state.ChangePositionBtn.isShow){
-            this.getPhonePoint(type);
-        }
-        
-        if(this.props.isRefresh){
-            this.state.timeInterval = setInterval(() => {
-                this.getMarker(type);
-                if(this.state.ChangePositionBtn.isShow){
-                    this.getPhonePoint(type);
-                }
-            },this.props.refreshTime);
-        }
+        this.setState({
+            userMapType:type
+        },()=>{
+            this.getMarker();
+            if(this.state.ChangePositionBtn.isShow){
+                this.getPhonePoint();
+            }
+            
+            if(this.props.isRefresh){
+                this.state.timeInterval = setInterval(() => {
+                    this.getMarker();
+                    if(this.state.ChangePositionBtn.isShow){
+                        this.getPhonePoint();
+                    }
+                },this.props.refreshTime);
+            }
+        });
     }
 
     /**
@@ -157,11 +163,11 @@ export default class PositionUtils extends Component {
     }
     /**
      * 获取手机位置
-     * @param {String} type  坐标类型
      */
-    getPhonePoint = (type) => {
+    getPhonePoint = () => {
+        let type = this.state.userMapType ? 'WGS84':'BD09';
         httpLocationGet(type).then((data)=>{
-            if(type == 'WGS84'){
+            if(this.state.userMapType){
                 data = gps.GPSToChina(data.lat,data.lng);
             }
             //获取上一次设置的经纬度,减少渲染
@@ -175,8 +181,6 @@ export default class PositionUtils extends Component {
                 longitude: data.lng
             };
 
-            console.log(point);
-            
             this.setState({
                 phonePoint:point,
             });
@@ -186,34 +190,121 @@ export default class PositionUtils extends Component {
     /**
      * 获取标记
      */
-    getMarker = (type)=> {
+    getMarker = ()=> {
+        console.log(this.props.getMarkerPoint);
+        
         if(this.props.getMarkerPoint){
             this.props.getMarkerPoint((data)=>{
                 let res = data;
-                this.drawMarker(res,type);
+                console.log(res);
+                this.drawMarker(res);
             });
         }else {
-            let data = {
-                imei:'555137100102921',
-                latitude:22.54605355,
-                longitude:114.02597366,
-                gpsTime:'2019-08-09 10:37:42',
-                otherPosTime:'2019-08-09 10:37:42',
-                posType:'WIFI',
-                gpsSpeed:'10',
-                address:'深圳市宝安区留仙一路高新奇b栋几米物联有限公司gubuygyhiuhuihui'
-            };
-            
-            this.drawMarker(data,type);
+            this.request();
         }
-
     };
 
     /**
+     * 请求数据默认
+     */
+    request = ()=>{
+        // jmAjax({
+        //     url:map.position,
+        //     method:'GET',
+        //     encoding:true,
+        //     encodingType:true
+        // }).then((res)=>{
+        //     let data = res;
+        //     console.log(data);
+        //     console.log('data');
+        // });
+        let result = {
+            'code': 0,
+            'data': {
+                'encodingType': 'imei',
+                'encoding': '351608089944623',
+                'deviceStatus': 2,
+                'clientId': '350000199603207563',
+                'deviceId': 'F4AB29e5-D5fa-3f37-69Db-5faEE3D61cdd',
+                'deviceName': 'Eric',
+                'acc': 'accacc',
+                'ci': '5546',
+                'direction': 41,
+                'baseX': '',
+                'lastAccTurnTime': '1120663607495',
+                'gateId': 'd5d8BeE9-F798-b3eE-Cbed-AF9Ef4dDaC85',
+                'gateTime': '960440526415',
+                'gpsInfo': 1,
+                'gpsMode': 1,
+                'gpsSpeed': 49,
+                'gpsTime': '1263511883300',
+                'ica': '9875',
+                'latitude': 22.5583432558,
+                'longitude': 113.9065941055,
+                'mcc': '',
+                'mnc': '',
+                'posType': 2,
+                'otherPosTime': '759797411814',
+                'posMethod': 2,
+                'recordTime': '1309722536121',
+                'hbOffOn': 1,
+                'accStatus': '',
+                'deviceInfo': 'Uzxdyeytr xdd krlu vcyovrnfj.',
+                'ext': '',
+                'fortifyStatus': '',
+                'gPSSignal': '',
+                'gpsStatus': 1,
+                'oilEleStatus': 1,
+                'powerLevel': 1,
+                'batteryPowerVal': '',
+                'powerValue': '',
+                'powerStatus': '',
+                'powerPer': '10',
+                'seqNo': '',
+                'time': '946994902071',
+                'alarmType': '20'
+            },
+            'msg': 'ok'
+        };
+        this.geocoder(result.data);
+    }
+
+
+    /**
+     * 地址解析
+     */
+    geocoder = (data)=> {
+        // jmAjax({
+        //     url:map.geocoder,
+        //     method:'GET',
+        //     data:{
+        //         latitude:data.latitude,
+        //         longitude:data.longitude,
+        //     }
+        // }).then((res)=>{
+        //     let data = res;
+        //     console.log(data);
+        //     console.log('data');
+        // });
+
+        let result = {
+            code:0,
+            data:{
+                location:'深圳市宝安区新安街道高新奇'
+            },
+            message:'msg'
+        };
+        data.address = result.data.location;
+        this.drawMarker(data);
+    }
+
+    
+    /**
      * 绘制marker
      */
-    drawMarker = (data,type)=>{
-
+    drawMarker = (data)=>{
+        console.log(data);
+        
         //如果和上次地址一样则不渲染
         if(this.state.markerPoint.latitude === data.latitude && this.state.markerPoint.longitude === data.longitude){
             return;
@@ -227,12 +318,12 @@ export default class PositionUtils extends Component {
             markerPoint:point,
             locationData:data       
         },()=>{
-            console.log(point);
-            console.log(data);
-            console.log('有数据没有');
-
-            if(type == 'WGS84'){
+            if(this.state.userMapType){
                 this.showInfoWindow('markers');
+            }else {
+                console.log('渲染info');
+                console.log(this.InfoWindowFunc);
+                this.InfoWindowFunc.update();
             }
             //仅初始化会可视化两点坐标
             if(!this.state.isInit){ 
@@ -252,32 +343,94 @@ export default class PositionUtils extends Component {
      * 标记的气泡
      */
     markerInfo= ()=>{
-        return <View style={MapStyles.infoWindow}>
-            <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.imei}>{this.state.locationData.imei}</Text>
+        let infoBordeRadius = this.state.userMapType ? null : 8;
+        let shadow = this.state.userMapType ?  null :MapStyles.infoWindowShadow;
+        let spaceBetween = this.state.userMapType ? {padding:5,paddingBottom:0} :null;
+        return <View style={[MapStyles.infoWindow,shadow,{borderRadius:infoBordeRadius},spaceBetween]}>
+            <View style={[MapStyles.infoWindowItem,MapStyles.infoWindowItemImei]}>
+                <Text style={MapStyles.imei}>{this.state.locationData.deviceName}</Text>
+                {
+                    this.state.locationData.powerPer ?
+                        <ImageBackground source={require('../../../assets/map/position_bubble_electricity.png')} style={MapStyles.batterybg}>
+                            <View style={{height:9,width:18,marginRight:1}}>
+                                <View style={{width:this.batteryState().per+'%',height:'100%',backgroundColor:this.batteryState().bgColor,borderRadius:1}}></View>
+                            </View>
+                        </ImageBackground>:null
+                }
             </View>
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>速       度:</Text>
-                <Text style={MapStyles.infoWindowValue}> {this.state.locationData.gpsSpeed}km/h</Text>
-            </View>                          
+                <Text style={{color:this.deviceState().color}}>{this.deviceState().text}</Text>
+                <Text style={MapStyles.line}>|</Text>
+                <Text style={MapStyles.infoWindowTitle}>{this.posType()}</Text>
+                <Text style={MapStyles.line}>|</Text>
+                <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.gpsSpeed}km/h</Text>
+            </View>                              
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>定位方式:</Text>
-                <Text style={MapStyles.infoWindowValue}> {this.state.locationData.posType}</Text>
-            </View>      
-            <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>定位时间:</Text>
-                <Text style={MapStyles.infoWindowValue}> {this.state.locationData.gpsTime}</Text>
+                <Text style={MapStyles.infoWindowTitle}>定位时间:{this.state.locationData.gpsTime}</Text>
             </View>     
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>通讯时间:</Text>
-                <Text style={MapStyles.infoWindowValue}> {this.state.locationData.otherPosTime}</Text>
+                <Text style={MapStyles.infoWindowTitle}>通讯时间:{this.state.locationData.time}</Text>
             </View>    
-            <View style={[MapStyles.infoWindowItem]}>
-                <Text style={MapStyles.infoWindowTitle}>地        址:</Text>
-                <Text style={MapStyles.infoWindowValue}> {this.state.locationData.address}{'\n'}                                                        
+            <View style={[MapStyles.infoWindowItem,{paddingBottom:0}]}>
+                <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.address}{'\n'}                                                        
                 </Text>
             </View>     
         </View>;
+    }
+
+    /**
+     * 设备状态
+     */
+    deviceState =()=>{
+        let stateOject = {};
+        switch (this.state.locationData.deviceStatus) {
+        case 0:
+            stateOject.text = '离线';
+            stateOject.color = '#000';
+            break;
+        case 1:
+            stateOject.text = '在线';
+            stateOject.color = '#13A887';
+            break;
+        case 2:
+            stateOject.text = '运动';
+            stateOject.color = '#13A887';
+            break;
+        case 3:
+            stateOject.text = '静止';
+            stateOject.color = '#F82E1B';
+        } 
+
+        return stateOject;
+    }
+
+    /**
+     * 电量状态
+     */
+    batteryState =()=>{
+        let stateOject = {};
+        stateOject.per = this.state.locationData.powerPer ;
+        stateOject.bgColor = this.state.locationData.powerPer > 20 ? '#13A887' : '#F82E1B';
+        return stateOject;
+    }
+
+    /**
+     * 定位类型
+     */
+    posType = ()=>{
+        let type = null;
+        switch (this.state.locationData.posType) {
+        case 0:
+            type = 'GPS定位';
+            break;
+        case 1:
+            type = 'LBS定位';
+            break;
+        case 2:
+            type = 'WIFI定位';
+        } 
+
+        return type;        
     }
     
     /**
@@ -307,9 +460,6 @@ export default class PositionUtils extends Component {
             <TouchableOpacity style={[MapStyles.phonePointBtn,this.props.ChangePositionBtn.style?this.props.ChangePositionBtn.style:null]}  activeOpacity={1}  
                 onPress={()=>{
                     this.changeMarker();
-                    if(mapType){
-                        this.InfoWindowFunc.update();
-                    }
                 }}> 
                 <Image style={MapStyles.btnImg} source={this.state.isMyPosition? this.state.ChangePositionBtn.myPositionImg :this.state.ChangePositionBtn.markerImg} />
             </TouchableOpacity>:null;

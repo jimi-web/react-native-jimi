@@ -3361,10 +3361,10 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
-  resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
-  integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
+  resolved "https://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+  integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
   dependencies:
     loose-envify "^1.4.0"
     object-assign "^4.1.1"
@@ -3444,10 +3444,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-baidu-map-jm@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.npm.taobao.org/react-native-baidu-map-jm/download/react-native-baidu-map-jm-1.1.4.tgz?cache=0&sync_timestamp=1566799615628&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-baidu-map-jm%2Fdownload%2Freact-native-baidu-map-jm-1.1.4.tgz#362ce6afa904e9e42c3982d4bf6985a577091101"
-  integrity sha1-Nizmr6kE6eQsOYLUv2mFpXcJEQE=
+react-native-baidu-map-jm@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.npm.taobao.org/react-native-baidu-map-jm/download/react-native-baidu-map-jm-1.1.6.tgz#4b5da56c38268bdada9e3980b75143ac4d11ce5d"
+  integrity sha1-S12lbDgmi9ranjmAt1FDrE0Rzl0=
 
 "react-native-deprecated-custom-components@github:facebookarchive/react-native-custom-components":
   version "0.1.1"
@@ -3460,19 +3460,19 @@ react-native-baidu-map-jm@^1.1.4:
     react-timer-mixin "^0.13.2"
     rebound "^0.0.13"
 
-react-native-gesture-handler@^1.3.0:
+react-native-gesture-handler@1.3.0:
   version "1.3.0"
-  resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-1.3.0.tgz#d0386f565928ccc1849537f03f2e37fd5f6ad43f"
-  integrity sha512-ASRFIXBuKRvqlmwkWJhV8yP2dTpvcqVrLNpd7FKVBFHYWr6SAxjGyO9Ik8w1lAxDhMlRP2IcJ9p9eq5X2WWeLQ==
+  resolved "https://registry.npm.taobao.org/react-native-gesture-handler/download/react-native-gesture-handler-1.3.0.tgz#d0386f565928ccc1849537f03f2e37fd5f6ad43f"
+  integrity sha1-0DhvVlkozMGElTfwPy43/V9q1D8=
   dependencies:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-maps@^0.24.0:
-  version "0.24.2"
-  resolved "https://registry.npm.taobao.org/react-native-maps/download/react-native-maps-0.24.2.tgz?cache=0&sync_timestamp=1562867134168&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-maps%2Fdownload%2Freact-native-maps-0.24.2.tgz#19974f967cb0c2e24dab74ca879118e0932571b2"
-  integrity sha1-GZdPlnywwuJNq3TKh5EY4JMlcbI=
+react-native-maps@0.24.0:
+  version "0.24.0"
+  resolved "https://registry.npm.taobao.org/react-native-maps/download/react-native-maps-0.24.0.tgz?cache=0&sync_timestamp=1562867134168&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-maps%2Fdownload%2Freact-native-maps-0.24.0.tgz#6627942e9357768c96ddd22bf66d7e88084d19b0"
+  integrity sha1-ZieULpNXdoyW3dIr9m1+iAhNGbA=
 
 react-native-orientation@3.1.3:
   version "3.1.3"
@@ -4236,7 +4236,7 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.3"
 
-teaset@^0.6.3:
+teaset@0.6.3:
   version "0.6.3"
   resolved "https://registry.npm.taobao.org/teaset/download/teaset-0.6.3.tgz#eaeaedbb6586c53707b6c0a38c631ad6ca8c57e7"
   integrity sha1-6urtu2WGxTcHtsCjjGMa1sqMV+c=

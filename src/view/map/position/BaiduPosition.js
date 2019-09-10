@@ -4,13 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-05 10:10:14
+ * @LastEditTime: 2019-09-09 16:07:21
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
 import {MapView,Overlay,Geolocation} from 'react-native-baidu-map-jm';
 import MapStyles from '../style/position';
-import PositionUtils from '../position/index';
+import PositionUtils from './index';
 import PropTypes from 'prop-types';
 
 
@@ -31,6 +31,7 @@ export default class BaiduPosition extends PositionUtils {
     }
 
     render(){
+        console.log(this.state.locationData);
         return (
             <View style={MapStyles.map}>
                 <MapView
@@ -40,16 +41,16 @@ export default class BaiduPosition extends PositionUtils {
                     center={this.state.region?this.state.region:this.props.initialRegion}
                     trafficEnabled={this.state.trafficEnabled}
                     onMapLoaded={()=>{
-                        this.onMapReady('BD09');
+                        this.onMapReady(0);
                     }}
                 >  
                     {
-                        this.state.markerPoint.latitude ?
+                        this.state.locationData ?
                             <Overlay.Marker
                                 tag={1}
                                 location={this.state.markerPoint}
                                 icon={this.props.markerOperation.image}
-                                rotate={this.state.locationData.rotate}
+                                rotate={this.state.locationData.direction}
                             />
                             :
                             null
@@ -64,23 +65,25 @@ export default class BaiduPosition extends PositionUtils {
                             :
                             null
                     }
-                    <Overlay.InfoWindow
-                        ref={(e)=>{this.InfoWindowFunc=e;}}
-                        style={[{position:'relative',backgroundColor:'#fff0',height:400,width:300}]}
-                        tag={1}
-                        visible={this.state.locationData ?true:false}
-                    >
-                        <View style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
-                            {
+                    {
+                        this.state.locationData ?
+                            <Overlay.InfoWindow
+                                ref={(e)=>{this.InfoWindowFunc=e;}}
+                                style={[{position:'relative',backgroundColor:'#fff0',height:400,width:300}]}
+                                tag={1}
+                                visible={this.state.locationData ?true:false}
+                            >
+                                <View style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
+                                    {
                                
-                                this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.state.locationData ?this.markerInfo():null
-                            }
-                        </View>
-                        <View style={{position:'absolute',width:20,height:10,bottom:0,left:'50%',marginLeft:-10}}>
-                            <Image source={require('../../../assets/map/position_bubble.png')} style={{width:20,height:10}} />
-                        </View>
-                    </Overlay.InfoWindow>
-                </MapView>
+                                        this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.state.locationData ?this.markerInfo():null
+                                    }
+                                </View>
+                                <View style={{position:'absolute',width:20,height:10,bottom:0,left:'50%',marginLeft:-10}}>
+                                    <Image source={require('../../../assets/map/position_bubble_shadow.png')} style={{width:20,height:10}} />
+                                </View>
+                            </Overlay.InfoWindow>:null }
+                </MapView> 
                 {
                     this.roadBtn()
                 }

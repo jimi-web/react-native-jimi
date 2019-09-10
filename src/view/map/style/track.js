@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-04 16:05:19
+ * @LastEditTime: 2019-09-09 16:09:44
  */
 import {StyleSheet,Dimensions} from 'react-native';
 
@@ -102,7 +102,7 @@ const MapStyles =  StyleSheet.create({
         backgroundColor:'#fff',
         borderRadius:4,
         zIndex:10,
-        elevation:10,//漂浮的效果,
+        elevation:6,//漂浮的效果,
         justifyContent:'center',
         alignItems:'center',
         shadowColor: '#000000',

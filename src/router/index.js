@@ -4,16 +4,15 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-05 09:54:36
+ * @LastEditTime: 2019-09-10 11:06:51
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
 
 import {TabContainer} from './TabNav';
 import Photo from '../view/photo/index';
-import Position from '../examples/Position/index';
-// import Position from '../view/map/baidu/Position';
-import Track from '../view/map/baidu/Track';
+import Position from '../examples/Position';
+import Track from '../examples/Track';
 
 const getOptions = (title) => {
     let headerTitle = {};

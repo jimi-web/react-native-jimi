@@ -4,16 +4,18 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-05 16:41:15
+ * @LastEditTime: 2019-09-10 17:40:02
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../style/base';
 import MapStyles from '../style/track';
-import Controller from '../track/TrackController';
-import trackData from '../track/json';
+import Controller from './TrackController';
+// import trackData from './json';
 import {Toast} from 'teaset';
+import {map} from '../../../api/index';
+import gps from '../../../libs/coversionPoint';
 
 export default class TrackUtils extends Component {  
     static propTypes = {
@@ -23,6 +25,7 @@ export default class TrackUtils extends Component {
         startMarkerOperation:PropTypes.object,//起点marker
         endMarkerOperation:PropTypes.object,//终点marker
         deviceMarkerOperation:PropTypes.object,//终点marker
+        dimDd:PropTypes.number
     }
 
     static defaultProps = {
@@ -46,6 +49,7 @@ export default class TrackUtils extends Component {
             style:Styles.deviceMarker,
             image:require('../../../assets/track/track_icon_deveice.png'),
         },
+        dimDd:7
     }
 
     constructor(props) {
@@ -55,6 +59,7 @@ export default class TrackUtils extends Component {
         this.state = {
             mapType:this.props.mapType,//地图类型
             trafficEnabled:this.props.trafficEnabled,//路况是否开启
+            trackData:[],
             startMarker:{
                 latitude:null,
                 longitude:null,  
@@ -63,7 +68,6 @@ export default class TrackUtils extends Component {
                 latitude:null,
                 longitude:null,  
             }, //终点的标注
-            longitudeData:null,//轨迹数据
             pointArr:[],//存储播放中的轨迹数组
             isTrackPolylineShow:true,//轨迹线是否显示
             trackPolylinePoint:[],//存储整条轨迹线
@@ -71,7 +75,11 @@ export default class TrackUtils extends Component {
             speed:700,//播放速度
             progress:0,//进度条
             totalProgress:0,//总进度条
-            isPlay:false
+            isPlay:false,//是否播放
+            startDate:new Date(new Date(new Date().Format('yyyy/MM/dd')+' 00:00').getTime()).Format('YYYY-MM-DD hh:mm'),//开始时间
+            endDate:new Date().Format('YYYY-MM-DD hh:mm'),//开始时间
+            posType:100,//定位类型
+            userMapType:0,//0为百度，1为谷歌
         };
     }
 
@@ -108,27 +116,128 @@ export default class TrackUtils extends Component {
             progress={this.state.progress}
             totalProgress={this.state.totalProgress}
             isPlay={this.state.isPlay}
+            deviceInformation={this.state.deviceMarker}
+            dimDd = {this.props.dimDd}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
         >
-        </Controller>;        
+        </Controller>;      
     }
 
+    onMapReady(userMapType) {
+        this.setState({
+            userMapType:userMapType
+        },()=>{
+            this.request();
+        });
+    }
+    
+    /**
+     * 请求数据
+     */
+    request = ()=> {
+        let data = {
+            startTime:this.state.startTime,
+            endTime:this.state.endTime,
+            posType:this.state.posType
+        };
+    
+        // jmAjax({
+        //     url:map.track,
+        //     method:'GET',
+        //     encoding:true,
+        //     encodingType:true,
+        //     data:data
+        // }).then((res)=>{
+        //     let data = res;
+        //     console.log(data);
+        //     console.log('data');
+        // });
+
+        let result = {
+            code: 0,
+            data: [{
+                direction:20,
+                gpsSpeed:'40',
+                gpsTime:'2019-01-02',
+                latitude: 22.5583432558,
+                longitude: 113.9165941055,
+                posType:'0'
+            },{
+                direction:30,
+                gpsSpeed:'40',
+                gpsTime:'2019-01-02',
+                latitude: 22.5183432558,
+                longitude: 113.9265941055,
+                posType:'0'
+            },{
+                direction:40,
+                gpsSpeed:'40',
+                gpsTime:'2019-01-02',
+                latitude: 22.5283432558,
+                longitude: 113.9365941055,
+                posType:'0'
+            },{
+                direction:50,
+                gpsSpeed:'40',
+                gpsTime:'2019-01-02',
+                latitude: 22.5383432558,
+                longitude: 113.9465941055,
+                posType:'0'
+            },{
+                direction:60,
+                gpsSpeed:'40',
+                gpsTime:'2019-01-02',
+                latitude: 22.5883432558,
+                longitude: 113.9565941055,
+                posType:'0'
+            },{
+                direction:70,
+                gpsSpeed:'40',
+                gpsTime:'2019-01-02',
+                latitude: 22.5683432558,
+                longitude: 113.9665941055,
+                posType:'0'
+            },],
+            message:'成功'
+        };
+
+        if(result.data.length>0){
+            this.setState({
+                trackData:result.data
+            },()=>{
+                this.getMarkPoint();
+            });
+        }else {
+            Toast.message('暂无轨迹');
+        }
+    }
+
+    
     /**
      * 获取数据
      */
     getMarkPoint = () =>{
+        let trackData = this.state.trackData;
         let allPoint = this.getTrackPointArr();
         let pointArr=[];
         pointArr.push(allPoint[0]); //初始化设备位置
+
+        let deviceMarker = trackData[0];
+        deviceMarker.totalDistance = 0;
+        
         this.setState({
-            longitudeData:trackData,
-            startMarker:{latitude:trackData[0].latLng.lat,longitude:trackData[0].latLng.lng},
-            endMarker:{latitude:trackData[trackData.length-1].latLng.lat,longitude:trackData[trackData.length-1].latLng.lng},
+            startMarker:{latitude:trackData[0].latitude,longitude:trackData[0].longitude},
+            endMarker:{latitude:trackData[trackData.length-1].latitude,longitude:trackData[trackData.length-1].longitude},
             trackPolylinePoint:allPoint,
-            deviceMarker:trackData[0],
+            deviceMarker:deviceMarker,
             pointArr:pointArr,
-            totalProgress:allPoint.length-1,
+            totalProgress:allPoint.length,
         },()=>{
-            
+            //如果是谷歌地图则设置可视区域
+            if(this.state.userMapType){
+                this.fitAllMarkers();
+            }
         });   
     }
 
@@ -137,13 +246,13 @@ export default class TrackUtils extends Component {
      */
     getTrackPointArr = () =>{
         let arr = [];
-        trackData.forEach((data)=> {
+        let trackData = this.state.trackData;
+        trackData.forEach((res)=> {
             arr.push({
-                latitude:data.latLng.lat,
-                longitude :data.latLng.lng,
+                latitude:res.latitude,
+                longitude :res.longitude,
             });
         });
-
         return arr;
     }
 
@@ -152,16 +261,24 @@ export default class TrackUtils extends Component {
      * 时间选择确认按钮
      */
     datepickerOnConfirm = (data)=> {
-        console.log(data);
-        console.log('开始时间和结束时间');
+        this.setState({
+            startDate:data.startDate,
+            endDate:data.endDate
+        },()=>{
+            this.request();
+        });
     }
 
     /**
      * 日期快捷切换面板监听
      */
     onBarChange = (data) =>{
-        console.log(data);
-        console.log('开始时间和结束时间');  
+        this.setState({
+            startDate:data.startDate,
+            endDate:data.endDate
+        },()=>{
+            this.request();
+        });
     }
 
     /**
@@ -170,8 +287,6 @@ export default class TrackUtils extends Component {
     onTrackShow = (isShow)=>{
         this.setState({
             isTrackPolylineShow:isShow
-        },()=>{
-            console.log(this.state.isTrackPolylineShow);
         });
     }
 
@@ -180,8 +295,18 @@ export default class TrackUtils extends Component {
      * 重置
      */
     onReplay = () => {
-        
-    }
+        let trackData = this.state.trackData;
+        let deviceMarker = trackData[0];
+        this.pause();
+        this.setState({
+            progress:0,
+            isPlay:true,
+            pointArr:[this.state.trackPolylinePoint[0]],
+            deviceMarker:trackData[0]
+        },()=>{
+            this.play();
+        });
+    }   
 
     /**
      *播放和暂停点击事件
@@ -202,9 +327,17 @@ export default class TrackUtils extends Component {
      /**
      * 速度切换事件
      */
-    onSpeed = (data) => {
-        console.log(data);
-        console.log('速度切换');    
+    onSpeed = (val) => {
+        let speed = val;
+        this.setState({
+            speed:speed
+        },()=>{
+            //切换速度需要重新设置下播放，如果是在播放状态需要停止再播放
+            if(this.state.isPlay){
+                this.pause();
+                this.play();
+            }
+        });  
     }
 
 
@@ -212,38 +345,42 @@ export default class TrackUtils extends Component {
      * 定位类型切换监听
      */
     onShowType = (data) =>{ 
-        console.log(data);
-        console.log('定位类型');        
+        this.setState({
+            posType:data
+        },()=>{
+            this.request();
+        });        
     }
 
     /**
      * 播放轨迹
      */
     play =()=>{
+        let trackData = this.state.trackData;
         let currentProgress = this.state.progress; //当前播放进度
-        let pointArr = [...this.state.pointArr];//获取轨迹绘制的数组
+        let pointArr = null;
         this.timer = setInterval(()=>{
             //已播完
-            if(this.state.progress === this.state.totalProgress){
+            if(this.state.progress === this.state.totalProgress-1){
                 Toast.message('播放完成');
-                this.setState({
-                    progress:0
-                });
+                this.reset();
                 this.pause();
                 return;
             }
-
+            
             //播放中
             currentProgress++;
-            console.log(currentProgress);
-            console.log(pointArr);
-            pointArr.push(this.state.trackPolylinePoint[currentProgress]);
+            pointArr = this.state.trackPolylinePoint.slice(0,currentProgress+1);
+            if(!trackData[currentProgress].totalDistance){
+                trackData[currentProgress].totalDistance = this.countTotalTrack(pointArr); //计算总里程
+            }
+            let deviceMarker = trackData[currentProgress]; 
+            console.log(trackData);
             
             this.setState({
                 progress:currentProgress,
-                pointArr:pointArr
-            },()=>{
-                console.log(this.state.pointArr,this.state.trackPolylinePoint);
+                pointArr:pointArr,
+                deviceMarker:deviceMarker
             });
         },this.state.speed);
     }
@@ -254,6 +391,44 @@ export default class TrackUtils extends Component {
     pause =()=>{
         clearInterval(this.timer);
     }
-    
 
+    /**
+     * 重置
+     */
+    reset = ()=> {
+        let trackData = this.state.trackData;
+        let deviceMarker = trackData[0];
+        //恢复初始化
+        this.setState({
+            progress:0,
+            isPlay:false,
+            pointArr:[this.state.trackPolylinePoint[0]],
+            deviceMarker:deviceMarker
+        });
+    }
+
+    /**
+     * 计算设备估计总里程
+     */
+    countTotalTrack = (track = []) => {
+        let totalMileage = 0;
+        for (let i = 0; i < track.length; i++) {
+            const item = track[i];
+            if(i > 0){
+                const itemSuper = track[i - 1];
+                totalMileage += gps.distance(item.latitude,item.longitude,itemSuper.latitude,itemSuper.longitude);
+            }
+        }
+        return totalMileage.toFixed(2);
+    }
+
+    /**
+     *  可是可视范围内(仅限谷歌)
+     */
+    fitAllMarkers =()=> {
+        this.map.fitToCoordinates(this.state.trackPolylinePoint, {
+            edgePadding:{top: 40,right: 40,bottom: 40,left: 40 },
+            animated: true,
+        });
+    }
 }

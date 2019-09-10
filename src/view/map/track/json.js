@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-04 14:25:15
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-05 10:20:29
+ * @LastEditTime: 2019-09-06 11:46:49
  */
 let trackData = [{
     'locationType': 2,
@@ -18,22 +18,22 @@ let trackData = [{
 },
 {
     'locationType': 2,
-    'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'totalDistance': 500,
+    'locationDate': '2017-11-21 20:49:25',
     'latLng': {
         'lng': 125.965971,
         'lat': 52.609169
     },
     'speed': '1',
     'stay': {
-        'startTime': '2017-11-21 15:49:24',
+        'startTime': '2017-11-21 15:49:26',
         'endTime': '2017-11-21 15:49:24'
     }
 },
 {
     'locationType': 2,
-    'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'totalDistance': 500,
+    'locationDate': '2017-11-21 20:49:27',
     'latLng': {
         'lng': 125.0829,
         'lat': 53.187675
@@ -42,8 +42,8 @@ let trackData = [{
 },
 {
     'locationType': 2,
-    'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'totalDistance': 900,
+    'locationDate': '2017-11-21 20:49:28',
     'latLng': {
         'lng': 124.935722,
         'lat': 53.187675
@@ -52,22 +52,22 @@ let trackData = [{
 },
 {
     'locationType': 2,
-    'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'totalDistance': 100,
+    'locationDate': '2017-11-21 20:49:29',
     'latLng': {
         'lng': 123.390349,
         'lat': 53.583643
     },
     'speed': '5',
     'stay': {
-        'startTime': '2017-11-21 15:49:24',
+        'startTime': '2017-11-21 15:49:30',
         'endTime': '2017-11-21 15:49:24'
     }
 },
 {
     'locationType': 2,
-    'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'totalDistance': 900,
+    'locationDate': '2017-11-21 20:49:31',
     'latLng': {
         'lng': 122.3601,
         'lat': 53.583643
@@ -76,8 +76,8 @@ let trackData = [{
 },
 {
     'locationType': 2,
-    'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'totalDistance': 500,
+    'locationDate': '2017-11-21 20:49:26',
     'latLng': {
         'lng': 120.961906,
         'lat': 53.320076
@@ -86,8 +86,8 @@ let trackData = [{
 },
 {
     'locationType': 2,
-    'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'totalDistance': 800,
+    'locationDate': '2017-11-21 20:49:27',
     'latLng': {
         'lng': 120.078836,
         'lat': 52.877136
@@ -96,22 +96,22 @@ let trackData = [{
 },
 {
     'locationType': 2,
-    'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'totalDistance': 300,
+    'locationDate': '2017-11-21 20:49:28',
     'latLng': {
         'lng': 120.078836,
         'lat': 52.653945
     },
     'speed': '9',
     'stay': {
-        'startTime': '2017-11-21 15:49:24',
+        'startTime': '2017-11-21 15:49:29',
         'endTime': '2017-11-21 15:49:24'
     }
 },
 {
     'locationType': 2,
     'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'locationDate': '2017-11-21 20:49:34',
     'latLng': {
         'lng': 120.520371,
         'lat': 52.609169
@@ -121,7 +121,7 @@ let trackData = [{
 {
     'locationType': 2,
     'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'locationDate': '2017-11-21 20:49:26',
     'latLng': {
         'lng': 120.741138,
         'lat': 52.384597
@@ -131,7 +131,7 @@ let trackData = [{
 {
     'locationType': 2,
     'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'locationDate': '2017-11-21 20:49:29',
     'latLng': {
         'lng': 120.741138,
         'lat': 52.068256
@@ -141,7 +141,7 @@ let trackData = [{
 {
     'locationType': 2,
     'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'locationDate': '2017-11-21 20:49:22',
     'latLng': {
         'lng': 120.152425,
         'lat': 51.749647
@@ -151,21 +151,21 @@ let trackData = [{
 {
     'locationType': 2,
     'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'locationDate': '2017-11-21 20:49:21',
     'latLng': {
         'lng': 119.269355,
         'lat': 50.452396
     },
     'speed': '14',
     'stay': {
-        'startTime': '2017-11-21 15:49:24',
+        'startTime': '2017-11-21 15:49:25',
         'endTime': '2017-11-21 15:49:24'
     }
 },
 {
     'locationType': 2,
     'totalDistance': 600,
-    'locationDate': '2017-11-21 20:49:24',
+    'locationDate': '2017-11-21 20:49:21',
     'latLng': {
         'lng': 119.342944,
         'lat': 50.075012

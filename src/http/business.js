@@ -4,16 +4,16 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-30 15:41:13
+ * @LastEditTime: 2019-09-09 14:24:00
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
 
 /**
  * 后台请求通用方法封装
- * @param {Object} params 后台需要的参数url，method，key
+ * @param {Object} params 后台需要的参数url，method，data
  */
-const jmAjax = (params) => {
+const request = (params) => {
     return new Promise((resolve, reject) => {
         httpApp('jm_net.request', {
             url: params.url,
@@ -25,6 +25,8 @@ const jmAjax = (params) => {
                 'Content-Type': 'application/json',
             },
             onSuccess: (res) => {
+                console.log(res);
+                console.log('请求成功');
                 if(res.code === 0){
                     resolve(res);
                 }else {
@@ -41,42 +43,28 @@ const jmAjax = (params) => {
     });
 };
 
-// /**
-//  * Get请求
-//  * @param {String} url  请求地址
-//  * @param {Oject} params 参数
-//  * @param {String} key  imei的字段名
-//  */
-// export const httpServiceGet = (url, params) => {
-//     return new Promise((resolve, reject) => {
-//         request(params, {
-//             url: url,
-//             method: 'GET',
-//         }).then((succeed, failure) => {
-//             resolve(succeed);
-//             resolve(failure);
-//         });
-//     });
-// };
-
-
-// /**
-//  * delete请求
-//  * @param {String} url  请求地址
-//  * @param {Oject} params 参数
-//  * @param {String} key  imei的字段名
-//  */
-// export const httpServiceDelete = (url, params) => {
-//     return new Promise((resolve, reject) => {
-//         request(params, {
-//             url: url,
-//             method: 'DELETE',
-//         }).then((succeed, failure) => {
-//             resolve(succeed);
-//             resolve(failure);
-//         });
-//     });
-// };
+/**
+ * 数据请求
+ * @param {Object} params 后台需要的参数url，method，data,如果需要encodingType 或者是encodingType 只要设置该参数为true
+ */
+export const jmAjax = (params)=> {
+    return new Promise((resolve, reject) => { 
+        if(params.encoding || params.encodingType){
+            getEncoding().then((res)=>{
+                let data = res;
+                if(params.encoding){
+                    params.data.encoding = data.encoding;
+                }
+                if(params.encodingType){
+                    params.data.encodingType = data.encodingType;
+                }
+                request(params);
+            });
+        }else {
+            request(params);
+        }
+    });
+};
 
 
 /**
@@ -137,8 +125,7 @@ export const httpSamllLocation = () =>{
     return new Promise(function (resolve, reject) {
         httpApp('jm_file.getSmallAppPath',{
             onSuccess:(res)=>{
-                console.log(res,1);
-                const data = getObject(res);
+                const data = res;
                 resolve(data);
             },
             onFail:()=>{
@@ -161,7 +148,7 @@ export const getFileList = (url) =>{
         httpApp('jm_file.getFileList',{
             onSuccess:(res)=>{
                 if(res){
-                    const data = getObject(res);
+                    const data = res;
                     this.setState({
                         filePath:data.files,
                     },()=>{
@@ -181,5 +168,30 @@ export const getFileList = (url) =>{
         });
     });
 };
+
+/**
+ * 获取当前手机位置
+ * @param {string} type 地图经纬度类型
+ */
+export const getEncoding = () =>{
+    return new Promise((resolve, reject)=> {
+        httpApp('jm_user.getEncoding', {
+            onSuccess: (res) => {
+                let data = res;
+                resolve(data);
+            },
+            // 请求失败
+            onFail: () => {
+                Toast.fail('设备唯一码请求失败');
+            },
+            // 请求失败或成功
+            onComplete: () => {
+                //
+            },
+        }); 
+    });
+};
+
+
 
 

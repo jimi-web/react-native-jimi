@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-05 16:47:29
+ * @LastEditTime: 2019-09-10 16:08:26
  */
 
 import React, {Component} from 'react';
@@ -12,10 +12,10 @@ import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
 import {MapView,Overlay} from 'react-native-baidu-map-jm';
 import Styles from '../style/base';
 import MapStyles from '../style/track';
-import TrackUtils from '../track/index';
+import TrackUtils from './index';
 import PropTypes from 'prop-types';
 
-export default class Track extends TrackUtils {
+export default class BaiduTrack extends TrackUtils {
     static propTypes = {
         ...TrackUtils.propTypes
     }
@@ -33,17 +33,15 @@ export default class Track extends TrackUtils {
     }
 
     render(){
-        console.log(this.state.pointArr,88);
-        
         return (
             <View style={Styles.container}>
                 <MapView
                     mapType={this.state.mapType === 'standard' ? 1 : 2}
                     style={Styles.container}
                     zoom={18}
-                    center={this.state.region?this.state.region:this.props.initialRegion}
+                    center={this.props.initialRegion}
                     onMapLoaded={()=>{
-                        this.getMarkPoint();
+                        this.onMapReady(0);
                     }}
                     visualRange = {this.state.trackPolylinePoint}
                 >
@@ -69,18 +67,19 @@ export default class Track extends TrackUtils {
                     }
                     {/* 设备 */}
                     {
-                        this.state.deviceMarker.latLng ?
+                        this.state.deviceMarker.latitude ?
                             <Overlay.Marker
-                                location={{latitude:this.state.deviceMarker.latLng.lat,longitude:this.state.deviceMarker.latLng.lng}}
+                                location={{latitude:this.state.deviceMarker.latitude,longitude:this.state.deviceMarker.longitude}}
                                 icon={this.props.deviceMarkerOperation.image}
+                                rotate={this.state.deviceMarker.direction}
                             />
                             :
                             null
                     }
                     {
-                        this.state.pointArr.length > 1 ?
+                        this.state.pointArr.length > 0 ?
                             <Overlay.Polyline
-                                width={1}
+                                width={2}
                                 visible={true}
                                 color={'50AE6F'}
                                 points={this.state.pointArr}/>
@@ -88,7 +87,7 @@ export default class Track extends TrackUtils {
                             null
                     }                    
                     {/* 整条轨迹 */}
-                    {/* {
+                    {
                         this.state.trackPolylinePoint.length > 0 ?
                             <Overlay.Polyline
                                 width={2}
@@ -97,7 +96,7 @@ export default class Track extends TrackUtils {
                                 points={this.state.trackPolylinePoint}/>
                             :
                             null
-                    } */}
+                    }
                 </MapView>
                 <View style={MapStyles.bottomContent}>
                     {this.controller()}
