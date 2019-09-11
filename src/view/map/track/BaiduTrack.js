@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-10 16:08:26
+ * @LastEditTime: 2019-09-11 15:20:42
  */
 
 import React, {Component} from 'react';
@@ -106,7 +106,10 @@ export default class BaiduTrack extends TrackUtils {
                 }
                 {
                     this.mapTypeBtn()
-                }                
+                }     
+                {
+                    this.customOverlay()
+                }           
             </View>
         );
     }

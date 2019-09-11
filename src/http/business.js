@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-09 14:24:00
+ * @LastEditTime: 2019-09-11 10:50:09
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -52,16 +52,21 @@ export const jmAjax = (params)=> {
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
                 let data = res;
+                params.data = {};
                 if(params.encoding){
                     params.data.encoding = data.encoding;
                 }
                 if(params.encodingType){
                     params.data.encodingType = data.encodingType;
                 }
-                request(params);
+                request(params).then((res)=>{
+                    resolve(res);
+                });
             });
         }else {
-            request(params);
+            request(params).then((res)=>{
+                resolve(res);
+            });
         }
     });
 };

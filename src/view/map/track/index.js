@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-10 17:40:02
+ * @LastEditTime: 2019-09-11 16:37:21
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -12,10 +12,11 @@ import PropTypes from 'prop-types';
 import Styles from '../style/base';
 import MapStyles from '../style/track';
 import Controller from './TrackController';
-// import trackData from './json';
 import {Toast} from 'teaset';
+import {jmAjax} from '../../../http/business';
 import {map} from '../../../api/index';
 import gps from '../../../libs/coversionPoint';
+
 
 export default class TrackUtils extends Component {  
     static propTypes = {
@@ -25,7 +26,8 @@ export default class TrackUtils extends Component {
         startMarkerOperation:PropTypes.object,//起点marker
         endMarkerOperation:PropTypes.object,//终点marker
         deviceMarkerOperation:PropTypes.object,//终点marker
-        dimDd:PropTypes.number
+        dimDd:PropTypes.number,
+        customItem:PropTypes.func,//在地图上自定义其他元素
     }
 
     static defaultProps = {
@@ -49,7 +51,8 @@ export default class TrackUtils extends Component {
             style:Styles.deviceMarker,
             image:require('../../../assets/track/track_icon_deveice.png'),
         },
-        dimDd:7
+        dimDd:7,
+        customItem:null
     }
 
     constructor(props) {
@@ -106,8 +109,7 @@ export default class TrackUtils extends Component {
      */
     controller = ()=>{
         return <Controller 
-            onConfirm={this.datepickerOnConfirm} 
-            onBarChange={this.onBarChange} 
+            onConfirm={this.onConfirm} 
             onShowType={this.onShowType}
             onSpeed={this.onSpeed}
             onReplay={this.onReplay}
@@ -142,75 +144,24 @@ export default class TrackUtils extends Component {
             posType:this.state.posType
         };
     
-        // jmAjax({
-        //     url:map.track,
-        //     method:'GET',
-        //     encoding:true,
-        //     encodingType:true,
-        //     data:data
-        // }).then((res)=>{
-        //     let data = res;
-        //     console.log(data);
-        //     console.log('data');
-        // });
-
-        let result = {
-            code: 0,
-            data: [{
-                direction:20,
-                gpsSpeed:'40',
-                gpsTime:'2019-01-02',
-                latitude: 22.5583432558,
-                longitude: 113.9165941055,
-                posType:'0'
-            },{
-                direction:30,
-                gpsSpeed:'40',
-                gpsTime:'2019-01-02',
-                latitude: 22.5183432558,
-                longitude: 113.9265941055,
-                posType:'0'
-            },{
-                direction:40,
-                gpsSpeed:'40',
-                gpsTime:'2019-01-02',
-                latitude: 22.5283432558,
-                longitude: 113.9365941055,
-                posType:'0'
-            },{
-                direction:50,
-                gpsSpeed:'40',
-                gpsTime:'2019-01-02',
-                latitude: 22.5383432558,
-                longitude: 113.9465941055,
-                posType:'0'
-            },{
-                direction:60,
-                gpsSpeed:'40',
-                gpsTime:'2019-01-02',
-                latitude: 22.5883432558,
-                longitude: 113.9565941055,
-                posType:'0'
-            },{
-                direction:70,
-                gpsSpeed:'40',
-                gpsTime:'2019-01-02',
-                latitude: 22.5683432558,
-                longitude: 113.9665941055,
-                posType:'0'
-            },],
-            message:'成功'
-        };
-
-        if(result.data.length>0){
-            this.setState({
-                trackData:result.data
-            },()=>{
-                this.getMarkPoint();
-            });
-        }else {
-            Toast.message('暂无轨迹');
-        }
+        jmAjax({
+            url:map.track,
+            method:'GET',
+            encoding:true,
+            encodingType:true,
+            data:data
+        }).then((res)=>{
+            let result = res.data;
+            if(result.length>0){
+                this.setState({
+                    trackData:result
+                },()=>{
+                    this.getMarkPoint();
+                });
+            }else {
+                Toast.message('暂无轨迹');
+            }
+        });
     }
 
     
@@ -260,7 +211,7 @@ export default class TrackUtils extends Component {
     /**
      * 时间选择确认按钮
      */
-    datepickerOnConfirm = (data)=> {
+    onConfirm = (data)=> {
         this.setState({
             startDate:data.startDate,
             endDate:data.endDate
@@ -269,17 +220,6 @@ export default class TrackUtils extends Component {
         });
     }
 
-    /**
-     * 日期快捷切换面板监听
-     */
-    onBarChange = (data) =>{
-        this.setState({
-            startDate:data.startDate,
-            endDate:data.endDate
-        },()=>{
-            this.request();
-        });
-    }
 
     /**
      * 隐藏轨迹
@@ -374,7 +314,13 @@ export default class TrackUtils extends Component {
             if(!trackData[currentProgress].totalDistance){
                 trackData[currentProgress].totalDistance = this.countTotalTrack(pointArr); //计算总里程
             }
-            let deviceMarker = trackData[currentProgress]; 
+
+            if(!trackData[currentProgress].time){
+                //时间戳转
+                trackData[currentProgress].time  = new Date(trackData[currentProgress].gpsTime).Format('YYYY-MM-DD hh:mm:ss');
+            }
+            
+            let deviceMarker = trackData[currentProgress];
             console.log(trackData);
             
             this.setState({
@@ -430,5 +376,13 @@ export default class TrackUtils extends Component {
             edgePadding:{top: 40,right: 40,bottom: 40,left: 40 },
             animated: true,
         });
+    }
+
+
+    /**
+     * 自定义覆盖物
+     */
+    customOverlay = ()=> {
+        return this.props.customItem ?this.props.customItem() :null;
     }
 }

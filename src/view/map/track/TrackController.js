@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-10 17:45:24
+ * @LastEditTime: 2019-09-11 16:21:28
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
@@ -15,7 +15,6 @@ import Datepicker from '../../../components/datepicker/Datepicker';
 export default class Track extends Component {
     static propTypes = {
         onConfirm:PropTypes.func,
-        onBarChange:PropTypes.func,
         onShowType:PropTypes.func,
         onSpeed:PropTypes.func,
         onReplay:PropTypes.func,
@@ -76,7 +75,7 @@ export default class Track extends Component {
             <View style={{flex:1}}>
                 <View style={MapStyles.details}>
                     <View style={MapStyles.time}>
-                        <Text style={MapStyles.timeText}>{deviceInformation.gpsTime}</Text>
+                        <Text style={MapStyles.timeText}>{deviceInformation.time}</Text>
                         <TouchableOpacity activeOpacity={1} style={MapStyles.selectTimeIcon} onPress={()=>{
                             this.setState({
                                 isShowPullTime:true
@@ -180,9 +179,7 @@ export default class Track extends Component {
                     }} >
                         <Text style={[MapStyles.btnItemText]}>取消</Text>
                     </TouchableOpacity>  
-                    <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.confirm]} onPress={()=>{
-                        
-                    }} >
+                    <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.confirm]} onPress={()=>this.onConfirm()} >
                         <Text style={[MapStyles.btnItemText,{color:'#fff'}]}>确认</Text>
                     </TouchableOpacity>  
                 </View>
@@ -227,9 +224,17 @@ export default class Track extends Component {
         this.setState({
             endDate:et,
             startDate:st
-        },()=>{
-            this.props.onConfirm && this.props.onConfirm({startDate:this.state.startDate,endDate:this.state.endDate});
         });
+    }
+
+    /**
+     * 确定监听事件
+     */
+    onConfirm = ()=> {
+        this.setState({
+            isShowPullTime:false
+        });
+        this.props.onConfirm && this.props.onConfirm({startDate:this.state.startDate,endDate:this.state.endDate});
     }
 
     /**
@@ -282,8 +287,6 @@ export default class Track extends Component {
             startDate:startDate,
             endDate:endDate,
             activeIndex:index
-        },()=>{
-            this.props.onBarChange && this.props.onBarChange({startDate:startDate,endDate:endDate});
         });
     }
 

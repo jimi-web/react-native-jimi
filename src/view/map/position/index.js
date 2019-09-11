@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-10 10:25:45
+ * @LastEditTime: 2019-09-11 15:09:52
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
@@ -101,6 +101,7 @@ export default class PositionUtils extends Component {
                 myPositionImg:this.props.ChangePositionBtn.myPositionImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/old.png')                
             },
             userMapType:0,//0为百度，1为谷歌
+            lastAddress:null,//上一次定位点的地址
         };
     }
 
@@ -191,12 +192,9 @@ export default class PositionUtils extends Component {
      * 获取标记
      */
     getMarker = ()=> {
-        console.log(this.props.getMarkerPoint);
-        
         if(this.props.getMarkerPoint){
             this.props.getMarkerPoint((data)=>{
                 let res = data;
-                console.log(res);
                 this.drawMarker(res);
             });
         }else {
@@ -204,107 +202,64 @@ export default class PositionUtils extends Component {
         }
     };
 
+    
     /**
      * 请求数据默认
      */
     request = ()=>{
-        // jmAjax({
-        //     url:map.position,
-        //     method:'GET',
-        //     encoding:true,
-        //     encodingType:true
-        // }).then((res)=>{
-        //     let data = res;
-        //     console.log(data);
-        //     console.log('data');
-        // });
-        let result = {
-            'code': 0,
-            'data': {
-                'encodingType': 'imei',
-                'encoding': '351608089944623',
-                'deviceStatus': 2,
-                'clientId': '350000199603207563',
-                'deviceId': 'F4AB29e5-D5fa-3f37-69Db-5faEE3D61cdd',
-                'deviceName': 'Eric',
-                'acc': 'accacc',
-                'ci': '5546',
-                'direction': 41,
-                'baseX': '',
-                'lastAccTurnTime': '1120663607495',
-                'gateId': 'd5d8BeE9-F798-b3eE-Cbed-AF9Ef4dDaC85',
-                'gateTime': '960440526415',
-                'gpsInfo': 1,
-                'gpsMode': 1,
-                'gpsSpeed': 49,
-                'gpsTime': '1263511883300',
-                'ica': '9875',
-                'latitude': 22.5583432558,
-                'longitude': 113.9065941055,
-                'mcc': '',
-                'mnc': '',
-                'posType': 2,
-                'otherPosTime': '759797411814',
-                'posMethod': 2,
-                'recordTime': '1309722536121',
-                'hbOffOn': 1,
-                'accStatus': '',
-                'deviceInfo': 'Uzxdyeytr xdd krlu vcyovrnfj.',
-                'ext': '',
-                'fortifyStatus': '',
-                'gPSSignal': '',
-                'gpsStatus': 1,
-                'oilEleStatus': 1,
-                'powerLevel': 1,
-                'batteryPowerVal': '',
-                'powerValue': '',
-                'powerStatus': '',
-                'powerPer': '10',
-                'seqNo': '',
-                'time': '946994902071',
-                'alarmType': '20'
-            },
-            'msg': 'ok'
-        };
-        this.geocoder(result.data);
+        jmAjax({
+            url:map.position,
+            method:'GET',
+            encoding:true,
+            encodingType:true
+        }).then((res)=>{
+            let result = res.data;
+            let lastPoint = this.state.markerPoint;
+            //解析地址，如果与上次解析的不超过10米，那么不解析
+            if(lastPoint.latitude){
+                let distance = gps.distance(lastPoint.latitude,lastPoint.longitude,result.latitude,result.longitude);
+                if(distance>10){
+                    this.geocoder(result);
+                }else {
+                    result.address = this.state.lastAddress;
+                }
+            }else {
+                //第一次进入需要解析地址
+                this.geocoder(result);
+            }
+        });   
     }
 
 
     /**
      * 地址解析
+     * @param {Object} data  定位信息
      */
     geocoder = (data)=> {
-        // jmAjax({
-        //     url:map.geocoder,
-        //     method:'GET',
-        //     data:{
-        //         latitude:data.latitude,
-        //         longitude:data.longitude,
-        //     }
-        // }).then((res)=>{
-        //     let data = res;
-        //     console.log(data);
-        //     console.log('data');
-        // });
-
-        let result = {
-            code:0,
+        jmAjax({
+            url:map.geocoder,
+            method:'GET',
             data:{
-                location:'深圳市宝安区新安街道高新奇'
-            },
-            message:'msg'
-        };
-        data.address = result.data.location;
-        this.drawMarker(data);
+                latitude:data.latitude,
+                longitude:data.longitude,
+            }
+        }).then((res)=>{
+            let result = res.data;
+            data.address = result.location;
+            this.setState({
+                lastAddress:result.location
+            },()=>{
+                this.drawMarker(data);
+            });
+        });
     }
 
     
     /**
      * 绘制marker
+     * @param {Object} data  定位信息
      */
     drawMarker = (data)=>{
-        console.log(data);
-        
         //如果和上次地址一样则不渲染
         if(this.state.markerPoint.latitude === data.latitude && this.state.markerPoint.longitude === data.longitude){
             return;
@@ -321,8 +276,6 @@ export default class PositionUtils extends Component {
             if(this.state.userMapType){
                 this.showInfoWindow('markers');
             }else {
-                console.log('渲染info');
-                console.log(this.InfoWindowFunc);
                 this.InfoWindowFunc.update();
             }
             //仅初始化会可视化两点坐标
@@ -400,7 +353,6 @@ export default class PositionUtils extends Component {
             stateOject.text = '静止';
             stateOject.color = '#F82E1B';
         } 
-
         return stateOject;
     }
 
@@ -453,9 +405,8 @@ export default class PositionUtils extends Component {
 
     /**
      * 我的位置按钮
-     * @param {String} mapType  地图类型，1百度地图
      */
-    phonePointBtn = (mapType)=> {
+    phonePointBtn = ()=> {
         return  this.state.ChangePositionBtn.isShow ? this.state.phonePoint.latitude === null?null:
             <TouchableOpacity style={[MapStyles.phonePointBtn,this.props.ChangePositionBtn.style?this.props.ChangePositionBtn.style:null]}  activeOpacity={1}  
                 onPress={()=>{

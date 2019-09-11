@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-09 16:07:21
+ * @LastEditTime: 2019-09-11 11:55:45
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -31,7 +31,6 @@ export default class BaiduPosition extends PositionUtils {
     }
 
     render(){
-        console.log(this.state.locationData);
         return (
             <View style={MapStyles.map}>
                 <MapView

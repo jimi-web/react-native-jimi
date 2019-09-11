@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-10 11:06:31
+ * @LastEditTime: 2019-09-11 11:16:32
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -41,7 +41,7 @@ export default class Position extends Component {
                 !this.state.isBaidu ?
        
                     <Jimi.GooglePosition
-                        getMarkerPoint={this.getPoint}
+                        // getMarkerPoint={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
                         markerOperation={obj}
@@ -55,11 +55,11 @@ export default class Position extends Component {
                     </Jimi.GooglePosition>
                     :
                     <Jimi.BaiduPosition
-                        getMarkerPoint={this.getPoint}
+                        // getMarkerPoint={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
                         markerOperation={obj}
-                        refreshTime = {1000}
+                        refreshTime = {15000}
                         ChangePositionBtn={car}
                         mylocationOperation={my}
                         customItem = {this.customItem}
