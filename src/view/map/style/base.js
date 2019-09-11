@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:33:49
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-05 10:25:27
+ * @LastEditTime: 2019-09-11 18:28:26
  */
 import {StyleSheet} from 'react-native';
 const Styles =  StyleSheet.create({
@@ -29,8 +29,8 @@ const Styles =  StyleSheet.create({
         top:63,
     }, 
     deviceMarker:{
-        width:35,
-        height:35
+        width:37,
+        height:37
     }  
 });
 

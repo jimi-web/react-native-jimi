@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:12:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-05 11:51:29
+ * @LastEditTime: 2019-09-11 17:49:42
  */
 
-const mainColor = '#03B8A6';
+const mainColor = '#3479F6';
 export default {
     //text
     fontSize:12,
