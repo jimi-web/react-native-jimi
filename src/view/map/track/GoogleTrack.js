@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 18:31:59
+ * @LastEditTime: 2019-09-12 11:45:56
  */
 
 import React, {Component} from 'react';
@@ -84,8 +84,8 @@ export default class GoogleTrack extends TrackUtils {
                 coordinate={this.state.startMarker}
             >
                 <Image 
-                    style={[this.props.startMarkerOperation.style ? this.props.startMarkerOperation.style:MapStyles.startEndImg,{transform:[{rotate:this.state.startMarker.direction+'deg'}]}]} 
-                    source={this.props.startMarkerOperation.image? this.props.startMarkerOperation.image :require('../../../assets/track/trajectory_map_start.png') }/>              
+                    style={[this.props.startMarkerOptions.style ? this.props.startMarkerOptions.style:MapStyles.startEndImg,{transform:[{rotate:this.state.startMarker.direction+'deg'}]}]} 
+                    source={this.props.startMarkerOptions.image? this.props.startMarkerOptions.image :require('../../../assets/track/trajectory_map_start.png') }/>              
             </Marker>:null;
         return markers;
     };
@@ -99,8 +99,8 @@ export default class GoogleTrack extends TrackUtils {
                 coordinate={this.state.endMarker}
             >
                 <Image 
-                    style={[this.props.endMarkerOperation.style ? this.props.endMarkerOperation.style:MapStyles.startEndImg,{transform:[{rotate:this.state.endMarker.direction+'deg'}]}]} 
-                    source={this.props.endMarkerOperation.image? this.props.endMarkerOperation.image :require('../../../assets/track/trajectory_map_end.png')}/>              
+                    style={[this.props.endMarkerOptions.style ? this.props.endMarkerOptions.style:MapStyles.startEndImg,{transform:[{rotate:this.state.endMarker.direction+'deg'}]}]} 
+                    source={this.props.endMarkerOptions.image? this.props.endMarkerOptions.image :require('../../../assets/track/trajectory_map_end.png')}/>              
             </Marker>:null;
         return markers;
     };
@@ -114,8 +114,8 @@ export default class GoogleTrack extends TrackUtils {
                 coordinate={this.state.deviceMarker}
             >
                 <Image 
-                    style={[this.props.deviceMarkerOperation.style ? this.props.deviceMarkerOperation.style:Styles.deviceMarker,{transform:[{rotate:this.state.deviceMarker.direction+'deg'}]}]} 
-                    source={this.props.deviceMarkerOperation.image? this.props.deviceMarkerOperation.image :require('../../../assets/map/device.png')}/>              
+                    style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:Styles.deviceMarker,{transform:[{rotate:this.state.deviceMarker.direction+'deg'}]}]} 
+                    source={this.props.deviceMarkerOptions.image? this.props.deviceMarkerOptions.image :require('../../../assets/map/device.png')}/>              
             </Marker>:null;
         return markers;
     }
@@ -124,11 +124,13 @@ export default class GoogleTrack extends TrackUtils {
      * 整条轨迹
      */
     allPolyline =()=> {
+        let color = this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#50AE6F' : '#50AE6F';
+        let width = this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2;
         let track =  this.state.isTrackPolylineShow?  
             this.state.trackPolylinePoint.length > 0 ?<Polyline
                 coordinates={this.state.trackPolylinePoint}
-                strokeColor="#50AE6F" 
-                strokeWidth={2}
+                strokeColor={color} 
+                strokeWidth={width}
             />:null 
             :null;
 
@@ -139,10 +141,12 @@ export default class GoogleTrack extends TrackUtils {
      * 播放轨迹
      */
     playPolyline =()=>{
+        let color = this.props.playPolylineOptions ? this.props.playPolylineOptions.color ? this.props.playPolylineOptions.color :'#50AE6F' : '#50AE6F';
+        let width = this.props.playPolylineOptions ? this.props.playPolylineOptions.width ? this.props.playPolylineOptions.width :2 : 2;        
         let track =  this.state.pointArr.length > 1 ?<Polyline
             coordinates={this.state.pointArr}
-            strokeColor="#50AE6F" 
-            strokeWidth={2}
+            strokeColor={color} 
+            strokeWidth={width}
         />:null; 
         return track;        
     }

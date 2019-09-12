@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 18:20:37
+ * @LastEditTime: 2019-09-12 14:04:25
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
@@ -68,8 +68,8 @@ export default class PositionUtils extends Component {
             isCustom:false,
         },
         customItem:null,
-        roadBtnStyle:MapStyles.btn,
-        mapTypeBtnStyle:MapStyles.btn,
+        roadBtnStyle:Styles.btn,
+        mapTypeBtnStyle:Styles.btn,
     };
 
     constructor(props) {
@@ -278,6 +278,7 @@ export default class PositionUtils extends Component {
             if(this.state.userMapType){
                 this.showInfoWindow('markers');
             }else {
+                console.log('渲染');
                 this.InfoWindowFunc.update();
             }
             //仅初始化会可视化两点坐标
@@ -390,8 +391,8 @@ export default class PositionUtils extends Component {
      * 路况按钮
      */
     roadBtn = ()=> {
-        return <TouchableOpacity style={[MapStyles.btn,MapStyles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled})}>
-            <Image style={MapStyles.btnImg} source={this.state.trafficEnabled?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
+        return <TouchableOpacity style={[Styles.btn,Styles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled})}>
+            <Image style={Styles.btnImg} source={this.state.trafficEnabled?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
         </TouchableOpacity>;
     }
 
@@ -399,8 +400,8 @@ export default class PositionUtils extends Component {
      * 地图类型按钮
      */
     mapTypeBtn = ()=> {
-        return <TouchableOpacity style={[MapStyles.btn,MapStyles.mapTypeBtn,this.props.mapTypeBtnStyle]}   activeOpacity={1} onPress={this.setMapType}>
-            <Image style={MapStyles.btnImg} source={this.state.mapType==='standard'?require('../../../assets/map/layer.png'):require('../../../assets/map/home_icon_live-action.png')} />
+        return <TouchableOpacity style={[Styles.btn,Styles.mapTypeBtn,this.props.mapTypeBtnStyle]}   activeOpacity={1} onPress={this.setMapType}>
+            <Image style={Styles.btnImg} source={this.state.mapType==='standard'?require('../../../assets/map/layer.png'):require('../../../assets/map/home_icon_live-action.png')} />
         </TouchableOpacity>; 
     }
 

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 17:52:11
+ * @LastEditTime: 2019-09-12 14:01:52
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
@@ -76,7 +76,7 @@ export default class Track extends Component {
             <View style={{flex:1}}>
                 <View style={MapStyles.details}>
                     <View style={MapStyles.time}>
-                        <Text style={MapStyles.timeText}>{new Date(deviceInformation.gpsTime).Format('YYYY-MM-DD hh:mm:ss')}</Text>
+                        <Text style={MapStyles.timeText}>{deviceInformation.gpsTime ?new Date(deviceInformation.gpsTime).Format('YYYY-MM-DD hh:mm:ss'):null}</Text>
                         <TouchableOpacity activeOpacity={1} style={MapStyles.selectTimeIcon} onPress={()=>{
                             this.setState({
                                 isShowPullTime:true

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 15:20:42
+ * @LastEditTime: 2019-09-12 11:59:45
  */
 
 import React, {Component} from 'react';
@@ -50,7 +50,7 @@ export default class BaiduTrack extends TrackUtils {
                         this.state.startMarker.latitude ?
                             <Overlay.Marker
                                 location={this.state.startMarker}
-                                icon={this.props.startMarkerOperation.image}
+                                icon={this.props.startMarkerOptions.image}
                             />
                             :
                             null
@@ -60,7 +60,7 @@ export default class BaiduTrack extends TrackUtils {
                         this.state.endMarker.latitude ?
                             <Overlay.Marker
                                 location={this.state.endMarker}
-                                icon={this.props.endMarkerOperation.image}
+                                icon={this.props.endMarkerOptions.image}
                             />
                             :
                             null
@@ -70,7 +70,7 @@ export default class BaiduTrack extends TrackUtils {
                         this.state.deviceMarker.latitude ?
                             <Overlay.Marker
                                 location={{latitude:this.state.deviceMarker.latitude,longitude:this.state.deviceMarker.longitude}}
-                                icon={this.props.deviceMarkerOperation.image}
+                                icon={this.props.deviceMarkerOptions.image}
                                 rotate={this.state.deviceMarker.direction}
                             />
                             :
@@ -79,9 +79,9 @@ export default class BaiduTrack extends TrackUtils {
                     {
                         this.state.pointArr.length > 0 ?
                             <Overlay.Polyline
-                                width={2}
+                                width={this.props.playPolylineOptions ? this.props.playPolylineOptions.width ? this.props.playPolylineOptions.width :2 : 2}
+                                color={this.props.playPolylineOptions ? this.props.playPolylineOptions.color ? this.props.playPolylineOptions.color :'#50AE6F' : '#50AE6F'}
                                 visible={true}
-                                color={'50AE6F'}
                                 points={this.state.pointArr}/>
                             :
                             null
@@ -90,8 +90,8 @@ export default class BaiduTrack extends TrackUtils {
                     {
                         this.state.trackPolylinePoint.length > 0 ?
                             <Overlay.Polyline
-                                width={2}
-                                color={'50AE6F'}
+                                width={this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2}
+                                color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#50AE6F' : '#50AE6F'}
                                 visible ={this.state.isTrackPolylineShow}
                                 points={this.state.trackPolylinePoint}/>
                             :

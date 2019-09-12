@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 18:32:55
+ * @LastEditTime: 2019-09-12 11:34:25
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -23,14 +23,20 @@ export default class TrackUtils extends Component {
         initialRegion:PropTypes.object,//初始化中心点
         mapType: PropTypes.oneOf(['standard', 'satellite']),//地图类型
         trafficEnabled:PropTypes.bool,//是否开启路况
-        startMarkerOperation:PropTypes.object,//起点marker
-        endMarkerOperation:PropTypes.object,//终点marker
-        deviceMarkerOperation:PropTypes.object,//终点marker
+        startMarkerOptions:PropTypes.object,//起点marker
+        endMarkerOptions:PropTypes.object,//终点marker
+        deviceMarkerOptions:PropTypes.object,//终点marker
         dimDd:PropTypes.number,
         customItem:PropTypes.func,//在地图上自定义其他元素
+        polylineOptions:PropTypes.object,
+        playPolylineOptions:PropTypes.object,
+        roadBtnStyle:PropTypes.object,//路况样式
+        mapTypeBtnStyle:PropTypes.object,//地图类型样式
     }
 
     static defaultProps = {
+        roadBtnStyle:Styles.btn,
+        mapTypeBtnStyle:Styles.btn,
         initialRegion:{
             latitude: 22.596904,
             longitude: 113.936674,
@@ -39,15 +45,15 @@ export default class TrackUtils extends Component {
         },
         mapType:'standard',
         trafficEnabled:false,
-        startMarkerOperation:{
+        startMarkerOptions:{
             style:MapStyles.startEndImg,
             image:require('../../../assets/track/trajectory_map_start.png'),
         },  
-        endMarkerOperation:{
+        endMarkerOptions:{
             style:MapStyles.startEndImg,
             image:require('../../../assets/track/trajectory_map_end.png'),
         }, 
-        deviceMarkerOperation:{
+        deviceMarkerOptions:{
             style:Styles.deviceMarker,
             image:require('../../../assets/map/device.png'),
         },
