@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 18:36:14
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-12 10:54:27
  */
 
 import Photo from './photo/index';
