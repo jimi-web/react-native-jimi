@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 15:09:52
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-12 10:24:26
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
@@ -167,7 +167,8 @@ export default class PositionUtils extends Component {
      */
     getPhonePoint = () => {
         let type = this.state.userMapType ? 'WGS84':'BD09';
-        httpLocationGet(type).then((data)=>{
+        httpLocationGet(type).then((res)=>{
+            let data = res;
             if(this.state.userMapType){
                 data = gps.GPSToChina(data.lat,data.lng);
             }

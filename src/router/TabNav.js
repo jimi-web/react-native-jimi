@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 09:45:53
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-14 17:16:43
+ * @LastEditTime: 2019-09-12 10:50:30
  */
 
 import React, {Component} from 'react';
@@ -12,7 +12,7 @@ import {createBottomTabNavigator,createAppContainer} from 'react-navigation';
 import {Text,Image,View} from 'react-native';
 import HomePage from '../page/home';
 import ConfigurationPage from '../page/configuration';
-import {homeIcon,homeIconActive,setIcon,setIconActive} from '../assets';
+import Icon from '../assets';
 const tabNav  = createBottomTabNavigator(
     {
         Home:{screen:HomePage},
@@ -46,19 +46,22 @@ const tabNav  = createBottomTabNavigator(
             tabBarLabel:({tintColor})=>{
                 const routeName = navigation.state.routeName;
                 let tabName = '首页';
-                let tabIcon = homeIcon;
+                let tabIcon = 'home';
+                let type = 0;
                 switch (routeName) {
                 case 'Home':
                     tabName = '首页';
-                    tabIcon = tintColor === '#333'?homeIconActive:homeIcon;
+                    tabIcon = 'home';
+                    type = tintColor === '#333'?1:0;
                     break;
                 case 'Configuration':
                     tabName = '设置';
-                    tabIcon = tintColor === '#333'?setIconActive:setIcon;
+                    tabIcon = 'config';
+                    type = tintColor === '#333'?1:0;
                     break;
                 }
                 return <View style={{justifyContent:'center',flex:1}}>
-                    <Image style={{width:23,height:23,marginLeft:'auto',marginRight:'auto'}} source={tabIcon}/>
+                    <Icon style={{width:23,height:23,marginLeft:'auto',marginRight:'auto'}} model={2} type={type} name={tabIcon}/>
                     <Text style={{textAlign:'center',fontSize:10}}>{tabName}</Text>
                 </View>;
                 

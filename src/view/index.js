@@ -3,15 +3,15 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-10 11:05:45
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-12 10:24:57
  */
 
-import Photo from './photo/index';
-import BaiduPosition from '../view/map/Position/BaiduPosition';
-import GooglePosition from '../view/map/Position/GooglePosition';
-import BaiduTrack from '../view/map/Track/BaiduTrack';
-import GoogleTrack from '../view/map/Track/GoogleTrack';
+import Photo from './photo/index.js';
+import BaiduPosition from './map/position/BaiduPosition.js';
+import GooglePosition from './map/position/GooglePosition.js';
+import BaiduTrack from './map/track/BaiduTrack.js';
+import GoogleTrack from './map/track/GoogleTrack.js';
 
 const Jimi = {
     Photo,
