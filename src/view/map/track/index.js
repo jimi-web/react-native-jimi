@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 16:37:21
+ * @LastEditTime: 2019-09-11 18:32:55
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -49,7 +49,7 @@ export default class TrackUtils extends Component {
         }, 
         deviceMarkerOperation:{
             style:Styles.deviceMarker,
-            image:require('../../../assets/track/track_icon_deveice.png'),
+            image:require('../../../assets/map/device.png'),
         },
         dimDd:7,
         customItem:null
@@ -173,9 +173,8 @@ export default class TrackUtils extends Component {
         let allPoint = this.getTrackPointArr();
         let pointArr=[];
         pointArr.push(allPoint[0]); //初始化设备位置
-
+        trackData[0].totalDistance = 0;
         let deviceMarker = trackData[0];
-        deviceMarker.totalDistance = 0;
         
         this.setState({
             startMarker:{latitude:trackData[0].latitude,longitude:trackData[0].longitude},
@@ -315,10 +314,7 @@ export default class TrackUtils extends Component {
                 trackData[currentProgress].totalDistance = this.countTotalTrack(pointArr); //计算总里程
             }
 
-            if(!trackData[currentProgress].time){
-                //时间戳转
-                trackData[currentProgress].time  = new Date(trackData[currentProgress].gpsTime).Format('YYYY-MM-DD hh:mm:ss');
-            }
+ 
             
             let deviceMarker = trackData[currentProgress];
             console.log(trackData);

@@ -4,12 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 16:21:28
+ * @LastEditTime: 2019-09-11 17:52:11
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
 import PropTypes from 'prop-types';
 import MapStyles from '../style/track';
+import themes from '../../../components/themes';
 import {ActionSheet,Overlay,SegmentedBar,ListRow,Label,Toast} from 'teaset';
 import Datepicker from '../../../components/datepicker/Datepicker';
 export default class Track extends Component {
@@ -75,7 +76,7 @@ export default class Track extends Component {
             <View style={{flex:1}}>
                 <View style={MapStyles.details}>
                     <View style={MapStyles.time}>
-                        <Text style={MapStyles.timeText}>{deviceInformation.time}</Text>
+                        <Text style={MapStyles.timeText}>{new Date(deviceInformation.gpsTime).Format('YYYY-MM-DD hh:mm:ss')}</Text>
                         <TouchableOpacity activeOpacity={1} style={MapStyles.selectTimeIcon} onPress={()=>{
                             this.setState({
                                 isShowPullTime:true
@@ -135,7 +136,7 @@ export default class Track extends Component {
             <View style={MapStyles.tab}> 
                 <SegmentedBar 
                     indicatorType={'customWidth'} 
-                    indicatorLineColor={'#03B8A6'} 
+                    indicatorLineColor={themes.TextColorPrimary} 
                     indicatorLineWidth={3} 
                     indicatorWidth={26}
                     indicatorPositionPadding={-8}

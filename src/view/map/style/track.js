@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-09 16:09:44
+ * @LastEditTime: 2019-09-11 18:40:04
  */
 import {StyleSheet,Dimensions} from 'react-native';
-
+import themes from '../../../components/themes';
 const {width} = Dimensions.get('window');
 
 
@@ -125,7 +125,7 @@ const MapStyles =  StyleSheet.create({
     },
     activeTitleStyle:{
         fontSize:16,
-        color:'#03B8A6'
+        color:themes.TextColorPrimary
     },
     listRow:{
         flexDirection:'row',
@@ -164,7 +164,7 @@ const MapStyles =  StyleSheet.create({
     },
     confirm:{
         color:'#fff',
-        backgroundColor:'#03B8A6'        
+        backgroundColor:themes.buttonBackColorPrimary      
     },
     btnItemText:{
         fontSize:16,

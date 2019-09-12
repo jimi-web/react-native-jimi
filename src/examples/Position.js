@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 11:16:32
+ * @LastEditTime: 2019-09-11 18:12:25
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -20,7 +20,7 @@ export default class Position extends Component {
     render(){
         let obj= {
             // style:styles.marker,
-            image:require('../assets/map/icon_car.png'),
+            image:require('../assets/map/device.png'),
         };
 
         let car = {
@@ -28,7 +28,7 @@ export default class Position extends Component {
         };
 
         let my = {
-            image:require('../assets/map/oldMan.png'),
+            image:require('../assets/map/trajectory_map_phone_position.png'),
         };
 
         let markerInfoWindow = {
