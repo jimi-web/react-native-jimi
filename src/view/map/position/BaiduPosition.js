@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 11:55:45
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-12 14:46:13
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
