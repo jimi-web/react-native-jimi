@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-12 11:34:25
+ * @LastEditTime: 2019-09-16 14:42:32
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -12,10 +12,11 @@ import PropTypes from 'prop-types';
 import Styles from '../style/base';
 import MapStyles from '../style/track';
 import Controller from './TrackController';
-import {Toast} from 'teaset';
+import {Toast,SegmentedBar} from 'teaset';
 import {jmAjax} from '../../../http/business';
 import {map} from '../../../api/index';
 import gps from '../../../libs/coversionPoint';
+import PullTime from './PullTime';
 
 
 export default class TrackUtils extends Component {  
@@ -88,7 +89,7 @@ export default class TrackUtils extends Component {
             startDate:new Date(new Date(new Date().Format('yyyy/MM/dd')+' 00:00').getTime()).Format('YYYY-MM-DD hh:mm'),//开始时间
             endDate:new Date().Format('YYYY-MM-DD hh:mm'),//开始时间
             posType:100,//定位类型
-            userMapType:0,//0为百度，1为谷歌
+            userMapType:0,//0为百度，1为谷歌,
         };
     }
 
@@ -111,11 +112,19 @@ export default class TrackUtils extends Component {
     }
 
     /**
-     * 控制面板所有组件
+     * 设备地图类型
+     */
+    setMapType = () => {
+        let type = this.state.mapType === 'satellite'?'standard':'satellite';
+        this.setState({mapType:type});
+    };
+
+    /**
+     * 控制面板
      */
     controller = ()=>{
         return <Controller 
-            onConfirm={this.onConfirm} 
+            onPullTime={this.onPullTime}
             onShowType={this.onShowType}
             onSpeed={this.onSpeed}
             onReplay={this.onReplay}
@@ -125,12 +134,22 @@ export default class TrackUtils extends Component {
             totalProgress={this.state.totalProgress}
             isPlay={this.state.isPlay}
             deviceInformation={this.state.deviceMarker}
-            dimDd = {this.props.dimDd}
-            startDate={this.state.startDate}
-            endDate={this.state.endDate}
         >
         </Controller>;      
     }
+
+    /**
+     * 时间选择框
+     */
+    pullTime = ()=>{
+        return <PullTime 
+            onConfirm={this.onConfirm} 
+            dimDd = {this.props.dimDd}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+        ></PullTime>;    
+    }
+
 
     onMapReady(userMapType) {
         this.setState({
@@ -217,6 +236,8 @@ export default class TrackUtils extends Component {
      * 时间选择确认按钮
      */
     onConfirm = (data)=> {
+        console.log(data);
+        
         this.setState({
             startDate:data.startDate,
             endDate:data.endDate
@@ -225,6 +246,12 @@ export default class TrackUtils extends Component {
         });
     }
 
+    /**
+     * 显示选择框
+     */
+    onPullTime = ()=>{
+        PullTime.show();
+    }
 
     /**
      * 隐藏轨迹
@@ -323,7 +350,6 @@ export default class TrackUtils extends Component {
  
             
             let deviceMarker = trackData[currentProgress];
-            console.log(trackData);
             
             this.setState({
                 progress:currentProgress,
@@ -387,4 +413,7 @@ export default class TrackUtils extends Component {
     customOverlay = ()=> {
         return this.props.customItem ?this.props.customItem() :null;
     }
+
+
+
 }

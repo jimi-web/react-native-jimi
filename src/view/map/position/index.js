@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-12 14:08:01
+ * @LastEditTime: 2019-09-12 17:44:41
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
@@ -90,8 +90,8 @@ export default class PositionUtils extends Component {
                 longitude: null, 
             },            
             markerPoint:{
-                latitude:null,
-                longitude:null,                    
+                latitude:0,
+                longitude:0,                
             },
             isMyPosition :false,// 判断是否切换到我的位置
             isInit:false,//判断出否初始化结束

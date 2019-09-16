@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-04 11:53:19
+ * @LastEditTime: 2019-09-16 14:29:41
  */
 import React, {Component} from 'react';
-import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter} from 'react-native';
+import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter,Alert} from 'react-native';
 import {Wheel,Overlay} from 'teaset';
 import '../../libs/time';
 import Theme from '../themes/index';
@@ -39,9 +39,10 @@ export default class Datepicker extends Component {
 
     componentWillMount() {
         DeviceEventEmitter.addListener('jmDatepickerShow', (params)=>{
+            let defaultValue = params.defaultValue.replace(/-/g,'/');
             this.setState({
                 isShowDatepicker:params.isShow,
-                defaultValue:params.defaultValue ? new Date(params.defaultValue):new Date(),
+                defaultValue:params.defaultValue ? new Date(defaultValue):new Date(),
                 finalResult:params.defaultValue ? new Date(params.defaultValue).Format('YYYY-MM-DD hh:mm'):new Date().Format('YYYY-MM-DD hh:mm')
             });
         });
@@ -69,7 +70,7 @@ export default class Datepicker extends Component {
         let daysCount = this.daysCounts[this.isLeapYear(year) ? 1 : 0][month];
         let days = [];
         for (let i = 1; i <= daysCount; ++i) days.push(i);   
-             
+        // alert(year+'-'+month+'-'+day+'-'+hour+'-'+min);
         return <Modal
             animationType="slide"
             transparent={true}
@@ -182,8 +183,8 @@ const styles = StyleSheet.create({
     shadow:{
         position:'absolute',
         bottom:0,
+        top:0,
         width:width,
-        height:height,
         zIndex:1000,
         backgroundColor:'#383838',
         opacity:0.8,
