@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-16 11:24:08
+ * @LastEditTime: 2019-09-16 14:49:14
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -13,8 +13,7 @@ import {TabContainer} from './TabNav';
 import Photo from '../view/photo/index';
 import Position from '../examples/Position';
 import Track from '../examples/Track';
-import Record from '../view/record/index';
-
+import Test from '../view/test';
 const getOptions = (title) => {
     let headerTitle = {};
     if(title){
@@ -67,10 +66,11 @@ const AppNavigator = createStackNavigator(
             screen:Track,
             navigationOptions:getOptions('轨迹')
         },
-        Record:{
-            screen:Record,
-            navigationOptions:getOptions('录音')
+        Test:{
+            screen:Test,
+            navigationOptions:getOptions('测试')
         }
+        
     });
 
 

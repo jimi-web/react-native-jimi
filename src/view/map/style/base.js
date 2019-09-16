@@ -4,12 +4,12 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:33:49
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 18:28:26
+ * @LastEditTime: 2019-09-12 18:00:26
  */
 import {StyleSheet} from 'react-native';
 const Styles =  StyleSheet.create({
     container:{
-        flex:1
+        flex:1,
     },
     btn:{
         position:'absolute',

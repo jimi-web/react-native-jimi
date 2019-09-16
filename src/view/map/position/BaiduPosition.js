@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-12 14:46:13
+ * @LastEditTime: 2019-09-16 14:51:30
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -44,15 +44,13 @@ export default class BaiduPosition extends PositionUtils {
                     }}
                 >  
                     {
-                        this.state.locationData ?
-                            <Overlay.Marker
-                                tag={1}
-                                location={this.state.markerPoint}
-                                icon={this.props.markerOperation.image}
-                                rotate={this.state.locationData.direction}
-                            />
-                            :
-                            null
+                        <Overlay.Marker
+                            visible={this.state.locationData ? true :false}
+                            tag={1}
+                            location={this.state.markerPoint}
+                            icon={this.props.markerOperation.image}
+                            rotate={this.state.locationData ? this.state.locationData.direction :0 }
+                        />
                     }
                     {
                         this.state.phonePoint.latitude ?
@@ -64,24 +62,22 @@ export default class BaiduPosition extends PositionUtils {
                             :
                             null
                     }
-                    {
-                        this.state.locationData ?
-                            <Overlay.InfoWindow
-                                ref={(e)=>{this.InfoWindowFunc=e;}}
-                                style={[{position:'relative',backgroundColor:'#fff0',height:400,width:300}]}
-                                tag={1}
-                                visible={this.state.locationData ?true:false}
-                            >
-                                <View style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
-                                    {
+                    <Overlay.InfoWindow
+                        ref={(e)=>{this.InfoWindowFunc=e;}}
+                        style={[{position:'relative',backgroundColor:'#fff0',height:400,width:300}]}
+                        tag={1}
+                        visible={this.state.locationData ? true :false}
+                    >
+                        <View style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
+                            {
                                
-                                        this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.state.locationData ?this.markerInfo():null
-                                    }
-                                </View>
-                                <View style={{position:'absolute',width:20,height:10,bottom:0,left:'50%',marginLeft:-10}}>
-                                    <Image source={require('../../../assets/map/position_bubble_shadow.png')} style={{width:20,height:10}} />
-                                </View>
-                            </Overlay.InfoWindow>:null }
+                                this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.state.locationData ?this.markerInfo():null
+                            }
+                        </View>
+                        <View style={{position:'absolute',width:20,height:10,bottom:0,left:'50%',marginLeft:-10}}>
+                            <Image source={require('../../../assets/map/position_bubble_shadow.png')} style={{width:20,height:10}} />
+                        </View>
+                    </Overlay.InfoWindow>
                 </MapView> 
                 {
                     this.roadBtn()

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 18:22:11
+ * @LastEditTime: 2019-09-12 14:58:54
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
@@ -126,7 +126,7 @@ export default class GooglePosition extends PositionUtils {
      * 车辆标记
      */
     markers = ()=>{
-        const markers = this.state.markerPoint.latitude===null? null:
+        const markers = this.state.locationData===null? null:
             <Marker
                 ref={'markers'}
                 identifier={'mapMark'}
