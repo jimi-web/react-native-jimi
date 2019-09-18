@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-16 14:29:41
+ * @LastEditTime: 2019-09-16 18:20:58
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter,Alert} from 'react-native';
@@ -37,7 +37,7 @@ export default class Datepicker extends Component {
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
         DeviceEventEmitter.addListener('jmDatepickerShow', (params)=>{
             let defaultValue = params.defaultValue.replace(/-/g,'/');
             this.setState({

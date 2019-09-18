@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-12 14:58:54
+ * @LastEditTime: 2019-09-18 11:09:44
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
@@ -111,8 +111,8 @@ export default class GooglePosition extends PositionUtils {
                 identifier={'phone'} 
                 coordinate={this.state.phonePoint} >
                 <Image 
-                    style={this.props.mylocationOperation.style ? this.props.mylocationOperation.style:MapStyles.markerImg} 
-                    source={this.props.mylocationOperation.image} />
+                    style={this.props.mylocationOptions.style ? this.props.mylocationOptions.style:MapStyles.markerImg} 
+                    source={this.props.mylocationOptions.image} />
                 <Callout >
                     <View style={{width:58}}>
                         <Text>我的位置</Text>
@@ -133,8 +133,8 @@ export default class GooglePosition extends PositionUtils {
                 coordinate={this.state.markerPoint}
             >
                 <Image 
-                    style={[this.props.markerOperation.style ? this.props.markerOperation.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction+'deg'}]}]} 
-                    source={this.props.markerOperation.image? this.props.markerOperation.image :require('../../../assets/map/device.png') }/>
+                    style={[this.props.markerOptions.style ? this.props.markerOptions.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction+'deg'}]}]} 
+                    source={this.props.markerOptions.image? this.props.markerOptions.image :require('../../../assets/map/device.png') }/>
                 <Callout tooltip={this.props.isCustom}>
                     {this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.markerInfo()}
                 </Callout>               

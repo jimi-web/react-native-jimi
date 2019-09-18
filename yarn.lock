@@ -3493,6 +3493,16 @@ react-native-safe-area-view@^0.13.0:
   dependencies:
     debounce "^1.2.0"
 
+react-native-shadow@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.npm.taobao.org/react-native-shadow/download/react-native-shadow-1.2.2.tgz#08991cd14b71e32f2fc6363911c139d231949a66"
+  integrity sha1-CJkc0Utx4y8vxjY5EcE50jGUmmY=
+
+react-native-svg@^9.3.7:
+  version "9.9.3"
+  resolved "https://registry.npm.taobao.org/react-native-svg/download/react-native-svg-9.9.3.tgz#5dab1a44b20b13a3f35245a286f30882b9611d66"
+  integrity sha1-XasaRLILE6PzUkWihvMIgrlhHWY=
+
 react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   version "1.4.1"
   resolved "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-1.4.1.tgz#f113cd87485808f0c991abec937f70fa380478b9"

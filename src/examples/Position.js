@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 18:12:25
+ * @LastEditTime: 2019-09-18 11:40:40
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -44,10 +44,10 @@ export default class Position extends Component {
                         // getMarkerPoint={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
-                        markerOperation={obj}
+                        markerOptions={obj}
                         refreshTime = {20000}
                         ChangePositionBtn={car}
-                        mylocationOperation={my}
+                        mylocationOptions={my}
                         customItem = {this.customItem}
                         mapTypeBtnStyle={styles.set}
                         // markerInfoWindow={markerInfoWindow}
@@ -58,10 +58,10 @@ export default class Position extends Component {
                         // getMarkerPoint={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
-                        markerOperation={obj}
+                        markerOptions={obj}
                         refreshTime = {15000}
                         ChangePositionBtn={car}
-                        mylocationOperation={my}
+                        mylocationOptions={my}
                         customItem = {this.customItem}
                         mapTypeBtnStyle={styles.set}
                         // markerInfoWindow={markerInfoWindow}
