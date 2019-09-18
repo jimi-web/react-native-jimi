@@ -4,15 +4,17 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-16 14:51:38
+ * @LastEditTime: 2019-09-16 15:32:19
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
+import Styles from '../style/base';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
 import {httpLocationGet,jmAjax} from '../../../http/business';
 import {map} from '../../../api/index';
 import PropTypes from 'prop-types';
+import '../../../libs/time';
 
 export default class PositionUtils extends Component { 
     static propTypes = {
@@ -41,12 +43,12 @@ export default class PositionUtils extends Component {
             longitudeDelta: 0.0421,
         },
         markerOperation:{
-            style:MapStyles.markerImg,
-            image:require('../../../assets/map/oldMan.png'),
+            style:Styles.deviceMarker,
+            image:require('../../../assets/map/device.png'),
         },
         mylocationOperation:{
-            style:MapStyles.markerImg,
-            image:require('../../../assets/map/phone.png'),
+            style:MapStyles.myMarker,
+            image:require('../../../assets/map/trajectory_map_phone_position.png'),
         },
         edgePadding:{ 
             top: 200, 
@@ -57,8 +59,8 @@ export default class PositionUtils extends Component {
         ChangePositionBtn:{
             isShow:true,
             style:MapStyles.phonePointBtn,
-            markerImg:require('../../../assets/map/equipment.png'),
-            myPositionImg:require('../../../assets/map/old.png')
+            markerImg:require('../../../assets/map/position_map_current-position.png'),
+            myPositionImg:require('../../../assets/map/map_phone_position.png')
         },
         isRefresh:true,
         refreshTime:15000,
@@ -66,8 +68,8 @@ export default class PositionUtils extends Component {
             isCustom:false,
         },
         customItem:null,
-        roadBtnStyle:MapStyles.btn,
-        mapTypeBtnStyle:MapStyles.btn,
+        roadBtnStyle:Styles.btn,
+        mapTypeBtnStyle:Styles.btn,
     };
 
     constructor(props) {
@@ -97,8 +99,8 @@ export default class PositionUtils extends Component {
             locationData:null,//定位的所有数据
             ChangePositionBtn:{
                 isShow:this.props.ChangePositionBtn.style ? true :this.props.ChangePositionBtn.isShow ? true : false,
-                markerImg:this.props.ChangePositionBtn.markerImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/equipment.png'),
-                myPositionImg:this.props.ChangePositionBtn.myPositionImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/old.png')                
+                markerImg:this.props.ChangePositionBtn.markerImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/position_map_current-position.png'),
+                myPositionImg:this.props.ChangePositionBtn.myPositionImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/map_phone_position.png')                
             },
             userMapType:0,//0为百度，1为谷歌
             lastAddress:null,//上一次定位点的地址
@@ -277,6 +279,7 @@ export default class PositionUtils extends Component {
             if(this.state.userMapType){
                 this.showInfoWindow('markers');
             }else {
+                console.log('渲染');
                 this.InfoWindowFunc.update();
             }
             //仅初始化会可视化两点坐标
@@ -320,10 +323,10 @@ export default class PositionUtils extends Component {
                 <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.gpsSpeed}km/h</Text>
             </View>                              
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>定位时间:{this.state.locationData.gpsTime}</Text>
+                <Text style={MapStyles.infoWindowTitle}>定位时间:{new Date(this.state.locationData.gpsTime).Format('YYYY-MM-DD hh:mm:ss') }</Text>
             </View>     
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>通讯时间:{this.state.locationData.time}</Text>
+                <Text style={MapStyles.infoWindowTitle}>通讯时间:{ new Date(this.state.locationData.time).Format('YYYY-MM-DD hh:mm:ss')}</Text>
             </View>    
             <View style={[MapStyles.infoWindowItem,{paddingBottom:0}]}>
                 <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.address}{'\n'}                                                        
@@ -382,7 +385,6 @@ export default class PositionUtils extends Component {
         case 2:
             type = 'WIFI定位';
         } 
-
         return type;        
     }
     
@@ -390,8 +392,8 @@ export default class PositionUtils extends Component {
      * 路况按钮
      */
     roadBtn = ()=> {
-        return <TouchableOpacity style={[MapStyles.btn,MapStyles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled})}>
-            <Image style={MapStyles.btnImg} source={this.state.trafficEnabled?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
+        return <TouchableOpacity style={[Styles.btn,Styles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled})}>
+            <Image style={Styles.btnImg} source={this.state.trafficEnabled?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
         </TouchableOpacity>;
     }
 
@@ -399,8 +401,8 @@ export default class PositionUtils extends Component {
      * 地图类型按钮
      */
     mapTypeBtn = ()=> {
-        return <TouchableOpacity style={[MapStyles.btn,MapStyles.mapTypeBtn,this.props.mapTypeBtnStyle]}   activeOpacity={1} onPress={this.setMapType}>
-            <Image style={MapStyles.btnImg} source={this.state.mapType==='standard'?require('../../../assets/map/layer.png'):require('../../../assets/map/home_icon_live-action.png')} />
+        return <TouchableOpacity style={[Styles.btn,Styles.mapTypeBtn,this.props.mapTypeBtnStyle]}   activeOpacity={1} onPress={this.setMapType}>
+            <Image style={Styles.btnImg} source={this.state.mapType==='standard'?require('../../../assets/map/layer.png'):require('../../../assets/map/home_icon_live-action.png')} />
         </TouchableOpacity>; 
     }
 
@@ -421,6 +423,6 @@ export default class PositionUtils extends Component {
      * 自定义覆盖物
      */
     customOverlay = ()=> {
-        return this.props.customItem ?this.props.customItem() :null;
+        return this.props.customItem?this.props.customItem() :null;
     }
 }
