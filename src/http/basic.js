@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-06 16:44:38
+ * @LastEditTime: 2019-09-18 14:25:31
  */
 
 import {
@@ -83,7 +83,6 @@ export const guids = () => {
  * @param {Object} params 传参
  */
 export const httpApp = (url, params) => {
-    // console.log(params);
     // 生成回调的名称，同一页面不能出现两个相同的回调名，因此回调名采用uuid
     const callbackName = guids();
 
@@ -103,7 +102,6 @@ export const httpApp = (url, params) => {
     }
 
     const bodyJson = JSON.stringify(obj);
-    console.log(bodyJson);
     JMRNEngineManager.requestMethod(url, bodyJson);
 
     // 定义回调
@@ -225,6 +223,6 @@ export const httpCameraInfo = (url, params) => {
 /**
  * 关闭小程序
  */
-export const close = () => {
+export const httpClose = () => {
     JMRNEngineManager.goExit();
 };

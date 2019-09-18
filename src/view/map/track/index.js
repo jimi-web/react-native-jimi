@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-16 14:42:32
+ * @LastEditTime: 2019-09-18 14:54:53
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -33,6 +33,8 @@ export default class TrackUtils extends Component {
         playPolylineOptions:PropTypes.object,
         roadBtnStyle:PropTypes.object,//路况样式
         mapTypeBtnStyle:PropTypes.object,//地图类型样式
+        playImg:PropTypes.object,
+        getTrackPoints:PropTypes.func
     }
 
     static defaultProps = {
@@ -59,7 +61,11 @@ export default class TrackUtils extends Component {
             image:require('../../../assets/map/device.png'),
         },
         dimDd:7,
-        customItem:null
+        customItem:null,
+        playImg:{
+            play:require('../../../assets/track/play.png'),
+            pause:require('../../../assets/track/pause.png')
+        }
     }
 
     constructor(props) {
@@ -124,6 +130,7 @@ export default class TrackUtils extends Component {
      */
     controller = ()=>{
         return <Controller 
+            playImg={this.props.playImg}
             onPullTime={this.onPullTime}
             onShowType={this.onShowType}
             onSpeed={this.onSpeed}
@@ -155,12 +162,38 @@ export default class TrackUtils extends Component {
         this.setState({
             userMapType:userMapType
         },()=>{
-            this.request();
+            this.requestMode();
         });
     }
-    
+
     /**
-     * 请求数据
+     * 数据请求模式判断
+     */
+    requestMode = ()=>{
+        if(this.props.getTrackPoints){
+            this.getTrackPoints();
+        }else{
+            this.request();
+        } 
+    }
+
+
+    /**
+     *  自己传入数据
+     */
+    getTrackPoints = ()=>{
+        let data = {
+            startTime:this.state.startTime,
+            endTime:this.state.endTime,
+            posType:this.state.posType
+        };
+        this.props.getTrackPoints(data,(res)=>{
+            this.getTrackData(res);
+        });
+    }
+
+    /**
+     * 默认请求数据
      */
     request = ()=> {
         let data = {
@@ -177,16 +210,23 @@ export default class TrackUtils extends Component {
             data:data
         }).then((res)=>{
             let result = res.data;
-            if(result.length>0){
-                this.setState({
-                    trackData:result
-                },()=>{
-                    this.getMarkPoint();
-                });
-            }else {
-                Toast.message('暂无轨迹');
-            }
+            this.getTrackData(result);
         });
+    }
+
+    /**
+     * 获取轨迹数据
+     */
+    getTrackData = (result)=>{
+        if(result.length>0){
+            this.setState({
+                trackData:result
+            },()=>{
+                this.getMarkPoint();
+            });
+        }else {
+            Toast.message('暂无轨迹');
+        }        
     }
 
     
@@ -236,13 +276,11 @@ export default class TrackUtils extends Component {
      * 时间选择确认按钮
      */
     onConfirm = (data)=> {
-        console.log(data);
-        
         this.setState({
             startDate:data.startDate,
             endDate:data.endDate
         },()=>{
-            this.request();
+            this.requestMode();
         });
     }
 
@@ -320,7 +358,7 @@ export default class TrackUtils extends Component {
         this.setState({
             posType:data
         },()=>{
-            this.request();
+            this.requestMode();
         });        
     }
 

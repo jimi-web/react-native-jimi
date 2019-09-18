@@ -4,11 +4,12 @@
  * @Author: xieruizhi
  * @Date: 2019-09-16 09:59:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-16 14:13:54
+ * @LastEditTime: 2019-09-18 10:33:16
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,DeviceEventEmitter} from 'react-native';
 import PropTypes from 'prop-types';
+import {BoxShadow} from 'react-native-shadow';
 import MapStyles from '../style/track';
 import themes from '../../../components/themes';
 import {SegmentedBar,ListRow,Toast} from 'teaset';
@@ -61,7 +62,7 @@ export default class PullTime extends Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         DeviceEventEmitter.addListener('jmPullTime', isShow=>{
             this.setState({
                 isShowPullTime:isShow,
@@ -73,24 +74,25 @@ export default class PullTime extends Component {
         return <View>
             {this.state.isShowPullTime ?
                 <View style={MapStyles.slideModalTime}>
-                    <View style={MapStyles.tab}> 
-                        <SegmentedBar 
-                            indicatorType={'customWidth'} 
-                            indicatorLineColor={themes.TextColorPrimary} 
-                            indicatorLineWidth={3} 
-                            indicatorWidth={26}
-                            indicatorPositionPadding={-8}
-                            activeIndex={this.state.activeIndex}
-                            onChange={index => this.onBarChange(index)}
-                        >
-                            {
-                                this.state.timeType.map((item,index)=>{
-                                    return <SegmentedBar.Item title={item.key} key={'SegmentedBar'+index} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle}  />;
-                                })
-                            }
-                        </SegmentedBar>
-        
-                    </View>
+                    <BoxShadow setting={tabOp} >
+                        <View style={MapStyles.tab}> 
+                            <SegmentedBar 
+                                indicatorType={'customWidth'} 
+                                indicatorLineColor={themes.TextColorPrimary} 
+                                indicatorLineWidth={3} 
+                                indicatorWidth={26}
+                                indicatorPositionPadding={-8}
+                                activeIndex={this.state.activeIndex}
+                                onChange={index => this.onBarChange(index)}
+                            >
+                                {
+                                    this.state.timeType.map((item,index)=>{
+                                        return <SegmentedBar.Item title={item.key} key={'SegmentedBar'+index} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle}  />;
+                                    })
+                                }
+                            </SegmentedBar>
+                        </View>
+                    </BoxShadow>
                     <View style={MapStyles.slideModalTimeContent}>
                         <ListRow title={
                             <View style={MapStyles.listRow}>
@@ -114,15 +116,19 @@ export default class PullTime extends Component {
                         style={MapStyles.endTime}
                         />
                         <View style={MapStyles.btn}>
-                            <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.cancel]} onPress={()=>{
-                                console.log('1111');
-                                this.setState({
-                                    isShowPullTime:false
-                                });
-                            }} >
-                                <Text style={[MapStyles.btnItemText]}>取消</Text>
-                            </TouchableOpacity>  
-                            <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.confirm]} onPress={()=>this.onConfirm()} >
+                            <BoxShadow setting={shadowOpt} >
+                                <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.cancel]} onPress={()=>{
+                                    this.setState({
+                                        isShowPullTime:false
+                                    });
+                                }} >
+                              
+                                    <Text style={[MapStyles.btnItemText]}>取消</Text>  
+                                
+                               
+                                </TouchableOpacity>  
+                            </BoxShadow>
+                            <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.confirm]} onPress={this.onConfirm} >
                                 <Text style={[MapStyles.btnItemText,{color:'#fff'}]}>确认</Text>
                             </TouchableOpacity>  
                         </View>
@@ -132,6 +138,9 @@ export default class PullTime extends Component {
             }
         </View>;
     } 
+
+
+
 
     /**
      * 确定监听事件
@@ -229,7 +238,7 @@ export default class PullTime extends Component {
             return;
         }
 
-
+      
         //设置时间到回调提供外部调用
         this.setState({
             endDate:et,
@@ -237,3 +246,27 @@ export default class PullTime extends Component {
         });
     }
 }
+
+const shadowOpt = {
+    width:128,
+    height:38,
+    color:'#e0e0e0',
+    border:15,
+    radius:19,
+    opacity:0.3,
+    x:0,
+    y:0,
+    style:{marginVertical:0}
+};
+
+const tabOp = {
+    width:326,
+    height:46,
+    color:'#e0e0e0',
+    border:6,
+    radius:4,
+    opacity:0.5,
+    x:0,
+    y:0,
+    style:{marginVertical:0, position:'absolute',top:0,left:'50%',marginLeft:-163,zIndex:999}
+};

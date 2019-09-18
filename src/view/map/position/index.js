@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-16 15:32:19
+ * @LastEditTime: 2019-09-18 17:33:56
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
@@ -23,8 +23,8 @@ export default class PositionUtils extends Component {
         refreshTime:PropTypes.number,
         mapType: PropTypes.oneOf(['standard', 'satellite']),//地图类型
         initialRegion:PropTypes.object,//初始化中心点
-        markerOperation:PropTypes.object,//车辆标记属性
-        mylocationOperation:PropTypes.object,//我的位置属性
+        markerOptions:PropTypes.object,//车辆标记属性
+        mylocationOptions:PropTypes.object,//我的位置属性
         edgePadding:PropTypes.object, //标记距离地图内边距(暂不需要)
         ChangePositionBtn:PropTypes.object,//切换车和我的位置的按钮属性
         getMarkerPoint:PropTypes.func,//获取定位信息
@@ -42,11 +42,11 @@ export default class PositionUtils extends Component {
             latitudeDelta:0.0922,
             longitudeDelta: 0.0421,
         },
-        markerOperation:{
+        markerOptions:{
             style:Styles.deviceMarker,
             image:require('../../../assets/map/device.png'),
         },
-        mylocationOperation:{
+        mylocationOptions:{
             style:MapStyles.myMarker,
             image:require('../../../assets/map/trajectory_map_phone_position.png'),
         },
@@ -279,7 +279,6 @@ export default class PositionUtils extends Component {
             if(this.state.userMapType){
                 this.showInfoWindow('markers');
             }else {
-                console.log('渲染');
                 this.InfoWindowFunc.update();
             }
             //仅初始化会可视化两点坐标

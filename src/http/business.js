@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 10:50:09
+ * @LastEditTime: 2019-09-18 14:02:54
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -25,8 +25,6 @@ const request = (params) => {
                 'Content-Type': 'application/json',
             },
             onSuccess: (res) => {
-                console.log(res);
-                console.log('请求成功');
                 if(res.code === 0){
                     resolve(res);
                 }else {
@@ -93,7 +91,7 @@ export const httpExit = (callback) => {
         },
         // 将要关闭小程序回调
         onWillClosePage: () => {
-            callback();
+            callback && callback();
         }
     });
 };
@@ -158,8 +156,7 @@ export const getFileList = (url) =>{
                         filePath:data.files,
                     },()=>{
                         this.fileListSplit(data.files);
-                    });
-                    
+                    });   
                 }
             },
             onFail:()=>{

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-16 14:38:20
+ * @LastEditTime: 2019-09-16 18:08:21
  */
 import {StyleSheet,Dimensions} from 'react-native';
 import themes from '../../../components/themes';
@@ -102,14 +102,14 @@ const MapStyles =  StyleSheet.create({
         marginLeft:-163,
         backgroundColor:'#fff',
         borderRadius:4,
-        zIndex:10,
+        zIndex:1000,
         elevation:4,//漂浮的效果,
         justifyContent:'center',
         alignItems:'center',
-        shadowColor: '#000000',
-        shadowOffset: {h: 10, w: 10},
-        shadowRadius: 5,
-        shadowOpacity: 0.1,
+        // shadowColor: '#000000',
+        // shadowOffset: {h: 10, w: 10},
+        // shadowRadius: 5,
+        // shadowOpacity: 0.1,
     },
     slideModalTimeContent:{
         width:width,
@@ -158,11 +158,11 @@ const MapStyles =  StyleSheet.create({
     },
     cancel:{
         backgroundColor:'#fff',
-        elevation:3,//漂浮的效果,
-        shadowColor: '#000000',
-        shadowOffset: {h: 10, w: 10},
-        shadowRadius: 5,
-        shadowOpacity: 0.1,        
+        // elevation:3,//漂浮的效果,
+        // shadowColor: '#000000',
+        // shadowOffset: {h: 10, w: 10},
+        // shadowRadius: 5,
+        // shadowOpacity: 0.1,        
     },
     confirm:{
         color:'#fff',
