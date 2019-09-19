@@ -3444,10 +3444,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-baidu-map-jm@1.1.6:
-  version "1.1.6"
-  resolved "https://registry.npmjs.org/react-native-baidu-map-jm/-/react-native-baidu-map-jm-1.1.6.tgz#4b5da56c38268bdada9e3980b75143ac4d11ce5d"
-  integrity sha512-MSULFtgif8zDWSxXZeAhQkGGVaZwiK2OCtUUu3diUGrkWRSRg6mmyh96DoSLPI5ppl/RrQ6gpllJrLk+Ao9TMg==
+react-native-baidu-map-jm@1.1.9:
+  version "1.1.9"
+  resolved "https://registry.npm.taobao.org/react-native-baidu-map-jm/download/react-native-baidu-map-jm-1.1.9.tgz#f9d6d40300ec36a45d43c277d4b194b57829ad6e"
+  integrity sha1-+dbUAwDsNqRdQ8J31LGUtXgprW4=
 
 "react-native-deprecated-custom-components@github:facebookarchive/react-native-custom-components":
   version "0.1.1"
@@ -3498,10 +3498,10 @@ react-native-shadow@1.2.2:
   resolved "https://registry.npm.taobao.org/react-native-shadow/download/react-native-shadow-1.2.2.tgz#08991cd14b71e32f2fc6363911c139d231949a66"
   integrity sha1-CJkc0Utx4y8vxjY5EcE50jGUmmY=
 
-react-native-svg@^9.3.7:
-  version "9.9.3"
-  resolved "https://registry.npm.taobao.org/react-native-svg/download/react-native-svg-9.9.3.tgz#5dab1a44b20b13a3f35245a286f30882b9611d66"
-  integrity sha1-XasaRLILE6PzUkWihvMIgrlhHWY=
+react-native-svg@9.3.7:
+  version "9.3.7"
+  resolved "https://registry.npm.taobao.org/react-native-svg/download/react-native-svg-9.3.7.tgz#00f72f6105177e93bf0cb56bd0d1339db9b6649f"
+  integrity sha1-APcvYQUXfpO/DLVr0NEznbm2ZJ8=
 
 react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   version "1.4.1"

@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: xieruizhi
+ * @Date: 2019-09-18 14:31:34
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-09-18 14:31:34
+ -->
 
 # `Track` 地图轨迹
 
@@ -23,22 +31,24 @@
 例子一，默认轨迹
 ```
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Jimi} from 'react-native-jimi';
 
-
 export default class Track extends Component {
-    constructor(props) {
-        super(props);
+    render() {
+        return (
+            <View style={styles.container}>
+                <Jimi.BaiduTrack></Jimi.BaiduTrack>
+            </View>
+        );
     }
-
-    render(){
-        return <View style={{flex:1}}>
-            <Jimi.BaiduTrack/>
-        </View>;  
-    }	
-
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    }
+});
 
 ```
 例子二，自定义的轨迹

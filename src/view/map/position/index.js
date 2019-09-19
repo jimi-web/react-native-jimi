@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 11:09:26
+ * @LastEditTime: 2019-09-19 10:30:00
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
@@ -171,18 +171,20 @@ export default class PositionUtils extends Component {
         let type = this.state.userMapType ? 'WGS84':'BD09';
         httpLocationGet(type).then((res)=>{
             let data = res;
+            let lat = Number(data.lat);
+            let lng = Number(data.lng);
             if(this.state.userMapType){
-                data = gps.GPSToChina(data.lat,data.lng);
+                data = gps.GPSToChina(lat,lng);
             }
             //获取上一次设置的经纬度,减少渲染
             let comparisonData = this.state.phonePoint;
-            if(data.lat === comparisonData.latitude && data.lng === comparisonData.longitude){
+            if(lat === comparisonData.latitude && lng === comparisonData.longitude){
                 return;
             }
 
             let point = {
-                latitude: data.lat,
-                longitude: data.lng
+                latitude: lat,
+                longitude: lng
             };
 
             this.setState({
@@ -322,13 +324,13 @@ export default class PositionUtils extends Component {
                 <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.gpsSpeed}km/h</Text>
             </View>                              
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>定位时间:{new Date(this.state.locationData.gpsTime).Format('YYYY-MM-DD hh:mm:ss') }</Text>
+                <Text style={MapStyles.infoWindowTitle}>定位时间：{new Date(this.state.locationData.gpsTime).Format('YYYY-MM-DD hh:mm:ss') }</Text>
             </View>     
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>通讯时间:{ new Date(this.state.locationData.time).Format('YYYY-MM-DD hh:mm:ss')}</Text>
+                <Text style={MapStyles.infoWindowTitle}>通讯时间：{ new Date(this.state.locationData.time).Format('YYYY-MM-DD hh:mm:ss')}</Text>
             </View>    
             <View style={[MapStyles.infoWindowItem,{paddingBottom:0}]}>
-                <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.address}{'\n'}                                                        
+                <Text style={MapStyles.infoWindowTitle}>地址：{this.state.locationData.address}{'\n'}                                                        
                 </Text>
             </View>     
         </View>;

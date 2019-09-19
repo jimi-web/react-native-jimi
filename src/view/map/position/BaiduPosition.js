@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 11:08:41
+ * @LastEditTime: 2019-09-19 10:11:43
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -45,7 +45,6 @@ export default class BaiduPosition extends PositionUtils {
                 >  
                     {
                         <Overlay.Marker
-                            visible={this.state.locationData ? true :false}
                             tag={1}
                             location={this.state.markerPoint}
                             icon={this.props.markerOptions.image}
@@ -66,7 +65,6 @@ export default class BaiduPosition extends PositionUtils {
                         ref={(e)=>{this.InfoWindowFunc=e;}}
                         style={[{position:'relative',backgroundColor:'#fff0',height:400,width:300}]}
                         tag={1}
-                        visible={this.state.locationData ? true :false}
                     >
                         <View style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
                             {
