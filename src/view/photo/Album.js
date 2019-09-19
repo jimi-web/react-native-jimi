@@ -4,14 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2019-08-14 17:30:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-16 10:15:25
+ * @LastEditTime: 2019-09-12 11:41:00
  */
 
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,Image} from 'react-native';
 import {httpSamllLocation,getFileList} from '../../http/business';
 import PropTypes from 'prop-types';
-import {albumGaryIcon,videoGaryIcon} from '../../assets';
 import { connect } from 'react-redux';
 class Album extends Component{
     static propTypes = {

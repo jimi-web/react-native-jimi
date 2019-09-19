@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-12 15:51:34
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-16 16:09:13
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -14,6 +14,7 @@ import Photo from '../view/photo/index';
 import Position from '../examples/Position';
 import Track from '../examples/Track';
 import Test from '../view/test';
+import Record from '../view/record';
 const getOptions = (title) => {
     let headerTitle = {};
     if(title){
@@ -69,6 +70,10 @@ const AppNavigator = createStackNavigator(
         Test:{
             screen:Test,
             navigationOptions:getOptions('测试')
+        },
+        Record:{
+            screen:Record,
+            navigationOptions:getOptions('录音')
         }
         
     });

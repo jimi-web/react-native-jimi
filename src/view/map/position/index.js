@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-19 10:30:00
+ * @LastEditTime: 2019-09-19 11:13:43
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
@@ -424,6 +424,6 @@ export default class PositionUtils extends Component {
      * 自定义覆盖物
      */
     customOverlay = ()=> {
-        return this.props.customItem ?this.props.customItem() :null;
+        return this.props.customItem?this.props.customItem() :null;
     }
 }

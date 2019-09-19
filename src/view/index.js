@@ -4,17 +4,16 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-12 10:54:27
+ * @LastEditTime: 2019-09-12 11:38:51
  */
 
-import Photo from './photo/index';
+// import Photo from './photo/index';
 import BaiduPosition from './map/position/BaiduPosition';
 import GooglePosition from './map/position/GooglePosition';
 import BaiduTrack from './map/track/BaiduTrack';
 import GoogleTrack from './map/track/GoogleTrack';
 
 const Jimi = {
-    Photo,
     BaiduPosition,
     GooglePosition,
     BaiduTrack,
