@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:12:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-11 17:49:42
+ * @LastEditTime: 2019-09-20 18:31:37
  */
 
 const mainColor = '#3479F6';
@@ -39,4 +39,7 @@ export default {
     TextColorDefault:'#000',
     TextColorPrimary:mainColor,
     TextColorDanger:'#FF3535',
+
+    //iphoneX兼容
+    iphoneXBottomDefault:25
 };

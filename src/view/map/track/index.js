@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 14:54:53
+ * @LastEditTime: 2019-09-19 15:31:00
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -43,8 +43,8 @@ export default class TrackUtils extends Component {
         initialRegion:{
             latitude: 22.596904,
             longitude: 113.936674,
-            latitudeDelta:0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta:0.1922,
+            longitudeDelta: 0.1421,
         },
         mapType:'standard',
         trafficEnabled:false,

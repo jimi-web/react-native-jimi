@@ -4,17 +4,17 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 14:02:54
+ * @LastEditTime: 2019-09-24 15:08:46
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
 
 /**
- * 后台请求通用方法封装
+ * 后台请求通用方法封装 
  * @param {Object} params 后台需要的参数url，method，data
  */
 const request = (params) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         httpApp('jm_net.request', {
             url: params.url,
             method: params.method,
@@ -42,15 +42,15 @@ const request = (params) => {
 };
 
 /**
- * 数据请求
+ * 后台数据请求
  * @param {Object} params 后台需要的参数url，method，data,如果需要encodingType 或者是encodingType 只要设置该参数为true
  */
 export const jmAjax = (params)=> {
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve) => { 
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
                 let data = res;
-                params.data = {};
+                params.data = params.data?params.data:{};
                 if(params.encoding){
                     params.data.encoding = data.encoding;
                 }
@@ -101,7 +101,7 @@ export const httpExit = (callback) => {
  * @param {string} type 地图经纬度类型
  */
 export const httpLocationGet = (type) =>{
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
         httpApp('jm_location.get', {
             type:type,
             onSuccess: (res) => {
@@ -109,8 +109,10 @@ export const httpLocationGet = (type) =>{
                 resolve(data);
             },
             // 请求失败
-            onFail: () => {
-                reject();
+            onFail: (res) => {
+                console.log(res);
+                console.log('定位失败');
+                Toast.fail('定位失败');
             },
             // 请求失败或成功
             onComplete: () => {
@@ -176,7 +178,7 @@ export const getFileList = (url) =>{
  * @param {string} type 地图经纬度类型
  */
 export const getEncoding = () =>{
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve)=> {
         httpApp('jm_user.getEncoding', {
             onSuccess: (res) => {
                 let data = res;

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-16 16:09:13
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-09-24 10:28:12
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -13,8 +13,10 @@ import {TabContainer} from './TabNav';
 import Photo from '../view/photo/index';
 import Position from '../examples/Position';
 import Track from '../examples/Track';
+import Trace from '../examples/Trace';
 import Test from '../view/test';
 import Record from '../view/record';
+import PrivacyAgreement from '../view/map/share/PrivacyAgreement';
 const getOptions = (title) => {
     let headerTitle = {};
     if(title){
@@ -67,6 +69,10 @@ const AppNavigator = createStackNavigator(
             screen:Track,
             navigationOptions:getOptions('轨迹')
         },
+        Trace:{
+            screen:Trace,
+            navigationOptions:getOptions('追踪')
+        },
         Test:{
             screen:Test,
             navigationOptions:getOptions('测试')
@@ -74,11 +80,12 @@ const AppNavigator = createStackNavigator(
         Record:{
             screen:Record,
             navigationOptions:getOptions('录音')
+        },
+        PrivacyAgreement:{
+            screen:PrivacyAgreement,
+            navigationOptions:getOptions('隐私政策')            
         }
-        
     });
-
-
 
 export const Root = createAppContainer(AppNavigator);
  

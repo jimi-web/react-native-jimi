@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 11:09:44
+ * @LastEditTime: 2019-09-24 14:39:54
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
@@ -51,6 +51,9 @@ export default class GooglePosition extends PositionUtils {
                     mapType={this.state.mapType}>
                     {this.markers()}
                     {this.myMarker()}
+                    {
+                        this.props.mapControls? this.props.mapControls():null
+                    }
                 </MapView>
                 {/* 按钮功能 */}
                 {
@@ -135,9 +138,14 @@ export default class GooglePosition extends PositionUtils {
                 <Image 
                     style={[this.props.markerOptions.style ? this.props.markerOptions.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction+'deg'}]}]} 
                     source={this.props.markerOptions.image? this.props.markerOptions.image :require('../../../assets/map/device.png') }/>
-                <Callout tooltip={this.props.isCustom}>
-                    {this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.markerInfo()}
-                </Callout>               
+                {
+                    this.props.markerInfoWindow.visible ? 
+                        <Callout tooltip={this.props.isCustom}>
+                            {this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.markerInfo()}
+                        </Callout> :
+                        null
+                }
+              
             </Marker>;
         return markers;
     };
@@ -146,8 +154,8 @@ export default class GooglePosition extends PositionUtils {
     /**
      *  可是可视范围内
      */
-    fitAllMarkers=()=> {
-        this.map.fitToCoordinates([this.state.markerPoint,this.state.phonePoint], {
+    fitAllMarkers=(points)=> {
+        this.map.fitToCoordinates(points, {
             edgePadding: this.props.edgePadding,
             animated: true,
         });

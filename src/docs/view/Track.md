@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-18 14:31:34
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 14:31:34
+ * @LastEditTime: 2019-09-24 17:08:26
  -->
 
 # `Track` 地图轨迹
@@ -27,7 +27,7 @@
 |getTrackPoints|Function|false | 使用几米圈模板接口 | 轨迹点数据传入，具体方法写法参考下面例子|
 |playImg|Object|false | 有默认属性 |播放图标的改变,<br>{<br>　　play:require('../../../assets/track/play.png') //播放图标,<br>　　pause:require('../../../assets/track/pause.png') //暂停图标<br>}|
 
-##Demo
+## Demo
 例子一，默认轨迹
 ```
 import React, {Component} from 'react';

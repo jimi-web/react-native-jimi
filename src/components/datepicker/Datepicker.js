@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-16 18:20:58
+ * @LastEditTime: 2019-09-19 15:18:18
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter,Alert} from 'react-native';
@@ -59,6 +59,10 @@ export default class Datepicker extends Component {
         DeviceEventEmitter.emit('jmDatepickerShow',{isShow});
     }
 
+
+    componentWillUnmount() {
+        DeviceEventEmitter.removeAllListeners('jmDatepickerShow');
+    }
 
     render() {
         let { defaultValue } = this.state;

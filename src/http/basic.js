@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 14:25:31
+ * @LastEditTime: 2019-09-25 09:50:19
  */
 
 import {
@@ -83,6 +83,8 @@ export const guids = () => {
  * @param {Object} params 传参
  */
 export const httpApp = (url, params) => {
+    console.log(params);
+    
     // 生成回调的名称，同一页面不能出现两个相同的回调名，因此回调名采用uuid
     const callbackName = guids();
 
@@ -109,7 +111,11 @@ export const httpApp = (url, params) => {
     for (let i = 0; i < funName.length; i++) {
         Object.assign(callName, {
             [funName[i]]: (res) => {
-                let data = getObject(res);
+                console.log('调用');
+                let data = '';
+                if(funName[i]!='onFail'){
+                    data = getObject(res);
+                }
                 params[funName[i]](data);
             }
         });
