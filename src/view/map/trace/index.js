@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-25 10:12:21
+ * @LastEditTime: 2019-09-25 14:18:03
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
@@ -13,7 +13,7 @@ import {httpApp} from '../../../http/basic';
 import {jmAjax} from '../../../http/business';
 import {map} from '../../../api/index';
 import gps from '../../../libs/coversionPoint';
-import {Checkbox} from 'teaset';
+import {Checkbox,Toast} from 'teaset';
 import Share from '../share/Share';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 import PositionUtils from '../position/index';
@@ -174,7 +174,12 @@ export default class TraceUtils extends PositionUtils {
                 
             },
             onFail: () => {
-
+                Share.hide();
+                if(state == 'qq'){
+                    Toast.message('未安装QQ无法分享');
+                }else {
+                    Toast.message('未安装微信无法分享');
+                }
             },
             onComplete:()=>{
                 
