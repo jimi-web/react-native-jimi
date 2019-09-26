@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:33:49
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-12 18:00:26
+ * @LastEditTime: 2019-09-19 18:23:41
  */
 import {StyleSheet} from 'react-native';
 const Styles =  StyleSheet.create({
@@ -28,6 +28,9 @@ const Styles =  StyleSheet.create({
     mapTypeBtn:{
         top:63,
     }, 
+    shareBtn:{
+        top:108,
+    },  
     deviceMarker:{
         width:37,
         height:37

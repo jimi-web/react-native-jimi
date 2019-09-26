@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 10:17:53
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-12 13:56:52
+ * @LastEditTime: 2019-09-23 14:27:24
  */
 
 import {StyleSheet,Platform} from 'react-native';
@@ -16,7 +16,7 @@ const MapStyles =  StyleSheet.create({
     },
     phonePointBtn:{
         position:'absolute',
-        left:20,
+        left:15,
         bottom:30,
         width:37,
         height:37,

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-16 09:59:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 10:33:16
+ * @LastEditTime: 2019-09-19 15:17:51
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,DeviceEventEmitter} from 'react-native';
@@ -68,6 +68,10 @@ export default class PullTime extends Component {
                 isShowPullTime:isShow,
             });
         });
+    }
+
+    componentWillUnmount() {
+        DeviceEventEmitter.removeAllListeners('jmPullTime');
     }
 
     render() {

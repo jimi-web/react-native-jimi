@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 10:45:19
+ * @LastEditTime: 2019-09-25 10:26:23
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';

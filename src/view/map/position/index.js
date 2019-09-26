@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-18 17:33:56
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-09-25 10:11:27
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
@@ -32,6 +32,9 @@ export default class PositionUtils extends Component {
         markerInfoWindow:PropTypes.object,//infoWindow
         roadBtnStyle:PropTypes.object,//路况样式
         mapTypeBtnStyle:PropTypes.object,//地图类型样式
+        mapControls:PropTypes.func,//添加地图控件
+        onDeviceChange:PropTypes.func,//设备位置改变监听事件
+        onMyChange:PropTypes.func,//我的位置改变监听事件
     };
     static defaultProps = {
         trafficEnabled:false,
@@ -51,10 +54,10 @@ export default class PositionUtils extends Component {
             image:require('../../../assets/map/trajectory_map_phone_position.png'),
         },
         edgePadding:{ 
-            top: 200, 
-            right: 200, 
-            bottom: 200, 
-            left: 200 
+            top: 30, 
+            right: 30, 
+            bottom: 30, 
+            left: 30 
         },
         ChangePositionBtn:{
             isShow:true,
@@ -66,6 +69,7 @@ export default class PositionUtils extends Component {
         refreshTime:15000,
         markerInfoWindow:{
             isCustom:false,
+            visible:true
         },
         customItem:null,
         roadBtnStyle:Styles.btn,
@@ -104,6 +108,7 @@ export default class PositionUtils extends Component {
             },
             userMapType:0,//0为百度，1为谷歌
             lastAddress:null,//上一次定位点的地址
+            visualRange:null
         };
     }
 
@@ -171,22 +176,27 @@ export default class PositionUtils extends Component {
         let type = this.state.userMapType ? 'WGS84':'BD09';
         httpLocationGet(type).then((res)=>{
             let data = res;
+            let lat = Number(data.lat);
+            let lng = Number(data.lng);
             if(this.state.userMapType){
-                data = gps.GPSToChina(data.lat,data.lng);
+                data = gps.GPSToChina(lat,lng);
             }
+
             //获取上一次设置的经纬度,减少渲染
             let comparisonData = this.state.phonePoint;
-            if(data.lat === comparisonData.latitude && data.lng === comparisonData.longitude){
+            if(lat === comparisonData.latitude && lng === comparisonData.longitude){
                 return;
             }
 
             let point = {
-                latitude: data.lat,
-                longitude: data.lng
+                latitude: lat,
+                longitude: lng
             };
 
             this.setState({
                 phonePoint:point,
+            },()=>{
+                this.onMyChange(point);
             });
         });       
     };
@@ -199,6 +209,7 @@ export default class PositionUtils extends Component {
             this.props.getMarkerPoint((data)=>{
                 let res = data;
                 this.drawMarker(res);
+                this.onDeviceChange(res);
             });
         }else {
             this.request();
@@ -253,6 +264,7 @@ export default class PositionUtils extends Component {
                 lastAddress:result.location
             },()=>{
                 this.drawMarker(data);
+                this.onDeviceChange(data);
             });
         });
     }
@@ -271,6 +283,9 @@ export default class PositionUtils extends Component {
             latitude:data.latitude,
             longitude: data.longitude,
         };
+        
+        data.gpsTime = new Date(data.gpsTime).Format('YYYY-MM-DD hh:mm:ss');
+        data.time = new Date(data.time).Format('YYYY-MM-DD hh:mm:ss');
        
         this.setState({
             markerPoint:point,
@@ -315,20 +330,20 @@ export default class PositionUtils extends Component {
                 }
             </View>
             <View style={MapStyles.infoWindowItem}>
-                <Text style={{color:this.deviceState().color}}>{this.deviceState().text}</Text>
+                <Text style={{color:this.deviceState(this.state.locationData.deviceStatus).color}}>{this.deviceState(this.state.locationData.deviceStatus).text}</Text>
                 <Text style={MapStyles.line}>|</Text>
-                <Text style={MapStyles.infoWindowTitle}>{this.posType()}</Text>
+                <Text style={MapStyles.infoWindowTitle}>{this.posType(this.state.locationData.posType)}</Text>
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.gpsSpeed}km/h</Text>
             </View>                              
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>定位时间:{new Date(this.state.locationData.gpsTime).Format('YYYY-MM-DD hh:mm:ss') }</Text>
+                <Text style={MapStyles.infoWindowTitle}>定位时间：{this.state.locationData.gpsTime}</Text>
             </View>     
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>通讯时间:{ new Date(this.state.locationData.time).Format('YYYY-MM-DD hh:mm:ss')}</Text>
+                <Text style={MapStyles.infoWindowTitle}>通讯时间：{ this.state.locationData.time}</Text>
             </View>    
             <View style={[MapStyles.infoWindowItem,{paddingBottom:0}]}>
-                <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.address}{'\n'}                                                        
+                <Text style={MapStyles.infoWindowTitle}>地址：{this.state.locationData.address}{'\n'}                                                        
                 </Text>
             </View>     
         </View>;
@@ -337,9 +352,9 @@ export default class PositionUtils extends Component {
     /**
      * 设备状态
      */
-    deviceState =()=>{
+    deviceState =(deviceStatus)=>{
         let stateOject = {};
-        switch (this.state.locationData.deviceStatus) {
+        switch (deviceStatus) {
         case 0:
             stateOject.text = '离线';
             stateOject.color = '#000';
@@ -372,9 +387,9 @@ export default class PositionUtils extends Component {
     /**
      * 定位类型
      */
-    posType = ()=>{
+    posType = (posType)=>{
         let type = null;
-        switch (this.state.locationData.posType) {
+        switch (posType) {
         case 0:
             type = 'GPS定位';
             break;
@@ -423,5 +438,19 @@ export default class PositionUtils extends Component {
      */
     customOverlay = ()=> {
         return this.props.customItem?this.props.customItem() :null;
+    }
+
+    /**
+     * 监听数据变化
+     */
+    onDeviceChange = (data)=>{
+        this.props.onDeviceChange && this.props.onDeviceChange(data);
+    }
+
+    /**
+     * 监听我的位置变化
+     */
+    onMyChange =(data)=>{
+        this.props.onMyChange && this.props.onMyChange(data);
     }
 }

@@ -4,12 +4,12 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-16 18:08:21
+ * @LastEditTime: 2019-09-25 10:55:02
  */
 import {StyleSheet,Dimensions} from 'react-native';
 import themes from '../../../components/themes';
 const {width} = Dimensions.get('window');
-
+import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 
 const MapStyles =  StyleSheet.create({
     map:{
@@ -17,7 +17,7 @@ const MapStyles =  StyleSheet.create({
     },
     bottomContent:{
         width:width,
-        height:180,
+        height:isIphoneX() ? iphoneXHeight(180):180,
         backgroundColor:'#FFF'
     },
     details:{
@@ -58,7 +58,6 @@ const MapStyles =  StyleSheet.create({
         alignItems:'center',
         marginTop:-15,
         paddingLeft:10,
-        // paddingRight:5
     },
     playControllerTextStyle:{
         flexDirection:'row',
@@ -90,7 +89,7 @@ const MapStyles =  StyleSheet.create({
         position:'absolute',
         bottom:0,
         width:width,
-        height:255,
+        height:isIphoneX() ? iphoneXHeight(255):255,
         justifyContent:'center',
     },
     tab:{
@@ -103,17 +102,12 @@ const MapStyles =  StyleSheet.create({
         backgroundColor:'#fff',
         borderRadius:4,
         zIndex:1000,
-        elevation:4,//漂浮的效果,
         justifyContent:'center',
         alignItems:'center',
-        // shadowColor: '#000000',
-        // shadowOffset: {h: 10, w: 10},
-        // shadowRadius: 5,
-        // shadowOpacity: 0.1,
     },
     slideModalTimeContent:{
         width:width,
-        height:232,
+        height:isIphoneX() ? iphoneXHeight(232):232,
         backgroundColor:'#FFF',
         marginTop:23,
         paddingLeft:37,
@@ -157,12 +151,7 @@ const MapStyles =  StyleSheet.create({
         borderRadius:19
     },
     cancel:{
-        backgroundColor:'#fff',
-        // elevation:3,//漂浮的效果,
-        // shadowColor: '#000000',
-        // shadowOffset: {h: 10, w: 10},
-        // shadowRadius: 5,
-        // shadowOpacity: 0.1,        
+        backgroundColor:'#fff',       
     },
     confirm:{
         color:'#fff',

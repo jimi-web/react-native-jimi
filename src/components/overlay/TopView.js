@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-26 16:11:04
+ * @LastEditTime: 2019-09-26 17:14:50
  */
 
 import React, {Component} from 'react';
@@ -124,7 +124,8 @@ AppRegistry.registerComponent = function(appKey, componentProvider) {
             );
         }
     }
+    return AppRegistry.registerComponentOld(appKey, () => RootElement);
 };
   
-return AppRegistry.registerComponentOld(appKey, () => RootElement);
+
 
