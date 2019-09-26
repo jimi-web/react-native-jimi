@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 14:25:31
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-25 11:25:25
  */
 
 import {
@@ -102,6 +102,9 @@ export const httpApp = (url, params) => {
     }
 
     const bodyJson = JSON.stringify(obj);
+    if(url === 'jm_media_playAudio'){
+        console.log(url,bodyJson);
+    }
     JMRNEngineManager.requestMethod(url, bodyJson);
 
     // 定义回调
@@ -111,6 +114,10 @@ export const httpApp = (url, params) => {
             [funName[i]]: (res) => {
                 let data = getObject(res);
                 params[funName[i]](data);
+                if(url === 'jm_media_playAudio'){
+                    console.log(data,'录音回调');
+                }
+                
             }
         });
     }

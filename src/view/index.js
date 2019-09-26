@@ -4,10 +4,11 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-12 11:38:51
+ * @LastEditTime: 2019-09-19 15:36:13
  */
 
 // import Photo from './photo/index';
+import '../libs/time';
 import BaiduPosition from './map/position/BaiduPosition';
 import GooglePosition from './map/position/GooglePosition';
 import BaiduTrack from './map/track/BaiduTrack';

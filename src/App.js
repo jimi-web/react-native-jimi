@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:05:47
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-04 10:26:58
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-26 16:11:38
  */
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
@@ -12,14 +12,13 @@ import {TopView} from './components/index';
 import {Root} from './router/index';
 import store from './store/index';
 import { Provider } from 'react-redux';
+import './libs/time';
 
 export default class App extends Component{
     render() {
         return (
             <Provider store={store}>
-                <TopView>
-                    <Root/>
-                </TopView>
+                <Root/>
             </Provider>
         );
     }

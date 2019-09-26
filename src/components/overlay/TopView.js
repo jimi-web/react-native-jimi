@@ -3,12 +3,12 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-08-23 09:27:16
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-26 16:11:04
  */
 
 import React, {Component} from 'react';
-import {DeviceEventEmitter, Text, View,StyleSheet,Animated} from 'react-native';
+import {DeviceEventEmitter, Text, View,StyleSheet,Animated,AppRegistry} from 'react-native';
 import Theme from '../themes/index';
 
 let keyIndex = 0;
@@ -97,6 +97,7 @@ export default class TopView extends Component {
     }
 }
 
+
 const styles = StyleSheet.create({
     overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -106,3 +107,24 @@ const styles = StyleSheet.create({
         color:'#fff',
     },
 });
+
+if (!AppRegistry.registerComponentOld) {
+    AppRegistry.registerComponentOld = AppRegistry.registerComponent;
+}
+  
+AppRegistry.registerComponent = function(appKey, componentProvider) {
+
+    class RootElement extends Component {
+        render() {
+            let Component = componentProvider();
+            return (
+                <TopView>
+                    <Component {...this.props} />
+                </TopView>
+            );
+        }
+    }
+};
+  
+return AppRegistry.registerComponentOld(appKey, () => RootElement);
+
