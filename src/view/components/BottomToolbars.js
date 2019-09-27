@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
 * @Date: 2019-09-26 17:39:03
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-27 16:29:02
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-09-27 17:42:33
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Dimensions} from 'react-native';
@@ -16,7 +16,6 @@ const {width} = Dimensions.get('window');
 export default class BottomToolbars extends Component {
     static propTypes = {
         height:PropTypes.number, //高度
-        element:PropTypes.func, //自定义元素
         style:PropTypes.object //样式
     }
 

@@ -3,13 +3,13 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-27 14:52:22
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-09-27 17:53:58
  * @LastEditors: xieruizhi
  * @LastEditTime: 2019-09-26 16:50:27
  */
 
-const dev = 0;
+const dev = 1;
 const server = dev?'http://10.0.16.126:3000':'http://10.0.17.227:3000';
 
 
@@ -19,16 +19,14 @@ export const recordApi = {
     deleteRecord:server + '/record/module/file',//发送指令
 };
 
-
-
 export const map = { 
-    position:server+'/proxy/module/paas/device/info',//定位
+    position:server+'/locator/device/info',//定位
     track:server+'/proxy/module/paas/track',//轨迹
     geocoder:server+'/proxy/module/paas/geocoder',//追踪
     shareToken:server+'/share/token',//分享
     shareUrl:'http://10.0.16.126:8080',
-    fenceList:server+'/fence/list'
-
+    fenceList:server+'/fence/list',
+    fenceDel:server+'/fence/delete'
 };
 
 
