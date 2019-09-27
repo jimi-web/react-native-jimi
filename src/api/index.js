@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 17:23:26
+ * @LastEditTime: 2019-09-27 17:53:58
  * @LastEditors: xieruizhi
  * @LastEditTime: 2019-09-26 16:50:27
  */
@@ -18,8 +18,6 @@ export const recordApi = {
     instruction:server + '/proxy/module/instruction',//发送指令
     deleteRecord:server + '/record/module/file',//发送指令
 };
-
-
 
 export const map = { 
     position:server+'/locator/device/info',//定位

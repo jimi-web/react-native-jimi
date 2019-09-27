@@ -4,19 +4,20 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-25 09:36:59
+ * @LastEditTime: 2019-09-27 16:29:57
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions,AsyncStorage} from 'react-native';
 import {Button} from '../../components/index';
 import {Wheel} from 'teaset';
+import BottomToolbars from '../components/BottomToolbars';
 const {width} = Dimensions.get('window');
 export default class RecordControl extends Component {
     constructor(props){
         super(props);
         this.state = {
             isVisible:false,
-            time:'30',
+            time:'30s',
             index:0,
         };
     }
@@ -24,6 +25,9 @@ export default class RecordControl extends Component {
      * 时间处理
      */
     ftmTime = (time) =>{
+        if(this.props.isRecording){
+            return time + 's'; 
+        }
         const s = time / 60 < 1?`${time}s`:`${time / 60}分钟`;
         return s;
     }
@@ -31,10 +35,12 @@ export default class RecordControl extends Component {
         const {isOpenSelect} = this.props;
         console.log(isOpenSelect,111);
         return (
-            <View style={this.renderStyle()}>
-                {isOpenSelect?this.renderControl():this.renderDelete()}
-                {this.renderModal()}
-            </View>
+            <BottomToolbars>
+                <View style={this.renderStyle()}>
+                    {isOpenSelect?this.renderControl():this.renderDelete()}
+                    {this.renderModal()}
+                </View>
+            </BottomToolbars>
         );
     }
     /**
@@ -45,11 +51,12 @@ export default class RecordControl extends Component {
         let text = '开始录音';
         let backgroundColor = isRecording?'#98BBF9':'#3479F6';
         let borderColor = isRecording?'#98BBF9':'#3479F6';
+        console.log(this.props,'录音状态修改');
         if(recordType == 0){
             text = '持续录音';
             text = isRecording?'录音中':'开始录音';
         }else{
-            text = isRecording?'持续录音中…':'持续录音';
+            text = isRecording?'关闭持续录音':'持续录音';
         }
         return <View style={styles.controlStyle}>
             <View style={styles.touchStyle}>
@@ -57,7 +64,7 @@ export default class RecordControl extends Component {
                     <Image source={require('../../assets/record/operating_select.png')} />
                     <Text style={{fontSize:10,color:'#979797'}}>{'选择'}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={1} style={{paddingLeft:20}} onPress={() => {this.setState({isVisible:true});}}>
+                <TouchableOpacity activeOpacity={1} style={{paddingLeft:20}} onPress={this.onSelectTimeLength}>
                     <Image source={require('../../assets/record/recording_operating_duration.png')} />
                     <Text style={{fontSize:10,color:'#979797'}}>{'时长'}</Text>
                 </TouchableOpacity>
@@ -73,6 +80,14 @@ export default class RecordControl extends Component {
             </View>
         </View>;
     }
+    onSelectTimeLength = () => {
+        const {isRecording} = this.props;
+        if(isRecording){
+            return;
+        }
+        this.setState({isVisible:true});
+    }
+   
     /**
      * 开始录音
      */
@@ -126,7 +141,7 @@ export default class RecordControl extends Component {
     renderModal = () => {
         const {isRecording} = this.props;
         if(isRecording){
-            return console.log('视频录制中');
+            return console.log('声音录制中');
         }
         const time = ['30s','1分钟','2分钟','3分钟','4分钟','5分钟','持续录音'];
         return <Modal
@@ -163,17 +178,11 @@ export default class RecordControl extends Component {
      * 保存时间
      */
     onConfirm = () => {
-        const unit = String(this.state.time)[this.state.time.length] === 's'?1:60;
+        console.log(this.state.time,'保存的时间');
+        const unit = String(this.state.time)[this.state.time.length - 1] === 's'?1:60;
         let time = parseInt(this.state.time) * unit;
         time = isNaN(time)?0:time;
         const type = this.state.time == '持续录音'?1:0;
-        // //缓存用户选择的时间
-        // const locatorData = {
-        //     recordTime:time,
-        //     recordIndex:this.state.index
-        // };
-        // const locatorRecord = JSON.stringify(locatorData);
-        // AsyncStorage.setItem('locatorRecord',locatorRecord);
         this.props.onConfirm &&  this.props.onConfirm({type,time});
         this.setState({
             isVisible:false

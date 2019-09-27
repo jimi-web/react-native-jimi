@@ -4,7 +4,7 @@
  * @Author: xieruizhi
 * @Date: 2019-09-26 17:39:03
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 11:24:58
+ * @LastEditTime: 2019-09-27 17:42:33
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Dimensions} from 'react-native';
@@ -16,7 +16,6 @@ const {width} = Dimensions.get('window');
 export default class BottomToolbars extends Component {
     static propTypes = {
         height:PropTypes.number, //高度
-        element:PropTypes.func, //自定义元素
         style:PropTypes.object //样式
     }
 
@@ -44,9 +43,7 @@ export default class BottomToolbars extends Component {
             style:{marginVertical:0,position:'absolute',bottom:0}
         }}>
             <View style={[Styles.bottom,{height:getHeight,...this.props.style}]}>
-                {
-                    this.props.element && this.props.element()
-                }
+                {this.props.children}
             </View>
         </BoxShadow>;
     }

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-26 17:17:04
+ * @LastEditTime: 2019-09-26 17:24:21
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet} from 'react-native';
@@ -14,7 +14,7 @@ export default class Home extends Component{
     constructor(props){
         super(props);
         this.state = {
-            homeName:'这里主页面'
+            homeName:''
         };
     }
     

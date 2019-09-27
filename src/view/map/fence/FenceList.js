@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 17:39:49
+ * @LastEditTime: 2019-09-27 17:51:39
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity} from 'react-native';
@@ -70,9 +70,9 @@ export default class FenceList extends Component {
                         <Text style={FenceStyles.emptyText}>暂无内容</Text>
                     </View>
             }
-            <BottomToolbars 
-                element = {this.bottomTool}
-            ></BottomToolbars>
+            <BottomToolbars>
+                {this.bottomTool()}
+            </BottomToolbars>
         </View>;
     } 
 
