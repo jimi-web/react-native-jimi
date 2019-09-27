@@ -4,12 +4,12 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-26 15:49:36
+ * @LastEditTime: 2019-09-27 14:17:09
  */
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity  } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage } from 'react-native';
 import RecordControl from './RecordControl';
-import { jmAjax } from '../../http/business';
+import { jmAjax,getEncoding } from '../../http/business';
 import { createTheFolder } from '../../http/file';
 import { playAudio } from '../../http/media';
 import { recordApi } from '../../api/index';
@@ -23,6 +23,7 @@ export default class Record extends Component {
         this.isFolder = false;//判断是否创建或是否拥有该文件夹
         this.folderPath = '';//是否创建文件夹地址
         this.isPlay = false;//是否正在播放
+        this.recordTimer = null;//录音过程中的计时器
         this.state = {
             isOpenSelect: 1,//是否开启选择
             changeFileLength: 0,//选中的文件长度
@@ -42,6 +43,51 @@ export default class Record extends Component {
     componentDidMount() {
         this.getServerRecordFile(this.state.params);
         this.createFolder();
+        this.getStorage();
+    }
+    /**
+     * 获取存储的录音信息
+     */
+    getStorage = () => {
+        getEncoding().then(value => {
+            const key = value.encoding + 'locatorRecord';
+            AsyncStorage.getItem(key).then(res => {
+                if(!res){
+                    return;
+                }
+                const data = JSON.parse(res);
+                const recordTime = Math.floor((new Date().getTime() - data.recordCreatedTime) / 1000);
+                let isRecording;
+                if(data.isRecording && data.recordType == 0){
+                    isRecording = recordTime > data.recordLength?false:true;
+                }else{
+                    isRecording = data.isRecording;
+                }
+                this.setState({
+                    isRecording,
+                    recordType:data.recordType,
+                    recordLength:data.recordLength,
+                });
+                if(isRecording && data.recordType == 0){
+                    let i = data.recordLength - recordTime;
+                    this.recordTimer = setInterval(()=>{
+                        i--;
+                        if(i <= 0){
+                            console.log(data.recordLength,78888888);
+                            this.setState({
+                                isRecording:false,
+                                recordLength:data.recordLength
+                            });
+                            clearInterval(this.recordTimer);
+                        }else{
+                            this.setState({
+                                recordLength:i
+                            });
+                        }
+                    },1000);
+                }
+            });
+        });
     }
     /**
      * 获取录音文件
@@ -117,7 +163,7 @@ export default class Record extends Component {
             const fileList = item.fileDetails || [];
             // 计算时长
             fileList.forEach((value, index) => {
-                item.timeLength += value.fileSize || 0;
+                item.timeLength += Number(value.audioTime) || 0;
                 item.ext  = value.ext || '.amr';
             });
             item.timeLength  =  item.timeLength;
@@ -158,6 +204,7 @@ export default class Record extends Component {
         });
     };
     render() {
+        console.log(this.state.recordLength,'渲染时的录音长度');
         return (
             <View style={{ backgroundColor: '#f7f7f7', flex: 1 }}>
                 <FlatList
@@ -259,6 +306,12 @@ export default class Record extends Component {
         console.log(item,'i的值');
         if(index >= item.length){
             this.isPlay = false;
+            data.type = 2;
+            this.state.recordList[data.index] = data;
+            const recordList = JSON.parse(JSON.stringify(this.state.recordList));
+            this.setState({
+                recordList
+            });
             return;
         }
         let i = index || 0;
@@ -269,9 +322,9 @@ export default class Record extends Component {
         this.isPlay = true;
         playAudio(url).then(res => {
             i++;
+            data.type = 3;
             let timer = setInterval(()=> {
                 data.progress += 100;
-                
                 this.state.recordList[data.index] = data;
                 const recordList = JSON.parse(JSON.stringify(this.state.recordList));
                 console.log(data.progress,'当前进度',length,recordList);
@@ -334,23 +387,38 @@ export default class Record extends Component {
      * 开始录音
      */
     onRecord = (data) => {
-        this.setState({
-            isRecording:!data.isRecording
-        });
+        console.log(data,'点击录音');
         this.setRecordInstruction().then(res => {
             if(res.code){
                 return console.log('指令发送失败');
             }
+            //录音成功时储存录音状态
+            const storage = {
+                recordType:this.state.recordType,
+                recordLength:data.recordLength,
+                recordCreatedTime:new Date().getTime(),
+                isRecording:!this.state.isRecording
+            };
+            getEncoding().then(value => {
+                const key = value.encoding + 'locatorRecord';
+                console.log(storage,key,'存储');
+                AsyncStorage.setItem(key,JSON.stringify(storage));
+            });
+           
+            // 修改录音状态
             this.setState({
                 isRecording:!data.isRecording
             });
+            // 录音结束之后重新刷新数据
             if(this.state.recordType){
+                // 持续录音
                 if(data.isRecording){
                     this.getServerRecordFile(this.state.params);
                 }
             }else{
+                // 限时录音
                 let i = data.recordLength;
-                const recordTimeing  = setInterval(() => {
+                this.recordTimer = setInterval(() => {
                     console.log(i,'开始计时');
                     i--;
                     this.setState({
@@ -362,7 +430,7 @@ export default class Record extends Component {
                             recordLength:data.recordLength
                         });
                         this.getServerRecordFile(this.state.params);
-                        clearInterval(recordTimeing);
+                        clearInterval(this.recordTimer);
                     }
                 }, 1000);
             }
@@ -390,7 +458,7 @@ export default class Record extends Component {
             return console.log('当前没有录音文件，无法进行操作！');
         }
         if(this.state.isRecording){
-            return console.log('视频录制中，无法进行操作！');
+            return console.log('声音录制中，无法进行操作！');
         }
         if(type == 1){
             this.setState({
@@ -432,9 +500,8 @@ export default class Record extends Component {
      */
     renderItem = (data) => {
         const item = data.item;
-        let progress = Math.floor(item.progress / (item.timeLength * 1000));
+        let progress = Math.floor(item.progress / (item.timeLength * 1000) * 100);
         progress = progress > 0? `${progress}%`: 0;
-        console.log(item.progress,item.timeLength,progress,'进度哦');
         let view = <View>
             {item.fileDate ?
                 <View style={styles.titleStyle}>
