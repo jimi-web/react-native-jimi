@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-27 16:15:38
+ * @LastEditTime: 2019-09-27 18:04:43
  */
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator } from 'react-native';
 import RecordControl from './RecordControl';
 import { jmAjax,getEncoding } from '../../http/business';
 import { createTheFolder } from '../../http/file';
@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 export default class Record extends Component {
     constructor(props) {
         super(props);
+        this.totalPage = 10;//总页数
         this.isFolder = false;//判断是否创建或是否拥有该文件夹
         this.folderPath = '';//是否创建文件夹地址
         this.isPlay = false;//是否正在播放
@@ -29,6 +30,8 @@ export default class Record extends Component {
             changeFileLength: 0,//选中的文件长度
             recordType:0,//录音类型，0是正常，1是持续录音
             isRecording:false,//是否录制中
+            recordLength:30,//录音时长
+            refreshing:true,//列表是否加载中
             /* 传参 */
             params: {
                 pageNum: 1,
@@ -36,7 +39,6 @@ export default class Record extends Component {
             },
             initFile: [],//原始数据
             recordList: [],//格式化之后数据
-            recordLength:30,//录音时长
             deleteRecordList:[],//删除录音深拷贝数据
         };
     }
@@ -100,10 +102,12 @@ export default class Record extends Component {
             encodingType: true,
             data: params
         }).then(res => {
+            console.log(res,'数据');
             if (res.code) {
                 return;
             }
-            this.ftmRecord(res.data);
+            this.totalPage = res.data.totalPage;
+            this.ftmRecord(res.data.result);
         });
     }
     /**
@@ -187,10 +191,12 @@ export default class Record extends Component {
             item.type = 0;
             item.index = index;
         });
-        console.log(data,'格式化之后的文件');
+        const recordList = this.state.recordList.concat(data);
+        const initFile = this.state.recordList.concat(file);
         this.setState({
-            recordList: data,
-            initFile: file
+            recordList,
+            initFile,
+            refreshing:false
         });
     }
     /**
@@ -208,8 +214,13 @@ export default class Record extends Component {
         return (
             <View style={{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }}>
                 <FlatList
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.onRefresh}
                     data={this.state.recordList}
                     renderItem={this.renderItem}
+                    onEndReached={this.onEndReached}
+                    onEndReachedThreshold={0.2}
+                    ListFooterComponent={this.renderFooter}
                 />
                 <View style={{ height: 55, width: '100%' }}>
                     <RecordControl
@@ -233,10 +244,63 @@ export default class Record extends Component {
         );
     }
     /**
+     * 刷新数据
+     */
+    onRefresh = () => {
+        const pageNum = 1;
+        this.state.params = {
+            ...this.state.params,
+            pageNum,
+        };
+        this.setState({
+            initFile:[],
+            recordList:[],
+            refreshing:true
+        });
+        this.getServerRecordFile(this.state.params);
+    }
+    /**
+     * 滚动到底部
+     */
+    onEndReached = (number) => {
+        
+        const pageNum = ++this.state.params.pageNum;
+        console.log(number,'滚动',this.totalPage,pageNum,this.state.params.pageNum);
+        if(pageNum > this.totalPage){
+            return;
+        }
+        this.setState({
+            params:{
+                ...this.state.params,
+                pageNum
+            }
+        },() => {
+            this.getServerRecordFile(this.state.params);
+        });
+        
+    }
+    /**
+     * 底部提示
+     */
+    renderFooter = () => {
+        if(this.state.refreshing || this.totalPage < this.state.params.pageNum){
+            return null;
+        }
+        if(this.totalPage == this.state.params.pageNum){
+            return <View style={{height:44,alignItems:'center',padding:10}}>
+                <Text>{'没有更多数据'}</Text>
+            </View>;
+        }
+        return <View style={{alignItems:'center',padding:15}}>
+            <ActivityIndicator animating={true} color={'#ccc'}  />
+            <Text>{'数据加载中，请稍后'}</Text>
+        </View>;
+    }
+    /**
      * 错误提示
      */
     renderLoading = () => {
-        if(this.state.recordList.length){
+        if(this.state.recordList.length || this.state.refreshing){
             return null;
         }
         return <TouchableOpacity activeOpacity={1} onPress={() => {this.getServerRecordFile(this.state.params);}} style={{width:'100%',height:'100%',justifyContent:'center',alignItems:'center',position:'absolute'}}>
