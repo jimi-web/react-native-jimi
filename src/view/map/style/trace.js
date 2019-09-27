@@ -4,11 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-24 09:32:06
+ * @LastEditTime: 2019-09-26 16:24:38
  */
 import {StyleSheet,Dimensions} from 'react-native';
 const {width} = Dimensions.get('window');
-
 
 const MapStyles =  StyleSheet.create({
     box:{

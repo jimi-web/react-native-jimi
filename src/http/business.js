@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-24 15:08:46
+ * @LastEditTime: 2019-09-26 16:59:16
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -14,6 +14,8 @@ import {Toast} from 'teaset';
  * @param {Object} params 后台需要的参数url，method，data
  */
 const request = (params) => {
+    console.log(params);
+    
     return new Promise((resolve) => {
         httpApp('jm_net.request', {
             url: params.url,
@@ -28,11 +30,11 @@ const request = (params) => {
                 if(res.code === 0){
                     resolve(res);
                 }else {
-                    Toast.fail('请求失败');
+                    Toast.message('数据请求失败code'+res.code);
                 }
             },
             onFail: (res) => {
-                Toast.fail('请求失败');
+                Toast.message('数据请求失败');
             },
             onComplete: (res) => {
                 //
@@ -110,9 +112,7 @@ export const httpLocationGet = (type) =>{
             },
             // 请求失败
             onFail: (res) => {
-                console.log(res);
-                console.log('定位失败');
-                Toast.fail('定位失败');
+                Toast.message('定位失败');
             },
             // 请求失败或成功
             onComplete: () => {
@@ -186,7 +186,7 @@ export const getEncoding = () =>{
             },
             // 请求失败
             onFail: () => {
-                Toast.fail('设备唯一码请求失败');
+                Toast.message('设备唯一码请求失败');
             },
             // 请求失败或成功
             onComplete: () => {

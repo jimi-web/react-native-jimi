@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-19 16:04:37
+ * @LastEditTime: 2019-09-26 15:06:35
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -77,9 +77,8 @@ export default class BaiduPosition extends PositionUtils {
                        
                             this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.state.locationData ?this.markerInfo():null
                         }
-                    </View>
-                    <View style={{position:'absolute',width:20,height:10,bottom:0,left:'50%',marginLeft:-10}}>
-                        <Image source={require('../../../assets/map/position_bubble_shadow.png')} style={{width:20,height:10}} />
+                    </View> 
+                    <View style={{position:'absolute',width: 0,height: 0,borderTopColor:'#fff',borderLeftColor:'transparent',borderRightColor:'transparent',borderLeftWidth:8,borderRightWidth:8,borderTopWidth:10,borderStyle:'solid',bottom:0,left:'50%',marginLeft:-5}}>
                     </View>
                 </Overlay.InfoWindow>
                 {
