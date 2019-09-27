@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 10:43:41
+ * @LastEditTime: 2019-09-27 17:23:26
  * @LastEditors: xieruizhi
  * @LastEditTime: 2019-09-26 16:50:27
  */
@@ -22,13 +22,13 @@ export const recordApi = {
 
 
 export const map = { 
-    position:server+'/proxy/module/paas/device/info',//定位
+    position:server+'/locator/device/info',//定位
     track:server+'/proxy/module/paas/track',//轨迹
     geocoder:server+'/proxy/module/paas/geocoder',//追踪
     shareToken:server+'/share/token',//分享
     shareUrl:'http://10.0.16.126:8080',
-    fenceList:server+'/fence/list'
-
+    fenceList:server+'/fence/list',
+    fenceDel:server+'/fence/delete'
 };
 
 

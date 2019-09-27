@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 16:02:08
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 11:01:08
+ * @LastEditTime: 2019-09-27 13:57:12
  */
 import {StyleSheet,Dimensions} from 'react-native';
 const {width} = Dimensions.get('window');
@@ -84,6 +84,12 @@ const FenceStyles =  StyleSheet.create({
     space:{
         width:width,
         height:isIphoneX()? iphoneXHeight(70):70
+    },
+    btnItemText:{
+        fontSize:17
+    },
+    btnItemLine:{
+        color:'rgba(0, 0, 0, 0.1)'
     }
 });
 
