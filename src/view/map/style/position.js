@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 10:17:53
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-23 14:27:24
+ * @LastEditTime: 2019-09-26 15:08:21
  */
 
 import {StyleSheet,Platform} from 'react-native';
@@ -63,8 +63,20 @@ const MapStyles =  StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'center',
-        width: 23, 
-        height:13
+        width: 22, 
+        height:13,
+        borderWidth:1,
+        borderColor:'#000',
+        borderRadius:2
+    },
+    batteryRight:{
+        position:'absolute',
+        right:-2,
+        top:'50%',
+        width:1,
+        height:6,
+        marginTop:-3,
+        backgroundColor:'#000'
     }
     
 });

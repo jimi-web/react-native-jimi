@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-26 17:02:47
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-09-27 10:14:06
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -14,7 +14,7 @@ import {Toast} from 'teaset';
  * @param {Object} params 后台需要的参数url，method，data
  */
 const request = (params) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         httpApp('jm_net.request', {
             url: params.url,
             method: params.method,
@@ -28,11 +28,11 @@ const request = (params) => {
                 if(res.code === 0){
                     resolve(res);
                 }else {
-                    Toast.fail('请求失败');
+                    Toast.message('数据请求失败code'+res.code);
                 }
             },
             onFail: (res) => {
-                Toast.fail('请求失败');
+                Toast.message('数据请求失败');
             },
             onComplete: (res) => {
                 //
@@ -46,7 +46,7 @@ const request = (params) => {
  * @param {Object} params 后台需要的参数url，method，data,如果需要encodingType 或者是encodingType 只要设置该参数为true
  */
 export const jmAjax = (params)=> {
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve) => { 
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
                 let data = res;
@@ -101,7 +101,7 @@ export const httpExit = (callback) => {
  * @param {string} type 地图经纬度类型
  */
 export const httpLocationGet = (type) =>{
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
         httpApp('jm_location.get', {
             type:type,
             onSuccess: (res) => {
@@ -109,8 +109,8 @@ export const httpLocationGet = (type) =>{
                 resolve(data);
             },
             // 请求失败
-            onFail: () => {
-                reject();
+            onFail: (res) => {
+                Toast.message('定位失败');
             },
             // 请求失败或成功
             onComplete: () => {
@@ -153,7 +153,7 @@ export const getEncoding = () =>{
             },
             // 请求失败
             onFail: () => {
-                Toast.fail('设备唯一码请求失败');
+                Toast.message('设备唯一码请求失败');
             },
             // 请求失败或成功
             onComplete: () => {

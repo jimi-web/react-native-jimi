@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-25 14:18:03
+ * @LastEditTime: 2019-09-26 15:12:25
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
@@ -252,6 +252,7 @@ export default class TraceUtils extends PositionUtils {
      * 监听设备位置
      */
     onDeviceChange = (data)=> {
+        console.log(data);
         this.setState({
             deviceInfo:data
         },()=>{

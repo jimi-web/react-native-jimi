@@ -4,19 +4,21 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 16:02:08
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-25 17:25:23
+ * @LastEditTime: 2019-09-27 11:01:08
  */
-import {StyleSheet} from 'react-native';
+import {StyleSheet,Dimensions} from 'react-native';
+const {width} = Dimensions.get('window');
+import Theme from '../../../components/themes/index';
+import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 const FenceStyles =  StyleSheet.create({
     line:{
+        flex:1,
         flexDirection:'row',
-        marginLeft:15,
-        marginRight:15,
-        paddingTop:15,
-        paddingBottom:15,
+        padding:15,
         alignItems:'center',
         borderBottomWidth:1,
-        borderColor:'#F7F7F7'
+        borderColor:'#F7F7F7',
+        backgroundColor:'#fff'
     },
     icon:{
         width:26,
@@ -41,7 +43,48 @@ const FenceStyles =  StyleSheet.create({
     },
     address:{
         marginTop:5
-    } 
+    },
+    empty:{
+        position:'absolute',
+        top:'50%',
+        left:'50%',
+        width:280,
+        height:218,
+        marginLeft:-140,
+        marginTop:-163
+    },
+    emptyText:{
+        marginTop:30,
+        fontSize:16,
+        color:'#979797',
+        textAlign:'center'
+    },
+    btn:{
+        marginLeft:50,
+        marginRight:50
+    },
+    btnItem:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+    },  
+    add:{
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center',
+        width:205,
+        height:38,
+        backgroundColor:Theme.buttonBackColorPrimary,
+        borderRadius:20
+    },
+    addText:{
+        marginLeft:10,
+        color:'#fff',
+        fontSize:16
+    },
+    space:{
+        width:width,
+        height:isIphoneX()? iphoneXHeight(70):70
+    }
 });
 
 export default FenceStyles;

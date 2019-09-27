@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-25 10:11:27
+ * @LastEditTime: 2019-09-26 15:18:41
  */
 import React, {Component} from 'react';
-import {View,Platform,TouchableOpacity,Image,Text,ImageBackground} from 'react-native';
+import {View,TouchableOpacity,Image,Text} from 'react-native';
 import Styles from '../style/base';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
@@ -322,11 +322,13 @@ export default class PositionUtils extends Component {
                 <Text style={MapStyles.imei}>{this.state.locationData.deviceName}</Text>
                 {
                     this.state.locationData.powerPer ?
-                        <ImageBackground source={require('../../../assets/map/position_bubble_electricity.png')} style={MapStyles.batterybg}>
-                            <View style={{height:9,width:18,marginRight:1}}>
+                        <View style={MapStyles.batterybg}>
+                            <View style={MapStyles.batteryRight}></View>
+                            <View style={{height:9,width:18}}>
                                 <View style={{width:this.batteryState().per+'%',height:'100%',backgroundColor:this.batteryState().bgColor,borderRadius:1}}></View>
                             </View>
-                        </ImageBackground>:null
+                        </View>
+                        :null
                 }
             </View>
             <View style={MapStyles.infoWindowItem}>
