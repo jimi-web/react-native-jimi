@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-26 18:13:56
+ * @LastEditTime: 2019-09-27 11:21:40
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity} from 'react-native';
@@ -19,7 +19,8 @@ export default class FenceList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fenceList:[]
+            fenceList:[],
+            isSelect:false
         };
     }
     
@@ -43,13 +44,14 @@ export default class FenceList extends Component {
                                     <View>
                                         <Image style={FenceStyles.icon} source={this.getFenceState(item.fenceState)}>  
                                         </Image>
+                                        
                                     </View>
                                     <View style={FenceStyles.info}>
                                         <View style={FenceStyles.title}>
                                             <Text style={FenceStyles.name}>{item.fenceTitle}</Text>
                                             <Text style={FenceStyles.text}>半径:{item.radius}m</Text>
                                         </View>
-                                        <View > 
+                                        <View> 
                                             <Text style={[FenceStyles.text,FenceStyles.address]}>{item.fenaddress}</Text>
                                         </View>
                                     </View>
@@ -69,24 +71,50 @@ export default class FenceList extends Component {
         </View>;
     } 
 
+    /**
+     * 底部工具栏
+     */
     bottomTool = ()=>{
         return <View style={FenceStyles.btn}>
             {
-                this.state.fenceList.length>0 ?
-                    <TouchableOpacity>
-                        <Image source={require('../../../assets/fence/operating_select.png')}/>
-                        <Text style={{fontSize:10,marginTop:2,color:'#979797'}}>选择</Text>
-                    </TouchableOpacity>
-                    :
-                    <TouchableOpacity activeOpacity={1}>
-                        <Image source={require('../../../assets/fence/operating_select_disable.png')}/>
-                        <Text style={{fontSize:10,marginTop:2,color:'#E9E9E9'}}>选择</Text>
-                    </TouchableOpacity> }
-            <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} >
-                <Image source={require('../../../assets/fence/fence_operating_add.png')}/>
-                <Text style={FenceStyles.addText}>添加围栏</Text>
-            </TouchableOpacity>
+                ! this.state.isSelect ? 
+                    <View style={FenceStyles.btnItem}>
+                        {
+                            this.state.fenceList.length>0 ?
+                                <TouchableOpacity onPress={()=>this.onSelect(true)}>
+                                    <Image source={require('../../../assets/fence/operating_select.png')}/>
+                                    <Text style={{fontSize:10,marginTop:2,color:'#979797'}}>选择</Text>
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity activeOpacity={1}>
+                                    <Image source={require('../../../assets/fence/operating_select_disable.png')}/>
+                                    <Text style={{fontSize:10,marginTop:2,color:'#E9E9E9'}}>选择</Text>
+                                </TouchableOpacity> }
+                        <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} >
+                            <Image source={require('../../../assets/fence/fence_operating_add.png')}/>
+                            <Text style={FenceStyles.addText}>添加围栏</Text>
+                        </TouchableOpacity>
+                    </View>:
+                    <View style={FenceStyles.btnItem}>
+                        <TouchableOpacity>
+                            <Text>取消</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Text>全选</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Text>删除</Text>
+                        </TouchableOpacity>
+                    </View>
+            }
         </View>;
+    }
+
+
+    onSelect = (state)=> {
+        this.setState({
+            isSelect:state
+        });
     }
 
     /**

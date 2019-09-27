@@ -4,7 +4,7 @@
  * @Author: xieruizhi
 * @Date: 2019-09-26 17:39:03
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 10:31:54
+ * @LastEditTime: 2019-09-27 11:24:58
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Dimensions} from 'react-native';
@@ -58,6 +58,5 @@ const Styles =  StyleSheet.create({
         bottom:0,
         width:width,
         backgroundColor:'#fff',
-        paddingTop:8
     }  
 });
