@@ -4,7 +4,7 @@
  * @Author: xieruizhi
 * @Date: 2019-09-26 17:39:03
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 10:09:42
+ * @LastEditTime: 2019-09-27 10:31:54
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Dimensions} from 'react-native';
@@ -32,28 +32,24 @@ export default class BottomToolbars extends Component {
 
     render(){
         const getHeight = isIphoneX()? iphoneXHeight(this.props.height):this.props.height;
-        return <View>
-            <BoxShadow setting={{
-                width:width,
-                height:getHeight,
-                color:'#b5b3b3',
-                border:4,
-                radius:0,
-                opacity:0.3,
-                x:0,
-                y:0,
-                style:{marginVertical:0}
-            }}>
-                <View style={[Styles.bottom,{height:getHeight,...this.props.style}]}>
-                    {
-                        this.props.element && this.props.element()
-                    }
-                </View>
-            </BoxShadow>
-        </View>
-        ;
+        return <BoxShadow setting={{
+            width:width,
+            height:getHeight,
+            color:'#b5b3b3',
+            border:4,
+            radius:0,
+            opacity:0.3,
+            x:0,
+            y:0,
+            style:{marginVertical:0,position:'absolute',bottom:0}
+        }}>
+            <View style={[Styles.bottom,{height:getHeight,...this.props.style}]}>
+                {
+                    this.props.element && this.props.element()
+                }
+            </View>
+        </BoxShadow>;
     }
-    
 }
 
 const Styles =  StyleSheet.create({
