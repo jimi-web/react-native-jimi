@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 11:21:40
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-27 16:30:37
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity} from 'react-native';
@@ -65,9 +65,9 @@ export default class FenceList extends Component {
                         <Text style={FenceStyles.emptyText}>暂无内容</Text>
                     </View>
             }
-            <BottomToolbars 
-                element = {this.bottomTool}
-            ></BottomToolbars>
+            <BottomToolbars>
+                {this.bottomTool}
+            </BottomToolbars>
         </View>;
     } 
 

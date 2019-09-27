@@ -4,12 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-27 14:21:48
+ * @LastEditTime: 2019-09-27 16:29:57
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions,AsyncStorage} from 'react-native';
 import {Button} from '../../components/index';
 import {Wheel} from 'teaset';
+import BottomToolbars from '../components/BottomToolbars';
 const {width} = Dimensions.get('window');
 export default class RecordControl extends Component {
     constructor(props){
@@ -34,10 +35,12 @@ export default class RecordControl extends Component {
         const {isOpenSelect} = this.props;
         console.log(isOpenSelect,111);
         return (
-            <View style={this.renderStyle()}>
-                {isOpenSelect?this.renderControl():this.renderDelete()}
-                {this.renderModal()}
-            </View>
+            <BottomToolbars>
+                <View style={this.renderStyle()}>
+                    {isOpenSelect?this.renderControl():this.renderDelete()}
+                    {this.renderModal()}
+                </View>
+            </BottomToolbars>
         );
     }
     /**

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-27 14:17:09
+ * @LastEditTime: 2019-09-27 16:15:38
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage } from 'react-native';
@@ -206,7 +206,7 @@ export default class Record extends Component {
     render() {
         console.log(this.state.recordLength,'渲染时的录音长度');
         return (
-            <View style={{ backgroundColor: '#f7f7f7', flex: 1 }}>
+            <View style={{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }}>
                 <FlatList
                     data={this.state.recordList}
                     renderItem={this.renderItem}
@@ -225,11 +225,24 @@ export default class Record extends Component {
                         onRecord={(data) => this.onRecord(data)}
                     />
                 </View>
+                {
+                    this.renderLoading()
+                }
 
             </View>
         );
     }
-    
+    /**
+     * 错误提示
+     */
+    renderLoading = () => {
+        if(this.state.recordList.length){
+            return null;
+        }
+        return <TouchableOpacity activeOpacity={1} onPress={() => {this.getServerRecordFile(this.state.params);}} style={{width:'100%',height:'100%',justifyContent:'center',alignItems:'center',position:'absolute'}}>
+            <Image source={require('../../assets/record/list_empty.png')} />
+        </TouchableOpacity>;
+    }
     /**
      * 
      * @param {Object} data 下载文件
@@ -387,8 +400,17 @@ export default class Record extends Component {
      * 开始录音
      */
     onRecord = (data) => {
-        console.log(data,'点击录音');
-        this.setRecordInstruction().then(res => {
+        let instruction = `LY${data.length}#`;
+        if(this.state.recordType){
+            if(data.isRecording){
+                instruction = 'CXLY,ON,30#';
+            }else{
+                instruction = 'CXLY,ON,OFF#';
+            }
+        }else{
+            instruction = `LY${data.length}#`;
+        }
+        this.setRecordInstruction(instruction).then(res => {
             if(res.code){
                 return console.log('指令发送失败');
             }
@@ -538,11 +560,14 @@ export default class Record extends Component {
      */
     renderRecordImage(item) {
         let img;
-        let fn  = this.downloadRecord.bind(this,item);
+        let fn  = () => {
+            console.log('别点击了，毫无作用');
+        };
         let status = item.type;
         switch (status) {
         case 0:
             img = require('../../assets/record/recording_list_undownload.png');
+            fn  = this.downloadRecord.bind(this,item);
             break;
         case 1:
             img = require('../../assets/record/recording_list_downloading.png');

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
 * @Date: 2019-09-26 17:39:03
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 11:24:58
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-27 16:29:02
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Dimensions} from 'react-native';
@@ -44,9 +44,7 @@ export default class BottomToolbars extends Component {
             style:{marginVertical:0,position:'absolute',bottom:0}
         }}>
             <View style={[Styles.bottom,{height:getHeight,...this.props.style}]}>
-                {
-                    this.props.element && this.props.element()
-                }
+                {this.props.children}
             </View>
         </BoxShadow>;
     }
