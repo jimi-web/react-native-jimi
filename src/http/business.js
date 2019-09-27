@@ -4,18 +4,16 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-26 16:59:16
+ * @LastEditTime: 2019-09-27 10:14:06
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
 
 /**
- * 后台请求通用方法封装 
+ * 后台请求通用方法封装
  * @param {Object} params 后台需要的参数url，method，data
  */
 const request = (params) => {
-    console.log(params);
-    
     return new Promise((resolve) => {
         httpApp('jm_net.request', {
             url: params.url,
@@ -44,7 +42,7 @@ const request = (params) => {
 };
 
 /**
- * 后台数据请求
+ * 数据请求
  * @param {Object} params 后台需要的参数url，method，data,如果需要encodingType 或者是encodingType 只要设置该参数为true
  */
 export const jmAjax = (params)=> {
@@ -52,7 +50,7 @@ export const jmAjax = (params)=> {
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
                 let data = res;
-                params.data = params.data?params.data:{};
+                params.data =  params.data?params.data:{};
                 if(params.encoding){
                     params.data.encoding = data.encoding;
                 }
@@ -143,42 +141,11 @@ export const httpSamllLocation = () =>{
     });
 };
 
-
 /**
- * 
- * @param {String} url 文件夹位置，需手动添加文件夹：imei+'/Media/'
- */
-export const getFileList = (url) =>{
-    return new Promise(function (resolve, reject) {
-        httpApp('jm_file.getFileList',{
-            onSuccess:(res)=>{
-                if(res){
-                    const data = res;
-                    this.setState({
-                        filePath:data.files,
-                    },()=>{
-                        this.fileListSplit(data.files);
-                    });   
-                }
-            },
-            onFail:()=>{
-                //  
-            },
-            onComplete:()=>{
-                //
-            }
-        },{
-            filePath:url
-        });
-    });
-};
-
-/**
- * 获取当前手机位置
- * @param {string} type 地图经纬度类型
+ * 获取当前IMEI
  */
 export const getEncoding = () =>{
-    return new Promise((resolve)=> {
+    return new Promise((resolve, reject)=> {
         httpApp('jm_user.getEncoding', {
             onSuccess: (res) => {
                 let data = res;

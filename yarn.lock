@@ -931,6 +931,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
+base-64@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
+  integrity sha1-eAqZyE59YAJgNhURxId2E78k9rs=
+
 base64-js@1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/base64-js/-/base64-js-1.1.2.tgz#d6400cac1c4c660976d90d07a04351d89395f5e8"
@@ -3444,10 +3449,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-baidu-map-jm@^1.2.0:
+react-native-baidu-map-jm@1.2.0:
   version "1.2.0"
-  resolved "https://registry.npm.taobao.org/react-native-baidu-map-jm/download/react-native-baidu-map-jm-1.2.0.tgz#5203f89d455edaafca37c2a02482355b3af8d155"
-  integrity sha1-UgP4nUVe2q/KN8KgJII1Wzr40VU=
+  resolved "https://registry.npmjs.org/react-native-baidu-map-jm/-/react-native-baidu-map-jm-1.2.0.tgz#5203f89d455edaafca37c2a02482355b3af8d155"
+  integrity sha512-3bAbR1BGT0g6pKOsa2LOJCiVd2l7DErzs9YQIU6Kj27snyPKB4aSN0rW0IUX3pSqgq+2AHYPPLikDXzkuDtrxA==
 
 "react-native-deprecated-custom-components@github:facebookarchive/react-native-custom-components":
   version "0.1.1"
@@ -3459,6 +3464,14 @@ react-native-baidu-map-jm@^1.2.0:
     prop-types "^15.5.10"
     react-timer-mixin "^0.13.2"
     rebound "^0.0.13"
+
+react-native-fs@2.13.3:
+  version "2.13.3"
+  resolved "https://registry.npmjs.org/react-native-fs/-/react-native-fs-2.13.3.tgz#a422f0ecd8a093a7e99d8d51ff51440e090a18a8"
+  integrity sha512-B62LSSAEYQGItg7KVTzTVVCxezOYFBYp4DMVFbdoZUd1mZVFdqR2sy1HY1mye1VI/Lf3IbxSyZEQ0GmrrdwLjg==
+  dependencies:
+    base-64 "^0.1.0"
+    utf8 "^2.1.1"
 
 react-native-gesture-handler@1.3.0:
   version "1.3.0"
@@ -4425,6 +4438,11 @@ use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
+
+utf8@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.npmjs.org/utf8/-/utf8-2.1.2.tgz#1fa0d9270e9be850d9b05027f63519bf46457d96"
+  integrity sha1-H6DZJw6b6FDZsFAn9jUZv0ZFfZY=
 
 util-deprecate@~1.0.1:
   version "1.0.2"

@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-18 15:30:43
+ * @LastEditTime: 2019-09-25 09:36:59
  */
 import React, {Component} from 'react';
-import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions} from 'react-native';
+import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions,AsyncStorage} from 'react-native';
 import {Button} from '../../components/index';
 import {Wheel} from 'teaset';
 const {width} = Dimensions.get('window');
@@ -17,15 +17,22 @@ export default class RecordControl extends Component {
         this.state = {
             isVisible:false,
             time:'30',
-            index:0
+            index:0,
         };
     }
+    /**
+     * 时间处理
+     */
+    ftmTime = (time) =>{
+        const s = time / 60 < 1?`${time}s`:`${time / 60}分钟`;
+        return s;
+    }
     render(){
-        const {type} = this.props;
-        console.log(type,2222);
+        const {isOpenSelect} = this.props;
+        console.log(isOpenSelect,111);
         return (
             <View style={this.renderStyle()}>
-                {type?this.renderControl():this.renderDelete()}
+                {isOpenSelect?this.renderControl():this.renderDelete()}
                 {this.renderModal()}
             </View>
         );
@@ -34,6 +41,16 @@ export default class RecordControl extends Component {
      * 轨迹声音录制控制面板
      */
     renderControl(){
+        const {recordLength,recordType,isRecording} = this.props;
+        let text = '开始录音';
+        let backgroundColor = isRecording?'#98BBF9':'#3479F6';
+        let borderColor = isRecording?'#98BBF9':'#3479F6';
+        if(recordType == 0){
+            text = '持续录音';
+            text = isRecording?'录音中':'开始录音';
+        }else{
+            text = isRecording?'持续录音中…':'持续录音';
+        }
         return <View style={styles.controlStyle}>
             <View style={styles.touchStyle}>
                 <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {this.props.onSelect && this.props.onSelect(0);}}>
@@ -46,9 +63,29 @@ export default class RecordControl extends Component {
                 </TouchableOpacity>
             </View>
             <View style={{flex:1}}>
-                <Button titleStyle={styles.titleStyle} style={styles.buttonStyle} title={`开始录音（${30}s）`}  />
+                {
+                    recordType == 0
+                        ?
+                        <Button onPress={this.onRecord} titleStyle={[styles.titleStyle]} style={[styles.buttonStyle,{backgroundColor,borderColor}]} title={`${text}（${this.ftmTime(recordLength)}）`}  />
+                        :
+                        <Button onPress={this.onRecord} titleStyle={styles.titleStyle} style={styles.buttonStyle} title={text}  />
+                }
             </View>
         </View>;
+    }
+    /**
+     * 开始录音
+     */
+    onRecord = () => {
+        const {isRecording,recordLength,recordType} = this.props;
+        let data = {
+            recordLength:recordLength,
+            isRecording:isRecording
+        };
+        if(isRecording && recordType == 0){
+            return console.log('当前设备正在录音');
+        }
+        this.props.onRecord && this.props.onRecord(data);
     }
     /**
      * 渲染录音删除控制面板
@@ -87,9 +124,11 @@ export default class RecordControl extends Component {
      * 选择时间弹框
      */
     renderModal = () => {
-        let {currentTime} = this.props;
-        const time = ['30秒','1分钟','2分钟','3分钟','4分钟','5分钟','持续录音'];
-        
+        const {isRecording} = this.props;
+        if(isRecording){
+            return console.log('视频录制中');
+        }
+        const time = ['30s','1分钟','2分钟','3分钟','4分钟','5分钟','持续录音'];
         return <Modal
             animationType="slide"
             transparent={true}
@@ -101,15 +140,10 @@ export default class RecordControl extends Component {
                     <TouchableOpacity activeOpacity={1} onPress={()=>{
                         this.setState({isVisible:false});
                     }} >
-                        <Text style={styles.headerText}>取消</Text>
+                        <Text style={styles.headerText}>{'取消'}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1} onPress={()=>{
-                        this.props.onConfirm &&  this.props.onConfirm(this.state.time);
-                        this.setState({
-                            isShowDatepicker:false
-                        });
-                    }} >
-                        <Text style={styles.headerText}>确定</Text>
+                    <TouchableOpacity activeOpacity={1} onPress={this.onConfirm} >
+                        <Text style={styles.headerText}>{'确定'}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{backgroundColor:'#fff',justifyContent: 'center', alignItems: 'center'}}>
@@ -126,10 +160,29 @@ export default class RecordControl extends Component {
         </Modal>;
     }
     /**
+     * 保存时间
+     */
+    onConfirm = () => {
+        const unit = String(this.state.time)[this.state.time.length] === 's'?1:60;
+        let time = parseInt(this.state.time) * unit;
+        time = isNaN(time)?0:time;
+        const type = this.state.time == '持续录音'?1:0;
+        // //缓存用户选择的时间
+        // const locatorData = {
+        //     recordTime:time,
+        //     recordIndex:this.state.index
+        // };
+        // const locatorRecord = JSON.stringify(locatorData);
+        // AsyncStorage.setItem('locatorRecord',locatorRecord);
+        this.props.onConfirm &&  this.props.onConfirm({type,time});
+        this.setState({
+            isVisible:false
+        });
+    }
+    /**
      * 选中图片
      */
     onDateChange = (time,index) => {
-        console.log(time,9999);
         this.setState({
             time,
             index
@@ -191,7 +244,7 @@ const styles = StyleSheet.create({
     },
     wheelItem:{
         height: 200, 
-        width: 60
+        width: 100
     },
     itemStyle:{
         textAlign: 'center',

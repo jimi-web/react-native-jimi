@@ -8,6 +8,7 @@
  */
 
 // import Photo from './photo/index';
+import '../libs/time';
 import BaiduPosition from './map/position/BaiduPosition';
 import GooglePosition from './map/position/GooglePosition';
 import BaiduTrack from './map/track/BaiduTrack';
