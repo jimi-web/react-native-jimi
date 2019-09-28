@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-25 10:39:00
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-28 14:04:38
  -->
 # 几米圈业务模块
 
@@ -18,4 +18,6 @@
 6. "react-native-shadow": "^1.2.2",
 7. "react-native-svg": "9.3.7",
 8. "react-navigation": "3.6.1",
+9. "react-native-fs": "2.13.3",
+10."prop-types": "15.7.2",
 ```

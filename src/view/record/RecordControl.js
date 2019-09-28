@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-27 16:29:57
+ * @LastEditTime: 2019-09-28 10:42:08
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions,AsyncStorage} from 'react-native';
@@ -33,7 +33,6 @@ export default class RecordControl extends Component {
     }
     render(){
         const {isOpenSelect} = this.props;
-        console.log(isOpenSelect,111);
         return (
             <BottomToolbars>
                 <View style={this.renderStyle()}>
@@ -51,7 +50,6 @@ export default class RecordControl extends Component {
         let text = '开始录音';
         let backgroundColor = isRecording?'#98BBF9':'#3479F6';
         let borderColor = isRecording?'#98BBF9':'#3479F6';
-        console.log(this.props,'录音状态修改');
         if(recordType == 0){
             text = '持续录音';
             text = isRecording?'录音中':'开始录音';
@@ -60,7 +58,7 @@ export default class RecordControl extends Component {
         }
         return <View style={styles.controlStyle}>
             <View style={styles.touchStyle}>
-                <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {this.props.onSelect && this.props.onSelect(0);}}>
+                <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {if(this.props.isPlay){return console.log('正在播放录音，不可进行操作');} this.props.onSelect && this.props.onSelect(0);}}>
                     <Image source={require('../../assets/record/operating_select.png')} />
                     <Text style={{fontSize:10,color:'#979797'}}>{'选择'}</Text>
                 </TouchableOpacity>

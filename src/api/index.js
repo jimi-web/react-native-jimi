@@ -3,14 +3,14 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 17:53:58
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-27 18:18:49
  * @LastEditors: xieruizhi
  * @LastEditTime: 2019-09-26 16:50:27
  */
 
-const dev = 1;
-const server = dev?'http://10.0.16.126:3000':'http://10.0.17.227:3000';
+const dev = 0;
+let server = dev?'http://10.0.16.126:3000':'http://10.0.17.227:3000';
 
 
 export const recordApi = {
@@ -29,4 +29,10 @@ export const map = {
     fenceDel:server+'/fence/delete'
 };
 
-
+/**
+ * 修改服务器地址
+ * @param {String} url 服务器地址
+ */
+export const editServerUrl  = (url) => {
+    server = url;
+};
