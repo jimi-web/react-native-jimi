@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 18:13:56
+ * @LastEditTime: 2019-09-29 09:50:15
  * @LastEditors: xieruizhi
  * @LastEditTime: 2019-09-26 16:50:27
  */
@@ -27,4 +27,10 @@ export const map = {
     fenceDel:server+'/fence/delete'
 };
 
-
+/**
+ * 修改服务器地址
+ * @param {String} url 服务器地址
+ */
+export const editServerUrl  = (url) => {
+    server = url;
+};

@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-27 16:15:38
+ * @LastEditTime: 2019-09-28 14:09:41
  */
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator } from 'react-native';
 import RecordControl from './RecordControl';
 import { jmAjax,getEncoding } from '../../http/business';
 import { createTheFolder } from '../../http/file';
@@ -20,15 +20,19 @@ import PropTypes from 'prop-types';
 export default class Record extends Component {
     constructor(props) {
         super(props);
+        this.totalPage = 10;//总页数
         this.isFolder = false;//判断是否创建或是否拥有该文件夹
         this.folderPath = '';//是否创建文件夹地址
-        this.isPlay = false;//是否正在播放
+        
         this.recordTimer = null;//录音过程中的计时器
         this.state = {
+            isPlay:false,//是否正在播放
             isOpenSelect: 1,//是否开启选择
             changeFileLength: 0,//选中的文件长度
             recordType:0,//录音类型，0是正常，1是持续录音
             isRecording:false,//是否录制中
+            recordLength:30,//录音时长
+            refreshing:true,//列表是否加载中
             /* 传参 */
             params: {
                 pageNum: 1,
@@ -36,7 +40,6 @@ export default class Record extends Component {
             },
             initFile: [],//原始数据
             recordList: [],//格式化之后数据
-            recordLength:30,//录音时长
             deleteRecordList:[],//删除录音深拷贝数据
         };
     }
@@ -100,10 +103,12 @@ export default class Record extends Component {
             encodingType: true,
             data: params
         }).then(res => {
+            console.log(res,'数据111');
             if (res.code) {
                 return;
             }
-            this.ftmRecord(res.data);
+            this.totalPage = res.data.totalPage;
+            this.ftmRecord(res.data.result);
         });
     }
     /**
@@ -152,6 +157,25 @@ export default class Record extends Component {
         });
     }
     /**
+     * 查询文件是否已经存在
+     */
+    onExists = (item) => {
+        if(this.isFolder){
+            const url = this.folderPath + item.fileName + item.ext;
+            return new Promise((resolve) => {
+                RNFS.exists(url).then(status => {
+                    resolve(status);
+                });
+            });
+        }else{
+            this.createFolder().then(res => {
+                this.onExists(item);
+            });
+        }
+        
+        
+    }
+    /**
      * 数据处理
      */
     ftmRecord = (file) => {
@@ -160,11 +184,39 @@ export default class Record extends Component {
         // data[0].create_time = new Date().getTime();
         data.forEach((item, index) => {
             item.timeLength = 0;
+            // 修改成显示数据
+            item.createTime = new Date(item.create_time).Format('hh:mm:ss');
+            item.row = 1;
+            item.recordType = item.recordType === 'MANUAL' ? '手动录音' : '震动录音';
+            item.progress = 0;
+            item.isChange = false;
+            
+            item.type = 0;
+            item.index = index;
             const fileList = item.fileDetails || [];
             // 计算时长
-            fileList.forEach((value, index) => {
+            fileList.forEach((value, i) => {
+                let flag = 2;
                 item.timeLength += Number(value.audioTime) || 0;
                 item.ext  = value.ext || '.amr';
+                
+                console.log(this.folderPath + value.fileName + value.ext,'路径');
+                this.onExists(value).then(status => {
+                    if(!status){
+                        flag = 0;
+                    }
+                    console.log(flag,'现在的路径',item);
+                    if(i === fileList.length - 1){
+                        console.log(i,item,'获取');
+                        item.type = flag;
+                    }
+                    if(index === data.length - 1){
+                        const totalList = JSON.parse(JSON.stringify(data));
+                        this.setState({
+                            recordList:totalList
+                        });
+                    }
+                });
             });
             item.timeLength  =  item.timeLength;
             // 添加日期标识符
@@ -178,41 +230,44 @@ export default class Record extends Component {
                     item.fileDate = parseDate(item.create_time);
                 }
             }
-            // 修改成显示数据
-            item.createTime = new Date(item.create_time).Format('hh:mm:ss');
-            item.row = 1;
-            item.recordType = item.recordType === 'MANUAL' ? '手动录音' : '震动录音';
-            item.progress = 0;
-            item.isChange = false;
-            item.type = 0;
-            item.index = index;
         });
-        console.log(data,'格式化之后的文件');
+        const recordList = this.state.recordList.concat(data);
+        const initFile = this.state.recordList.concat(file);
+        console.log(recordList,'格式化之后的数据');
         this.setState({
-            recordList: data,
-            initFile: file
+            recordList,
+            initFile,
+            refreshing:false
         });
     }
     /**
      * 创建文件夹
      */
     createFolder = () => {
-        createTheFolder('record').then(res => {
-            console.log(res,'当前创建的文件夹');
-            this.isFolder = true;
-            this.folderPath = res;
+        return new Promise((resolve) => {
+            createTheFolder('record').then(res => {
+                console.log(res,'当前创建的文件夹');
+                this.isFolder = true;
+                this.folderPath = res;
+                resolve(res);
+            });
         });
     };
     render() {
-        console.log(this.state.recordLength,'渲染时的录音长度');
         return (
             <View style={{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }}>
                 <FlatList
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.onRefresh}
                     data={this.state.recordList}
                     renderItem={this.renderItem}
+                    onEndReached={this.onEndReached}
+                    onEndReachedThreshold={0.2}
+                    ListFooterComponent={this.renderFooter}
                 />
                 <View style={{ height: 55, width: '100%' }}>
                     <RecordControl
+                        isPlay={this.state.isPlay}
                         isOpenSelect={this.state.isOpenSelect}
                         recordLength={this.state.recordLength}
                         fileNumber={this.state.changeFileLength}
@@ -233,10 +288,66 @@ export default class Record extends Component {
         );
     }
     /**
+     * 刷新数据
+     */
+    onRefresh = () => {
+        if(this.state.isPlay){
+            return console.log('当前录音正在播放');
+        }
+        const pageNum = 1;
+        this.state.params = {
+            ...this.state.params,
+            pageNum,
+        };
+        this.setState({
+            initFile:[],
+            recordList:[],
+            refreshing:true
+        });
+        this.getServerRecordFile(this.state.params);
+    }
+    /**
+     * 滚动到底部
+     */
+    onEndReached = (number) => {
+        
+        const pageNum = ++this.state.params.pageNum;
+        console.log(number,'滚动',this.totalPage,pageNum,this.state.params.pageNum);
+        if(pageNum > this.totalPage){
+            return;
+        }
+        this.setState({
+            params:{
+                ...this.state.params,
+                pageNum
+            }
+        },() => {
+            this.getServerRecordFile(this.state.params);
+        });
+        
+    }
+    /**
+     * 底部提示
+     */
+    renderFooter = () => {
+        if(this.state.refreshing || this.totalPage < this.state.params.pageNum){
+            return null;
+        }
+        if(this.totalPage == this.state.params.pageNum){
+            return <View style={{height:44,alignItems:'center',padding:10}}>
+                <Text>{'没有更多数据了'}</Text>
+            </View>;
+        }
+        return <View style={{alignItems:'center',padding:15}}>
+            <ActivityIndicator animating={true} color={'#ccc'}  />
+            <Text>{'数据加载中，请稍后'}</Text>
+        </View>;
+    }
+    /**
      * 错误提示
      */
     renderLoading = () => {
-        if(this.state.recordList.length){
+        if(this.state.recordList.length || this.state.refreshing){
             return null;
         }
         return <TouchableOpacity activeOpacity={1} onPress={() => {this.getServerRecordFile(this.state.params);}} style={{width:'100%',height:'100%',justifyContent:'center',alignItems:'center',position:'absolute'}}>
@@ -307,32 +418,52 @@ export default class Record extends Component {
         if(this.isFolder){
             this.downloadFile(item);
         }else{
-            this.createFolder();
+            this.createFolder().then(res => {
+                this.downloadRecord(item);
+            });
         }
+    }
+    /**
+     * 
+     * @param {Object} data 录音文件
+     * @param {Number}} index 初始位置
+     */
+    playRecord(data,index){
+        if(this.state.isPlay){
+            return console.log('当前录音正在播放');
+        }
+        this.playRecording(data,index);
     }
     /**
      * 播放录音
      * @param {object} item 录音的文件
+     * @param {Number}} index 初始位置
      */
-    playRecord(data,index){
+    playRecording(data,index){
         let item = data.fileDetails;
-        console.log(item,'i的值');
-        if(index >= item.length){
-            this.isPlay = false;
+        let i = index || 0;
+        console.log(i,'i的值');
+        if(i >= item.length){
             data.type = 2;
             this.state.recordList[data.index] = data;
             const recordList = JSON.parse(JSON.stringify(this.state.recordList));
             this.setState({
-                recordList
+                recordList,
+                isPlay:false
             });
             return;
         }
-        let i = index || 0;
-        const length = item[i].audioTime * 1000;
-        console.log(data,'播放时的数据',i);
+        let length = 0;
+        for (let j = 0; j < i + 1; j++) {
+            
+            const value = item[j];
+            length = (length / 1000 + Number(value.audioTime)) * 1000;   
+        }
+        
+        // console.log(data,'播放时的数据',i);
         const url = this.folderPath + item[i].fileName + item[i].ext;
-        console.log(url,'获取的文件地址');
-        this.isPlay = true;
+        // console.log(url,'获取的文件地址');
+        
         playAudio(url).then(res => {
             i++;
             data.type = 3;
@@ -340,13 +471,16 @@ export default class Record extends Component {
                 data.progress += 100;
                 this.state.recordList[data.index] = data;
                 const recordList = JSON.parse(JSON.stringify(this.state.recordList));
-                console.log(data.progress,'当前进度',length,recordList);
+                // console.log(data.progress,'当前进度',length,recordList);
                 this.setState({
-                    recordList
+                    recordList,
+                    isPlay:true
                 });
+                console.log(data.progress,length,'进度和长度');
                 if(data.progress >= length){
-                    this.playRecord(data,i);
-                    console.log('清除当前计时器');
+                    console.log(data.progress,length,'进入的进度和长度');
+                    this.playRecording(data,i);
+                    // console.log('清除当前计时器');
                     clearInterval(timer);
                 }
             },100); 
