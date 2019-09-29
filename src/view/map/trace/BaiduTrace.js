@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-28 16:58:33
+ * @LastEditTime: 2019-09-29 10:24:46
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
@@ -37,7 +37,8 @@ export default class BaiduTrace extends TraceUtils {
                 visualRange={this.state.visualRange}
                 ChangePositionBtn={this.ChangePositionBtn()}
                 mapControls={this.polyline}
-            ></BaiduPosition>
+            >
+            </BaiduPosition>
             {
                 this.whitespace()
             }

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-26 15:18:41
+ * @LastEditTime: 2019-09-29 10:28:25
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text} from 'react-native';
@@ -28,7 +28,7 @@ export default class PositionUtils extends Component {
         edgePadding:PropTypes.object, //标记距离地图内边距(暂不需要)
         ChangePositionBtn:PropTypes.object,//切换车和我的位置的按钮属性
         getMarkerPoint:PropTypes.func,//获取定位信息
-        customItem:PropTypes.func,//在地图上自定义其他元素
+        // customItem:PropTypes.func,//在地图上自定义其他元素
         markerInfoWindow:PropTypes.object,//infoWindow
         roadBtnStyle:PropTypes.object,//路况样式
         mapTypeBtnStyle:PropTypes.object,//地图类型样式
@@ -71,7 +71,7 @@ export default class PositionUtils extends Component {
             isCustom:false,
             visible:true
         },
-        customItem:null,
+        // customItem:null,
         roadBtnStyle:Styles.btn,
         mapTypeBtnStyle:Styles.btn,
     };
@@ -435,12 +435,12 @@ export default class PositionUtils extends Component {
             </TouchableOpacity>:null;
     }
 
-    /**
-     * 自定义覆盖物
-     */
-    customOverlay = ()=> {
-        return this.props.customItem?this.props.customItem() :null;
-    }
+    // /**
+    //  * 自定义覆盖物
+    //  */
+    // customOverlay = ()=> {
+    //     return this.props.customItem?this.props.customItem() :null;
+    // }
 
     /**
      * 监听数据变化

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-19 15:31:00
+ * @LastEditTime: 2019-09-29 10:20:52
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -61,7 +61,7 @@ export default class TrackUtils extends Component {
             image:require('../../../assets/map/device.png'),
         },
         dimDd:7,
-        customItem:null,
+        // customItem:null,
         playImg:{
             play:require('../../../assets/track/play.png'),
             pause:require('../../../assets/track/pause.png')
@@ -445,12 +445,12 @@ export default class TrackUtils extends Component {
     }
 
 
-    /**
-     * 自定义覆盖物
-     */
-    customOverlay = ()=> {
-        return this.props.customItem ?this.props.customItem() :null;
-    }
+    // /**
+    //  * 自定义覆盖物
+    //  */
+    // customOverlay = ()=> {
+    //     return this.props.customItem ?this.props.customItem() :null;
+    // }
 
 
 

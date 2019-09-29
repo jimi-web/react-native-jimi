@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 11:40:40
+ * @LastEditTime: 2019-09-29 10:33:44
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -39,33 +39,36 @@ export default class Position extends Component {
         return <View style={{flex:1}}>
             {
                 !this.state.isBaidu ?
-       
                     <Jimi.GooglePosition
-                        // getMarkerPoint={this.getPoint}
+                        getMarkerPoint={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
                         markerOptions={obj}
                         refreshTime = {20000}
                         ChangePositionBtn={car}
                         mylocationOptions={my}
-                        customItem = {this.customItem}
                         mapTypeBtnStyle={styles.set}
                         // markerInfoWindow={markerInfoWindow}
                     >
+                        {
+                            this.customItem()
+                        }
                     </Jimi.GooglePosition>
                     :
                     <Jimi.BaiduPosition
-                        // getMarkerPoint={this.getPoint}
+                        getMarkerPoint={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
                         markerOptions={obj}
                         refreshTime = {15000}
                         ChangePositionBtn={car}
                         mylocationOptions={my}
-                        customItem = {this.customItem}
                         mapTypeBtnStyle={styles.set}
                         // markerInfoWindow={markerInfoWindow}
                     >
+                        {
+                            this.customItem()
+                        }
                     </Jimi.BaiduPosition>
             }
         </View>;  

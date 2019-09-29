@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-10 11:02:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-18 15:05:58
+ * @LastEditTime: 2019-09-29 10:23:07
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -38,21 +38,25 @@ export default class Track extends Component {
                 this.state.isBaidu ? 
                     <Jimi.BaiduTrack
                         getTrackPoints ={this.getTrackPoints}
-                        customItem = {this.customItem}
                         mapTypeBtnStyle={styles.set}
                         polylineOptions = {polylineOptions}
                         playPolylineOptions = {playPolylineOptions}
                         playImg={playImg}
                     >
+                        {
+                            this.customItem()
+                        }
                     </Jimi.BaiduTrack>
                     :
                     <Jimi.GoogleTrack
-                        customItem = {this.customItem}
                         mapTypeBtnStyle={styles.set}
                         polylineOptions = {polylineOptions}
                         playPolylineOptions = {playPolylineOptions}
                         playImg={playImg}
                     >
+                        {
+                            this.customItem()
+                        }
                     </Jimi.GoogleTrack>            
             }
         </View>;

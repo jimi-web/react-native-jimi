@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-26 15:06:35
+ * @LastEditTime: 2019-09-29 10:15:07
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -95,7 +95,7 @@ export default class BaiduPosition extends PositionUtils {
                 this.phonePointBtn(1)
             }
             {
-                this.customOverlay()
+                this.props.children
             }
         </View>;        
     }
