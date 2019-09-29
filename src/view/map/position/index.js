@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 10:28:25
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-29 15:01:44
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text} from 'react-native';
@@ -12,7 +12,7 @@ import Styles from '../style/base';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
 import {httpLocationGet,jmAjax} from '../../../http/business';
-import {map} from '../../../api/index';
+import api from '../../../api/index';
 import PropTypes from 'prop-types';
 import '../../../libs/time';
 
@@ -222,7 +222,7 @@ export default class PositionUtils extends Component {
      */
     request = ()=>{
         jmAjax({
-            url:map.position,
+            url:api.position,
             method:'GET',
             encoding:true,
             encodingType:true
@@ -251,7 +251,7 @@ export default class PositionUtils extends Component {
      */
     geocoder = (data)=> {
         jmAjax({
-            url:map.geocoder,
+            url:api.geocoder,
             method:'GET',
             data:{
                 latitude:data.latitude,

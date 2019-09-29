@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-10 11:02:33
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 10:23:07
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-29 15:07:31
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -37,7 +37,6 @@ export default class Track extends Component {
             {
                 this.state.isBaidu ? 
                     <Jimi.BaiduTrack
-                        getTrackPoints ={this.getTrackPoints}
                         mapTypeBtnStyle={styles.set}
                         polylineOptions = {polylineOptions}
                         playPolylineOptions = {playPolylineOptions}

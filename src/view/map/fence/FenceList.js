@@ -4,13 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 14:30:06
+ * @LastEditTime: 2019-09-29 15:21:40
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity} from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {jmAjax} from '../../../http/business';
-import {map} from '../../../api/index';
+import api from '../../../api/index';
 import FenceListItem from '../../map/fence/FenceListItem';
 import BottomToolbars from '../../components/BottomToolbars';
 import FenceStyles from '../style/fenceList';
@@ -115,7 +115,7 @@ class FenceList extends Component {
      */
     getFenceList = ()=>{
         jmAjax({
-            url:map.fenceList,
+            url:api.fenceList,
             method:'GET',
             encoding:true,
             encodingType:true
@@ -155,7 +155,7 @@ class FenceList extends Component {
                 delList:list.filter(item => item.checked ==true)
             });
         }else {
-            
+            //
         }
     }
 
@@ -206,7 +206,7 @@ class FenceList extends Component {
             fenceList.splice(fenceList.findIndex(v => v.fenceId === item.fenceId),1);
         });
         jmAjax({
-            url:map.fenceDel,
+            url:api.fenceDel,
             method:'GET',
             data:{
                 fenceId:delId.join(',')

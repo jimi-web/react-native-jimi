@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 10:20:52
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-29 15:06:07
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -14,7 +14,7 @@ import MapStyles from '../style/track';
 import Controller from './TrackController';
 import {Toast,SegmentedBar} from 'teaset';
 import {jmAjax} from '../../../http/business';
-import {map} from '../../../api/index';
+import api from '../../../api/index';
 import gps from '../../../libs/coversionPoint';
 import PullTime from './PullTime';
 
@@ -170,6 +170,7 @@ export default class TrackUtils extends Component {
      * 数据请求模式判断
      */
     requestMode = ()=>{
+        console.log(this.props.getTrackPoints,6666666666);
         if(this.props.getTrackPoints){
             this.getTrackPoints();
         }else{
@@ -201,9 +202,9 @@ export default class TrackUtils extends Component {
             endTime:this.state.endTime,
             posType:this.state.posType
         };
-    
+        console.log(api,'获取的api');
         jmAjax({
-            url:map.track,
+            url:api.track,
             method:'GET',
             encoding:true,
             encodingType:true,

@@ -4,27 +4,40 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-28 14:09:41
+ * @LastEditTime: 2019-09-29 14:20:13
  */
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
 import RecordControl from './RecordControl';
 import { jmAjax,getEncoding } from '../../http/business';
 import { createTheFolder } from '../../http/file';
-import { playAudio } from '../../http/media';
-import { recordApi } from '../../api/index';
+import { playAudio,stopAudio } from '../../http/media';
+import api from '../../api/index';
 import { parseDate,parseTime } from '../../libs/utils';
 import RNFS from 'react-native-fs';
 import PropTypes from 'prop-types';
+import {Toast} from 'teaset';
 
 export default class Record extends Component {
+    static propTypes = {
+        params: PropTypes.object,
+        insTimeArr:PropTypes.array
+    };
+    static defaultProps = {
+        params:{
+            pageNum: 1,
+            pageSize: 10
+        },
+        insTimeArr: ['30s','1分钟','2分钟','3分钟','4分钟','5分钟','持续录音']
+    };
+
     constructor(props) {
         super(props);
         this.totalPage = 10;//总页数
         this.isFolder = false;//判断是否创建或是否拥有该文件夹
         this.folderPath = '';//是否创建文件夹地址
-        
         this.recordTimer = null;//录音过程中的计时器
+        this.playAudioTimer = null;//录音播放器
         this.state = {
             isPlay:false,//是否正在播放
             isOpenSelect: 1,//是否开启选择
@@ -34,10 +47,7 @@ export default class Record extends Component {
             recordLength:30,//录音时长
             refreshing:true,//列表是否加载中
             /* 传参 */
-            params: {
-                pageNum: 1,
-                pageSize: 10
-            },
+            params: this.props.params,
             initFile: [],//原始数据
             recordList: [],//格式化之后数据
             deleteRecordList:[],//删除录音深拷贝数据
@@ -47,6 +57,22 @@ export default class Record extends Component {
         this.getServerRecordFile(this.state.params);
         this.createFolder();
         this.getStorage();
+        // this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+        //     if (!this.state.isChangeScreen) {
+        //         this.changeSreenDirection('portrait');
+        //         return true;
+        //     }
+        //     return false;
+        // });
+    }
+    componentWillUnmount(){
+        if(this.recordTimer){
+            clearInterval(this.recordTimer);
+        }
+        if(this.playAudioTimer){
+            clearInterval(this.playAudioTimer);
+        }
+        stopAudio();
     }
     /**
      * 获取存储的录音信息
@@ -96,19 +122,89 @@ export default class Record extends Component {
      * 获取录音文件
      */
     getServerRecordFile = (params) => {
+        console.log(api,'地址');
         jmAjax({
-            url: recordApi.recordList,
+            url: api.recordList,
             method: 'GET',
             encoding: true,
             encodingType: true,
             data: params
         }).then(res => {
-            console.log(res,'数据111');
             if (res.code) {
+                this.setState({
+                    refreshing:false
+                });
                 return;
             }
             this.totalPage = res.data.totalPage;
-            this.ftmRecord(res.data.result);
+            
+            const serverParams = {
+                pageNum:res.data.currentPage,
+                pageSize:res.data.pageSize
+            };
+            this.ftmRecord(res.data.result,serverParams);
+        });
+    }
+    /**
+     * 数据处理
+     */
+    ftmRecord = (file,serverParams) => {
+        const data = JSON.parse(JSON.stringify(file));
+        // 数据重组
+        // data[0].create_time = new Date().getTime();
+        data.forEach((item, index) => {
+            item.timeLength = 0;
+            // 修改成显示数据
+            item.createTime = new Date(item.create_time).Format('hh:mm:ss');
+            item.row = 1;
+            item.recordType = item.recordType == 'MANUAL' ? '手动录音' : '震动录音';
+            item.progress = 0;
+            item.isChange = false;
+            
+            item.type = 0;
+            item.index = index;
+            const fileList = item.fileDetails || [];
+            // 计算时长
+            fileList.forEach((value, i) => {
+                let flag = 2;
+                item.timeLength += Number(value.audioTime) || 0;
+                item.ext  = value.ext || '.amr';
+                this.onExists(value).then(status => {
+                    if(!status){
+                        flag = 0;
+                    }
+                    if(i === fileList.length - 1){
+                        item.type = flag;
+                    }
+                    if(index === data.length - 1){
+                        const totalList = JSON.parse(JSON.stringify(this.state.recordList));
+                        this.setState({
+                            recordList:totalList
+                        });
+                    }
+                });
+            });
+            item.timeLength  =  item.timeLength;
+            // 添加日期标识符
+            item.today = new Date(item.create_time).Format('YYYY-MM-DD');
+            if (index == 0) {
+                item.fileDate = parseDate(item.create_time);
+            }
+            for (let i = 0; i < index; i++) {
+                const value = data[i];
+                if (item.today !== value.today) {
+                    item.fileDate = parseDate(item.create_time);
+                }
+            }
+        });
+        const recordList = this.state.recordList.concat(data);
+        const initFile = this.state.recordList.concat(file);
+        console.log(recordList,'格式化之后的数据',serverParams);
+        this.setState({
+            recordList,
+            initFile,
+            refreshing:false,
+            params:serverParams
         });
     }
     /**
@@ -117,37 +213,8 @@ export default class Record extends Component {
     deleteRecord = (params) => {
         return new Promise((resolve) => {
             jmAjax({
-                url:recordApi.deleteRecord,
+                url:api.deleteRecord,
                 method: 'DELETE',
-                encoding: true,
-                encodingType: true,
-                data:params
-            }).then(res => {
-                resolve(res);
-            });
-        });
-    }
-    /**
-     * 发送指令录音
-     */
-    setRecordInstruction = (instrution) => {
-        const params = {
-            encodingType:'IMEI',
-            cmdCode:instrution,
-            cmdType:0,
-            cmdId:'recording',
-            isSync:0,
-            offLineFlag:0,
-            platform:'app',
-            offLineInsType:'',
-            instructionSetting:{
-                recordLength:this.state.recordLength
-            }
-        };
-        return new Promise((resolve) => {
-            jmAjax({
-                url:recordApi.instruction,
-                method: 'POST',
                 encoding: true,
                 encodingType: true,
                 data:params
@@ -172,72 +239,34 @@ export default class Record extends Component {
                 this.onExists(item);
             });
         }
-        
-        
     }
     /**
-     * 数据处理
+     * 发送指令录音
      */
-    ftmRecord = (file) => {
-        const data = JSON.parse(JSON.stringify(file));
-        // 数据重组
-        // data[0].create_time = new Date().getTime();
-        data.forEach((item, index) => {
-            item.timeLength = 0;
-            // 修改成显示数据
-            item.createTime = new Date(item.create_time).Format('hh:mm:ss');
-            item.row = 1;
-            item.recordType = item.recordType === 'MANUAL' ? '手动录音' : '震动录音';
-            item.progress = 0;
-            item.isChange = false;
-            
-            item.type = 0;
-            item.index = index;
-            const fileList = item.fileDetails || [];
-            // 计算时长
-            fileList.forEach((value, i) => {
-                let flag = 2;
-                item.timeLength += Number(value.audioTime) || 0;
-                item.ext  = value.ext || '.amr';
-                
-                console.log(this.folderPath + value.fileName + value.ext,'路径');
-                this.onExists(value).then(status => {
-                    if(!status){
-                        flag = 0;
-                    }
-                    console.log(flag,'现在的路径',item);
-                    if(i === fileList.length - 1){
-                        console.log(i,item,'获取');
-                        item.type = flag;
-                    }
-                    if(index === data.length - 1){
-                        const totalList = JSON.parse(JSON.stringify(data));
-                        this.setState({
-                            recordList:totalList
-                        });
-                    }
-                });
+    setRecordInstruction = (instrution) => {
+        const params = {
+            encodingType:'IMEI',
+            cmdCode:instrution,
+            cmdType:0,
+            cmdId:'recording',
+            isSync:0,
+            offLineFlag:0,
+            platform:'app',
+            offLineInsType:'',
+            instructionSetting:{
+                recordLength:this.state.recordLength
+            }
+        };
+        return new Promise((resolve) => {
+            jmAjax({
+                url:api.instruction,
+                method: 'POST',
+                encoding: true,
+                encodingType: true,
+                data:params
+            }).then(res => {
+                resolve(res);
             });
-            item.timeLength  =  item.timeLength;
-            // 添加日期标识符
-            item.today = new Date(item.create_time).Format('YYYY-MM-DD');
-            if (index == 0) {
-                item.fileDate = parseDate(item.create_time);
-            }
-            for (let i = 0; i < index; i++) {
-                const value = data[i];
-                if (item.today !== value.today) {
-                    item.fileDate = parseDate(item.create_time);
-                }
-            }
-        });
-        const recordList = this.state.recordList.concat(data);
-        const initFile = this.state.recordList.concat(file);
-        console.log(recordList,'格式化之后的数据');
-        this.setState({
-            recordList,
-            initFile,
-            refreshing:false
         });
     }
     /**
@@ -273,6 +302,7 @@ export default class Record extends Component {
                         fileNumber={this.state.changeFileLength}
                         recordType={this.state.recordType}
                         isRecording={this.state.isRecording}
+                        insTimeArr={this.props.insTimeArr}
                         onSelect={(type) => { this.onSelect(type); }}
                         onEmpty={() => { this.onEmpty(); }}
                         onDelete={() => { this.onDelete(); }}
@@ -295,45 +325,42 @@ export default class Record extends Component {
             return console.log('当前录音正在播放');
         }
         const pageNum = 1;
-        this.state.params = {
+        const params = {
             ...this.state.params,
             pageNum,
         };
-        this.setState({
-            initFile:[],
-            recordList:[],
-            refreshing:true
-        });
-        this.getServerRecordFile(this.state.params);
+        // this.setState({
+        //     refreshing:true
+        // });
+        this.state.initFile = [];
+        this.state.recordList = [];
+        this.getServerRecordFile(params);
     }
     /**
      * 滚动到底部
      */
     onEndReached = (number) => {
         
-        const pageNum = ++this.state.params.pageNum;
-        console.log(number,'滚动',this.totalPage,pageNum,this.state.params.pageNum);
+        const pageNum = this.state.params.pageNum + 1;
+        // console.log(number,'滚动',this.totalPage,pageNum,this.state.params.pageNum);
         if(pageNum > this.totalPage){
             return;
         }
-        this.setState({
-            params:{
-                ...this.state.params,
-                pageNum
-            }
-        },() => {
-            this.getServerRecordFile(this.state.params);
-        });
+        const params = {
+            ...this.state.params,
+            pageNum
+        };
+        this.getServerRecordFile(params);
         
     }
     /**
      * 底部提示
      */
     renderFooter = () => {
-        if(this.state.refreshing || this.totalPage < this.state.params.pageNum){
+        if(this.state.refreshing){
             return null;
         }
-        if(this.totalPage == this.state.params.pageNum){
+        if(this.totalPage <= this.state.params.pageNum){
             return <View style={{height:44,alignItems:'center',padding:10}}>
                 <Text>{'没有更多数据了'}</Text>
             </View>;
@@ -435,6 +462,27 @@ export default class Record extends Component {
         this.playRecording(data,index);
     }
     /**
+     * 停止播放录音
+     * @param {Object} data 当前列文件
+     */
+    stopRecordAudio(data){
+        console.log(data,1111111);
+        stopAudio().then(res => {
+            data.progress = 0;
+            data.type = 2;
+            this.state.recordList[data.index] = data;
+            const recordList = JSON.parse(JSON.stringify(this.state.recordList));
+            if(!this.playAudioTimer){
+                return;
+            }
+            clearInterval(this.playAudioTimer);
+            this.setState({
+                recordList,
+                isPlay:false
+            });
+        });
+    }
+    /**
      * 播放录音
      * @param {object} item 录音的文件
      * @param {Number}} index 初始位置
@@ -442,7 +490,6 @@ export default class Record extends Component {
     playRecording(data,index){
         let item = data.fileDetails;
         let i = index || 0;
-        console.log(i,'i的值');
         if(i >= item.length){
             data.type = 2;
             this.state.recordList[data.index] = data;
@@ -467,7 +514,7 @@ export default class Record extends Component {
         playAudio(url).then(res => {
             i++;
             data.type = 3;
-            let timer = setInterval(()=> {
+            this.playAudioTimer = setInterval(()=> {
                 data.progress += 100;
                 this.state.recordList[data.index] = data;
                 const recordList = JSON.parse(JSON.stringify(this.state.recordList));
@@ -481,7 +528,7 @@ export default class Record extends Component {
                     console.log(data.progress,length,'进入的进度和长度');
                     this.playRecording(data,i);
                     // console.log('清除当前计时器');
-                    clearInterval(timer);
+                    clearInterval(this.playAudioTimer);
                 }
             },100); 
             
@@ -508,7 +555,7 @@ export default class Record extends Component {
         };
         this.deleteRecord(params).then(res => {
             if(res.code){
-                return console.log('清空完成');
+                return Toast.message('文件已删除');
             }
             this.getServerRecordFile(this.state.params);
         });
@@ -523,7 +570,7 @@ export default class Record extends Component {
         };
         this.deleteRecord(params).then(res => {
             if(res.code){
-                return console.log('清空完成');
+                return Toast.message('录音已清空');
             }
             this.setState({
                 recordList:[]
@@ -546,7 +593,7 @@ export default class Record extends Component {
         }
         this.setRecordInstruction(instruction).then(res => {
             if(res.code){
-                return console.log('指令发送失败');
+                return Toast.message('指令发送失败');
             }
             //录音成功时储存录音状态
             const storage = {
@@ -611,10 +658,10 @@ export default class Record extends Component {
     onSelect = (type) => {
         
         if(!this.state.recordList.length){
-            return console.log('当前没有录音文件，无法进行操作！');
+            return Toast.message('当前没有录音文件，无法进行操作！');
         }
         if(this.state.isRecording){
-            return console.log('声音录制中，无法进行操作！');
+            return Toast.message('声音录制中，无法进行操作！');
         }
         if(type == 1){
             this.setState({
@@ -712,6 +759,7 @@ export default class Record extends Component {
             break;
         case 3:
             img = require('../../assets/record/recording_list_playing.gif');
+            fn = this.stopRecordAudio.bind(this,item);
             break;
         case 4:
             fn = this.onSelectItem.bind(this,item,5);
