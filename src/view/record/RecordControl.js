@@ -4,12 +4,12 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-28 10:42:08
+ * @LastEditTime: 2019-09-29 10:01:18
  */
 import React, {Component} from 'react';
-import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions,AsyncStorage} from 'react-native';
+import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions} from 'react-native';
 import {Button} from '../../components/index';
-import {Wheel} from 'teaset';
+import {Wheel,Toast} from 'teaset';
 import BottomToolbars from '../components/BottomToolbars';
 const {width} = Dimensions.get('window');
 export default class RecordControl extends Component {
@@ -58,7 +58,7 @@ export default class RecordControl extends Component {
         }
         return <View style={styles.controlStyle}>
             <View style={styles.touchStyle}>
-                <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {if(this.props.isPlay){return console.log('正在播放录音，不可进行操作');} this.props.onSelect && this.props.onSelect(0);}}>
+                <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {if(this.props.isPlay){return Toast.message('正在播放录音，不可进行操作');} this.props.onSelect && this.props.onSelect(0);}}>
                     <Image source={require('../../assets/record/operating_select.png')} />
                     <Text style={{fontSize:10,color:'#979797'}}>{'选择'}</Text>
                 </TouchableOpacity>
@@ -96,7 +96,7 @@ export default class RecordControl extends Component {
             isRecording:isRecording
         };
         if(isRecording && recordType == 0){
-            return console.log('当前设备正在录音');
+            return Toast.message('当前设备正在录音');
         }
         this.props.onRecord && this.props.onRecord(data);
     }
@@ -137,11 +137,11 @@ export default class RecordControl extends Component {
      * 选择时间弹框
      */
     renderModal = () => {
-        const {isRecording} = this.props;
+        const {isRecording,insTimeArr} = this.props;
         if(isRecording){
-            return console.log('声音录制中');
+            return Toast.message('当前设备正在录音');
         }
-        const time = ['30s','1分钟','2分钟','3分钟','4分钟','5分钟','持续录音'];
+        const time = insTimeArr;
         return <Modal
             animationType="slide"
             transparent={true}

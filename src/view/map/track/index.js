@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-19 15:31:00
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-29 14:58:52
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -14,7 +14,7 @@ import MapStyles from '../style/track';
 import Controller from './TrackController';
 import {Toast,SegmentedBar} from 'teaset';
 import {jmAjax} from '../../../http/business';
-import {map} from '../../../api/index';
+import api from '../../../api/index';
 import gps from '../../../libs/coversionPoint';
 import PullTime from './PullTime';
 
@@ -203,7 +203,7 @@ export default class TrackUtils extends Component {
         };
     
         jmAjax({
-            url:map.track,
+            url:api.track,
             method:'GET',
             encoding:true,
             encodingType:true,
