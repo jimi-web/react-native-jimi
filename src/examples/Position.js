@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 10:33:44
+ * @LastEditTime: 2019-09-29 11:19:34
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -40,6 +40,7 @@ export default class Position extends Component {
             {
                 !this.state.isBaidu ?
                     <Jimi.GooglePosition
+                        style={{height:200}}
                         getMarkerPoint={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
