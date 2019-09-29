@@ -4,14 +4,14 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 17:51:39
+ * @LastEditTime: 2019-09-28 14:56:57
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity} from 'react-native';
 import {jmAjax} from '../../../http/business';
 import {map} from '../../../api/index';
+import FenceListItem from '../../map/fence/FenceListItem';
 import BottomToolbars from '../../components/BottomToolbars';
-import {Checkbox} from 'teaset';
 import FenceStyles from '../style/fenceList';
 
 export default class FenceList extends Component { 
@@ -30,42 +30,27 @@ export default class FenceList extends Component {
     }
 
     render() {
-    
-
         return <View style={{flex:1,position:'relative',backgroundColor:'#F7F7F7'}}>
             {
                 this.state.fenceList.length>0 ?
                     <ScrollView>
                         {
                             this.state.fenceList.map((item,index)=>{
-                                return <TouchableOpacity style={FenceStyles.line} activeOpacity={0.5} key={'fenceList'+index} onPress={()=>this.onFenceListItem(index)}>
-                                    <View>
-                                        {
-                                            this.state.isSelect ?
-                                                <Checkbox 
-                                                    checked={item.checked}
-                                                    checkedIcon={<Image style={{width: 24, height: 24}} source={require('../../../assets/record/checkbox_pre.png')} />}
-                                                    uncheckedIcon={<Image style={{width: 24, height: 24}} source={require('../../../assets/record/checkbox_nor.png')} />}
-                                                />:
-                                                <Image style={FenceStyles.icon} source={this.getFenceState(item.fenceState)}>  
-                                                </Image>
-                                        }
-                                    </View>
-                                    <View style={FenceStyles.info}>
-                                        <View style={FenceStyles.title}>
-                                            <Text style={FenceStyles.name}>{item.fenceTitle}</Text>
-                                            <Text style={FenceStyles.text}>半径:{item.radius}m</Text>
-                                        </View>
-                                        <View> 
-                                            <Text style={[FenceStyles.text,FenceStyles.address]}>{item.fenaddress}</Text>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity >;
+                                return <FenceListItem
+                                    key={'fenceList'+index} 
+                                    checked={item.checked}
+                                    fenceState={item.fenceState}
+                                    fenceTitle={item.fenceTitle}
+                                    radius={item.radius}
+                                    fenaddress={item.fenaddress}
+                                    isSelect = {this.state.isSelect}
+                                    onFenceListItem = {()=>{this.onFenceListItem(index);}}
+                                ></FenceListItem>; 
                             })
                         }
                         <View style={FenceStyles.space}></View>
                     </ScrollView>:
-                    <View style={FenceStyles.empty} >
+                    <View style={FenceStyles.empty}>
                         <Image source={require('../../../assets/fence/list_empty.png')} />
                         <Text style={FenceStyles.emptyText}>暂无内容</Text>
                     </View>
@@ -135,7 +120,7 @@ export default class FenceList extends Component {
             encodingType:true
         }).then((res)=>{
             let result = res.data;
-            result.forEach((item)=>{
+            result.forEach((item,index)=>{
                 item.checked = false;
             });
             this.setState({
@@ -144,26 +129,11 @@ export default class FenceList extends Component {
         });        
     }
 
-    /**
-     * 围栏状态
-     */
-    getFenceState = (state)=> {
-        let img = '';
-        switch (state) {
-        case 'in':
-            img = require('../../../assets/fence/fence_list_enter.png');
-            break;
-        case 'out':
-            img = require('../../../assets/fence/fence_list_out.png');
-            break;
-        case 'all':
-            img = require('../../../assets/fence/fence_list_turnover.png');
-        }
-        return img;
-    }
+
 
     /**
      * 选择点击事件
+     * @param {Boolean} state  是否点击选择
      */
     onSelect = (state)=> {
         this.setState({
@@ -171,7 +141,10 @@ export default class FenceList extends Component {
         });
     }
 
-
+    /**
+     * 点击围栏列表事件
+     * @param {Number} index  位置
+     */
     onFenceListItem = (index)=>{
         if(this.state.isSelect){
             let list = this.state.fenceList;
@@ -201,6 +174,7 @@ export default class FenceList extends Component {
 
     /**
      * 反选
+     * @param {Boolean} state  复选框状态
      */
     inverse = (state)=>{
         let list = this.state.fenceList;
@@ -216,7 +190,7 @@ export default class FenceList extends Component {
     onCheckAll = ()=>{
         let list = this.inverse(true);
         this.setState({
-            delList:list,
+            delList:JSON.parse(JSON.stringify(list)),
             fenceList:list
         });
     }
@@ -226,13 +200,10 @@ export default class FenceList extends Component {
         let delList = this.state.delList;
         let fenceList = this.state.fenceList;
         //获取数据，删除信息
-        delList.forEach((item)=>{
+        delList.forEach((item,index)=>{
             delId.push(item.fenceId);
             fenceList.splice(fenceList.findIndex(v => v.fenceId === item.fenceId),1);
         });
-        console.log(delId);
-        console.log(fenceList);
-
         jmAjax({
             url:map.fenceDel,
             method:'GET',
@@ -240,16 +211,11 @@ export default class FenceList extends Component {
                 fenceId:delId.join(',')
             }
         }).then((res)=>{
-            console.log(res);
-            
             //更新数据
             this.setState({
                 fenceList:fenceList,
                 delList:[]
             });
         }); 
-
-
-  
     }
 }

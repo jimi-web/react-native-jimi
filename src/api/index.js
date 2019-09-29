@@ -4,15 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 17:53:58
+ * @LastEditTime: 2019-09-27 18:13:56
  * @LastEditors: xieruizhi
  * @LastEditTime: 2019-09-26 16:50:27
  */
 
 const dev = 1;
 const server = dev?'http://10.0.16.126:3000':'http://10.0.17.227:3000';
-
-
 export const recordApi = {
     recordList:server + '/record/module/file/page',//获取录音列表
     instruction:server + '/proxy/module/instruction',//发送指令

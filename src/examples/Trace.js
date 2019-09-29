@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 13:38:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-26 16:27:51
+ * @LastEditTime: 2019-09-28 16:59:39
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -29,12 +29,12 @@ export default class Track extends Component {
                 this.state.isBaidu ?
                     <Jimi.BaiduTrace 
                         isRefresh={false}
-                        playPolylineOptions={playPolylineOptions}
+                        polylineOptions={playPolylineOptions}
                         customItem={this.customItem}
                     ></Jimi.BaiduTrace>
                     :
                     <Jimi.GoogleTrace 
-                        playPolylineOptions={playPolylineOptions}
+                        polylineOptions={playPolylineOptions}
                         customItem={this.customItem}
                     ></Jimi.GoogleTrace>}
         </View>;

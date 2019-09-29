@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-25 10:06:41
+ * @LastEditTime: 2019-09-28 16:58:33
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
@@ -54,6 +54,7 @@ export default class BaiduTrace extends TraceUtils {
     }
 
     polyline = ()=>{
+        console.log(this.props.polylineOptions.color);
         return <Overlay.Polyline
             width={this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2}
             color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#F82E1B' : '#F82E1B'}
