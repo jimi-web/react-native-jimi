@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-12 11:45:56
+ * @LastEditTime: 2019-09-29 10:20:35
  */
 
 import React, {Component} from 'react';
@@ -69,8 +69,8 @@ export default class GoogleTrack extends TrackUtils {
                     this.mapTypeBtn()
                 } 
                 {
-                    this.customOverlay()
-                } 
+                    this.props.children
+                }
             </View>
         );
     }

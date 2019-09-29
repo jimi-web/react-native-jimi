@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-18 14:31:34
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-24 17:08:26
+ * @LastEditTime: 2019-09-29 10:26:12
  -->
 
 # `Track` 地图轨迹
@@ -19,7 +19,6 @@
 |endMarkerOptions|Object|false | 有默认属性 |终点标记,只有谷歌地图能自定义样式 style，百度传无效<br>{<br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
 |deviceMarkerOptions|Object|false | 有默认属性 |设备标记,只有谷歌地图能自定义样式 style，百度传无效<br>{<br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
 |dimDd|Number| false | 7 |两时间最长的间隔天数 | 
-|customItem|Function|false | 有默认属性|在地图上自定义其他元素|
 |polylineOptions|Object|false | 有默认属性| 整条轨迹的属性<br>　{<br>　　width:2, //线宽<br>　　color:'#50AE6F' //线颜色<br>}|
 |playPolylineOptions|Object|false | 有默认属性| 播放的轨迹的属性<br>　{<br>　　width:2, //线宽<br>　　color:'#50AE6F' //线颜色<br>}|
 |roadBtnStyle|Object|false | 有默认样式 |设置路况图标样式 <br> {width:100,height:100}|

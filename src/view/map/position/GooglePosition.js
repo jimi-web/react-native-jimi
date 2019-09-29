@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-24 14:39:54
+ * @LastEditTime: 2019-09-29 11:19:43
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
@@ -66,7 +66,7 @@ export default class GooglePosition extends PositionUtils {
                     this.phonePointBtn()
                 }
                 {
-                    this.customOverlay()
+                    this.props.children
                 }                    
             </View>
         );

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-29 14:58:52
+ * @LastEditTime: 2019-09-29 15:06:07
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image} from 'react-native';
@@ -61,7 +61,7 @@ export default class TrackUtils extends Component {
             image:require('../../../assets/map/device.png'),
         },
         dimDd:7,
-        customItem:null,
+        // customItem:null,
         playImg:{
             play:require('../../../assets/track/play.png'),
             pause:require('../../../assets/track/pause.png')
@@ -170,6 +170,7 @@ export default class TrackUtils extends Component {
      * 数据请求模式判断
      */
     requestMode = ()=>{
+        console.log(this.props.getTrackPoints,6666666666);
         if(this.props.getTrackPoints){
             this.getTrackPoints();
         }else{
@@ -201,7 +202,7 @@ export default class TrackUtils extends Component {
             endTime:this.state.endTime,
             posType:this.state.posType
         };
-    
+        console.log(api,'获取的api');
         jmAjax({
             url:api.track,
             method:'GET',
@@ -445,12 +446,12 @@ export default class TrackUtils extends Component {
     }
 
 
-    /**
-     * 自定义覆盖物
-     */
-    customOverlay = ()=> {
-        return this.props.customItem ?this.props.customItem() :null;
-    }
+    // /**
+    //  * 自定义覆盖物
+    //  */
+    // customOverlay = ()=> {
+    //     return this.props.customItem ?this.props.customItem() :null;
+    // }
 
 
 

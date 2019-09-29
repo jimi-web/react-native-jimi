@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-29 10:26:31
+ * @LastEditTime: 2019-09-29 15:00:23
  -->
 # 几米圈标准小程序
 
@@ -37,4 +37,12 @@
 8. "react-navigation": "3.6.1",
 9. "react-native-fs": "2.13.3",
 10."prop-types": "15.7.2",
+
 ```
+
+## 地图组件
+[`<Jimi.BaiduPosition />`定位](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Position.md)<br>
+
+[`<Jimi.BaiduTrack />`轨迹](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Track.md)<br>
+
+[`<Jimi.BaiduTrace />`追踪](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Trace.md)<br>

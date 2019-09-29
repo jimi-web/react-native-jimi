@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 16:02:08
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 13:57:12
+ * @LastEditTime: 2019-09-28 11:33:32
  */
 import {StyleSheet,Dimensions} from 'react-native';
 const {width} = Dimensions.get('window');
@@ -26,12 +26,11 @@ const FenceStyles =  StyleSheet.create({
     },
     title:{
         flexDirection:'row',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
     },
     info:{
         flex:1,
         marginLeft:8,
-
     },
     name:{
         color:'#4D4D4D',
@@ -83,7 +82,7 @@ const FenceStyles =  StyleSheet.create({
     },
     space:{
         width:width,
-        height:isIphoneX()? iphoneXHeight(70):70
+        height:isIphoneX()? iphoneXHeight(80):80
     },
     btnItemText:{
         fontSize:17
