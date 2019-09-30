@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-30 11:44:44
+ * @LastEditTime: 2019-09-30 17:46:22
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -41,7 +41,6 @@ export default class Record extends Component {
         },
         insTimeArr: ['30s','1分钟','2分钟','3分钟','4分钟','5分钟','持续录音']
     };
-        
     constructor(props) {
         super(props);
         this.totalPage = 10;//总页数
@@ -213,6 +212,7 @@ export default class Record extends Component {
             recordList,
             initFile,
             refreshing:false,
+            isOpenSelect:1,
             params:serverParams
         });
     }
@@ -354,6 +354,9 @@ export default class Record extends Component {
         if(pageNum > this.totalPage){
             return;
         }
+        if(this.state.isOpenSelect === 0){
+            return;
+        }
         const params = {
             ...this.state.params,
             pageNum
@@ -368,12 +371,20 @@ export default class Record extends Component {
         if(this.state.refreshing){
             return null;
         }
+        if(!this.state.recordList.length){
+            return null;
+        }
         if(this.totalPage <= this.state.params.pageNum){
-            return <View style={{height:44,alignItems:'center',padding:10}}>
+            return <View style={{alignItems:'center',padding:20}}>
                 <Text>{'没有更多数据了'}</Text>
             </View>;
         }
-        return <View style={{alignItems:'center',padding:15}}>
+        if(this.state.isOpenSelect === 0){
+            return <View style={{alignItems:'center',padding:20}}>
+                <Text>{'请取消选择操作'}</Text>
+            </View>;
+        }
+        return <View style={{alignItems:'center',padding:20}}>
             <ActivityIndicator animating={true} color={'#ccc'}  />
             <Text>{'数据加载中，请稍后'}</Text>
         </View>;
@@ -385,7 +396,7 @@ export default class Record extends Component {
         if(this.state.recordList.length || this.state.refreshing){
             return null;
         }
-        return <TouchableOpacity activeOpacity={1} onPress={() => {this.getServerRecordFile(this.state.params);}} style={{width:'100%',height:'100%',justifyContent:'center',alignItems:'center',position:'absolute'}}>
+        return <TouchableOpacity activeOpacity={1} onPress={() => {this.getServerRecordFile({pageNum:1,pageSize:10});}} style={{width:'100%',height:'100%',justifyContent:'center',alignItems:'center',position:'absolute'}}>
             <Image source={require('../../assets/record/list_empty.png')} />
         </TouchableOpacity>;
     }
@@ -557,9 +568,14 @@ export default class Record extends Component {
         };
         this.deleteRecord(params).then(res => {
             if(res.code){
-                return Toast.message('文件已删除');
+                return Toast.message(res.message);
             }
-            this.getServerRecordFile(this.state.params);
+            Toast.message('文件删除成功');
+            const params = {
+                pageNum:1,
+                pageSize:10
+            };
+            this.getServerRecordFile(params);
         });
     }
     /**
@@ -575,8 +591,15 @@ export default class Record extends Component {
                 return Toast.message('录音已清空');
             }
             this.setState({
-                recordList:[]
+                isOpenSelect:1,
+                recordList:[],
+                deleteRecordList:[]
             });
+            // const params = {
+            //     pageNum:1,
+            //     pageSize:10
+            // };
+            // this.getServerRecordFile(params);
         });
     }
     /**
@@ -593,7 +616,7 @@ export default class Record extends Component {
         }else{
             instruction = this.props.recordIns.replace('ins',data.recordLength);
         }
-        console.log(instruction,'当前请求时的录音指令');
+        // console.log(instruction,'当前请求时的录音指令');
         this.setRecordInstruction(instruction).then(res => {
             if(res.code){
                 return Toast.message('指令发送失败');
@@ -656,14 +679,15 @@ export default class Record extends Component {
      * 点击选择 
      */
     onSelect = (type) => {
-        
-        if(!this.state.recordList.length){
-            return Toast.message('当前没有录音文件，无法进行操作！');
+        console.log(type,'获取的type');
+        if(this.state.isPlay){
+            return Toast.message('声音播放中，无法进行操作！');
         }
-        if(this.state.isRecording){
-            return Toast.message('声音录制中，无法进行操作！');
-        }
+       
         if(type == 1){
+            if(!this.state.recordList.length){
+                return Toast.message('当前没有录音文件，无法进行操作！');
+            }
             this.setState({
                 recordList:this.state.deleteRecordList,
                 isOpenSelect: type
@@ -676,7 +700,7 @@ export default class Record extends Component {
             const recordList = JSON.parse(JSON.stringify(this.state.recordList));
             this.setState({
                 recordList,
-                isOpenSelect: type
+                isOpenSelect:type
             });
         }
     }

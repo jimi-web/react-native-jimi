@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-30 11:23:41
+ * @LastEditTime: 2019-09-30 17:05:52
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions} from 'react-native';
@@ -58,7 +58,7 @@ export default class RecordControl extends Component {
         }
         return <View style={styles.controlStyle}>
             <View style={styles.touchStyle}>
-                <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {if(this.props.isPlay){return Toast.message('正在播放录音，不可进行操作');} this.props.onSelect && this.props.onSelect(0);}}>
+                <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {this.props.onSelect && this.props.onSelect(0);}}>
                     <Image source={require('../../assets/record/operating_select.png')} />
                     <Text style={{fontSize:10,color:'#979797'}}>{'选择'}</Text>
                 </TouchableOpacity>
