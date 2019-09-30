@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-29 14:20:13
+ * @LastEditTime: 2019-09-30 11:44:44
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -19,18 +19,29 @@ import PropTypes from 'prop-types';
 import {Toast} from 'teaset';
 
 export default class Record extends Component {
+
     static propTypes = {
         params: PropTypes.object,
-        insTimeArr:PropTypes.array
+        insTimeArr:PropTypes.array,
+        insSutainTime:PropTypes.number,
+        recordIns:PropTypes.string,
+        recordStutainTrue:PropTypes.string,
+        recordStutainFalse:PropTypes.string,
+
     };
     static defaultProps = {
+        recordIns:'LY,OFF,ins#',
+        recordStutainTrue:'CXLY,ON,ins#',
+        recordStutainFalse:'CXLY,OFF#',
+        insSutainTime:30,
         params:{
             pageNum: 1,
             pageSize: 10
+            
         },
         insTimeArr: ['30s','1分钟','2分钟','3分钟','4分钟','5分钟','持续录音']
     };
-
+        
     constructor(props) {
         super(props);
         this.totalPage = 10;//总页数
@@ -102,7 +113,6 @@ export default class Record extends Component {
                     this.recordTimer = setInterval(()=>{
                         i--;
                         if(i <= 0){
-                            console.log(data.recordLength,78888888);
                             this.setState({
                                 isRecording:false,
                                 recordLength:data.recordLength
@@ -122,7 +132,6 @@ export default class Record extends Component {
      * 获取录音文件
      */
     getServerRecordFile = (params) => {
-        console.log(api,'地址');
         jmAjax({
             url: api.recordList,
             method: 'GET',
@@ -199,7 +208,7 @@ export default class Record extends Component {
         });
         const recordList = this.state.recordList.concat(data);
         const initFile = this.state.recordList.concat(file);
-        console.log(recordList,'格式化之后的数据',serverParams);
+        // console.log(recordList,'格式化之后的数据',serverParams);
         this.setState({
             recordList,
             initFile,
@@ -275,7 +284,6 @@ export default class Record extends Component {
     createFolder = () => {
         return new Promise((resolve) => {
             createTheFolder('record').then(res => {
-                console.log(res,'当前创建的文件夹');
                 this.isFolder = true;
                 this.folderPath = res;
                 resolve(res);
@@ -322,7 +330,7 @@ export default class Record extends Component {
      */
     onRefresh = () => {
         if(this.state.isPlay){
-            return console.log('当前录音正在播放');
+            return Toast.message('当前录音正在播放');
         }
         const pageNum = 1;
         const params = {
@@ -389,7 +397,6 @@ export default class Record extends Component {
         if (!data) {
             return;
         }
-        
         let i = index || 0;
         const file = data.fileDetails;
         const options = {
@@ -418,7 +425,6 @@ export default class Record extends Component {
         ret.promise.then(res => {
             i++;
             //下载完成时执行
-            console.log(res, '下载完成');
             if(i < file.length){
                 this.downloadFile(data,i);
             }
@@ -434,14 +440,13 @@ export default class Record extends Component {
         })
             .catch(err => {
                 //下载出错时执行
-                console.log(err);
+                console.log('下载失败');
             });
     };
     /**
      * 下载录音
      */
     downloadRecord(item){
-        console.log(item,'下载录音',this.isFolder);
         if(this.isFolder){
             this.downloadFile(item);
         }else{
@@ -457,7 +462,7 @@ export default class Record extends Component {
      */
     playRecord(data,index){
         if(this.state.isPlay){
-            return console.log('当前录音正在播放');
+            return Toast.message('当前录音正在播放');
         }
         this.playRecording(data,index);
     }
@@ -466,7 +471,6 @@ export default class Record extends Component {
      * @param {Object} data 当前列文件
      */
     stopRecordAudio(data){
-        console.log(data,1111111);
         stopAudio().then(res => {
             data.progress = 0;
             data.type = 2;
@@ -518,16 +522,14 @@ export default class Record extends Component {
                 data.progress += 100;
                 this.state.recordList[data.index] = data;
                 const recordList = JSON.parse(JSON.stringify(this.state.recordList));
-                // console.log(data.progress,'当前进度',length,recordList);
                 this.setState({
                     recordList,
                     isPlay:true
                 });
-                console.log(data.progress,length,'进度和长度');
+                // console.log(data.progress,length,'进度和长度');
                 if(data.progress >= length){
-                    console.log(data.progress,length,'进入的进度和长度');
+                    // console.log(data.progress,length,'进入的进度和长度');
                     this.playRecording(data,i);
-                    // console.log('清除当前计时器');
                     clearInterval(this.playAudioTimer);
                 }
             },100); 
@@ -545,7 +547,7 @@ export default class Record extends Component {
             }
         });
         if(!dataArr.length){
-            console.log('请选择需要删除的文件');
+            Toast.message('请选择需要删除的文件');
         }
 
         const params = {
@@ -581,16 +583,17 @@ export default class Record extends Component {
      * 开始录音
      */
     onRecord = (data) => {
-        let instruction = `LY${data.length}#`;
+        let instruction;
         if(this.state.recordType){
             if(data.isRecording){
-                instruction = 'CXLY,ON,30#';
+                instruction = this.props.recordStutainFalse;
             }else{
-                instruction = 'CXLY,ON,OFF#';
+                instruction = this.props.recordStutainTrue.replace('ins',this.props.insSutainTime);
             }
         }else{
-            instruction = `LY${data.length}#`;
+            instruction = this.props.recordIns.replace('ins',data.recordLength);
         }
+        console.log(instruction,'当前请求时的录音指令');
         this.setRecordInstruction(instruction).then(res => {
             if(res.code){
                 return Toast.message('指令发送失败');
@@ -604,15 +607,14 @@ export default class Record extends Component {
             };
             getEncoding().then(value => {
                 const key = value.encoding + 'locatorRecord';
-                console.log(storage,key,'存储');
                 AsyncStorage.setItem(key,JSON.stringify(storage));
             });
-           
             // 修改录音状态
             this.setState({
                 isRecording:!data.isRecording
             });
             // 录音结束之后重新刷新数据
+            
             if(this.state.recordType){
                 // 持续录音
                 if(data.isRecording){
@@ -622,7 +624,6 @@ export default class Record extends Component {
                 // 限时录音
                 let i = data.recordLength;
                 this.recordTimer = setInterval(() => {
-                    console.log(i,'开始计时');
                     i--;
                     this.setState({
                         recordLength:i
@@ -644,7 +645,6 @@ export default class Record extends Component {
      * 修改时长
      */
     onConfirm = ({type,time}) => {
-        console.log(time,type,888);
         this.setState({
             recordLength:time,
             recordType:type,
@@ -685,7 +685,6 @@ export default class Record extends Component {
      * @param {Object} item 当前行数据
      */
     onSelectItem(item,type){
-        console.log(type,555);
         item.type = type;
         this.state.recordList[item.index] = item;
         const recordList = JSON.parse(JSON.stringify(this.state.recordList));
@@ -731,7 +730,6 @@ export default class Record extends Component {
                 <View style={{ ...styles.bottomBorder, width: progress, height: 1, position: 'absolute', bottom: 0, left: 15 }}></View>
             </View>
         </View>;
-        // console.log(view,item.row);
         return view;
 
     }
@@ -742,7 +740,7 @@ export default class Record extends Component {
     renderRecordImage(item) {
         let img;
         let fn  = () => {
-            console.log('别点击了，毫无作用');
+            return null;
         };
         let status = item.type;
         switch (status) {

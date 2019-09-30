@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-25 14:09:53
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-09-30 10:35:56
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -16,7 +16,7 @@ import Track from '../examples/Track';
 import Trace from '../examples/Trace';
 import Fence from '../examples/Fence';
 import Test from '../view/test';
-import Record from '../view/record';
+import Record from '../examples/Record';
 import PrivacyAgreement from '../view/map/share/PrivacyAgreement';
 const getOptions = (title) => {
     let headerTitle = {};

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-29 15:08:34
+ * @LastEditTime: 2019-09-30 10:39:02
  */
 
 //后台地址
@@ -43,10 +43,10 @@ const api  = {
      */
     setServer:function(url){
         const newApi = {};
-        let server = url || this.server;
+        this.server = url || this.server;
         for (const key in serverUrl) {
             if (Object.prototype.hasOwnProperty.call(serverUrl,key)) {
-                const item = server + serverUrl[key];
+                const item = this.server + serverUrl[key];
                 newApi[key] = item;
             }
         }
@@ -58,5 +58,4 @@ const share = {
 };
 api.setApi(share);
 api.setServer();
-console.log(api,'获取的服务器地址');
 export default api;
