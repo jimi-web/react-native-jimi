@@ -4,11 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-30 10:35:56
+ * @LastEditTime: 2019-09-30 17:47:45
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
-
 import {TabContainer} from './TabNav';
 import Photo from '../view/photo/index';
 import Position from '../examples/Position';
@@ -18,6 +17,8 @@ import Fence from '../examples/Fence';
 import Test from '../view/test';
 import Record from '../examples/Record';
 import PrivacyAgreement from '../view/map/share/PrivacyAgreement';
+import AddFence from '../view/map/fence/AddFence';
+
 const getOptions = (title) => {
     let headerTitle = {};
     if(title){
@@ -90,6 +91,17 @@ const AppNavigator = createStackNavigator(
             screen:Fence,
             navigationOptions:getOptions('围栏')            
         },
+        AddFence:{
+            screen:AddFence,
+            navigationOptions: ({ navigation }) => (
+                {
+                    ...getOptions('添加围栏'),
+                    headerStyle:{
+                        backgroundColor:'#fff',
+                        borderBottomColor:'#fff'
+                    },
+                }),
+        }
     });
 
 export const Root = createAppContainer(AppNavigator);

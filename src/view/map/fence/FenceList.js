@@ -3,18 +3,19 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-29 15:01:30
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-09-29 15:21:40
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity} from 'react-native';
+import { withNavigation } from 'react-navigation';
 import {jmAjax} from '../../../http/business';
 import api from '../../../api/index';
 import FenceListItem from '../../map/fence/FenceListItem';
 import BottomToolbars from '../../components/BottomToolbars';
 import FenceStyles from '../style/fenceList';
 
-export default class FenceList extends Component { 
+class FenceList extends Component { 
 
     constructor(props) {
         super(props);
@@ -80,7 +81,7 @@ export default class FenceList extends Component {
                                     <Image source={require('../../../assets/fence/operating_select_disable.png')}/>
                                     <Text style={{fontSize:10,marginTop:2,color:'#E9E9E9'}}>选择</Text>
                                 </TouchableOpacity> }
-                        <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} >
+                        <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} onPress={()=>{this.props.navigation.push('AddFence');}}>
                             <Image source={require('../../../assets/fence/fence_operating_add.png')}/>
                             <Text style={FenceStyles.addText}>添加围栏</Text>
                         </TouchableOpacity>
@@ -219,3 +220,5 @@ export default class FenceList extends Component {
         }); 
     }
 }
+
+export default withNavigation(FenceList);
