@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-12 11:54:39
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-12 10:50:39
+ * @LastEditTime: 2019-10-08 11:53:43
  */
 
 import React, {Component} from 'react';
@@ -63,7 +63,6 @@ export default class Icon extends TouchableOpacity {
         const data = images.find(item => {
             return item.name == icon;
         });
-        console.log(type,111);
         if(!data){
             return null;
         }

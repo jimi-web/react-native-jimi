@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-19 15:18:18
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-10-08 11:53:51
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter,Alert} from 'react-native';
@@ -169,9 +169,6 @@ export default class Datepicker extends Component {
         date.setDate(day);
         date.setHours(hour);
         date.setMinutes(min);
-        
-        console.log(date);
-        
         this.setState ({
             defaultValue:date,
             finalResult: new Date(date).Format('YYYY-MM-DD hh:mm')

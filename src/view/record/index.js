@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-30 17:46:22
+ * @LastEditTime: 2019-10-08 11:55:57
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -427,7 +427,7 @@ export default class Record extends Component {
                 
             },
             progress: (res) => {
-                console.info(res, '下载中');
+                // console.info(res, '下载中');
             }
         };
 
@@ -679,20 +679,19 @@ export default class Record extends Component {
      * 点击选择 
      */
     onSelect = (type) => {
-        console.log(type,'获取的type');
         if(this.state.isPlay){
             return Toast.message('声音播放中，无法进行操作！');
         }
        
         if(type == 1){
-            if(!this.state.recordList.length){
-                return Toast.message('当前没有录音文件，无法进行操作！');
-            }
             this.setState({
                 recordList:this.state.deleteRecordList,
                 isOpenSelect: type
             });
         }else{
+            if(!this.state.recordList.length){
+                return Toast.message('当前没有录音文件，无法进行操作！');
+            }
             this.state.deleteRecordList = JSON.parse(JSON.stringify(this.state.recordList));
             this.state.recordList.forEach(item => {
                 item.type = 4;
@@ -831,7 +830,7 @@ export default class Record extends Component {
             text = item.recordType;
             break;
         }
-        return <Text style={{ color: textColor, fontSize: 11 }}>{text}</Text>;
+        return <Text style={{ color: textColor, fontSize: 11,width:120 }}>{text}</Text>;
     }
 
 }
