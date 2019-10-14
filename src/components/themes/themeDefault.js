@@ -4,8 +4,9 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:12:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-20 18:31:37
+ * @LastEditTime: 2019-10-14 10:05:42
  */
+
 
 const mainColor = '#3479F6';
 export default {

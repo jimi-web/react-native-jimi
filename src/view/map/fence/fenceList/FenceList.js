@@ -4,18 +4,32 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 15:21:40
+ * @LastEditTime: 2019-10-14 10:00:05
  */
 import React, {Component} from 'react';
-import {View,Image,ScrollView,Text,TouchableOpacity} from 'react-native';
+import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
 import { withNavigation } from 'react-navigation';
-import {jmAjax} from '../../../http/business';
-import api from '../../../api/index';
-import FenceListItem from '../../map/fence/FenceListItem';
-import BottomToolbars from '../../components/BottomToolbars';
-import FenceStyles from '../style/fenceList';
+import PropTypes from 'prop-types';
+import {jmAjax} from '../../../../http/business';
+import api from '../../../../api/index';
+import FenceListItem from './FenceListItem';
+import BottomToolbars from '../../../components/BottomToolbars';
+import FenceStyles from '../../style/fenceList';
 
 class FenceList extends Component { 
+    static propTypes = {
+        routeName:PropTypes.string,
+        fenceStateImg:PropTypes.object
+    }
+
+    static defaultProps = {
+        routeName:'',
+        fenceStateImg:{
+            in:require('../../../../assets/fence/fence_list_enter.png'),
+            out:require('../../../../assets/fence/fence_list_out.png'),
+            all:require('../../../../assets/fence/fence_list_turnover.png')
+        }
+    };
 
     constructor(props) {
         super(props);
@@ -30,6 +44,17 @@ class FenceList extends Component {
         this.getFenceList();
     }
 
+    componentWillMount() {
+        //添加围栏或者编辑围栏更新数据时候返回刷新
+        DeviceEventEmitter.addListener('jmFenceList', ()=>{
+            this.getFenceList();
+        });
+    }
+
+    componentWillUnmount() {
+        DeviceEventEmitter.removeAllListeners('jmFenceList');
+    }
+
     render() {
         return <View style={{flex:1,position:'relative',backgroundColor:'#F7F7F7'}}>
             {
@@ -40,19 +65,20 @@ class FenceList extends Component {
                                 return <FenceListItem
                                     key={'fenceList'+index} 
                                     checked={item.checked}
-                                    fenceState={item.fenceState}
+                                    source={this.getFenceState(item.fenceState)}
                                     fenceTitle={item.fenceTitle}
                                     radius={item.radius}
-                                    fenaddress={item.fenaddress}
+                                    fenceAddress={item.fenceAddress}
                                     isSelect = {this.state.isSelect}
-                                    onFenceListItem = {()=>{this.onFenceListItem(index);}}
+                                    onChangeCheckbox = {()=>this.onFenceListItem(index)}
+                                    onFenceListItem = {()=>{this.onFenceListItem(index,item.fenceId);}}
                                 ></FenceListItem>; 
                             })
                         }
                         <View style={FenceStyles.space}></View>
                     </ScrollView>:
                     <View style={FenceStyles.empty}>
-                        <Image source={require('../../../assets/fence/list_empty.png')} />
+                        <Image source={require('../../../../assets/fence/list_empty.png')} />
                         <Text style={FenceStyles.emptyText}>暂无内容</Text>
                     </View>
             }
@@ -73,16 +99,16 @@ class FenceList extends Component {
                         {
                             this.state.fenceList.length>0 ?
                                 <TouchableOpacity onPress={()=>this.onSelect(true)}>
-                                    <Image source={require('../../../assets/fence/operating_select.png')}/>
+                                    <Image source={require('../../../../assets/fence/operating_select.png')}/>
                                     <Text style={{fontSize:10,marginTop:2,color:'#979797'}}>选择</Text>
                                 </TouchableOpacity>
                                 :
                                 <TouchableOpacity activeOpacity={1}>
-                                    <Image source={require('../../../assets/fence/operating_select_disable.png')}/>
+                                    <Image source={require('../../../../assets/fence/operating_select_disable.png')}/>
                                     <Text style={{fontSize:10,marginTop:2,color:'#E9E9E9'}}>选择</Text>
                                 </TouchableOpacity> }
-                        <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} onPress={()=>{this.props.navigation.push('AddFence');}}>
-                            <Image source={require('../../../assets/fence/fence_operating_add.png')}/>
+                        <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} onPress={()=>{this.props.navigation.push(this.props.routeName);}}>
+                            <Image source={require('../../../../assets/fence/fence_operating_add.png')}/>
                             <Text style={FenceStyles.addText}>添加围栏</Text>
                         </TouchableOpacity>
                     </View>:
@@ -92,7 +118,7 @@ class FenceList extends Component {
                         </TouchableOpacity>
                         <Text style={FenceStyles.btnItemLine}>|</Text>
                         <TouchableOpacity onPress={this.onCheckAll}>
-                            <Text  style={[FenceStyles.btnItemText,{color:'#3479F6'}]}>全选</Text>
+                            <Text  style={[FenceStyles.btnItemText,FenceStyles.allSelectText]}>全选</Text>
                         </TouchableOpacity>
                         <Text style={FenceStyles.btnItemLine}>|</Text>
                         {
@@ -145,8 +171,10 @@ class FenceList extends Component {
     /**
      * 点击围栏列表事件
      * @param {Number} index  位置
+     * @param {String} fenceId  围栏
      */
-    onFenceListItem = (index)=>{
+    onFenceListItem = (index,fenceId)=>{
+        //选择
         if(this.state.isSelect){
             let list = this.state.fenceList;
             list[index].checked = !list[index].checked;
@@ -155,7 +183,8 @@ class FenceList extends Component {
                 delList:list.filter(item => item.checked ==true)
             });
         }else {
-            //
+            //编辑
+            this.props.navigation.push(this.props.routeName,{fenceId:fenceId});
         }
     }
 
@@ -219,6 +248,26 @@ class FenceList extends Component {
             });
         }); 
     }
+
+
+    /**
+     * 围栏状态
+     * @param {String} state  报警状态
+     */
+    getFenceState = (state)=> {
+        let img = '';
+        switch (state) {
+        case 'in':
+            img = this.props.fenceStateImg.in;
+            break;
+        case 'out':
+            img = this.props.fenceStateImg.out;
+            break;
+        case 'all':
+            img = this.props.fenceStateImg.all;
+        }
+        return img;
+    } 
 }
 
 export default withNavigation(FenceList);

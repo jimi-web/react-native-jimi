@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-29 15:01:44
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-14 09:10:14
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text} from 'react-native';
@@ -294,7 +294,10 @@ export default class PositionUtils extends Component {
             if(this.state.userMapType){
                 this.showInfoWindow('markers');
             }else {
-                this.InfoWindowFunc.update();
+                //安卓infoWindwo更新需要延迟10ms
+                setTimeout(()=>{
+                    this.InfoWindowFunc.update();
+                },10);
             }
             //仅初始化会可视化两点坐标
             if(!this.state.isInit){ 
