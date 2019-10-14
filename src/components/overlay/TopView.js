@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-26 17:14:50
+ * @LastEditTime: 2019-10-14 11:46:05
  */
 
 import React, {Component} from 'react';
@@ -13,7 +13,7 @@ import Theme from '../themes/index';
 
 let keyIndex = 0;
 
-export default class TopView extends Component {
+export default class JmTopView extends Component {
     
     static add (element) {
         let key = ++keyIndex;
@@ -22,7 +22,7 @@ export default class TopView extends Component {
     }
     
     static remove (key) {
-        DeviceEventEmitter.emit('jmRemoveOverlay',{key,element});
+        DeviceEventEmitter.emit('jmRemoveOverlay',{key});
     }
     
     static removeAll() {
@@ -79,12 +79,13 @@ export default class TopView extends Component {
     render(){
         const {elements} = this.state;
         return (
-            <View style={{flex:1}}>
+            <View style={{flex:1,backgroundColor:'red'}}>
                 <Animated.View style={{flex:1}}> 
                     {this.props.children}
                 </Animated.View>
                 {
                     elements.map((item,index) => {
+                        console.log(item,6666);
                         return (
                             <View key={item.key} style={styles.overlay} pointerEvents='box-none'>
                                 {item.element}
@@ -104,27 +105,27 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: 0,
-        color:'#fff',
+        right: 0,
+        bottom: 0,
     },
 });
-
-if (!AppRegistry.registerComponentOld) {
-    AppRegistry.registerComponentOld = AppRegistry.registerComponent;
+if (!AppRegistry.jmegisterComponentOld) {
+    AppRegistry.jmegisterComponentOld = AppRegistry.registerComponent;
 }
-  
-AppRegistry.registerComponent = function(appKey, componentProvider) {
 
-    class RootElement extends Component {
+AppRegistry.registerComponent = function(appKey, componentProvider) {
+    class JmRootElement extends Component {
         render() {
+            console.log(appKey,111111111);
             let Component = componentProvider();
             return (
-                <TopView>
+                <JmTopView>
                     <Component {...this.props} />
-                </TopView>
+                </JmTopView>
             );
         }
     }
-    return AppRegistry.registerComponentOld(appKey, () => RootElement);
+    return AppRegistry.jmegisterComponentOld(appKey, () => JmRootElement);
 };
   
 

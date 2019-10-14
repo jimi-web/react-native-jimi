@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-29 10:01:18
+ * @LastEditTime: 2019-09-30 17:05:52
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions} from 'react-native';
@@ -58,7 +58,7 @@ export default class RecordControl extends Component {
         }
         return <View style={styles.controlStyle}>
             <View style={styles.touchStyle}>
-                <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {if(this.props.isPlay){return Toast.message('正在播放录音，不可进行操作');} this.props.onSelect && this.props.onSelect(0);}}>
+                <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {this.props.onSelect && this.props.onSelect(0);}}>
                     <Image source={require('../../assets/record/operating_select.png')} />
                     <Text style={{fontSize:10,color:'#979797'}}>{'选择'}</Text>
                 </TouchableOpacity>
@@ -81,7 +81,7 @@ export default class RecordControl extends Component {
     onSelectTimeLength = () => {
         const {isRecording} = this.props;
         if(isRecording){
-            return;
+            return Toast.message('当前设备正在录音');
         }
         this.setState({isVisible:true});
     }
@@ -137,10 +137,7 @@ export default class RecordControl extends Component {
      * 选择时间弹框
      */
     renderModal = () => {
-        const {isRecording,insTimeArr} = this.props;
-        if(isRecording){
-            return Toast.message('当前设备正在录音');
-        }
+        const {insTimeArr} = this.props;
         const time = insTimeArr;
         return <Modal
             animationType="slide"
@@ -176,7 +173,7 @@ export default class RecordControl extends Component {
      * 保存时间
      */
     onConfirm = () => {
-        console.log(this.state.time,'保存的时间');
+        // console.log(this.state.time,'保存的时间');
         const unit = String(this.state.time)[this.state.time.length - 1] === 's'?1:60;
         let time = parseInt(this.state.time) * unit;
         time = isNaN(time)?0:time;

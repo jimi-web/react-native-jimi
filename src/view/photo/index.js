@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:48:01
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-26 10:00:46
+ * @LastEditTime: 2019-10-08 12:00:23
  */
 import React, {Component} from 'react';
 import {View,StyleSheet} from 'react-native';
@@ -26,7 +26,7 @@ export default class Photo extends Component{
      */
     getSamllLocation = () => {
         httpSamllLocation().then(res => {
-            console.log(res,'小程序位置');
+            // console.log(res,'小程序位置');
         });
         
     }

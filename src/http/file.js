@@ -74,7 +74,6 @@ export const createFolder = (url) => {
         httpApp('jm_file.createFolder', {
             filePath: url,
             onSuccess: (res) => {
-                console.log(res,'是否创建成功');
                 resolve(res);
             },
             onFail: (res) => {
