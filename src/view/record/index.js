@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-08 11:55:57
+ * @LastEditTime: 2019-10-14 11:42:27
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -17,6 +17,7 @@ import { parseDate,parseTime } from '../../libs/utils';
 import RNFS from 'react-native-fs';
 import PropTypes from 'prop-types';
 import {Toast} from 'teaset';
+import {Dialog,Overlay} from '../../components/index';
 
 export default class Record extends Component {
 
@@ -43,6 +44,7 @@ export default class Record extends Component {
     };
     constructor(props) {
         super(props);
+        this.overlayKey = 0;
         this.totalPage = 10;//总页数
         this.isFolder = false;//判断是否创建或是否拥有该文件夹
         this.folderPath = '';//是否创建文件夹地址
@@ -582,7 +584,15 @@ export default class Record extends Component {
      * 清空
      */
     onEmpty = () => {
-
+        const element = <Dialog
+            onConfirm={()=>{this.onConfirmEmpty();}}
+            onCancel={() => {Overlay.remove(this.overlayKey);}}
+        />; 
+        this.overlayKey = Overlay.add(element);
+        console.log(this.overlayKey,784);
+        
+    }
+    onConfirmEmpty = () => {
         const params = {
             deleteFlag:0
         };
@@ -595,6 +605,7 @@ export default class Record extends Component {
                 recordList:[],
                 deleteRecordList:[]
             });
+            Overlay.remove(this.overlayKey);
             // const params = {
             //     pageNum:1,
             //     pageSize:10
