@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-26 17:24:21
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-15 17:18:51
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet} from 'react-native';
@@ -26,7 +26,7 @@ export default class Home extends Component{
                     <Button style={styles.btn} title={'定位'} onPress={()=>{this.props.navigation.push('Position');}} />
                     <Button style={styles.btn} title={'轨迹'} onPress={()=>{this.props.navigation.push('Track');}} />
                     <Button style={styles.btn} title={'追踪'} onPress={()=>{this.props.navigation.push('Trace');}} />
-                    <Button style={styles.btn} title={'测试'} onPress={()=>{this.props.navigation.push('Test');}} />  
+                    <Button style={styles.btn} title={'测试'} onPress={()=>{this.props.navigation.push('Share');}} />  
                     <Button style={styles.btn} title={'录音'} onPress={()=>{this.props.navigation.push('Record');}} />  
                     <Button style={styles.btn} title={'围栏'} onPress={()=>{this.props.navigation.push('Fence');}} />  
                 </View>

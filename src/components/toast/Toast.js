@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-10 16:01:37
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-11 10:32:36
+ * @LastEditTime: 2019-10-15 14:45:57
  */
 import React, { Component } from 'react';
 import {
@@ -51,9 +51,6 @@ export default class Toast extends Component {
         </View>;
     }
 }
-
-
-
 
 
 const Styles =  StyleSheet.create({ 

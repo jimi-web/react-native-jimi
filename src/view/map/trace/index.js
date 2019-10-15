@@ -4,16 +4,14 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-09 10:08:44
+ * @LastEditTime: 2019-10-15 17:30:28
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
 import PropTypes from 'prop-types';
 import {httpApp} from '../../../http/basic';
-import {jmAjax} from '../../../http/business';
 import api from '../../../api/index';
 import gps from '../../../libs/coversionPoint';
-import {Checkbox,Toast} from 'teaset';
 import Share from '../share/Share';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 import PositionUtils from '../position/index';
@@ -24,6 +22,11 @@ export default class TraceUtils extends PositionUtils {
     static propTypes = {
         ...PositionUtils.propTypes,
         polylineOptions:PropTypes.object,
+        checkedTitle:PropTypes.string,
+        routerName:PropTypes.string,
+        shareUrl:PropTypes.string,
+        shareTitle:PropTypes.string,
+        shareText:PropTypes.string,
     };
 
     static defaultProps = {
@@ -32,6 +35,11 @@ export default class TraceUtils extends PositionUtils {
             isCustom:false,
             visible:false
         },
+        checkedTitle:'《使用协议和隐私政策》',
+        routerName:'PrivacyAgreement',
+        shareUrl:api.shareUrl,
+        shareTitle:'我的实时位置',
+        shareText:'点击查看我现在在哪里吧！'
     };
 
 
@@ -78,7 +86,7 @@ export default class TraceUtils extends PositionUtils {
                         <Text style={MapStyles.title}>{deviceInfo.deviceName?deviceInfo.deviceName:null}</Text>
                     </View> 
                     <View style={[MapStyles.item,MapStyles.state]}>
-                        <Text style={[MapStyles.text,{color:deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus).color:null}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus).text:null}</Text>
+                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color}]}>{this.deviceState(deviceInfo.deviceStatus).text}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>距离{this.state.distance}m</Text>
                         <Text style={MapStyles.line}>|</Text>
@@ -121,7 +129,11 @@ export default class TraceUtils extends PositionUtils {
      */
     drawerShare = ()=> {
         return <Share 
-            onShareTypeChange={this.onShareTypeChange}   
+            checkedTitle ={this.props.checkedTitle}
+            routerName ={this.props.routerName}
+            shareUrl ={this.props.shareUrl}
+            shareTitle ={this.props.shareTitle}
+            shareText ={this.props.shareText}   
         ></Share>;
     }
 
@@ -131,60 +143,6 @@ export default class TraceUtils extends PositionUtils {
     whitespace =()=>{
         return <View style={[MapStyles.whitespace,{height:isIphoneX()?iphoneXHeight(90):90}]}></View>;
     }
-
-    /**
-     * 分享界面分享事件
-     */
-    onShareTypeChange = (data)=> {  
-        this.getToken(data);
-    }
-
-    /**
-     * 获取token认证身份
-     */
-    getToken = (data)=>{
-        console.log(data);
-        jmAjax({
-            url:api.shareToken,
-            method:'GET',
-            data:{
-                shareType:'position',
-                expireTime:data.expireTime,
-            },
-            encoding:true,
-            encodingType:true
-        }).then((res)=>{
-            console.log(res);  
-            let result = res.data;
-            this.httpShare(data.state,result);
-        });
-    }
-
-    /**
-     * 分享
-     */
-    httpShare = (state,token)=> {
-        httpApp('jm_api.onShare',{
-            state:state,
-            text:'点击查看我现在在哪里吧!',
-            url:api.share+'?token='+token,
-            title:'我的实时位置:',
-            onSuccess: () => {
-                
-            },
-            onFail: () => {
-                Share.hide();
-                if(state == 'qq'){
-                    Toast.message('未安装QQ无法分享');
-                }else {
-                    Toast.message('未安装微信无法分享');
-                }
-            },
-            onComplete:()=>{
-                
-            }
-        });        
-    }    
 
 
     /**
@@ -251,7 +209,7 @@ export default class TraceUtils extends PositionUtils {
      * 监听设备位置
      */
     onDeviceChange = (data)=> {
-        console.log(data);
+        console.log(data,'是否有数据');
         this.setState({
             deviceInfo:data
         },()=>{

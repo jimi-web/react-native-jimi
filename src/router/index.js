@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 13:54:27
+ * @LastEditTime: 2019-10-15 17:18:25
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -16,8 +16,9 @@ import Trace from '../examples/Trace';
 import Fence from '../examples/Fence';
 import Test from '../view/test';
 import Record from '../examples/Record';
-import PrivacyAgreement from '../view/map/share/PrivacyAgreement';
+import PrivacyAgreement from '../view/map/share/Share';
 import AddFence from '../examples/AddFence';
+import Share from '../examples/Share';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -102,7 +103,11 @@ const AppNavigator = createStackNavigator(
                         elevation:0
                     },
                 }),
-        }
+        },
+        Share:{
+            screen:Share,
+            navigationOptions:getOptions('分享')            
+        },
     });
 
 export const Root = createAppContainer(AppNavigator);

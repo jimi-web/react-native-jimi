@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-16 09:59:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-08 11:59:38
+ * @LastEditTime: 2019-10-15 17:40:14
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,DeviceEventEmitter} from 'react-native';
@@ -18,11 +18,9 @@ import Datepicker from '../../../components/datepicker/Datepicker';
 export default class PullTime extends Component {
     static propTypes = {
         onConfirm:PropTypes.func,
-        dimDd:PropTypes.number,//两个时间相隔天数
     }
 
     static defaultProps = {
-        dimDd:7,
         startDate:new Date(new Date(new Date().Format('yyyy/MM/dd')+' 00:00').getTime()).Format('YYYY-MM-DD hh:mm'),
         endDate:new Date().Format('YYYY-MM-DD hh:mm'),//开始时间
     }
@@ -235,14 +233,7 @@ export default class PullTime extends Component {
             Toast.message('开始时间不能大于结束时间');
             return;
         }
-        
-        //相隔时间校验
-        if(parseInt((etdt-stdt)/ (1000 * 60 * 60 * 24))>this.props.dimDd){
-            Toast.message('选择的时间只允许在'+this.props.dimDd+'天之内');
-            return;
-        }
-
-      
+ 
         //设置时间到回调提供外部调用
         this.setState({
             endDate:et,

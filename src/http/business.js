@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-27 10:14:06
+ * @LastEditTime: 2019-10-15 16:13:42
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -20,7 +20,10 @@ const request = (params) => {
             method: params.method,
             data: JSON.stringify(params.data),
             // 提交参数的数据方式,这里以json的形式
-            headers: {
+            headers:params.header ? {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }:{
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
@@ -50,13 +53,17 @@ export const jmAjax = (params)=> {
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
                 let data = res;
+                console.log(data,'getEncoding');
+                
                 params.data =  params.data?params.data:{};
                 if(params.encoding){
-                    params.data.encoding = data.encoding;
+                    // params.data.encoding = data.encoding;
+                    params.data.encoding = '201801051535007';
                 }
                 if(params.encodingType){
-                    params.data.encodingType = data.encodingType;
+                    params.data.encodingType = data.encodType;
                 }
+                console.log(params,'getEncoding');
                 request(params).then((res)=>{
                     resolve(res);
                 });
@@ -145,7 +152,7 @@ export const httpSamllLocation = () =>{
  * 获取当前IMEI
  */
 export const getEncoding = () =>{
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve)=> {
         httpApp('jm_user.getEncoding', {
             onSuccess: (res) => {
                 let data = res;

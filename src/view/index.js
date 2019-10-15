@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-12 18:10:44
+ * @LastEditTime: 2019-10-15 17:15:37
  */
 
 // import Photo from './photo/index';
@@ -18,6 +18,7 @@ import GoogleTrace from './map/trace/GoogleTrace';
 import FenceList from './map/fence/fenceList/FenceList';
 import BaiduAddFence from './map/fence/addFence/BaiduAddFence';
 import Record from './record';
+import Share from './map/share/Share';
 
 
 
@@ -30,7 +31,8 @@ const Jimi = {
     GoogleTrace,
     FenceList,
     BaiduAddFence,
-    Record
+    Record,
+    Share
 };
 
 module.exports = Jimi;

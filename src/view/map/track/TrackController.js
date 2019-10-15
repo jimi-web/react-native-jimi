@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-25 10:26:23
+ * @LastEditTime: 2019-10-15 11:01:52
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
@@ -21,7 +21,8 @@ export default class Track extends Component {
         isPlay:PropTypes.bool,
         deviceInformation:PropTypes.object,
         onPullTime:PropTypes.func,
-        playImg:PropTypes.object
+        playImg:PropTypes.object,
+        onSlidingComplete:PropTypes.func,
     }
 
     static defaultProps = {
@@ -29,6 +30,9 @@ export default class Track extends Component {
         playImg:{
             play:require('../../../assets/track/play.png'),
             pause:require('../../../assets/track/pause.png')
+        },
+        onSlidingComplete:()=>{
+            
         }
     }
 
@@ -79,6 +83,7 @@ export default class Track extends Component {
                     thumbTintColor={'#333033'}
                     value={this.props.progress}
                     maximumValue={this.props.totalProgress}
+                    onSlidingComplete = {(value)=>{this.onSlidingComplete(value);}}
                 />
                 <View style={MapStyles.bottomBtn}>
                     <TouchableOpacity activeOpacity={1} onPress={this.onTrackShow}>
@@ -198,5 +203,17 @@ export default class Track extends Component {
         },()=>{
             this.props.onTrackShow &&  this.props.onTrackShow(isShow);
         });
+    }
+
+    
+    onSlidingComplete = (progress)=> {
+        console.log(progress,'aaa');
+        
+        if(typeof progress !== 'number'){
+            return;
+        }
+        const currentProgress = parseInt(progress);
+        console.log(currentProgress,'bbb');
+        this.props.onSlidingComplete && this.props.onSlidingComplete(currentProgress);        
     }
 }

@@ -3,16 +3,16 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-29 15:06:07
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-15 17:43:00
  */
 import React, {Component} from 'react';
-import {View,TouchableOpacity,Image} from 'react-native';
+import {TouchableOpacity,Image} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../style/base';
 import MapStyles from '../style/track';
 import Controller from './TrackController';
-import {Toast,SegmentedBar} from 'teaset';
+import {Toast} from 'teaset';
 import {jmAjax} from '../../../http/business';
 import api from '../../../api/index';
 import gps from '../../../libs/coversionPoint';
@@ -75,27 +75,30 @@ export default class TrackUtils extends Component {
         this.state = {
             mapType:this.props.mapType,//地图类型
             trafficEnabled:this.props.trafficEnabled,//路况是否开启
-            trackData:[],
-            startMarker:{
-                latitude:null,
-                longitude:null,  
-            }, //起点的标注
-            endMarker:{
-                latitude:null,
-                longitude:null,  
-            }, //终点的标注
-            pointArr:[],//存储播放中的轨迹数组
             isTrackPolylineShow:true,//轨迹线是否显示
-            trackPolylinePoint:[],//存储整条轨迹线
-            deviceMarker:{},//设备标记
-            speed:700,//播放速度
-            progress:0,//进度条
-            totalProgress:0,//总进度条
             isPlay:false,//是否播放
+            speed:700,//播放速度
             startDate:new Date(new Date(new Date().Format('yyyy/MM/dd')+' 00:00').getTime()).Format('YYYY-MM-DD hh:mm'),//开始时间
             endDate:new Date().Format('YYYY-MM-DD hh:mm'),//开始时间
-            posType:100,//定位类型
-            userMapType:0,//0为百度，1为谷歌,
+            posType:0,//定位类型
+            userMapType:0,//0为百度，1为谷歌,            
+            trackData:[],//存储完整数据
+            startMarker:{
+                latitude:0,
+                longitude:0,  
+            }, //起点的标注
+            endMarker:{
+                latitude:0,
+                longitude:0,  
+            }, //终点的标注
+            pointArr:[],//存储播放中的轨迹数组
+            trackPolylinePoint:[],//存储整条轨迹线
+            deviceMarker:{
+                latitude:0,
+                longitude:0,
+            },//设备标记
+            progress:0,//进度条
+            totalProgress:0,//总进度条
         };
     }
 
@@ -141,6 +144,7 @@ export default class TrackUtils extends Component {
             totalProgress={this.state.totalProgress}
             isPlay={this.state.isPlay}
             deviceInformation={this.state.deviceMarker}
+            onSlidingComplete={this.onSlidingComplete}
         >
         </Controller>;      
     }
@@ -170,7 +174,6 @@ export default class TrackUtils extends Component {
      * 数据请求模式判断
      */
     requestMode = ()=>{
-        console.log(this.props.getTrackPoints,6666666666);
         if(this.props.getTrackPoints){
             this.getTrackPoints();
         }else{
@@ -184,13 +187,16 @@ export default class TrackUtils extends Component {
      */
     getTrackPoints = ()=>{
         let data = {
-            startTime:this.state.startTime,
-            endTime:this.state.endTime,
+            startTime:this.state.startDate,
+            endTime:this.state.endDate,
             posType:this.state.posType
         };
+        console.log(data,'数据');
+        
         this.props.getTrackPoints(data,(res)=>{
             this.getTrackData(res);
         });
+
     }
 
     /**
@@ -198,11 +204,11 @@ export default class TrackUtils extends Component {
      */
     request = ()=> {
         let data = {
-            startTime:this.state.startTime,
-            endTime:this.state.endTime,
+            startTime:this.state.startDate,
+            endTime:this.state.endDate,
             posType:this.state.posType
         };
-        console.log(api,'获取的api');
+        console.log(data,'获取的api');
         jmAjax({
             url:api.track,
             method:'GET',
@@ -227,6 +233,7 @@ export default class TrackUtils extends Component {
             });
         }else {
             Toast.message('暂无轨迹');
+            this.useDefaults();
         }        
     }
 
@@ -235,6 +242,10 @@ export default class TrackUtils extends Component {
      * 获取数据
      */
     getMarkPoint = () =>{
+        //如果是重新查询条件，在播放中则暂停
+        if(this.state.isPlay){
+            this.pause();
+        }
         let trackData = this.state.trackData;
         let allPoint = this.getTrackPointArr();
         let pointArr=[];
@@ -249,6 +260,7 @@ export default class TrackUtils extends Component {
             deviceMarker:deviceMarker,
             pointArr:pointArr,
             totalProgress:allPoint.length,
+            progress:0
         },()=>{
             //如果是谷歌地图则设置可视区域
             if(this.state.userMapType){
@@ -277,6 +289,15 @@ export default class TrackUtils extends Component {
      * 时间选择确认按钮
      */
     onConfirm = (data)=> {
+        let stdt=new Date(st.replace(/-/g,'/'));
+        let etdt=new Date(et.replace(/-/g,'/'));
+       
+        //相隔时间校验
+        if(parseInt((etdt-stdt)/ (1000 * 60 * 60 * 24))>this.props.dimDd){
+            Toast.message('选择的时间只允许在'+this.props.dimDd+'天之内');
+            return;
+        }
+
         this.setState({
             startDate:data.startDate,
             endDate:data.endDate
@@ -324,15 +345,19 @@ export default class TrackUtils extends Component {
      */
 
      onPlay = (isPlay) =>{
-         if(isPlay){
-             this.play();
-         }else {
-             this.pause();
+         if(this.state.pointArr.length>0){
+             if(isPlay){
+                 this.play();
+             }else {
+                 this.pause();
+             }
+   
+             this.setState({
+                 isPlay:isPlay
+             });
+         }else{
+             Toast.message('暂无轨迹，无法播放');
          }
-
-         this.setState({
-             isPlay:isPlay
-         });
      }
 
      /**
@@ -386,8 +411,6 @@ export default class TrackUtils extends Component {
                 trackData[currentProgress].totalDistance = this.countTotalTrack(pointArr); //计算总里程
             }
 
- 
-            
             let deviceMarker = trackData[currentProgress];
             
             this.setState({
@@ -445,14 +468,57 @@ export default class TrackUtils extends Component {
         });
     }
 
+    /**
+     * 滑块事件
+     */
+    onSlidingComplete = (progress)=> {
+        if(this.state.isPlay){
+            this.pause();
+        }
+        if(progress > this.state.trackPolylinePoint.length || progress < 1){
+            return;
+        }
+        let trackPolylinePoint = this.state.trackPolylinePoint;
+        //过滤轨迹线目前移动的点
+        let pointArr = trackPolylinePoint.filter((item,index) => {
+            return index < progress;
+        });
 
-    // /**
-    //  * 自定义覆盖物
-    //  */
-    // customOverlay = ()=> {
-    //     return this.props.customItem ?this.props.customItem() :null;
-    // }
-
-
-
+        //所有数据更新
+        this.setState({
+            progress,
+            pointArr,
+            deviceMarker:this.state.trackData[progress-1]
+        },()=>{
+            //如果在播放在继续播放
+            if(this.state.isPlay){
+                this.play();
+            }
+        });
+    }
+    
+    /**
+     * 恢复初始状态
+     */
+   useDefaults = ()=>{
+       this.setState({
+           trackData:[],
+           startMarker:{
+               latitude:0,
+               longitude:0
+           },
+           endMarker:{
+               latitude:0,
+               longitude:0
+           },
+           trackPolylinePoint:[],
+           deviceMarker:{
+               latitude:0,
+               longitude:0
+           },
+           progress:0,
+           totalProgress:0,
+           pointArr:[]
+       });
+   }    
 }

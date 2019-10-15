@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-08 11:54:21
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-14 14:03:26
  */
 
 import {
@@ -107,6 +107,7 @@ export const httpApp = (url, params) => {
     if(url === 'jm_media_playAudio'){
         // console.log(url,bodyJson);
     }
+    console.log(bodyJson,'给app传数据');
     JMRNEngineManager.requestMethod(url, bodyJson);
 
     // 定义回调
@@ -118,6 +119,7 @@ export const httpApp = (url, params) => {
                 if(funName[i]!='onFail'){
                     data = getObject(res);
                 }
+                console.log(data,'app给小程序传数据');
                 params[funName[i]](data);
             }
         });

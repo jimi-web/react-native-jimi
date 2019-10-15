@@ -4,13 +4,14 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 09:10:14
+ * @LastEditTime: 2019-10-14 15:58:56
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text} from 'react-native';
 import Styles from '../style/base';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
+import { devicePosition } from '../comm';
 import {httpLocationGet,jmAjax} from '../../../http/business';
 import api from '../../../api/index';
 import PropTypes from 'prop-types';
@@ -220,28 +221,38 @@ export default class PositionUtils extends Component {
     /**
      * 请求数据默认
      */
-    request = ()=>{
-        jmAjax({
-            url:api.position,
-            method:'GET',
-            encoding:true,
-            encodingType:true
-        }).then((res)=>{
-            let result = res.data;
-            let lastPoint = this.state.markerPoint;
-            //解析地址，如果与上次解析的不超过10米，那么不解析
-            if(lastPoint.latitude){
-                let distance = gps.distance(lastPoint.latitude,lastPoint.longitude,result.latitude,result.longitude);
-                if(distance>10){
-                    this.geocoder(result);
-                }else {
-                    result.address = this.state.lastAddress;
-                }
-            }else {
-                //第一次进入需要解析地址
-                this.geocoder(result);
-            }
-        });   
+    request = async()=>{
+        let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress);
+
+        this.setState({
+            lastAddress:deviceInfo.address
+        },()=>{
+            this.drawMarker(deviceInfo);
+            this.onDeviceChange(deviceInfo);
+        });
+
+        
+        // jmAjax({
+        //     url:api.position,
+        //     method:'GET',
+        //     encoding:true,
+        //     encodingType:true
+        // }).then((res)=>{
+        //     let result = res.data;
+        //     let lastPoint = this.state.markerPoint;
+        //     //解析地址，如果与上次解析的不超过10米，那么不解析
+        //     if(lastPoint.latitude){
+        //         let distance = gps.distance(lastPoint.latitude,lastPoint.longitude,result.latitude,result.longitude);
+        //         if(distance>10){
+        //             this.geocoder(result);
+        //         }else {
+        //             result.address = this.state.lastAddress;
+        //         }
+        //     }else {
+        //         //第一次进入需要解析地址
+        //         this.geocoder(result);
+        //     }
+        // });   
     }
 
 
@@ -339,7 +350,7 @@ export default class PositionUtils extends Component {
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{this.posType(this.state.locationData.posType)}</Text>
                 <Text style={MapStyles.line}>|</Text>
-                <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.gpsSpeed}km/h</Text>
+                <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.gpsSpeed ? this.state.locationData.gpsSpeed:0}km/h</Text>
             </View>                              
             <View style={MapStyles.infoWindowItem}>
                 <Text style={MapStyles.infoWindowTitle}>定位时间：{this.state.locationData.gpsTime}</Text>
@@ -375,7 +386,11 @@ export default class PositionUtils extends Component {
         case 3:
             stateOject.text = '静止';
             stateOject.color = '#F82E1B';
-        } 
+            break;
+        case null:
+            stateOject.text = '离线';
+            stateOject.color = '#000'; 
+        }
         return stateOject;
     }
 
@@ -395,13 +410,13 @@ export default class PositionUtils extends Component {
     posType = (posType)=>{
         let type = null;
         switch (posType) {
-        case 0:
+        case 'GPS':
             type = 'GPS定位';
             break;
-        case 1:
+        case 'LBS':
             type = 'LBS定位';
             break;
-        case 2:
+        case 'WIFI':
             type = 'WIFI定位';
         } 
         return type;        

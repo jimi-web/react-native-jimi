@@ -4,12 +4,16 @@
  * @Author: xieruizhi
  * @Date: 2019-09-23 10:48:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-24 13:34:57
+ * @LastEditTime: 2019-10-15 16:52:44
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Modal,StyleSheet,Dimensions,DeviceEventEmitter} from 'react-native';
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
+import {httpApp} from '../../../http/basic';
+import {jmAjax,getEncoding} from '../../../http/business';
+import api from '../../../api/index';
+import Toast from '../../../components/toast/Toast';
 import {Checkbox} from 'teaset';
 import Theme from '../../../components/themes';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
@@ -17,8 +21,20 @@ const {width} = Dimensions.get('window');
 
 class Share extends Component { 
     static propTypes = {
-        onShareTypeChange:PropTypes.func
+        checkedTitle:PropTypes.string,
+        routerName:PropTypes.string,
+        shareUrl:PropTypes.string,
+        shareTitle:PropTypes.string,
+        shareText:PropTypes.string,
     };
+
+    static defaultProps = {
+        checkedTitle:'《使用协议和隐私政策》',
+        routerName:'PrivacyAgreement',
+        shareUrl:api.shareUrl,
+        shareTitle:'我的实时位置',
+        shareText:'点击查看我现在在哪里吧！'
+    }
 
     constructor(props) {
         super(props);
@@ -59,7 +75,8 @@ class Share extends Component {
                 key:'QQ'
             }],
             isDrawerShareShow:false,
-            err:false
+            err:false,
+            message:'请先勾选同意'
         };
     }
 
@@ -118,10 +135,10 @@ class Share extends Component {
                                 this.setState({
                                     isDrawerShareShow:false
                                 },()=>{
-                                    this.props.navigation.push('PrivacyAgreement');
+                                    this.props.navigation.push(this.props.routerName);
                                 });
                             }}>
-                                <Text style={{color:'#3479F6'}}>《使用协议和隐私政策》</Text>
+                                <Text style={{color:'#3479F6'}}>{this.props.checkedTitle}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -141,15 +158,10 @@ class Share extends Component {
                 </View>
                 <View style={MapStyles.shareLine}></View>
                 <TouchableOpacity style={MapStyles.shareCancel} onPress={this.onCancel}>
-                    <Text style={MapStyles.shareCancelText}> 取消</Text>
+                    <Text style={MapStyles.shareCancelText}>取消</Text>
                 </TouchableOpacity>
             </View>
-            {
-                this.state.err ?
-                    <View style={MapStyles.tip}><Text style={{color:'#fff',fontSize:14}}>请先勾选同意</Text></View>
-                    :
-                    null
-            }
+            <Toast message={this.state.message}></Toast>
         </Modal>;
     }
 
@@ -184,19 +196,69 @@ class Share extends Component {
             expireTime:this.state.activeValue
         };
         if(this.state.isChecked){
-            this.props.onShareTypeChange &&  this.props.onShareTypeChange(data);
+            this.getToken(data);
         }else{
-            this.setState({
-                err:true
-            },()=>{
-                setTimeout(()=>{
-                    this.setState({
-                        err:false
-                    });
-                },2000);
-            });
+            Toast.show();
         } 
     }
+
+    /**
+     * 获取token认证身份
+     */
+    getToken = (data)=>{
+        jmAjax({
+            url:api.shareToken,
+            method:'POST',
+            data:{
+                shareType:'position',
+                expireTime:data.expireTime,
+            },
+            encoding:true,
+            encodingType:true,
+            header:true,
+        }).then((res)=>{ 
+            let result = res.data;
+            this.httpShare(data.state,result);
+        });
+    }
+
+    /**
+     * 分享
+     */
+    httpShare = (state,token)=> {
+        getEncoding().then((res)=>{
+            httpApp('jm_api.onShare',{
+                state:state,
+                text:this.props.shareText,
+                url:this.props.shareUrl+'?token='+token+'&encodingType='+res.encodType+'&encoding='+res.encoding,
+                title:this.props.shareTitle,
+                onSuccess: () => {
+                    this.setState({
+                        isDrawerShareShow:false
+                    });
+                },
+                onFail: () => {
+                    let message = '';
+                    if(state == 'qq'){
+                        message = '未安装QQ无法分享';
+                    }else {
+                        message = '未安装微信无法分享';
+                    }
+                    this.setState({
+                        message:message
+                    },()=>{
+                        Toast.show();
+                    });
+                },
+                onComplete:()=>{
+                
+                }
+            });    
+        });    
+    }  
+    
+    
+
 }
 
 export default withNavigation(Share);
