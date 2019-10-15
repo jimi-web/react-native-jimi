@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-08 11:54:21
+ * @LastEditTime: 2019-10-15 11:21:28
  */
 
 import {
@@ -104,11 +104,7 @@ export const httpApp = (url, params) => {
     }
 
     const bodyJson = JSON.stringify(obj);
-    if(url === 'jm_media_playAudio'){
-        // console.log(url,bodyJson);
-    }
     JMRNEngineManager.requestMethod(url, bodyJson);
-
     // 定义回调
     let callName = {};
     for (let i = 0; i < funName.length; i++) {

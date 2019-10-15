@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-14 11:42:27
+ * @LastEditTime: 2019-10-15 11:45:28
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -13,7 +13,7 @@ import { jmAjax,getEncoding } from '../../http/business';
 import { createTheFolder } from '../../http/file';
 import { playAudio,stopAudio } from '../../http/media';
 import api from '../../api/index';
-import { parseDate,parseTime } from '../../libs/utils';
+import { parseDate,parseTime,isIphoneX } from '../../libs/utils';
 import RNFS from 'react-native-fs';
 import PropTypes from 'prop-types';
 import {Toast} from 'teaset';
@@ -31,7 +31,7 @@ export default class Record extends Component {
 
     };
     static defaultProps = {
-        recordIns:'LY,OFF,ins#',
+        recordIns:'LY,ins#',
         recordStutainTrue:'CXLY,ON,ins#',
         recordStutainFalse:'CXLY,OFF#',
         insSutainTime:30,
@@ -147,7 +147,6 @@ export default class Record extends Component {
                 return;
             }
             this.totalPage = res.data.totalPage;
-            
             const serverParams = {
                 pageNum:res.data.currentPage,
                 pageSize:res.data.pageSize
@@ -165,7 +164,7 @@ export default class Record extends Component {
         data.forEach((item, index) => {
             item.timeLength = 0;
             // 修改成显示数据
-            item.createTime = new Date(item.create_time).Format('hh:mm:ss');
+            item.createTimeFtm = new Date(item.createTime).Format('hh:mm:ss');
             item.row = 1;
             item.recordType = item.recordType == 'MANUAL' ? '手动录音' : '震动录音';
             item.progress = 0;
@@ -184,9 +183,11 @@ export default class Record extends Component {
                         flag = 0;
                     }
                     if(i === fileList.length - 1){
-                        item.type = flag;
-                    }
-                    if(index === data.length - 1){
+                        this.state.recordList.forEach(downloadData => {
+                            if(item.fileId === downloadData.fileId){
+                                downloadData.type = flag;
+                            }
+                        });
                         const totalList = JSON.parse(JSON.stringify(this.state.recordList));
                         this.setState({
                             recordList:totalList
@@ -196,20 +197,24 @@ export default class Record extends Component {
             });
             item.timeLength  =  item.timeLength;
             // 添加日期标识符
-            item.today = new Date(item.create_time).Format('YYYY-MM-DD');
+            item.today = new Date(item.createTime).Format('YYYY-MM-DD');
             if (index == 0) {
-                item.fileDate = parseDate(item.create_time);
+                item.fileDate = parseDate(item.createTime);
             }
+            let dataFalg = true;
             for (let i = 0; i < index; i++) {
                 const value = data[i];
-                if (item.today !== value.today) {
-                    item.fileDate = parseDate(item.create_time);
+                if (item.today == value.today) {
+                    dataFalg = false;
                 }
+            }
+            if(dataFalg){
+                item.fileDate = parseDate(item.createTime);
             }
         });
         const recordList = this.state.recordList.concat(data);
         const initFile = this.state.recordList.concat(file);
-        // console.log(recordList,'格式化之后的数据',serverParams);
+        console.log(recordList,'格式化之后的数据',initFile);
         this.setState({
             recordList,
             initFile,
@@ -259,12 +264,12 @@ export default class Record extends Component {
             encodingType:'IMEI',
             cmdCode:instrution,
             cmdType:0,
-            cmdId:'recording',
+            cmdId:0,
             isSync:0,
             offLineFlag:0,
             platform:'app',
-            offLineInsType:'',
-            instructionSetting:{
+            offLineInsType:'customIns',
+            instructSetting:{
                 recordLength:this.state.recordLength
             }
         };
@@ -294,7 +299,7 @@ export default class Record extends Component {
     };
     render() {
         return (
-            <View style={{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }}>
+            <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' },{paddingBottom:isIphoneX()?25:0}]}>
                 <FlatList
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
@@ -304,7 +309,7 @@ export default class Record extends Component {
                     onEndReachedThreshold={0.2}
                     ListFooterComponent={this.renderFooter}
                 />
-                <View style={{ height: 55, width: '100%' }}>
+                <View style={{ height: 55, width: '100%',zIndex:999 }}>
                     <RecordControl
                         isPlay={this.state.isPlay}
                         isOpenSelect={this.state.isOpenSelect}
@@ -352,8 +357,8 @@ export default class Record extends Component {
     onEndReached = (number) => {
         
         const pageNum = this.state.params.pageNum + 1;
-        // console.log(number,'滚动',this.totalPage,pageNum,this.state.params.pageNum);
-        if(pageNum > this.totalPage){
+        console.log(number,'滚动',this.totalPage,pageNum,this.state.params.pageNum);
+        if(pageNum >= this.totalPage){
             return;
         }
         if(this.state.isOpenSelect === 0){
@@ -376,6 +381,7 @@ export default class Record extends Component {
         if(!this.state.recordList.length){
             return null;
         }
+        console.log(this.totalPage,this.state.params.pageNum,1456);
         if(this.totalPage <= this.state.params.pageNum){
             return <View style={{alignItems:'center',padding:20}}>
                 <Text>{'没有更多数据了'}</Text>
@@ -563,12 +569,11 @@ export default class Record extends Component {
             Toast.message('请选择需要删除的文件');
         }
 
-        const params = {
-            deleteFlag:1,
+        const data = {
+            deleteFlag:0,
             fileIds:dataArr.join(','),
-            isOpenSelect:1
         };
-        this.deleteRecord(params).then(res => {
+        this.deleteRecord(data).then(res => {
             if(res.code){
                 return Toast.message(res.message);
             }
@@ -577,6 +582,11 @@ export default class Record extends Component {
                 pageNum:1,
                 pageSize:10
             };
+            this.setState({
+                isOpenSelect:1
+            });
+            this.state.recordList = [];
+            this.state.initFile = [];
             this.getServerRecordFile(params);
         });
     }
@@ -594,7 +604,7 @@ export default class Record extends Component {
     }
     onConfirmEmpty = () => {
         const params = {
-            deleteFlag:0
+            deleteFlag:1
         };
         this.deleteRecord(params).then(res => {
             if(res.code){
@@ -627,10 +637,17 @@ export default class Record extends Component {
         }else{
             instruction = this.props.recordIns.replace('ins',data.recordLength);
         }
-        // console.log(instruction,'当前请求时的录音指令');
+        console.log(instruction,'当前请求时的录音指令');
         this.setRecordInstruction(instruction).then(res => {
+            console.log(res,'指令结果');
             if(res.code){
                 return Toast.message('指令发送失败');
+            }
+            if(res.data){
+                const content = typeof res.data.content === 'string'?JSON.parse(res.data.content) : {};
+                if(!content._code){
+                    return Toast.message(content._msg);
+                }
             }
             //录音成功时储存录音状态
             const storage = {
@@ -652,7 +669,15 @@ export default class Record extends Component {
             if(this.state.recordType){
                 // 持续录音
                 if(data.isRecording){
-                    this.getServerRecordFile(this.state.params);
+                    const listParams = {
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    setTimeout(() => {
+                        this.state.recordList = [];
+                        this.state.initFile = [];
+                        this.getServerRecordFile(listParams);
+                    },10000);
                 }
             }else{
                 // 限时录音
@@ -665,9 +690,18 @@ export default class Record extends Component {
                     if(i === 0){
                         this.setState({
                             isRecording:false,
-                            recordLength:data.recordLength
+                            recordLength:data.recordLength,
+                            
                         });
-                        this.getServerRecordFile(this.state.params);
+                        const listParams = {
+                            pageNum:1,
+                            pageSize:10
+                        };
+                        setTimeout(() => {
+                            this.state.recordList = [];
+                            this.state.initFile = [];
+                            this.getServerRecordFile(listParams);
+                        },15000);
                         clearInterval(this.recordTimer);
                     }
                 }, 1000);
@@ -679,10 +713,10 @@ export default class Record extends Component {
      * 修改时长
      */
     onConfirm = ({type,time}) => {
+        console.log(type,time,222);
         this.setState({
             recordLength:time,
             recordType:type,
-            
         });
         
     }
@@ -693,7 +727,6 @@ export default class Record extends Component {
         if(this.state.isPlay){
             return Toast.message('声音播放中，无法进行操作！');
         }
-       
         if(type == 1){
             this.setState({
                 recordList:this.state.deleteRecordList,
@@ -753,7 +786,7 @@ export default class Record extends Component {
                     </View>
                     <View style={{ paddingLeft: 10, flex: 1 }}>
                         <Text style={{ color: '#4D4D4D', fontSize: 16 }}>
-                            {item.createTime}
+                            {item.createTimeFtm}
                         </Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, }}>
                             {this.renderRecordType(item)}

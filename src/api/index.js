@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-30 10:39:02
+ * @LastEditTime: 2019-10-14 13:58:16
  */
 
 //后台地址
@@ -17,8 +17,8 @@ const serverUrl = {
     fenceDel:'/fence/delete',
 
     recordList:'/record/module/file/page',//获取录音列表
-    instruction:'/proxy/module/instruction',//发送指令
-    deleteRecord:'/record/module/file',//发送指令
+    instruction:'/proxy/module/instruction/sendInstruct',//发送指令
+    deleteRecord:'/record/module/file',//删除录音
 };
 
 
