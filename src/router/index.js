@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-30 17:47:45
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-14 13:54:27
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -17,7 +17,7 @@ import Fence from '../examples/Fence';
 import Test from '../view/test';
 import Record from '../examples/Record';
 import PrivacyAgreement from '../view/map/share/PrivacyAgreement';
-import AddFence from '../view/map/fence/AddFence';
+import AddFence from '../examples/AddFence';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -98,7 +98,8 @@ const AppNavigator = createStackNavigator(
                     ...getOptions('添加围栏'),
                     headerStyle:{
                         backgroundColor:'#fff',
-                        borderBottomColor:'#fff'
+                        borderBottomColor:'#fff',
+                        elevation:0
                     },
                 }),
         }

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 16:02:08
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-28 11:33:32
+ * @LastEditTime: 2019-10-14 09:39:59
  */
 import {StyleSheet,Dimensions} from 'react-native';
 const {width} = Dimensions.get('window');
@@ -86,6 +86,9 @@ const FenceStyles =  StyleSheet.create({
     },
     btnItemText:{
         fontSize:17
+    },
+    allSelectText:{
+        color:Theme.TextColorPrimary
     },
     btnItemLine:{
         color:'rgba(0, 0, 0, 0.1)'

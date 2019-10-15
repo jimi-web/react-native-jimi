@@ -4,14 +4,14 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-26 15:12:25
+ * @LastEditTime: 2019-10-09 10:08:44
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
 import PropTypes from 'prop-types';
 import {httpApp} from '../../../http/basic';
 import {jmAjax} from '../../../http/business';
-import {map} from '../../../api/index';
+import api from '../../../api/index';
 import gps from '../../../libs/coversionPoint';
 import {Checkbox,Toast} from 'teaset';
 import Share from '../share/Share';
@@ -144,9 +144,8 @@ export default class TraceUtils extends PositionUtils {
      */
     getToken = (data)=>{
         console.log(data);
-        
         jmAjax({
-            url:map.shareToken,
+            url:api.shareToken,
             method:'GET',
             data:{
                 shareType:'position',
@@ -168,7 +167,7 @@ export default class TraceUtils extends PositionUtils {
         httpApp('jm_api.onShare',{
             state:state,
             text:'点击查看我现在在哪里吧!',
-            url:map.shareUrl+'?token='+token,
+            url:api.share+'?token='+token,
             title:'我的实时位置:',
             onSuccess: () => {
                 
@@ -194,11 +193,11 @@ export default class TraceUtils extends PositionUtils {
     onTouch =()=>{
         //监听手势滑动
         this._panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (evt, gestureState) => true,
-            onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-            onMoveShouldSetPanResponder: (evt, gestureState) => true,
-            onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-            onPanResponderGrant: (evt, gestureState) => {
+            onStartShouldSetPanResponder: (evt) => true,
+            onStartShouldSetPanResponderCapture: (evt) => true,
+            onMoveShouldSetPanResponder: (evt) => true,
+            onMoveShouldSetPanResponderCapture: (evt) => true,
+            onPanResponderGrant: (evt) => {
                 this.setState({
                     touchStart:evt.nativeEvent.pageY
                 });
@@ -217,7 +216,7 @@ export default class TraceUtils extends PositionUtils {
                     }
                 }
             },
-            onPanResponderTerminationRequest: (evt, gestureState) => true,
+            onResponderTerminationRequest: (evt, gestureState) => true,
         });        
     }
 
@@ -330,6 +329,4 @@ export default class TraceUtils extends PositionUtils {
             }
         });
     }
-
-
 }

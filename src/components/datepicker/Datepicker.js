@@ -3,15 +3,15 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-08 11:53:51
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-14 13:54:18
  */
 import React, {Component} from 'react';
-import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter,Alert} from 'react-native';
-import {Wheel,Overlay} from 'teaset';
+import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter} from 'react-native';
+import {Wheel} from 'teaset';
 import '../../libs/time';
 import Theme from '../themes/index';
-const {width,height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 export default class Datepicker extends Component {
     constructor(props) {
