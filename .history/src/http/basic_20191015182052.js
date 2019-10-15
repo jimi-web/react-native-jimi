@@ -3,8 +3,13 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
+<<<<<<< HEAD
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 18:20:58
+ * @LastEditTime: 2019-10-15 18:20:52
+=======
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-10-15 11:21:28
+>>>>>>> 9084297e327c15f7485f372387e5163088df5a86
  */
 
 import {

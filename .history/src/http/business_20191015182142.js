@@ -3,8 +3,13 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
+<<<<<<< HEAD
  * @LastEditors: xieruizhi
  * @LastEditTime: 2019-10-15 18:21:41
+=======
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-10-15 11:48:29
+>>>>>>> 9084297e327c15f7485f372387e5163088df5a86
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';

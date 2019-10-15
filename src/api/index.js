@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 13:54:03
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-10-15 11:51:38
  */
 
 //后台地址
@@ -19,8 +19,8 @@ const serverUrl = {
     getFence:'/fence/getFence/',
 
     recordList:'/record/module/file/page',//获取录音列表
-    instruction:'/proxy/module/instruction',//发送指令
-    deleteRecord:'/record/module/file',//发送指令
+    instruction:'/proxy/module/instruction/sendInstruct',//发送指令
+    deleteRecord:'/record/module/file',//删除录音
 };
 
 
