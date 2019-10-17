@@ -4,12 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 10:50:26
+ * @LastEditTime: 2019-10-17 16:12:05
  */
 import React, {Component} from 'react';
 import {TouchableOpacity,Image} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../style/base';
+import Loading from '../../../components/loading/Loading';
 import MapStyles from '../style/track';
 import Controller from './TrackController';
 import {Toast} from 'teaset';
@@ -33,8 +34,8 @@ export default class TrackUtils extends Component {
         playPolylineOptions:PropTypes.object,
         roadBtnStyle:PropTypes.object,//路况样式
         mapTypeBtnStyle:PropTypes.object,//地图类型样式
-        playImg:PropTypes.object,
-        getTrackPoints:PropTypes.func
+        playImg:PropTypes.object, 
+        getData:PropTypes.func
     }
 
     static defaultProps = {
@@ -179,7 +180,7 @@ export default class TrackUtils extends Component {
      */
     requestMode = ()=>{
         Loading.show();
-        if(this.props.getTrackPoints){
+        if(this.props.getData){
             this.getTrackPoints();
         }else{
             this.request();
@@ -198,7 +199,7 @@ export default class TrackUtils extends Component {
         };
         console.log(data,'数据');
         
-        this.props.getTrackPoints(data,(res)=>{
+        this.props.getData(data,(res)=>{
             this.getTrackData(res);
         });
 

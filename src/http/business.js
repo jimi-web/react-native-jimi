@@ -3,11 +3,12 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-17 11:05:55
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-17 11:57:29
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
+import Loading from '../components/loading/Loading';
 
 /**
  * 后台请求通用方法封装

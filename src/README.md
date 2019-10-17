@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-08 11:40:35
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-17 13:46:43
  -->
 # 几米圈标准小程序
 
@@ -48,8 +48,15 @@
 
 [`<Jimi.BaiduTrace />`追踪](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Trace.md)<br>
 
+[`<Jimi.BaiduFenceList />`围栏列表](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/FenceList.md)<br>
+
+[`<Jimi.BaiduAddFence />`添加围栏](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/AddFence.md)<br>
+
+[`<Jimi.Share />`分享](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Share.md)<br>
+
 [`<Jimi.Record />`录音](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Record.md)<br>
 
+[`<Circle.Loading />`加载](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Loading.md)<br>
 
 ## 方法
 [`<Api />` 接口](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Api.md)<br>

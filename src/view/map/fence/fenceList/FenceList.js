@@ -4,26 +4,27 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 11:03:43
+ * @LastEditTime: 2019-10-17 17:00:37
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
-import { withNavigation } from 'react-navigation';
+// import { withNavigation } from 'react-navigation';
 import PropTypes from 'prop-types';
+import Loading from '../../../../components/loading/Loading';
 import {jmAjax} from '../../../../http/business';
 import api from '../../../../api/index';
 import FenceListItem from './FenceListItem';
 import BottomToolbars from '../../../components/BottomToolbars';
 import FenceStyles from '../../style/fenceList';
 
-class FenceList extends Component { 
+export default class FenceList extends Component { 
     static propTypes = {
-        routeName:PropTypes.string,
-        fenceStateImg:PropTypes.object
+        onAddEditFence:PropTypes.func,
+        fenceStateImg:PropTypes.object,
+        getData:PropTypes.func
     }
 
     static defaultProps = {
-        routeName:'',
         fenceStateImg:{
             in:require('../../../../assets/fence/fence_list_enter.png'),
             out:require('../../../../assets/fence/fence_list_out.png'),
@@ -73,7 +74,7 @@ class FenceList extends Component {
                                     fenceAddress={item.fenceAddress}
                                     isSelect = {this.state.isSelect}
                                     onChangeCheckbox = {()=>this.onFenceListItem(index)}
-                                    onFenceListItem = {()=>{this.onFenceListItem(index,item.fenceId);}}
+                                    onFenceListItem = {()=>{this.onFenceListItem(index,item);}}
                                 ></FenceListItem>; 
                             })
                         }
@@ -109,7 +110,8 @@ class FenceList extends Component {
                                     <Image source={require('../../../../assets/fence/operating_select_disable.png')}/>
                                     <Text style={{fontSize:10,marginTop:2,color:'#E9E9E9'}}>选择</Text>
                                 </TouchableOpacity> }
-                        <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} onPress={()=>{this.props.navigation.push(this.props.routeName);}}>
+                        <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} 
+                            onPress={()=>{this.props.onAddEditFence && this.props.onAddEditFence();}}>
                             <Image source={require('../../../../assets/fence/fence_operating_add.png')}/>
                             <Text style={FenceStyles.addText}>添加围栏</Text>
                         </TouchableOpacity>
@@ -137,26 +139,42 @@ class FenceList extends Component {
         </View>;
     }
 
+    
+
+
     /**
      * 获取数据
      */
     getFenceList = ()=>{
-        jmAjax({
-            url:api.fenceList,
-            method:'GET',
-            encoding:true,
-            encodingType:true
-        }).then((res)=>{
-            let result = res.data;
-            result.forEach((item,index)=>{
-                item.checked = false;
+        if(this.props.getData){
+            this.props.getData((data)=>{
+                this.assignment(data);
             });
-            this.setState({
-                fenceList:result
-            },()=>{
-                Loading.hide();
-            });
-        });        
+        }else{
+            jmAjax({
+                url:api.fenceList,
+                method:'GET',
+                encoding:true,
+                encodingType:true
+            }).then((res)=>{
+                this.assignment(res);
+            });  
+        }
+    }
+
+    /**
+     * 拿到数据后赋值
+     */
+    assignment = (res)=>{
+        let result = res.data;
+        result.forEach((item,index)=>{
+            item.checked = false;
+        });
+        this.setState({
+            fenceList:result
+        },()=>{
+            Loading.hide();
+        });
     }
 
 
@@ -176,7 +194,7 @@ class FenceList extends Component {
      * @param {Number} index  位置
      * @param {String} fenceId  围栏
      */
-    onFenceListItem = (index,fenceId)=>{
+    onFenceListItem = (index,item)=>{
         //选择
         if(this.state.isSelect){
             let list = this.state.fenceList;
@@ -187,7 +205,7 @@ class FenceList extends Component {
             });
         }else {
             //编辑
-            this.props.navigation.push(this.props.routeName,{fenceId:fenceId});
+            this.props.onAddEditFence && this.props.onAddEditFence(item);
         }
     }
 
@@ -276,4 +294,3 @@ class FenceList extends Component {
     } 
 }
 
-export default withNavigation(FenceList);

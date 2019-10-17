@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 15:42:51
+ * @LastEditTime: 2019-10-17 16:14:40
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -41,7 +41,7 @@ export default class Position extends Component {
                 !this.state.isBaidu ?
                     <Jimi.GooglePosition
                         style={{height:200}}
-                        // getMarkerPoint={this.getPoint}
+                        // getData={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
                         markerOptions={obj}
@@ -58,7 +58,7 @@ export default class Position extends Component {
                     :
                     <Jimi.BaiduPosition
                         isRefresh={false}
-                        // getMarkerPoint={this.getPoint}
+                        // getData={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
                         markerOptions={obj}

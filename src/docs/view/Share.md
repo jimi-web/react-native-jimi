@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-24 15:28:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 10:12:11
+ * @LastEditTime: 2019-10-17 13:40:31
  -->
 
 # `Share` 分享
@@ -18,6 +18,9 @@
 |shareTitle |String|false | 有默认属性| 分享的标题 |
 |shareText |String|false | 有默认属性| 分享的文字 |
 |token |String|false | 有默认属性| 身份校验的token |
+|show |无|无 | 无 | 显示 |
+|hide |无|无 | 无 | 隐藏 |
+
 ## Demo
 ```
 import React, {Component} from 'react';
@@ -34,7 +37,6 @@ export default class Share extends Component {
 
     render() {
         return <Jimi.Share />;
-
     }
 }
 
