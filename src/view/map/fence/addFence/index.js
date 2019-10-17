@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 17:07:26
+ * @LastEditTime: 2019-10-17 10:51:36
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -62,7 +62,10 @@ export default class AddFenceUtils extends Component {
         };
     }
 
-
+    componentWillUnmount() {
+        Loading.hide();
+    }
+    
     getFenceTitle = ()=>{
         let date = new Date();
         return date.getFullYear()+''+date.getMonth() + 1+''+date.getDate()+''+date.getHours()+''+date.getMinutes()+''+date.getSeconds();

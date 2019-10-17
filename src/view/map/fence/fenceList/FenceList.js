@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 16:55:16
+ * @LastEditTime: 2019-10-17 11:03:43
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
@@ -53,6 +53,7 @@ class FenceList extends Component {
     }
 
     componentWillUnmount() {
+        Loading.hide();
         DeviceEventEmitter.removeAllListeners('jmFenceList');
     }
 

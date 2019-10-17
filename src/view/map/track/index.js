@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 17:24:42
+ * @LastEditTime: 2019-10-17 10:50:26
  */
 import React, {Component} from 'react';
 import {TouchableOpacity,Image} from 'react-native';
@@ -100,6 +100,10 @@ export default class TrackUtils extends Component {
             progress:0,//进度条
             totalProgress:0,//总进度条
         };
+    }
+
+    componentWillUnmount() {
+        Loading.hide();
     }
 
     /**

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 17:17:44
+ * @LastEditTime: 2019-10-17 10:49:24
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text} from 'react-native';
@@ -114,6 +114,7 @@ export default class PositionUtils extends Component {
     }
 
     componentWillUnmount() {
+        Loading.hide();
         clearInterval(this.state.timeInterval);
     }
 
