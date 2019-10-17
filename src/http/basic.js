@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 10:00:03
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-10-17 11:03:29
  */
 
 import {
@@ -55,8 +55,23 @@ export const getObject = (data)=> {
     if(!data){
         return null;
     }
-    var obj = typeof data === 'string'?JSON.parse(data):data;
+    var obj = isJSON(data)?JSON.parse(data):data;
     return obj;
+};
+
+export const isJSON = (str) => {
+    if (typeof str == 'string') {
+        try {
+            var obj=JSON.parse(str);
+            if(typeof obj == 'object' && obj ){
+                return true;
+            }else{
+                return false;
+            }
+        } catch(e) {
+            return false;
+        }
+    }
 };
 
 export const guids = () => {
@@ -102,8 +117,6 @@ export const httpApp = (url, params) => {
             obj[key] = params[key];
         }
     }
-
-    console.log(obj);
     const bodyJson = JSON.stringify(obj);
     JMRNEngineManager.requestMethod(url, bodyJson);
     // 定义回调
@@ -112,10 +125,7 @@ export const httpApp = (url, params) => {
         Object.assign(callName, {
             [funName[i]]: (res) => {
                 let data = '';
-                if(funName[i]!='onFail'){
-                    data = getObject(res);
-                }
-                console.log(data,'app给小程序传数据');
+                data = getObject(res);
                 params[funName[i]](data);
             }
         });

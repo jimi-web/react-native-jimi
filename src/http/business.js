@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 16:58:57
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-10-17 11:05:55
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -28,10 +28,10 @@ const request = (params) => {
                 'Content-Type': 'application/json',
             },
             onSuccess: (res) => {
+                Loading.hide();
                 if(res.code === 0){
                     resolve(res);
                 }else {
-                    Loading.hide();
                     Toast.message(`${res.message}[${res.code}]`);
                 }
             },
@@ -40,7 +40,7 @@ const request = (params) => {
                 Toast.message('数据请求失败');
             },
             onComplete: (res) => {
-                //
+                Loading.hide();
             }
         });
     });
@@ -55,17 +55,14 @@ export const jmAjax = (params)=> {
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
                 let data = res;
-                console.log(data,'getEncoding');
-                
                 params.data =  params.data?params.data:{};
                 if(params.encoding){
-                    params.data.encoding = '201801051535007';
-                    // params.data.encoding = data.encoding;
+                    // params.data.encoding = '869354040432859';
+                    params.data.encoding = data.encoding;
                 }
                 if(params.encodingType){
                     params.data.encodingType = data.encodType;
                 }
-                console.log(params,'getEncoding');
                 request(params).then((res)=>{
                     resolve(res);
                 });
