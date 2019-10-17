@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 17:30:28
+ * @LastEditTime: 2019-10-17 10:22:53
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
@@ -27,6 +27,7 @@ export default class TraceUtils extends PositionUtils {
         shareUrl:PropTypes.string,
         shareTitle:PropTypes.string,
         shareText:PropTypes.string,
+        token:PropTypes.string,
     };
 
     static defaultProps = {
@@ -133,7 +134,8 @@ export default class TraceUtils extends PositionUtils {
             routerName ={this.props.routerName}
             shareUrl ={this.props.shareUrl}
             shareTitle ={this.props.shareTitle}
-            shareText ={this.props.shareText}   
+            shareText ={this.props.shareText}
+            token={this.props.token ? this.props.token : ''} 
         ></Share>;
     }
 

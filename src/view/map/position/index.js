@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 15:58:56
+ * @LastEditTime: 2019-10-16 17:17:44
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text} from 'react-native';
@@ -206,6 +206,7 @@ export default class PositionUtils extends Component {
      * 获取标记
      */
     getMarker = ()=> {
+        Loading.show();
         if(this.props.getMarkerPoint){
             this.props.getMarkerPoint((data)=>{
                 let res = data;
@@ -230,29 +231,6 @@ export default class PositionUtils extends Component {
             this.drawMarker(deviceInfo);
             this.onDeviceChange(deviceInfo);
         });
-
-        
-        // jmAjax({
-        //     url:api.position,
-        //     method:'GET',
-        //     encoding:true,
-        //     encodingType:true
-        // }).then((res)=>{
-        //     let result = res.data;
-        //     let lastPoint = this.state.markerPoint;
-        //     //解析地址，如果与上次解析的不超过10米，那么不解析
-        //     if(lastPoint.latitude){
-        //         let distance = gps.distance(lastPoint.latitude,lastPoint.longitude,result.latitude,result.longitude);
-        //         if(distance>10){
-        //             this.geocoder(result);
-        //         }else {
-        //             result.address = this.state.lastAddress;
-        //         }
-        //     }else {
-        //         //第一次进入需要解析地址
-        //         this.geocoder(result);
-        //     }
-        // });   
     }
 
 
@@ -320,6 +298,8 @@ export default class PositionUtils extends Component {
                     }
                 });
             }
+
+            Loading.hide();
         });
     }
 

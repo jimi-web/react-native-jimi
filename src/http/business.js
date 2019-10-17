@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 18:21:41
+ * @LastEditTime: 2019-10-16 16:58:57
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -31,10 +31,12 @@ const request = (params) => {
                 if(res.code === 0){
                     resolve(res);
                 }else {
+                    Loading.hide();
                     Toast.message(`${res.message}[${res.code}]`);
                 }
             },
             onFail: (res) => {
+                Loading.hide();
                 Toast.message('数据请求失败');
             },
             onComplete: (res) => {
@@ -57,7 +59,7 @@ export const jmAjax = (params)=> {
                 
                 params.data =  params.data?params.data:{};
                 if(params.encoding){
-                    params.data.encoding = data.encoding;
+                    params.data.encoding = '201801051535007';
                     // params.data.encoding = data.encoding;
                 }
                 if(params.encodingType){

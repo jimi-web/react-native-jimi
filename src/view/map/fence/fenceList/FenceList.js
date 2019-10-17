@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 10:00:05
+ * @LastEditTime: 2019-10-16 16:55:16
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
@@ -41,6 +41,7 @@ class FenceList extends Component {
     }
     
     componentDidMount(){
+        Loading.show();
         this.getFenceList();
     }
 
@@ -135,7 +136,6 @@ class FenceList extends Component {
         </View>;
     }
 
-
     /**
      * 获取数据
      */
@@ -152,6 +152,8 @@ class FenceList extends Component {
             });
             this.setState({
                 fenceList:result
+            },()=>{
+                Loading.hide();
             });
         });        
     }
@@ -225,6 +227,7 @@ class FenceList extends Component {
         });
     }
 
+    
     del = ()=>{
         let delId = [];//给后台删除的数据
         let delList = this.state.delList;
@@ -236,15 +239,17 @@ class FenceList extends Component {
         });
         jmAjax({
             url:api.fenceDel,
-            method:'GET',
+            method:'DELETE',
             data:{
-                fenceId:delId.join(',')
-            }
+                fenceIds:delId.join(',')
+            },
+            header:true
         }).then((res)=>{
             //更新数据
             this.setState({
                 fenceList:fenceList,
-                delList:[]
+                delList:[],
+                isSelect:false
             });
         }); 
     }

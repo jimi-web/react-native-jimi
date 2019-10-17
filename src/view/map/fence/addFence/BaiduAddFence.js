@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 11:37:22
+ * @LastEditTime: 2019-10-16 10:50:38
  */
 import React, {Component} from 'react';
 import {View,Text} from 'react-native';
@@ -40,9 +40,10 @@ export default class BaiduAddFence extends AddFenceUtils {
                     center={this.state.fencePoint}
                     style={{flex:1}}
                     onMapStatusChangeFinish={(params)=>{
-                        this.setState({
-                            fencePoint:params.target
-                        });
+                        // this.setState({
+                        //     fencePoint:params.target
+                        // });
+                        this.onMapStatusChangeFinish(params.target);
                     }}
                     onMapLoaded={()=>{
                         this.onMapReady(0);

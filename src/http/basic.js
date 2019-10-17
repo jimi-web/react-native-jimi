@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 18:20:58
+ * @LastEditTime: 2019-10-16 10:00:03
  */
 
 import {
@@ -103,6 +103,7 @@ export const httpApp = (url, params) => {
         }
     }
 
+    console.log(obj);
     const bodyJson = JSON.stringify(obj);
     JMRNEngineManager.requestMethod(url, bodyJson);
     // 定义回调

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 17:43:00
+ * @LastEditTime: 2019-10-16 17:24:42
  */
 import React, {Component} from 'react';
 import {TouchableOpacity,Image} from 'react-native';
@@ -174,6 +174,7 @@ export default class TrackUtils extends Component {
      * 数据请求模式判断
      */
     requestMode = ()=>{
+        Loading.show();
         if(this.props.getTrackPoints){
             this.getTrackPoints();
         }else{
@@ -208,7 +209,6 @@ export default class TrackUtils extends Component {
             endTime:this.state.endDate,
             posType:this.state.posType
         };
-        console.log(data,'获取的api');
         jmAjax({
             url:api.track,
             method:'GET',
@@ -225,6 +225,7 @@ export default class TrackUtils extends Component {
      * 获取轨迹数据
      */
     getTrackData = (result)=>{
+        Loading.hide();
         if(result.length>0){
             this.setState({
                 trackData:result
@@ -289,8 +290,8 @@ export default class TrackUtils extends Component {
      * 时间选择确认按钮
      */
     onConfirm = (data)=> {
-        let stdt=new Date(st.replace(/-/g,'/'));
-        let etdt=new Date(et.replace(/-/g,'/'));
+        let stdt=new Date(data.startDate.replace(/-/g,'/'));
+        let etdt=new Date(data.endDate.replace(/-/g,'/'));
        
         //相隔时间校验
         if(parseInt((etdt-stdt)/ (1000 * 60 * 60 * 24))>this.props.dimDd){

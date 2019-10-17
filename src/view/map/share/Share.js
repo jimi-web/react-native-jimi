@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-23 10:48:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 16:52:44
+ * @LastEditTime: 2019-10-17 09:55:05
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Modal,StyleSheet,Dimensions,DeviceEventEmitter} from 'react-native';
@@ -26,6 +26,7 @@ class Share extends Component {
         shareUrl:PropTypes.string,
         shareTitle:PropTypes.string,
         shareText:PropTypes.string,
+        token:PropTypes.string,
     };
 
     static defaultProps = {
@@ -196,7 +197,11 @@ class Share extends Component {
             expireTime:this.state.activeValue
         };
         if(this.state.isChecked){
-            this.getToken(data);
+            if(this.props.token){
+                this.httpShare(data.state,this.props.token);
+            }else{
+                this.getToken(data);
+            }
         }else{
             Toast.show();
         } 

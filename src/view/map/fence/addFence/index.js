@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 11:28:36
+ * @LastEditTime: 2019-10-16 17:07:26
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -15,13 +15,12 @@ import {jmAjax} from '../../../../http/business';
 import Slider from '../../../../components/slider/index';
 import AddFenceStyles from '../../style/addfence';
 import {SearchInput,Toast} from 'teaset';
-import {devicePosition} from '../../comm';
+import {devicePosition,geocoder} from '../../comm';
 import InputBox from '../../../../components/popUpBox/inputBox';
 
 export default class AddFenceUtils extends Component { 
     static propTypes = {
         onSave:PropTypes.func,
-        fenceId:PropTypes.string,
         strokeStyle:PropTypes.object,
         fillColor:PropTypes.string
     };
@@ -280,9 +279,7 @@ export default class AddFenceUtils extends Component {
   
 
     init = ()=>{
-        // console.log(this.props.navigation);
-        
-        //如果fenceId则是编辑
+        Loading.show();
         if(this.props.fenceId){
             this.getFence();
         }else {
@@ -295,11 +292,12 @@ export default class AddFenceUtils extends Component {
      */
     async getFence (){
         let deviceInfo = await devicePosition();
-        // let fenceId = this.props.navigation.state.params.fenceId;
         jmAjax({
             url:api.getFence,
             method:'GET',
-            data:{ }
+            data:{
+                fenceId:this.props.fenceId ? this.props.fenceId:''
+            }
         }).then((res)=>{
             let data = res.data;
             //编辑赋值
@@ -313,11 +311,12 @@ export default class AddFenceUtils extends Component {
                 radius:data.radius,
                 fenceState:data.fenceState,
                 fenceTitle:data.fenceTitle,
-                savefenceState:[data.fenceState],
+                savefenceState:data.fenceState === 'all' ? ['in','out']:[data.fenceState],
                 zoom:this.getZoom(data.radius*2)
+            },()=>{
+                Loading.hide();
             });
         });
-  
     }
 
     /**
@@ -332,6 +331,8 @@ export default class AddFenceUtils extends Component {
                 longitude:deviceInfo.longitude 
             },
             fenceAddress:deviceInfo.address
+        },()=>{
+            Loading.hide();
         });
     }
 
@@ -358,7 +359,6 @@ export default class AddFenceUtils extends Component {
      * 搜索框值返回事件
      */
     onChangeText = (value)=> {
-        // console.log(value,'bbbbb');
         if(!value){
             this.setState({
                 addressList:[],
@@ -369,7 +369,6 @@ export default class AddFenceUtils extends Component {
                 searchValue:value,
             });
             MapSearch.requestSuggestion('',value).then((data)=>{
-                console.log(data);
                 this.setState({
                     addressList:data.sugList
                 });
@@ -410,22 +409,40 @@ export default class AddFenceUtils extends Component {
             radius:this.state.radius,
             latitude:this.state.fencePoint.latitude,
             longitude:this.state.fencePoint.longitude,
-            fenceState:this.state.fenceState
+            fenceState:this.state.fenceState,
+            fenceAddress:this.state.fenceAddress
         };
+
+        if(this.props.fenceId){
+            data.fenceId = this.props.fenceId;
+        }
         jmAjax({
             url:api.fenceSave,
-            method:'GET',
+            method:'POST',
             data:data,
             encoding:true,
             encodingType:true
         }).then((res)=>{
+            Toast.message('保存成功');
             DeviceEventEmitter.emit('jmFenceList',{});//围栏列表刷新
-            // this.props.navigation.goBack();
             this.props.onSave && this.props.onSave();
         });
     }
 
-    
+    /**
+     * 地图移动停止状态
+     */
+    onMapStatusChangeFinish = (params)=>{
+        this.setState({
+            fencePoint:params
+        });
+        //解析地址
+        geocoder(params).then((res)=>{
+            this.setState({
+                fenceAddress:res.address
+            });
+        });
+    }
 
     onFocus =()=> {
         this.setState({

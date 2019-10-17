@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-09 15:34:12
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-11 19:09:11
+ * @LastEditTime: 2019-10-16 15:20:04
  */
 import React, { Component } from 'react';
 import {
@@ -39,7 +39,8 @@ export default class InputBox extends Component {
             isDelShow: true,
             visible: false,
             inputBoxTop:'50%',
-            title:this.props.title ?this.props.title :'输入框'
+            title:this.props.title ?this.props.title :'输入框',
+            autoFocus:true
         };
     }
 
@@ -76,29 +77,38 @@ export default class InputBox extends Component {
                     <View style={styles.content}>
                         <Text style={styles.name}>{this.state.title}</Text>
                         <View style={styles.inputName}>
-                            <Input
-                                style={[styles.inputItem,{borderRightWidth:this.state.isDelShow?0:1}]}
-                                value={this.state.searchValue}
-                                maxLength={this.props.maxLength ? this.props.maxLength:30}
-                                onFocus={() => {
-                                    this.onFocus();
-                                }}
-                                onBlur={() => {
-                                    this.onBlur();
-                                }}
-                                onChangeText={text => {
-                                    this.onChangeText(text);
-                                }}
-                                autoFocus={true}
-                                ref='inputName'
-                            ></Input>
+                            {
+                                this.state.autoFocus ? 
+                                    <Input
+                                        style={[styles.inputItem,{borderRightWidth:this.state.isDelShow?0:1}]}
+                                        value={this.state.searchValue}
+                                        maxLength={this.props.maxLength ? this.props.maxLength:30}
+                                        onFocus={() => {
+                                            this.onFocus();
+                                        }}
+                                        onBlur={() => {
+                                            this.onBlur();
+                                        }}
+                                        onChangeText={text => {
+                                            this.onChangeText(text);
+                                        }}
+                                        autoFocus={this.state.autoFocus}
+                                        ref='inputName'
+                                    ></Input>:null
+                            }
+                       
                             {this.state.isDelShow ? 
                                 <TouchableOpacity
                                     style={styles.inputDel}
                                     activeOpacity={1}
                                     onPress={() => {
                                         this.setState({
-                                            searchValue: ''
+                                            searchValue: '',
+                                            autoFocus:false
+                                        },()=>{
+                                            this.setState({
+                                                autoFocus:true
+                                            });
                                         });
                                     }}
                                 >

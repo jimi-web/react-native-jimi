@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-24 15:28:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-24 16:18:43
+ * @LastEditTime: 2019-10-17 10:12:11
  -->
 
 # `Share` 分享
@@ -17,6 +17,7 @@
 |shareUrl|String|false | 有默认属性| 分享的地址 |
 |shareTitle |String|false | 有默认属性| 分享的标题 |
 |shareText |String|false | 有默认属性| 分享的文字 |
+|token |String|false | 有默认属性| 身份校验的token |
 ## Demo
 ```
 import React, {Component} from 'react';

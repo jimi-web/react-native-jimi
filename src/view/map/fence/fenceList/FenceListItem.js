@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-27 10:46:26
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 09:56:58
+ * @LastEditTime: 2019-10-16 14:49:48
  */
 import React, {Component} from 'react';
 import {View,Image,Text,TouchableOpacity} from 'react-native';
@@ -18,7 +18,7 @@ export default class FenceListItem extends Component {
     }
 
     shouldComponentUpdate(nextProps,nextState){
-        return this.props.isSelect!=nextProps.isSelect || this.props.checked!=nextProps.checked; 
+        return this.props.isSelect!=nextProps.isSelect || this.props.checked!=nextProps.checked || this.props.source!=nextProps.source || this.props.fenceTitle!=nextProps.fenceTitle || this.props.radius!=nextProps.radius; 
     }   
 
     render() {
@@ -48,5 +48,4 @@ export default class FenceListItem extends Component {
             </View>
         </TouchableOpacity>;
     }
-
 }
