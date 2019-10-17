@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-15 11:45:28
+ * @LastEditTime: 2019-10-17 11:04:34
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -214,7 +214,6 @@ export default class Record extends Component {
         });
         const recordList = this.state.recordList.concat(data);
         const initFile = this.state.recordList.concat(file);
-        console.log(recordList,'格式化之后的数据',initFile);
         this.setState({
             recordList,
             initFile,
@@ -357,7 +356,6 @@ export default class Record extends Component {
     onEndReached = (number) => {
         
         const pageNum = this.state.params.pageNum + 1;
-        console.log(number,'滚动',this.totalPage,pageNum,this.state.params.pageNum);
         if(pageNum >= this.totalPage){
             return;
         }
@@ -381,7 +379,6 @@ export default class Record extends Component {
         if(!this.state.recordList.length){
             return null;
         }
-        console.log(this.totalPage,this.state.params.pageNum,1456);
         if(this.totalPage <= this.state.params.pageNum){
             return <View style={{alignItems:'center',padding:20}}>
                 <Text>{'没有更多数据了'}</Text>
@@ -599,7 +596,6 @@ export default class Record extends Component {
             onCancel={() => {Overlay.remove(this.overlayKey);}}
         />; 
         this.overlayKey = Overlay.add(element);
-        console.log(this.overlayKey,784);
         
     }
     onConfirmEmpty = () => {
@@ -637,9 +633,7 @@ export default class Record extends Component {
         }else{
             instruction = this.props.recordIns.replace('ins',data.recordLength);
         }
-        console.log(instruction,'当前请求时的录音指令');
         this.setRecordInstruction(instruction).then(res => {
-            console.log(res,'指令结果');
             if(res.code){
                 return Toast.message('指令发送失败');
             }
@@ -713,7 +707,6 @@ export default class Record extends Component {
      * 修改时长
      */
     onConfirm = ({type,time}) => {
-        console.log(type,time,222);
         this.setState({
             recordLength:time,
             recordType:type,
