@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 10:22:53
+ * @LastEditTime: 2019-10-17 18:33:04
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
@@ -28,6 +28,7 @@ export default class TraceUtils extends PositionUtils {
         shareTitle:PropTypes.string,
         shareText:PropTypes.string,
         token:PropTypes.string,
+        onFile:PropTypes.func,
     };
 
     static defaultProps = {
@@ -136,6 +137,9 @@ export default class TraceUtils extends PositionUtils {
             shareTitle ={this.props.shareTitle}
             shareText ={this.props.shareText}
             token={this.props.token ? this.props.token : ''} 
+            onFile={()=>{
+                this.props.onFile &&  this.props.onFile();
+            }}
         ></Share>;
     }
 

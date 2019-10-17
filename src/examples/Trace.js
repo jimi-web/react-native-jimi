@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 13:38:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 10:24:03
+ * @LastEditTime: 2019-10-17 18:34:29
  */
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
@@ -29,6 +29,9 @@ export default class Track extends Component {
                     <Jimi.BaiduTrace
                         isRefresh={false}
                         polylineOptions={playPolylineOptions}
+                        onFile={()=>{
+                            this.props.navigation.push('PrivacyAgreement');
+                        }}
                     >
                         {this.customItem()}
                     </Jimi.BaiduTrace>

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 17:18:25
+ * @LastEditTime: 2019-10-17 18:35:47
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -16,7 +16,7 @@ import Trace from '../examples/Trace';
 import Fence from '../examples/Fence';
 import Test from '../view/test';
 import Record from '../examples/Record';
-import PrivacyAgreement from '../view/map/share/Share';
+import PrivacyAgreement from '../view/map/share/PrivacyAgreement';
 import AddFence from '../examples/AddFence';
 import Share from '../examples/Share';
 

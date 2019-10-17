@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 13:38:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 17:17:27
+ * @LastEditTime: 2019-10-17 18:31:25
  */
 import React, { Component } from 'react';
 import { View } from 'react-native';
@@ -20,7 +20,11 @@ export default class Share extends Component {
     }
 
     render() {
-        return <Jimi.Share />;
+        return <Jimi.Share 
+            onFile={()=>{
+                this.props.navigation.push('PrivacyAgreement');
+            }}
+        />;
 
     }
 }
