@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-10-12 14:01:19
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-14 11:46:13
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-18 15:05:50
  */
 import React, {Component} from 'react';
 import {Text, View,StyleSheet,Animated,Image,TouchableOpacity,Modal} from 'react-native';
@@ -34,4 +34,6 @@ export default class Overlay extends JmTopView{
     static remove(key){
         JmTopView.remove(key);
     }
+
+    
 }

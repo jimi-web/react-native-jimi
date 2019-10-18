@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 13:36:58
+ * @LastEditTime: 2019-10-18 17:26:11
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
@@ -124,7 +124,7 @@ export default class TraceUtils extends PositionUtils {
      */
     shareBtn = ()=> {
         return <TouchableOpacity style={[Styles.btn,Styles.shareBtn,this.props.shareBtnStyle]}  activeOpacity={0.5} onPress={()=>{
-            Share.show();
+            this.share.show();
         }}>
             <Image style={Styles.btnImg} source={require('../../../assets/trace/track_map_share.png')} />
         </TouchableOpacity>;
@@ -144,6 +144,7 @@ export default class TraceUtils extends PositionUtils {
             onFile={()=>{
                 this.props.onFile &&  this.props.onFile();
             }}
+            ref={ref=>this.share=ref}
         ></Share>;
     }
 
