@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 13:38:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 18:34:29
+ * @LastEditTime: 2019-10-18 11:56:58
  */
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
@@ -27,6 +27,13 @@ export default class Track extends Component {
             <View style={{ flex: 1 }}>
                 {this.state.isBaidu ? 
                     <Jimi.BaiduTrace
+                        onDeviceChange = {(data)=>{
+                            console.log(data,'设备数据');
+                            
+                        }}
+                        onMyChange = {(data)=>{
+                            console.log(data,'我的位置');
+                        }}
                         isRefresh={false}
                         polylineOptions={playPolylineOptions}
                         onFile={()=>{

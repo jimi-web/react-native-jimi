@@ -4,13 +4,14 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 11:48:51
+ * @LastEditTime: 2019-10-18 13:51:06
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
 import {MapSearch} from 'react-native-baidu-map-jm';
 import Loading from '../../../../components/loading/Loading';
 import PropTypes from 'prop-types';
+import Styles from '../../style/base';
 import api from '../../../../api/index';
 import {jmAjax} from '../../../../http/business';
 import Slider from '../../../../components/slider/index';
@@ -23,14 +24,20 @@ export default class AddFenceUtils extends Component {
     static propTypes = {
         onSave:PropTypes.func,
         strokeStyle:PropTypes.object,
-        fillColor:PropTypes.string
+        fillColor:PropTypes.string,
+        deviceMarkerOptions:PropTypes.object,//终点marker
+        onDeviceChange:PropTypes.func,//设备位置改变监听事件
     };
     
     static defaultProps = {
         fenceId:'',
         onSave:()=>{},
         strokeStyle:AddFenceStyles.strokeStyle,
-        fillColor:'#3479f61a'
+        fillColor:'#3479f61a',
+        deviceMarkerOptions:{
+            style:Styles.deviceMarker,
+            image:require('../../../../assets/map/device.png'),
+        },
     };
 
 
@@ -318,6 +325,7 @@ export default class AddFenceUtils extends Component {
                 savefenceState:data.fenceState === 'all' ? ['in','out']:[data.fenceState],
                 zoom:this.getZoom(data.radius*2)
             },()=>{
+                this.props.onDeviceChange && this.props.onDeviceChange(deviceInfo);
                 Loading.hide();
             });
         });
@@ -336,6 +344,7 @@ export default class AddFenceUtils extends Component {
             },
             fenceAddress:deviceInfo.address
         },()=>{
+            this.props.onDeviceChange && this.props.onDeviceChange(deviceInfo);
             Loading.hide();
         });
     }

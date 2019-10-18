@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 16:14:40
+ * @LastEditTime: 2019-10-18 14:02:30
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -14,14 +14,18 @@ export default class Position extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isBaidu:true
+            isBaidu:true,
+            obj:{
+                image:require('../assets/map/video.png')
+            },
+            isSetImg:true
         };
     }
     render(){
-        let obj= {
-            // style:styles.marker,
-            image:require('../assets/map/device.png'),
-        };
+        // let obj= {
+        //     // style:styles.marker,
+            
+        // };
 
         let car = {
             isShow:true
@@ -44,7 +48,7 @@ export default class Position extends Component {
                         // getData={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
-                        markerOptions={obj}
+                        deviceMarkerOptions={obj}
                         isRefresh={false}
                         ChangePositionBtn={car}
                         mylocationOptions={my}
@@ -57,11 +61,11 @@ export default class Position extends Component {
                     </Jimi.GooglePosition>
                     :
                     <Jimi.BaiduPosition
-                        isRefresh={false}
-                        // getData={this.getPoint}
+                        // isRefresh={false}
+                        getData={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
-                        markerOptions={obj}
+                        deviceMarkerOptions={this.state.obj}
                         ChangePositionBtn={car}
                         mylocationOptions={my}
                         mapTypeBtnStyle={styles.set}
@@ -159,6 +163,22 @@ export default class Position extends Component {
             },
             'msg': 'ok'
         };
+        if(!this.state.isSetImg){
+            this.setState({
+                obj:{
+                    image:require('../assets/map/video_actve.png') 
+                },
+                isSetImg:!this.state.isSetImg
+            });
+        }else{
+            this.setState({
+                obj:{
+                    image:require('../assets/map/device.png') 
+                },
+                isSetImg:!this.state.isSetImg
+            });
+        }
+
         setLocationData(result.data);
     }     
 }

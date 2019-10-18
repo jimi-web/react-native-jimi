@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 10:50:38
+ * @LastEditTime: 2019-10-18 14:01:02
  */
 import React, {Component} from 'react';
 import {View,Text} from 'react-native';
@@ -40,9 +40,6 @@ export default class BaiduAddFence extends AddFenceUtils {
                     center={this.state.fencePoint}
                     style={{flex:1}}
                     onMapStatusChangeFinish={(params)=>{
-                        // this.setState({
-                        //     fencePoint:params.target
-                        // });
                         this.onMapStatusChangeFinish(params.target);
                     }}
                     onMapLoaded={()=>{
@@ -52,7 +49,7 @@ export default class BaiduAddFence extends AddFenceUtils {
                     <Overlay.Marker
                         tag={0}
                         location={this.state.deviceInfo?{longitude:this.state.deviceInfo.longitude,latitude:this.state.deviceInfo.latitude}:{longitude:0,latitude:0}}
-                        icon={require('../../../../assets/map/device.png')}
+                        icon={this.props.deviceMarkerOptions.image}
                         rotate={this.state.deviceInfo ? this.state.deviceInfo.direction :0 }
                     />
                     <Overlay.Marker

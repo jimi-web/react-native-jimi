@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 16:11:05
+ * @LastEditTime: 2019-10-18 13:40:04
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text} from 'react-native';
@@ -25,7 +25,7 @@ export default class PositionUtils extends Component {
         refreshTime:PropTypes.number,
         mapType: PropTypes.oneOf(['standard', 'satellite']),//地图类型
         initialRegion:PropTypes.object,//初始化中心点
-        markerOptions:PropTypes.object,//车辆标记属性
+        deviceMarkerOptions:PropTypes.object,//车辆标记属性
         mylocationOptions:PropTypes.object,//我的位置属性
         edgePadding:PropTypes.object, //标记距离地图内边距(暂不需要)
         ChangePositionBtn:PropTypes.object,//切换车和我的位置的按钮属性
@@ -47,7 +47,7 @@ export default class PositionUtils extends Component {
             latitudeDelta:0.0922,
             longitudeDelta: 0.0421,
         },
-        markerOptions:{
+        deviceMarkerOptions:{
             style:Styles.deviceMarker,
             image:require('../../../assets/map/device.png'),
         },
@@ -124,6 +124,7 @@ export default class PositionUtils extends Component {
      * @param {String} type  坐标类型
      */
     onMapReady(type){
+        Loading.show();
         this.setState({
             userMapType:type
         },()=>{
@@ -208,7 +209,6 @@ export default class PositionUtils extends Component {
      * 获取标记
      */
     getMarker = ()=> {
-        Loading.show();
         if(this.props.getData){
             this.props.getData((data)=>{
                 let res = data;

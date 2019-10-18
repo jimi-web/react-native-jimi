@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-24 15:28:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 17:53:54
+ * @LastEditTime: 2019-10-18 13:47:49
  -->
 
 # `AddFence` 围栏
@@ -21,7 +21,7 @@
 | Event Name | Returns | Notes |
 |---|---|---|
 |onSave|围栏保存|点击保存事件会回调事件|
-
+|onDeviceChange|设备信息（参考几米圈定位信息接口）|当更新设备信息时会调用|
 
 ## Demo
 ```

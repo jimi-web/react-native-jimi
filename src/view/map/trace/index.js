@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 18:33:04
+ * @LastEditTime: 2019-10-18 13:36:58
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
@@ -29,6 +29,9 @@ export default class TraceUtils extends PositionUtils {
         shareText:PropTypes.string,
         token:PropTypes.string,
         onFile:PropTypes.func,
+        onDeviceChange:PropTypes.func,
+        onMyChange:PropTypes.func,//我的位置改变监听事件
+        ChangePositionBtn:PropTypes.object,
     };
 
     static defaultProps = {
@@ -41,7 +44,8 @@ export default class TraceUtils extends PositionUtils {
         routerName:'PrivacyAgreement',
         shareUrl:api.shareUrl,
         shareTitle:'我的实时位置',
-        shareText:'点击查看我现在在哪里吧！'
+        shareText:'点击查看我现在在哪里吧！',
+        ChangePositionBtn:{}
     };
 
 
@@ -220,6 +224,7 @@ export default class TraceUtils extends PositionUtils {
             deviceInfo:data
         },()=>{
             this.update(data,'deviceMarker');
+            this.props.onDeviceChange &&  this.props.onDeviceChange(data);
         });
     }
     
@@ -228,6 +233,7 @@ export default class TraceUtils extends PositionUtils {
      */
     onMyChange = (data)=> {
         this.update(data,'myMarker');
+        this.props.onMyChange &&  this.props.onMyChange(data);
     }
 
     /**
@@ -270,6 +276,7 @@ export default class TraceUtils extends PositionUtils {
                 width:37,
                 height:37,
                 zIndex:100,
+                ...this.props.ChangePositionBtn
             }
         };
         return op;

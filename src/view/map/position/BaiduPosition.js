@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 15:30:31
+ * @LastEditTime: 2019-10-18 13:40:16
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -52,7 +52,7 @@ export default class BaiduPosition extends PositionUtils {
                     <Overlay.Marker
                         tag={1}
                         location={this.state.markerPoint}
-                        icon={this.props.markerOptions.image}
+                        icon={this.props.deviceMarkerOptions.image}
                         rotate={this.state.locationData ? this.state.locationData.direction ? this.state.locationData.direction :0  :0 }
                     />
                 }
