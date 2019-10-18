@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 17:01:03
+ * @LastEditTime: 2019-10-18 09:29:34
  -->
 
 
@@ -22,7 +22,7 @@
 |trafficEnabled|Bool|false | false|是否打开路况图层 <br>true && false| 
 |isRefresh|Bool|false | true|是否刷新定位信息 <br>true && false|
 |refreshTime|Number|false | 15000|定位信息更新时间|
-|markerOptions|Object|false | 有默认属性 |标记点属性,只有谷歌地图能自定义样式 style，百度传无效<br>{<br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
+|markerOptions|Object|false | 有默认属性 |设备标记点属性,只有谷歌地图能自定义样式 style，百度传无效<br>{<br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
 |mylocationOptions|Object|false | 有默认属性 |我的位置点属性,只有谷歌地图能自定义样式 style，百度传无效 <br>{ <br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
 |ChangePositionBtn|Object|false | 有默认属性 |我的位置和自定义标记的图标设置<br>-style: 自定义样式<br>-markerImg: 自定义标记图标 <br>-myPositionImg: 自定义我的位置图标<br>{<br>style:{width:100,height:100}<br>markerImg:require('./../../assets/map/equipment.png'),<br>myPositionImg:require('./../../assets/map/old.png')<br>}|
 |getData|Function|false | 使用几米圈模板接口 | 设置定位信息，具体方法写法参考下面例子|
