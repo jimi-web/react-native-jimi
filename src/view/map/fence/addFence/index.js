@@ -4,11 +4,12 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 17:07:26
+ * @LastEditTime: 2019-10-17 11:48:51
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
 import {MapSearch} from 'react-native-baidu-map-jm';
+import Loading from '../../../../components/loading/Loading';
 import PropTypes from 'prop-types';
 import api from '../../../../api/index';
 import {jmAjax} from '../../../../http/business';
@@ -62,7 +63,10 @@ export default class AddFenceUtils extends Component {
         };
     }
 
-
+    // componentWillUnmount() {
+    //     Loading.hide();
+    // }
+    
     getFenceTitle = ()=>{
         let date = new Date();
         return date.getFullYear()+''+date.getMonth() + 1+''+date.getDate()+''+date.getHours()+''+date.getMinutes()+''+date.getSeconds();

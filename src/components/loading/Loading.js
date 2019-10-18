@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-16 14:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 17:10:26
+ * @LastEditTime: 2019-10-17 11:43:51
  */
 import React from 'react';
 import {
@@ -20,7 +20,7 @@ export default class Loading {
             text: '正在加载...',
             icon: <ActivityIndicator size='large' color={'#fff'} />,
             position: 'center',
-            duration: 1000000,
+            duration: 15000,
         });
     }
 

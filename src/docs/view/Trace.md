@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-24 15:28:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 10:24:01
+ * @LastEditTime: 2019-10-17 18:33:41
  -->
 
 # `Trace` 地图追踪
@@ -20,6 +20,12 @@
 |shareTitle |String|false | 有默认属性| 分享的标题 |
 |shareText |String|false | 有默认属性| 分享的文字 |
 |token |String|false | 有默认属性| 身份校验的token |
+
+## Events
+| Event Name | Returns | Notes |
+|---|---|---|
+| onFile | 无 | 点击【我已阅读并同意】后的文件名跳转事件 |
+
 ## Demo
 ```
 import React, {Component} from 'react';

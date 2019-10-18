@@ -3,13 +3,13 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-10 11:02:33
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-29 15:07:31
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-17 16:15:45
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
 import {Jimi,Applet} from '../index';
-import {map} from '../api/index';
+import api from '../api/index';
 
 export default class Track extends Component { 
     constructor(props) {
@@ -37,6 +37,7 @@ export default class Track extends Component {
             {
                 this.state.isBaidu ? 
                     <Jimi.BaiduTrack
+                        getData={this.getTrackPoints}
                         mapTypeBtnStyle={styles.set}
                         polylineOptions = {polylineOptions}
                         playPolylineOptions = {playPolylineOptions}
@@ -83,7 +84,7 @@ export default class Track extends Component {
      */
     getTrackPoints = (params,setPoint)=>{
         Applet.jmAjax({
-            url:map.track,
+            url:api.track,
             method:'GET',
             encoding:true,
             encodingType:true,

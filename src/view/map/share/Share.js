@@ -4,12 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-09-23 10:48:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-17 11:49:08
+ * @LastEditTime: 2019-10-18 10:15:24
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Modal,StyleSheet,Dimensions,DeviceEventEmitter} from 'react-native';
 import PropTypes from 'prop-types';
-import { withNavigation } from 'react-navigation';
 import {httpApp} from '../../../http/basic';
 import {jmAjax,getEncoding} from '../../../http/business';
 import api from '../../../api/index';
@@ -19,10 +18,11 @@ import Theme from '../../../components/themes';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 const {width} = Dimensions.get('window');
 
-class Share extends Component { 
+
+export default class Share extends Component { 
     static propTypes = {
         checkedTitle:PropTypes.string,
-        routerName:PropTypes.string,
+        onFile:PropTypes.func,
         shareUrl:PropTypes.string,
         shareTitle:PropTypes.string,
         shareText:PropTypes.string,
@@ -136,7 +136,8 @@ class Share extends Component {
                                 this.setState({
                                     isDrawerShareShow:false
                                 },()=>{
-                                    this.props.navigation.push(this.props.routerName);
+                                    // this.props.navigation.push(this.props.routerName);
+                                    this.props.onFile &&  this.props.onFile();
                                 });
                             }}>
                                 <Text style={{color:'#3479F6'}}>{this.props.checkedTitle}</Text>
@@ -266,7 +267,6 @@ class Share extends Component {
 
 }
 
-export default withNavigation(Share);
 
 const MapStyles =  StyleSheet.create({
     share:{

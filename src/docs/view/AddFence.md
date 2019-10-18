@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-24 15:28:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 11:33:38
+ * @LastEditTime: 2019-10-17 17:53:54
  -->
 
 # `AddFence` 围栏
@@ -42,7 +42,24 @@ export default class AddFence extends Component {
                 this.props.navigation.goBack();
             }}
         ></Jimi.BaiduAddFence>;
-    }
+   }
 }
+
+```
+
+## 路由导航配置
+
+去掉添加围栏导航的阴影
+
+```
+navigationOptions: ({ navigation }) => (
+    {
+        headerStyle:{
+            backgroundColor:'#fff',
+            borderBottomColor:'#fff',
+            elevation:0
+        },
+    }
+)
 
 ```

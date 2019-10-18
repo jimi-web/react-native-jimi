@@ -4,11 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:48:19
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 10:20:04
+ * @LastEditTime: 2019-10-17 16:59:42
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import {Jimi} from '../index';
+import {jmAjax} from '../http/business';
+import api from '../api/index';
 
 
 export default class Fence extends Component { 
@@ -19,7 +21,23 @@ export default class Fence extends Component {
     
     render() {
         return <Jimi.FenceList
-            routeName={'AddFence'}
+            getData = {this.getList}
+            onAddEditFence={(data)=>{
+                let obj = data ? {fenceId:data.fenceId} : null;
+                this.props.navigation.push('AddFence',obj);
+            }}
         ></Jimi.FenceList>;
+    }
+
+
+    getList =(data) =>{
+        jmAjax({
+            url:api.fenceList,
+            method:'GET',
+            encoding:true,
+            encodingType:true
+        }).then((res)=>{
+            data(res);
+        });
     }
 }

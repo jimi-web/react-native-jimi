@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-18 14:31:34
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 10:26:12
+ * @LastEditTime: 2019-10-17 18:25:06
  -->
 
 # `Track` 地图轨迹
@@ -23,7 +23,7 @@
 |playPolylineOptions|Object|false | 有默认属性| 播放的轨迹的属性<br>　{<br>　　width:2, //线宽<br>　　color:'#50AE6F' //线颜色<br>}|
 |roadBtnStyle|Object|false | 有默认样式 |设置路况图标样式 <br> {width:100,height:100}|
 |mapTypeBtnStyle|Object|false | 有默认样式 |设置地图图标样式 <br> {width:100,height:100}|
-|getTrackPoints|Function|false | 使用几米圈模板接口 | 轨迹点数据传入，具体方法写法参考下面例子|
+|getData|Function|false | 使用几米圈模板接口 | 轨迹点数据传入，具体方法写法参考下面例子|
 |playImg|Object|false | 有默认属性 |播放图标的改变,<br>{<br>　　play:require('../../../assets/track/play.png') //播放图标,<br>　　pause:require('../../../assets/track/pause.png') //暂停图标<br>}|
 
 ## Demo

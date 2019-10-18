@@ -4,13 +4,14 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 17:17:44
+ * @LastEditTime: 2019-10-17 16:11:05
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text} from 'react-native';
 import Styles from '../style/base';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
+import Loading from '../../../components/loading/Loading';
 import { devicePosition } from '../comm';
 import {httpLocationGet,jmAjax} from '../../../http/business';
 import api from '../../../api/index';
@@ -28,7 +29,7 @@ export default class PositionUtils extends Component {
         mylocationOptions:PropTypes.object,//我的位置属性
         edgePadding:PropTypes.object, //标记距离地图内边距(暂不需要)
         ChangePositionBtn:PropTypes.object,//切换车和我的位置的按钮属性
-        getMarkerPoint:PropTypes.func,//获取定位信息
+        getData:PropTypes.func,//获取定位信息
         // customItem:PropTypes.func,//在地图上自定义其他元素
         markerInfoWindow:PropTypes.object,//infoWindow
         roadBtnStyle:PropTypes.object,//路况样式
@@ -114,6 +115,7 @@ export default class PositionUtils extends Component {
     }
 
     componentWillUnmount() {
+        Loading.hide();
         clearInterval(this.state.timeInterval);
     }
 
@@ -207,8 +209,8 @@ export default class PositionUtils extends Component {
      */
     getMarker = ()=> {
         Loading.show();
-        if(this.props.getMarkerPoint){
-            this.props.getMarkerPoint((data)=>{
+        if(this.props.getData){
+            this.props.getData((data)=>{
                 let res = data;
                 this.drawMarker(res);
                 this.onDeviceChange(res);
