@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-23 10:48:33
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 18:22:03
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-10-18 10:15:24
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Modal,StyleSheet,Dimensions,DeviceEventEmitter} from 'react-native';
@@ -257,7 +257,7 @@ export default class Share extends Component {
                     });
                 },
                 onComplete:()=>{
-                
+                    //
                 }
             });    
         });    
