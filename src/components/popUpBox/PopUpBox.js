@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-10-09 15:34:12
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-10 10:13:44
+ * @LastEditTime: 2019-10-22 09:30:17
  */
 import React, {Component} from 'react';
-import {View,StyleSheet,Modal,TouchableOpacity} from 'react-native';
+import {StyleSheet,Modal,TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 
 export default class PopUpBox extends Component {

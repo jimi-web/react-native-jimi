@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:37:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 12:00:12
+ * @LastEditTime: 2019-10-21 14:43:54
  */
 import {StyleSheet,Dimensions} from 'react-native';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';

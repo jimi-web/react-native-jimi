@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 13:40:16
+ * @LastEditTime: 2019-10-21 10:41:23
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -38,6 +38,7 @@ export default class BaiduPosition extends PositionUtils {
     renderContent =()=>{
         return  <View style={MapStyles.map}>
             <MapView
+                {...this.props}
                 mapType={this.state.mapType === 'standard' ? 1 : 2}
                 style={MapStyles.map}
                 zoom={18}

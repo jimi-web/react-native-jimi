@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 13:40:26
+ * @LastEditTime: 2019-10-21 14:41:15
  */
-import React, {Component} from 'react';
-import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
+import React from 'react';
+import {View,Platform,Image,Text} from 'react-native';
 import MapStyles from '../style/position';
 import PositionUtils from './index';
 import MapView,{Marker,Callout} from 'react-native-maps';
@@ -31,6 +31,7 @@ export default class GooglePosition extends PositionUtils {
         return (
             <View style={MapStyles.map}>
                 <MapView
+                    {...this.props}
                     ref={ref => {
                         this.map = ref;
                     }}

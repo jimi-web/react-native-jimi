@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 14:02:30
+ * @LastEditTime: 2019-10-21 11:07:25
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -62,6 +62,10 @@ export default class Position extends Component {
                     :
                     <Jimi.BaiduPosition
                         // isRefresh={false}
+                        onMapClick={()=>{
+                            console.log('点击事件');
+                            
+                        }}
                         getData={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}

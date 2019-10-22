@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 13:51:06
+ * @LastEditTime: 2019-10-21 18:19:10
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -59,7 +59,9 @@ export default class AddFenceUtils extends Component {
             deviceInfo:null,//设备信息
             fencePoint:{    //围栏坐标
                 latitude:0,
-                longitude:0
+                longitude:0,
+                latitudeDelta:0.1,
+                longitudeDelta: 0.1,
             },
             radius:200, //半径
             fenceTitle:this.getFenceTitle(),//围栏标题
@@ -86,7 +88,7 @@ export default class AddFenceUtils extends Component {
         return  <View style={[AddFenceStyles.search,this.state.isDelShow?{borderTopRightRadius:0,borderBottomRightRadius:0}:{}]}>
             <SearchInput 
                 style={AddFenceStyles.searchInput}
-                placeholder='搜索' 
+                placeholder='请输入搜索地址' 
                 placeholderTextColor='#D8D8D8'
                 onFocus={()=>{
                     this.onFocus();
@@ -114,19 +116,6 @@ export default class AddFenceUtils extends Component {
         </View>;
     }
 
-    /**
-     * 计算缩放级别
-     */
-    getZoom =(line)=> {
-        var zoom = ['50', '100', '200', '500', '1000', '2000', '5000', '10000', '20000', '25000', '50000', '100000', '200000', '500000', '1000000', '2000000']; //级别18到3。  
-        var distance = line; //获取两点距离 
-        for (var i = 0, zoomLen = zoom.length; i < zoomLen; i++) {
-            if (zoom[i] - distance > 0) {
-                return 18 - i + 3; //之所以会多3，是因为地图范围常常是比例尺距离的10倍以上。所以级别会增加3。  
-            }
-        }
-    }
-
 
     /**
      * 地址列表
@@ -141,6 +130,7 @@ export default class AddFenceUtils extends Component {
                         onPress={()=>{
                             let deviceInfo = this.state.deviceInfo;
                             this.onSelectAddress({
+                                ...this.state.fencePoint,
                                 longitude:deviceInfo.longitude,
                                 latitude:deviceInfo.latitude
                             },deviceInfo.address);
@@ -157,6 +147,7 @@ export default class AddFenceUtils extends Component {
                             key={'addressList'+index} 
                             onPress={()=>{
                                 this.onSelectAddress({
+                                    ...this.state.fencePoint,
                                     longitude:item.longitude,
                                     latitude:item.latitude
                                 },item.city+item.district+item.key);
@@ -271,6 +262,20 @@ export default class AddFenceUtils extends Component {
             />
         </View>;
     }
+
+    /**
+     * 计算缩放级别
+     */
+    getZoom =(line)=> {
+        var zoom = ['50', '100', '200', '500', '1000', '2000', '5000', '10000', '20000', '25000', '50000', '100000', '200000', '500000', '1000000', '2000000']; //级别18到3。  
+        var distance = line; //获取两点距离 
+        for (var i = 0, zoomLen = zoom.length; i < zoomLen; i++) {
+            if (zoom[i] - distance > 0) {
+                return 18 - i + 3; //之所以会多3，是因为地图范围常常是比例尺距离的10倍以上。所以级别会增加3。  
+            }
+        }
+    }
+
     
     /**
      * 地图加载结束
@@ -315,6 +320,7 @@ export default class AddFenceUtils extends Component {
             this.setState({
                 deviceInfo:deviceInfo,
                 fencePoint:{
+                    ...this.state.fencePoint,
                     latitude:data.latitude,
                     longitude:data.longitude  
                 },
@@ -339,6 +345,7 @@ export default class AddFenceUtils extends Component {
         this.setState({
             deviceInfo:deviceInfo,
             fencePoint:{
+                ...this.state.fencePoint,
                 latitude:deviceInfo.latitude,
                 longitude:deviceInfo.longitude 
             },
@@ -449,12 +456,16 @@ export default class AddFenceUtils extends Component {
         this.setState({
             fencePoint:params
         });
+
         //解析地址
         geocoder(params).then((res)=>{
             this.setState({
                 fenceAddress:res.address
             });
         });
+
+        console.log(params);
+        
     }
 
     onFocus =()=> {
@@ -467,5 +478,18 @@ export default class AddFenceUtils extends Component {
         this.setState({
             isDelShow:false
         });
+    }
+
+    /**
+     * 半径提示元素
+     */
+    radiusTip = ()=> {
+        return <View  style={[{backgroundColor:'#fff0',height:34,width:74,alignItems:'center'}]}>
+            <View style={[{height:24,width:74,backgroundColor:'#3479F6',borderRadius:12,justifyContent:'center',alignItems:'center'}]}>
+                <Text style={{color:'#fff',fontSize:11}}>半径:{this.state.radius}m</Text>
+            </View>
+            <View style={[{backgroundColor:'#3479F6',height:10,width:2}]}>
+            </View>
+        </View>;
     }
 }

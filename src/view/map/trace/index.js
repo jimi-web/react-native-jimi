@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 17:26:11
+ * @LastEditTime: 2019-10-21 18:27:25
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
@@ -92,11 +92,11 @@ export default class TraceUtils extends PositionUtils {
                         <Text style={MapStyles.title}>{deviceInfo.deviceName?deviceInfo.deviceName:null}</Text>
                     </View> 
                     <View style={[MapStyles.item,MapStyles.state]}>
-                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color}]}>{this.deviceState(deviceInfo.deviceStatus).text}</Text>
+                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus).text:'离线'}</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>距离{this.state.distance}m</Text>
+                        <Text style={MapStyles.text}>距离{this.state.distance?this.state.distance:0}m</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>{deviceInfo.posType?this.posType(deviceInfo.posType):null}</Text>
+                        <Text style={MapStyles.text}>{deviceInfo.posType?this.posType(deviceInfo.posType):'无'}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>{deviceInfo.gpsSpeed?deviceInfo.gpsSpeed:0}km/h</Text>
                     </View>
@@ -104,13 +104,13 @@ export default class TraceUtils extends PositionUtils {
                         this.state.pullState ?
                             <View>
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>定位时间：{deviceInfo.gpsTime?deviceInfo.gpsTime:null}</Text>
+                                    <Text style={MapStyles.text}>定位时间：{deviceInfo.gpsTime?deviceInfo.gpsTime:'无'}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>通讯时间：{deviceInfo.time?deviceInfo.time:null}</Text>
+                                    <Text style={MapStyles.text}>通讯时间：{deviceInfo.time?deviceInfo.time:'无'}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:null}</Text>
+                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:'无'}</Text>
                                 </View> 
                             </View>:null
                     }

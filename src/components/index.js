@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:28:59
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 18:00:55
+ * @LastEditTime: 2019-10-22 09:31:07
  */
 
 import TopView from './overlay/TopView';
@@ -13,6 +13,9 @@ import Button from './button/button';
 import Dialog from './dialog';
 import Overlay from './overlay/overlay';
 import Loading from './loading/Loading';
+import Toast from './toast/Toast';
+import PopUpBox from './popUpBox/PopUpBox';
+import InputBox from './popUpBox/inputBox';
 
 const Circle = {
     TopView,
@@ -20,7 +23,10 @@ const Circle = {
     Button,
     Dialog,
     Overlay,
-    Loading
+    Loading,
+    Toast,
+    PopUpBox,
+    InputBox
 };
 
 module.exports =  Circle;

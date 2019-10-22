@@ -4,9 +4,9 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 14:01:02
+ * @LastEditTime: 2019-10-21 16:38:08
  */
-import React, {Component} from 'react';
+import React from 'react';
 import {View,Text} from 'react-native';
 import {MapView,Overlay} from 'react-native-baidu-map-jm';
 import AddFenceStyles from '../../style/addfence';
@@ -29,7 +29,7 @@ export default class BaiduAddFence extends AddFenceUtils {
     }
 
     render() {
-        return <View style={{flex:1,position:'relative'}}>
+        return <View style={[AddFenceStyles.map,{position:'relative'}]}>
             {
                 this.searchElement()
             }
@@ -38,7 +38,7 @@ export default class BaiduAddFence extends AddFenceUtils {
                     mapType={1}
                     zoom={this.state.zoom}
                     center={this.state.fencePoint}
-                    style={{flex:1}}
+                    style={AddFenceStyles.map}
                     onMapStatusChangeFinish={(params)=>{
                         this.onMapStatusChangeFinish(params.target);
                     }}
@@ -71,13 +71,14 @@ export default class BaiduAddFence extends AddFenceUtils {
                         visible={true}
                         style={[{position:'relative',backgroundColor:'#fff0',height:34,width:74}]}
                     >
-                        <View  style={[{backgroundColor:'#fff0',height:34,width:74,alignItems:'center'}]}>
+                        {/* <View  style={[{backgroundColor:'#fff0',height:34,width:74,alignItems:'center'}]}>
                             <View style={[{height:24,width:74,backgroundColor:'#3479F6',borderRadius:12,justifyContent:'center',alignItems:'center'}]}>
                                 <Text style={{color:'#fff',fontSize:11}}>半径:{this.state.radius}m</Text>
                             </View>
                             <View style={[{backgroundColor:'#3479F6',height:10,width:2}]}>
                             </View>
-                        </View>
+                        </View> */}
+                        {this.radiusTip()}
                     </Overlay.InfoWindow>                  
                 </MapView>
             </View>

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 13:41:05
+ * @LastEditTime: 2019-10-21 11:37:42
  -->
 
 
@@ -17,6 +17,9 @@
 ## Props
 | Prop | Type | required | Default | Note |
 |---|---|---|---|---|
+|百度地图[MapView props...](https://github.com/Eafy/react-native-baidu-map-jm)|无|无|无|继承了百度地图地图所有属性|
+|谷歌地图[MapView props...](https://github.com/react-native-community/react-native-maps/blob/master/docs/mapview.md)|无|无|无|继承了谷歌地图地图所有属性|
+|[react-native-baidu-map-jm](https://github.com/Eafy/react-native-baidu-map-jm)|无|无|无|继承了百度地图地图所有属性|
 |mapType|String| false | 'standard'|地图类型 <br>- standard: 标准 <br>- satellite: 卫星| 
 |initialRegion|Object|false | 有默认值 |地图初始化地区 <br> {<br>　　latitude: 22.596904,<br>　　longitude:113.936674,<br>　　latitudeDelta:0.0922,<br>　　longitudeDelta:0.0421<br>} | 
 |trafficEnabled|Bool|false | false|是否打开路况图层 <br>true && false| 
