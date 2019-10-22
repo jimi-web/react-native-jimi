@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-18 10:21:19
+ * @LastEditTime: 2019-10-22 15:14:59
  */
 
 import {
@@ -62,7 +62,7 @@ export const getObject = (data)=> {
 export const isJSON = (str) => {
     if (typeof str == 'string') {
         try {
-            var obj=JSON.parse(str);
+            var obj = JSON.parse(str);
             if(typeof obj == 'object' && obj ){
                 return true;
             }else{

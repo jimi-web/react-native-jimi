@@ -16,6 +16,7 @@ import Loading from '../components/loading/Loading';
  */
 const request = (params) => {
     return new Promise((resolve) => {
+        console.log(params,33);
         httpApp('jm_net.request', {
             url: params.url,
             method: params.method,
@@ -155,7 +156,7 @@ export const getEncoding = () =>{
     return new Promise((resolve)=> {
         httpApp('jm_user.getEncoding', {
             onSuccess: (res) => {
-                let data = res;
+                let data =  res;
                 resolve(data);
             },
             // 请求失败
