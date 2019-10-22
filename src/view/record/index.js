@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-17 11:04:34
+ * @LastEditTime: 2019-10-22 15:13:47
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -354,7 +354,6 @@ export default class Record extends Component {
      * 滚动到底部
      */
     onEndReached = (number) => {
-        
         const pageNum = this.state.params.pageNum + 1;
         if(pageNum >= this.totalPage){
             return;
@@ -472,32 +471,64 @@ export default class Record extends Component {
         }
     }
     /**
+     * 获取正在播放的录音
+     */
+    getPlayRecord = () => {
+        return new Promise(resolve => {
+            const data = this.state.recordList.filter(item => {
+                return item.type == 3;
+            });
+            resolve(data);
+        });
+    }
+    /**
+     * 停止录音并返回停止后构件号的录音列表
+     */
+    getStopRecordList = (data) => {
+        return new Promise(resolve => {
+            stopAudio().then(res => {
+                data.progress = 0;
+                data.type = 2;
+                this.state.recordList[data.index] = data;
+                const recordList = JSON.parse(JSON.stringify(this.state.recordList));
+                if(!this.playAudioTimer){
+                    return;
+                }
+                clearInterval(this.playAudioTimer);
+                this.state.isPlay = false;
+                resolve(recordList);
+            });
+        });
+    }
+    /**
      * 
-     * @param {Object} data 录音文件
+     * @param {Object} data 点击录音文件
      * @param {Number}} index 初始位置
      */
     playRecord(data,index){
+        data.progress = 0;
         if(this.state.isPlay){
-            return Toast.message('当前录音正在播放');
+            this.getPlayRecord().then(res => {
+                this.getStopRecordList(res[0]).then(value => {
+                    this.setState({
+                        recordList:value,
+                        isPlay:false
+                    });
+                    this.playRecording(data,index);
+                });
+            });
+        }else{
+            this.playRecording(data,index);
         }
-        this.playRecording(data,index);
     }
     /**
      * 停止播放录音
      * @param {Object} data 当前列文件
      */
     stopRecordAudio(data){
-        stopAudio().then(res => {
-            data.progress = 0;
-            data.type = 2;
-            this.state.recordList[data.index] = data;
-            const recordList = JSON.parse(JSON.stringify(this.state.recordList));
-            if(!this.playAudioTimer){
-                return;
-            }
-            clearInterval(this.playAudioTimer);
+        this.getStopRecordList(data).then(res => {
             this.setState({
-                recordList,
+                recordList:res,
                 isPlay:false
             });
         });
@@ -522,14 +553,12 @@ export default class Record extends Component {
         }
         let length = 0;
         for (let j = 0; j < i + 1; j++) {
-            
             const value = item[j];
             length = (length / 1000 + Number(value.audioTime)) * 1000;   
         }
         
         // console.log(data,'播放时的数据',i);
         const url = this.folderPath + item[i].fileName + item[i].ext;
-        // console.log(url,'获取的文件地址');
         
         playAudio(url).then(res => {
             i++;
@@ -546,6 +575,9 @@ export default class Record extends Component {
                 if(data.progress >= length){
                     // console.log(data.progress,length,'进入的进度和长度');
                     this.playRecording(data,i);
+                    this.setState({
+                        isPlay:false
+                    });
                     clearInterval(this.playAudioTimer);
                 }
             },100); 
@@ -717,9 +749,6 @@ export default class Record extends Component {
      * 点击选择 
      */
     onSelect = (type) => {
-        if(this.state.isPlay){
-            return Toast.message('声音播放中，无法进行操作！');
-        }
         if(type == 1){
             this.setState({
                 recordList:this.state.deleteRecordList,
@@ -729,15 +758,32 @@ export default class Record extends Component {
             if(!this.state.recordList.length){
                 return Toast.message('当前没有录音文件，无法进行操作！');
             }
-            this.state.deleteRecordList = JSON.parse(JSON.stringify(this.state.recordList));
-            this.state.recordList.forEach(item => {
-                item.type = 4;
-            });
-            const recordList = JSON.parse(JSON.stringify(this.state.recordList));
-            this.setState({
-                recordList,
-                isOpenSelect:type
-            });
+            if(this.state.isPlay){
+                this.getPlayRecord().then(res => {
+                    this.getStopRecordList(res[0]).then(value => {
+                        this.state.deleteRecordList = JSON.parse(JSON.stringify(value));
+                        this.state.recordList.forEach(item => {
+                            item.type = 4;
+                        });
+                        const recordList = JSON.parse(JSON.stringify(this.state.recordList));
+                        this.setState({
+                            recordList,
+                            isOpenSelect:type
+                        });
+                    });
+                });
+            }else{
+                this.state.deleteRecordList = JSON.parse(JSON.stringify(this.state.recordList));
+                this.state.recordList.forEach(item => {
+                    item.type = 4;
+                });
+                const recordList = JSON.parse(JSON.stringify(this.state.recordList));
+                this.setState({
+                    recordList,
+                    isOpenSelect:type
+                });
+            }
+            
         }
     }
     /**
