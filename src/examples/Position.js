@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 11:07:25
+ * @LastEditTime: 2019-10-22 12:04:16
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -126,7 +126,7 @@ export default class Position extends Component {
                 'deviceStatus': 2,
                 'clientId': '350000199603207563',
                 'deviceId': 'F4AB29e5-D5fa-3f37-69Db-5faEE3D61cdd',
-                'deviceName': 'Eric',
+                'deviceName': '哈哈哈哈',
                 'acc': 'accacc',
                 'ci': '5546',
                 'direction': 90,
@@ -143,7 +143,7 @@ export default class Position extends Component {
                 'longitude': 113.9065941055,
                 'mcc': '',
                 'mnc': '',
-                'posType': 2,
+                'posType': 'GPS',
                 'otherPosTime': '759797411814',
                 'posMethod': 2,
                 'recordTime': '1309722536121',

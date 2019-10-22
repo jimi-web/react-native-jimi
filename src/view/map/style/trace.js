@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-26 16:24:38
+ * @LastEditTime: 2019-10-22 13:51:16
  */
 import {StyleSheet,Dimensions} from 'react-native';
 const {width} = Dimensions.get('window');
@@ -33,7 +33,7 @@ const MapStyles =  StyleSheet.create({
         alignItems:'center',
     },
     information:{
-        padding:20,
+        padding:15,
         paddingTop:0,
     },
     item:{
@@ -44,6 +44,7 @@ const MapStyles =  StyleSheet.create({
         fontSize:16
     },
     text:{
+        fontSize:12,
         color:'#666'
     },
     state:{

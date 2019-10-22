@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 18:19:10
+ * @LastEditTime: 2019-10-22 16:16:49
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -51,8 +51,8 @@ export default class AddFenceUtils extends Component {
             initialRegion:{
                 latitude: 22.596904,
                 longitude: 113.936674,
-                latitudeDelta:0.1922,
-                longitudeDelta: 0.1421,
+                latitudeDelta:0.010810810810810811,//145.5468733622675 0.00040644735832984225 最大值和最小值
+                longitudeDelta:0.007207207207207207  //106.60983654376228 0.0005647605017351509 最大值和最小值
             },
             fenceState:'',//围栏状态
             zoomingBtnHeight:85,
@@ -60,8 +60,8 @@ export default class AddFenceUtils extends Component {
             fencePoint:{    //围栏坐标
                 latitude:0,
                 longitude:0,
-                latitudeDelta:0.1,
-                longitudeDelta: 0.1,
+                latitudeDelta:0.010810810810810811,//145.5468733622675 0.00040644735832984225 最大值和最小值
+                longitudeDelta:0.007207207207207207  //106.60983654376228 0.0005647605017351509 最大值和最小值
             },
             radius:200, //半径
             fenceTitle:this.getFenceTitle(),//围栏标题
@@ -72,9 +72,9 @@ export default class AddFenceUtils extends Component {
         };
     }
 
-    // componentWillUnmount() {
-    //     Loading.hide();
-    // }
+    componentWillUnmount() {
+        Loading.hide();
+    }
     
     getFenceTitle = ()=>{
         let date = new Date();
@@ -245,22 +245,34 @@ export default class AddFenceUtils extends Component {
                         </View>
                     );
                 }}
-                onChange={(value)=>{
-                    let radius = value;
-                    let zoom = this.getZoom(radius*2);
-                    this.setState({
-                        zoom:zoom,
-                        radius:radius
-                    },()=>{
-                        if(!this.state.userMapType){
-                            setTimeout(()=>{
-                                this.InfoWindowFunc.update();
-                            },10);
-                        }
-                    });
-                }}
+                onChange={this.onsliderChange}
             />
         </View>;
+    }
+
+    /**
+     * 监听滑块改变事件
+     */
+    onsliderChange = (value)=>{
+        let radius = value;
+        let zoom = this.getZoom(radius*2);
+        let latZoom  = this.getGoogleZoom(radius*2*3);
+        let lngZoom   = this.getGoogleZoom(radius*2*2);
+        this.setState({
+            zoom:zoom,
+            radius:radius,
+            fencePoint:{
+                ...this.state.fencePoint,
+                latitudeDelta:latZoom,
+                longitudeDelta:lngZoom
+            }
+        },()=>{
+            if(!this.state.userMapType){
+                setTimeout(()=>{
+                    this.InfoWindowFunc.update();
+                },10);
+            }
+        });
     }
 
     /**
@@ -276,6 +288,14 @@ export default class AddFenceUtils extends Component {
         }
     }
 
+
+    getGoogleZoom = (line)=>{
+        const pointLength = line;
+        console.log( pointLength / (111 * 1000));
+        
+        return pointLength / (111 * 1000);
+    }
+    
     
     /**
      * 地图加载结束
@@ -410,9 +430,7 @@ export default class AddFenceUtils extends Component {
             if(!this.state.userMapType){
                 this.InfoWindowFunc.update();
             }
-        });
-
-        
+        });   
     }
 
     /**
@@ -433,9 +451,13 @@ export default class AddFenceUtils extends Component {
             fenceAddress:this.state.fenceAddress
         };
 
+        console.log(this.props.fenceId,'this.props.fenceId');
+        
+
         if(this.props.fenceId){
             data.fenceId = this.props.fenceId;
         }
+
         jmAjax({
             url:api.fenceSave,
             method:'POST',
@@ -457,15 +479,15 @@ export default class AddFenceUtils extends Component {
             fencePoint:params
         });
 
-        //解析地址
-        geocoder(params).then((res)=>{
-            this.setState({
-                fenceAddress:res.address
-            });
-        });
+        if(!this.state.userMapType){
+            //解析地址
+            geocoder(params).then((res)=>{
+                this.setState({
+                    fenceAddress:res.address
+                });
+            }); 
+        }
 
-        console.log(params);
-        
     }
 
     onFocus =()=> {

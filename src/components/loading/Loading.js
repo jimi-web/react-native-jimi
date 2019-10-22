@@ -28,6 +28,7 @@ export default class Loading {
     static hide() {
         Toast.hide(this.customKey);
     }
+    
 }
 
 

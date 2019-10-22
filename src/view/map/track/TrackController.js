@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 11:01:52
+ * @LastEditTime: 2019-10-22 14:24:40
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
@@ -63,15 +63,15 @@ export default class Track extends Component {
             <View style={{flex:1}}>
                 <View style={MapStyles.details}>
                     <View style={MapStyles.time}>
-                        <Text style={MapStyles.timeText}>{deviceInformation.gpsTime ?new Date(deviceInformation.gpsTime).Format('YYYY-MM-DD hh:mm:ss'):null}</Text>
+                        <Text style={MapStyles.timeText}>{deviceInformation.gpsTime ?new Date(deviceInformation.gpsTime).Format('YYYY-MM-DD hh:mm:ss'):new Date(new Date(new Date().Format('yyyy/MM/dd')+' 00:00').getTime()).Format('YYYY-MM-DD hh:mm')}</Text>
                         <TouchableOpacity activeOpacity={1} style={MapStyles.selectTimeIcon} onPress={this.onPullTime}>
                             <Image style={MapStyles.timeIcon} source={require('../../../assets/track/edit_time.png')} />
                         </TouchableOpacity>
                     </View>
                     <View style={MapStyles.speed}>
-                        <Text style={[MapStyles.speedText,{marginRight:15}]}>总里程：{deviceInformation.totalDistance}KM</Text>
+                        <Text style={[MapStyles.speedText,{marginRight:15}]}>总里程：{deviceInformation.totalDistance?deviceInformation.totalDistance:0 }KM</Text>
                         <Text style={[MapStyles.speedText,{fontSize:12}]}>|</Text>
-                        <Text style={[MapStyles.speedText,{marginLeft:15}]}>时速：{deviceInformation.gpsSpeed}km/h</Text>
+                        <Text style={[MapStyles.speedText,{marginLeft:15}]}>时速：{deviceInformation.gpsSpeed?deviceInformation.gpsSpeed:0}km/h</Text>
                     </View>
                 </View>
                 <Slider
@@ -207,13 +207,10 @@ export default class Track extends Component {
 
     
     onSlidingComplete = (progress)=> {
-        console.log(progress,'aaa');
-        
         if(typeof progress !== 'number'){
             return;
         }
         const currentProgress = parseInt(progress);
-        console.log(currentProgress,'bbb');
         this.props.onSlidingComplete && this.props.onSlidingComplete(currentProgress);        
     }
 }
