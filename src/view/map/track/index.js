@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 16:12:05
+ * @LastEditTime: 2019-10-21 17:51:18
  */
 import React, {Component} from 'react';
 import {TouchableOpacity,Image} from 'react-native';
@@ -101,6 +101,10 @@ export default class TrackUtils extends Component {
             progress:0,//进度条
             totalProgress:0,//总进度条
         };
+    }
+
+    componentDidMount() {
+        this.onPullTime();
     }
 
     componentWillUnmount() {
@@ -334,6 +338,10 @@ export default class TrackUtils extends Component {
      */
     onReplay = () => {
         let trackData = this.state.trackData;
+        if(trackData.length === 0){
+            Toast.message('暂无轨迹');
+            return;
+        }
         let deviceMarker = trackData[0];
         this.pause();
         this.setState({

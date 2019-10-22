@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 09:29:34
+ * @LastEditTime: 2019-10-22 10:09:05
  -->
 
 
@@ -17,12 +17,14 @@
 ## Props
 | Prop | Type | required | Default | Note |
 |---|---|---|---|---|
+|百度地图[MapView props...](https://github.com/Eafy/react-native-baidu-map-jm)|无|无|无|继承了百度地图地图所有属性|
+|谷歌地图[MapView props...](https://github.com/react-native-community/react-native-maps/blob/master/docs/mapview.md)|无|无|无|继承了谷歌地图地图所有属性|
 |mapType|String| false | 'standard'|地图类型 <br>- standard: 标准 <br>- satellite: 卫星| 
 |initialRegion|Object|false | 有默认值 |地图初始化地区 <br> {<br>　　latitude: 22.596904,<br>　　longitude:113.936674,<br>　　latitudeDelta:0.0922,<br>　　longitudeDelta:0.0421<br>} | 
 |trafficEnabled|Bool|false | false|是否打开路况图层 <br>true && false| 
 |isRefresh|Bool|false | true|是否刷新定位信息 <br>true && false|
 |refreshTime|Number|false | 15000|定位信息更新时间|
-|markerOptions|Object|false | 有默认属性 |设备标记点属性,只有谷歌地图能自定义样式 style，百度传无效<br>{<br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
+|deviceMarkerOptions|Object|false | 有默认属性 |设备标记点属性,只有谷歌地图能自定义样式 style，百度传无效<br>{<br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
 |mylocationOptions|Object|false | 有默认属性 |我的位置点属性,只有谷歌地图能自定义样式 style，百度传无效 <br>{ <br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
 |ChangePositionBtn|Object|false | 有默认属性 |我的位置和自定义标记的图标设置<br>-style: 自定义样式<br>-markerImg: 自定义标记图标 <br>-myPositionImg: 自定义我的位置图标<br>{<br>style:{width:100,height:100}<br>markerImg:require('./../../assets/map/equipment.png'),<br>myPositionImg:require('./../../assets/map/old.png')<br>}|
 |getData|Function|false | 使用几米圈模板接口 | 设置定位信息，具体方法写法参考下面例子|
@@ -34,7 +36,7 @@
 ## Events
 | Event Name | Returns | Notes |
 |---|---|---|
-|onDeviceChange|设备信息|当更新设备信息时会调用|
+|onDeviceChange|设备信息（参考几米圈定位信息接口）|当更新设备信息时会调用|
 |onMyChange|我的位置坐标|当更我的位置时会调用|
 
 ## Demo

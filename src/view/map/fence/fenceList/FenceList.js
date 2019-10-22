@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 17:00:37
+ * @LastEditTime: 2019-10-21 18:18:17
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
@@ -16,6 +16,7 @@ import api from '../../../../api/index';
 import FenceListItem from './FenceListItem';
 import BottomToolbars from '../../../components/BottomToolbars';
 import FenceStyles from '../../style/fenceList';
+import {Dialog,Overlay} from '../../../../components/index';
 
 export default class FenceList extends Component { 
     static propTypes = {
@@ -38,6 +39,8 @@ export default class FenceList extends Component {
             fenceList:[],
             isSelect:false,//是否点击了选择
             delList:[],
+            isAllSelect:false,//是否全选
+            allSelectText:'全选'
         };
     }
     
@@ -122,12 +125,12 @@ export default class FenceList extends Component {
                         </TouchableOpacity>
                         <Text style={FenceStyles.btnItemLine}>|</Text>
                         <TouchableOpacity onPress={this.onCheckAll}>
-                            <Text  style={[FenceStyles.btnItemText,FenceStyles.allSelectText]}>全选</Text>
+                            <Text  style={[FenceStyles.btnItemText,FenceStyles.allSelectText]}>{this.state.allSelectText}</Text>
                         </TouchableOpacity>
                         <Text style={FenceStyles.btnItemLine}>|</Text>
                         {
                             this.state.delList.length>0 ? 
-                                <TouchableOpacity onPress={this.del}>
+                                <TouchableOpacity onPress={this.deltip}>
                                     <Text  style={[FenceStyles.btnItemText,{color:'#FF3535'}]}>
                                         {'删除('+this.state.delList.length+')'}
                                     </Text>
@@ -239,15 +242,30 @@ export default class FenceList extends Component {
      * 全选
      */
     onCheckAll = ()=>{
-        let list = this.inverse(true);
         this.setState({
-            delList:JSON.parse(JSON.stringify(list)),
-            fenceList:list
+            isAllSelect:!this.state.isAllSelect
+        },()=>{
+            if(this.state.isAllSelect){
+                let list = this.inverse(true);
+                this.setState({
+                    delList:JSON.parse(JSON.stringify(list)),
+                    fenceList:list,
+                    allSelectText:'全不选'
+                });
+            }else{
+                let list = this.inverse(false);
+                this.setState({
+                    delList:[],
+                    fenceList:list,
+                    allSelectText:'全选'
+                });
+            }
         });
     }
 
     
     del = ()=>{
+        Overlay.remove(this.overlayKey);
         let delId = [];//给后台删除的数据
         let delList = this.state.delList;
         let fenceList = this.state.fenceList;
@@ -271,6 +289,18 @@ export default class FenceList extends Component {
                 isSelect:false
             });
         }); 
+    }
+
+    /**
+     * 删除提示
+     */
+    deltip = ()=>{
+        const element = <Dialog
+            contentText={'确认删除围栏吗？'}
+            onConfirm={()=>{this.del();}}
+            onCancel={() => {Overlay.remove(this.overlayKey);}}
+        />; 
+        this.overlayKey = Overlay.add(element);
     }
 
 

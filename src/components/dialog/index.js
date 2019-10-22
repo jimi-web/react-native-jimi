@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-10-12 14:01:19
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-14 13:32:42
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-21 18:11:08
  */
 import React, {Component} from 'react';
 import {Text, View,StyleSheet,Animated,Image,TouchableOpacity,Modal} from 'react-native';
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     },
     dialogText:{
         flex:1,
-        padding:10,
+        padding:12,
         fontWeight:'bold',
         alignItems:'center',
     },

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 18:33:04
+ * @LastEditTime: 2019-10-21 18:27:25
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
@@ -29,6 +29,9 @@ export default class TraceUtils extends PositionUtils {
         shareText:PropTypes.string,
         token:PropTypes.string,
         onFile:PropTypes.func,
+        onDeviceChange:PropTypes.func,
+        onMyChange:PropTypes.func,//我的位置改变监听事件
+        ChangePositionBtn:PropTypes.object,
     };
 
     static defaultProps = {
@@ -41,7 +44,8 @@ export default class TraceUtils extends PositionUtils {
         routerName:'PrivacyAgreement',
         shareUrl:api.shareUrl,
         shareTitle:'我的实时位置',
-        shareText:'点击查看我现在在哪里吧！'
+        shareText:'点击查看我现在在哪里吧！',
+        ChangePositionBtn:{}
     };
 
 
@@ -88,11 +92,11 @@ export default class TraceUtils extends PositionUtils {
                         <Text style={MapStyles.title}>{deviceInfo.deviceName?deviceInfo.deviceName:null}</Text>
                     </View> 
                     <View style={[MapStyles.item,MapStyles.state]}>
-                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color}]}>{this.deviceState(deviceInfo.deviceStatus).text}</Text>
+                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus).text:'离线'}</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>距离{this.state.distance}m</Text>
+                        <Text style={MapStyles.text}>距离{this.state.distance?this.state.distance:0}m</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>{deviceInfo.posType?this.posType(deviceInfo.posType):null}</Text>
+                        <Text style={MapStyles.text}>{deviceInfo.posType?this.posType(deviceInfo.posType):'无'}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>{deviceInfo.gpsSpeed?deviceInfo.gpsSpeed:0}km/h</Text>
                     </View>
@@ -100,13 +104,13 @@ export default class TraceUtils extends PositionUtils {
                         this.state.pullState ?
                             <View>
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>定位时间：{deviceInfo.gpsTime?deviceInfo.gpsTime:null}</Text>
+                                    <Text style={MapStyles.text}>定位时间：{deviceInfo.gpsTime?deviceInfo.gpsTime:'无'}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>通讯时间：{deviceInfo.time?deviceInfo.time:null}</Text>
+                                    <Text style={MapStyles.text}>通讯时间：{deviceInfo.time?deviceInfo.time:'无'}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:null}</Text>
+                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:'无'}</Text>
                                 </View> 
                             </View>:null
                     }
@@ -120,7 +124,7 @@ export default class TraceUtils extends PositionUtils {
      */
     shareBtn = ()=> {
         return <TouchableOpacity style={[Styles.btn,Styles.shareBtn,this.props.shareBtnStyle]}  activeOpacity={0.5} onPress={()=>{
-            Share.show();
+            this.share.show();
         }}>
             <Image style={Styles.btnImg} source={require('../../../assets/trace/track_map_share.png')} />
         </TouchableOpacity>;
@@ -140,6 +144,7 @@ export default class TraceUtils extends PositionUtils {
             onFile={()=>{
                 this.props.onFile &&  this.props.onFile();
             }}
+            ref={ref=>this.share=ref}
         ></Share>;
     }
 
@@ -220,6 +225,7 @@ export default class TraceUtils extends PositionUtils {
             deviceInfo:data
         },()=>{
             this.update(data,'deviceMarker');
+            this.props.onDeviceChange &&  this.props.onDeviceChange(data);
         });
     }
     
@@ -228,6 +234,7 @@ export default class TraceUtils extends PositionUtils {
      */
     onMyChange = (data)=> {
         this.update(data,'myMarker');
+        this.props.onMyChange &&  this.props.onMyChange(data);
     }
 
     /**
@@ -270,6 +277,7 @@ export default class TraceUtils extends PositionUtils {
                 width:37,
                 height:37,
                 zIndex:100,
+                ...this.props.ChangePositionBtn
             }
         };
         return op;

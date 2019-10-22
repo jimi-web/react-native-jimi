@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 10:17:53
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-26 15:08:21
+ * @LastEditTime: 2019-10-21 15:23:28
  */
 
 import {StyleSheet,Platform} from 'react-native';
@@ -23,8 +23,8 @@ const MapStyles =  StyleSheet.create({
         zIndex:100,
     },
     myMarker:{
-        width:30,
-        height:30
+        width:32,
+        height:32
     },  
     infoWindow:{
         padding:15,

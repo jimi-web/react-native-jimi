@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-24 15:28:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 17:53:54
+ * @LastEditTime: 2019-10-18 14:29:33
  -->
 
 # `AddFence` 围栏
@@ -16,12 +16,13 @@
 | fenceId | String | false | 无 | 如果是添加围栏则不必传，编辑围栏则需要|
 | strokeStyle | Object| false | 有默认属性 | 围栏圆圈边框宽和颜色设置 {width:100,color:'#3479f670'}|
 | fillColor | String| false | 有默认属性 | 围栏圆圈内部填充颜色|
+|deviceMarkerOptions|Object|false | 有默认属性 |设备标记点属性,只有谷歌地图能自定义样式 style，百度传无效<br>{<br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
 
 ## Events
 | Event Name | Returns | Notes |
 |---|---|---|
 |onSave|围栏保存|点击保存事件会回调事件|
-
+|onDeviceChange|设备信息（参考几米圈定位信息接口）|当更新设备信息时会调用|
 
 ## Demo
 ```

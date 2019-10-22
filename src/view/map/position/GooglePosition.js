@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 11:19:43
+ * @LastEditTime: 2019-10-21 14:41:15
  */
-import React, {Component} from 'react';
-import {View,Platform,TouchableOpacity,Image,Text} from 'react-native';
+import React from 'react';
+import {View,Platform,Image,Text} from 'react-native';
 import MapStyles from '../style/position';
 import PositionUtils from './index';
 import MapView,{Marker,Callout} from 'react-native-maps';
@@ -31,6 +31,7 @@ export default class GooglePosition extends PositionUtils {
         return (
             <View style={MapStyles.map}>
                 <MapView
+                    {...this.props}
                     ref={ref => {
                         this.map = ref;
                     }}
@@ -136,8 +137,8 @@ export default class GooglePosition extends PositionUtils {
                 coordinate={this.state.markerPoint}
             >
                 <Image 
-                    style={[this.props.markerOptions.style ? this.props.markerOptions.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction+'deg'}]}]} 
-                    source={this.props.markerOptions.image? this.props.markerOptions.image :require('../../../assets/map/device.png') }/>
+                    style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction+'deg'}]}]} 
+                    source={this.props.deviceMarkerOptions.image? this.props.deviceMarkerOptions.image :require('../../../assets/map/device.png') }/>
                 {
                     this.props.markerInfoWindow.visible ? 
                         <Callout tooltip={this.props.isCustom}>

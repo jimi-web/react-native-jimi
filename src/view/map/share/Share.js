@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-23 10:48:33
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-18 10:15:24
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-10-21 18:33:33
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Modal,StyleSheet,Dimensions,DeviceEventEmitter} from 'react-native';
@@ -81,32 +81,48 @@ export default class Share extends Component {
         };
     }
 
-    static show(params) {
-        let isShow = true;
-        DeviceEventEmitter.emit('jmDrawerShareShow',isShow);
-    }
 
-    static hide() {
-        let isShow = false;
-        DeviceEventEmitter.emit('jmDrawerShareShow',isShow);
-    }    
-
-    componentDidMount() {
-        DeviceEventEmitter.addListener('jmDrawerShareShow', (isShow)=>{
-            this.setState({
-                isDrawerShareShow:isShow,
-            });
+    isShow =(flag)=>{
+        this.setState({
+            isDrawerShareShow:flag
         });
     }
 
+    show = ()=>{
+        this.isShow(true);
+    }
 
-    componentWillUnmount() {
-        DeviceEventEmitter.removeAllListeners('jmDrawerShareShow');
-    }    
+    hide = ()=>{
+        this.isShow(false);
+    }
+    
+    
+    // static show(params) {
+    //     let isShow = true;
+    //     DeviceEventEmitter.emit('jmDrawerShareShow',isShow);
+    // }
+
+    // static hide() {
+    //     let isShow = false;
+    //     DeviceEventEmitter.emit('jmDrawerShareShow',isShow);
+    // }    
+
+    // componentDidMount() {
+    //     DeviceEventEmitter.addListener('jmDrawerShareShow', (isShow)=>{
+    //         this.setState({
+    //             isDrawerShareShow:isShow,
+    //         });
+    //     });
+    // }
+
+
+    // componentWillUnmount() {
+    //     DeviceEventEmitter.removeAllListeners('jmDrawerShareShow');
+    // }    
     
     render(){
         return <Modal
-            animationType="slide"
+            animationType="none"
             transparent={true}
             visible={this.state.isDrawerShareShow}
         >

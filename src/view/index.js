@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 17:15:37
+ * @LastEditTime: 2019-10-21 11:57:48
  */
 
 // import Photo from './photo/index';
@@ -17,6 +17,7 @@ import BaiduTrace from './map/trace/BaiduTrace';
 import GoogleTrace from './map/trace/GoogleTrace';
 import FenceList from './map/fence/fenceList/FenceList';
 import BaiduAddFence from './map/fence/addFence/BaiduAddFence';
+import GoogleAddFence from './map/fence/addFence/GoogleAddFence';
 import Record from './record';
 import Share from './map/share/Share';
 
@@ -31,6 +32,7 @@ const Jimi = {
     GoogleTrace,
     FenceList,
     BaiduAddFence,
+    GoogleAddFence,
     Record,
     Share
 };
