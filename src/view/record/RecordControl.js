@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-30 17:05:52
+ * @LastEditTime: 2019-10-23 15:12:16
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions} from 'react-native';
@@ -32,9 +32,9 @@ export default class RecordControl extends Component {
         return s;
     }
     render(){
-        const {isOpenSelect} = this.props;
+        const {isOpenSelect,height} = this.props;
         return (
-            <BottomToolbars>
+            <BottomToolbars height={height}>
                 <View style={this.renderStyle()}>
                     {isOpenSelect?this.renderControl():this.renderDelete()}
                     {this.renderModal()}
