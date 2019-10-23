@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:33:49
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-19 18:23:41
+ * @LastEditTime: 2019-10-22 11:52:17
  */
 import {StyleSheet} from 'react-native';
 const Styles =  StyleSheet.create({
@@ -14,8 +14,8 @@ const Styles =  StyleSheet.create({
     btn:{
         position:'absolute',
         right:20,
-        width:35,
-        height:35,
+        // width:37,
+        // height:37,
         zIndex:100,
     },
     btnImg:{

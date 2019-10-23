@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 13:40:04
+ * @LastEditTime: 2019-10-22 14:10:43
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text} from 'react-native';
@@ -328,7 +328,7 @@ export default class PositionUtils extends Component {
                 }
             </View>
             <View style={MapStyles.infoWindowItem}>
-                <Text style={{color:this.deviceState(this.state.locationData.deviceStatus).color}}>{this.deviceState(this.state.locationData.deviceStatus).text}</Text>
+                <Text style={[MapStyles.infoWindowTitle,{color:this.deviceState(this.state.locationData.deviceStatus).color,paddingTop:1}]}>{this.deviceState(this.state.locationData.deviceStatus).text}</Text>
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{this.posType(this.state.locationData.posType)}</Text>
                 <Text style={MapStyles.line}>|</Text>

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 10:17:53
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 15:23:28
+ * @LastEditTime: 2019-10-22 12:02:57
  */
 
 import {StyleSheet,Platform} from 'react-native';
@@ -40,17 +40,17 @@ const MapStyles =  StyleSheet.create({
     },
     infoWindowItem:{
         flexDirection: 'row',
-        fontSize:12,
-        paddingBottom:8,
+        paddingBottom:5,
     },
     infoWindowTitle:{
         color:'#666',
+        fontSize:12
     },
     infoWindowItemImei:{
         justifyContent:'space-between'
     },  
     imei:{
-        fontSize:14,
+        fontSize:16,
         color:'#000',
         paddingBottom:5
     },

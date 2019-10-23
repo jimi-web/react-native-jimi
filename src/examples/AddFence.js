@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:48:19
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 14:56:23
+ * @LastEditTime: 2019-10-22 16:35:57
  */
 import React, {Component} from 'react';
 import {Jimi} from '../index';
@@ -22,6 +22,8 @@ export default class BaiduAddFence extends Component {
 
     render() {
         let {params} = this.props.navigation.state;
+        console.log(params);
+        
         return  <View style={{flex:1}}>
         
             {
@@ -34,7 +36,13 @@ export default class BaiduAddFence extends Component {
                         console.log(data,'设备数据');
                 
                     }}
-                ></Jimi.BaiduAddFence>:<Jimi.GoogleAddFence></Jimi.GoogleAddFence>
+                ></Jimi.BaiduAddFence>:<Jimi.GoogleAddFence
+                    fenceId={params?params.fenceId:''}
+                    onSave={()=>{
+                        this.props.navigation.goBack();
+                    }}
+                >    
+                </Jimi.GoogleAddFence>
             }
         </View>;
     }

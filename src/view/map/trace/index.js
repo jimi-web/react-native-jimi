@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 18:27:25
+ * @LastEditTime: 2019-10-22 14:15:05
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
@@ -56,7 +56,7 @@ export default class TraceUtils extends PositionUtils {
             deviceMarker:null,
             myMarker:null,
             deviceInfo:{},//设备信息
-            pullUpHeight:isIphoneX()?iphoneXHeight(90):90,//上拉框高度
+            pullUpHeight:isIphoneX()?iphoneXHeight(80):80,//上拉框高度
             touchStart:null,
             pullState:0,//0为默认高度，1为上拉
             positionBtnHeight:10,//定位高度
@@ -75,7 +75,6 @@ export default class TraceUtils extends PositionUtils {
         return (
             <View  activeOpacity={1} style={[MapStyles.box,{height:this.state.pullUpHeight}]}>
                 <TouchableOpacity  style={MapStyles.navigation}  onPress={()=>{
-                    console.log('导航');
                     this.navigation();
                 }}>
                     <Image source={require('../../../assets/trace/track_navigation.png')}></Image>
@@ -92,7 +91,7 @@ export default class TraceUtils extends PositionUtils {
                         <Text style={MapStyles.title}>{deviceInfo.deviceName?deviceInfo.deviceName:null}</Text>
                     </View> 
                     <View style={[MapStyles.item,MapStyles.state]}>
-                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus).text:'离线'}</Text>
+                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color,paddingTop:1}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus).text:'离线'}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>距离{this.state.distance?this.state.distance:0}m</Text>
                         <Text style={MapStyles.line}>|</Text>
@@ -191,7 +190,7 @@ export default class TraceUtils extends PositionUtils {
 
     pullUp = ()=>{
         this.setState({
-            pullUpHeight:isIphoneX()?iphoneXHeight(170):170,
+            pullUpHeight:isIphoneX()?iphoneXHeight(160):160,
             pullState:1,
             positionBtnHeight:90
         });
@@ -199,7 +198,7 @@ export default class TraceUtils extends PositionUtils {
 
     pulldown = ()=>{
         this.setState({
-            pullUpHeight:isIphoneX()?iphoneXHeight(90):90,
+            pullUpHeight:isIphoneX()?iphoneXHeight(80):80,
             pullState:0,
             positionBtnHeight:10
         });  
