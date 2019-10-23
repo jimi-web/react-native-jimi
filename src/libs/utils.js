@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:17:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-26 17:05:44
+ * @LastEditTime: 2019-10-23 15:00:02
  */
 import {Dimensions,Platform} from 'react-native';
 import Theme from '../components/themes/index';
@@ -25,7 +25,7 @@ export const isIphoneX =()=> {
     );  
 };
 
-export const iphoneXHeight = (initHeight)=>{
+export const iphoneXHeight = (initHeight = 0)=>{
     return initHeight+Theme.iphoneXBottomDefault;
 };
 

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-22 15:13:47
+ * @LastEditTime: 2019-10-23 15:12:08
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -13,7 +13,7 @@ import { jmAjax,getEncoding } from '../../http/business';
 import { createTheFolder } from '../../http/file';
 import { playAudio,stopAudio } from '../../http/media';
 import api from '../../api/index';
-import { parseDate,parseTime,isIphoneX } from '../../libs/utils';
+import { parseDate,parseTime,isIphoneX,iphoneXHeight } from '../../libs/utils';
 import RNFS from 'react-native-fs';
 import PropTypes from 'prop-types';
 import {Toast} from 'teaset';
@@ -298,7 +298,7 @@ export default class Record extends Component {
     };
     render() {
         return (
-            <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' },{paddingBottom:isIphoneX()?25:0}]}>
+            <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' },{paddingBottom:isIphoneX()?iphoneXHeight(0):0}]}>
                 <FlatList
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
@@ -308,8 +308,9 @@ export default class Record extends Component {
                     onEndReachedThreshold={0.2}
                     ListFooterComponent={this.renderFooter}
                 />
-                <View style={{ height: 55, width: '100%',zIndex:999 }}>
+                <View style={{ height:55, width: '100%',zIndex:999 }}>
                     <RecordControl
+                        height={isIphoneX()?iphoneXHeight(-25):55}
                         isPlay={this.state.isPlay}
                         isOpenSelect={this.state.isOpenSelect}
                         recordLength={this.state.recordLength}
