@@ -42,8 +42,8 @@ export default class Datepicker extends Component {
             let defaultValue = params.defaultValue.replace(/-/g,'/');
             this.setState({
                 isShowDatepicker:params.isShow,
-                defaultValue:params.defaultValue ? new Date(defaultValue):new Date(),
-                finalResult:params.defaultValue ? new Date(params.defaultValue).Format('YYYY-MM-DD hh:mm'):new Date().Format('YYYY-MM-DD hh:mm')
+                defaultValue:params.defaultValue ? new Date(defaultValue):this.state.defaultValue,
+                finalResult:params.defaultValue ? params.defaultValue:this.state.finalResult
             });
         });
     }
@@ -51,12 +51,13 @@ export default class Datepicker extends Component {
     static show(params) {
         let isShow = true;
         let defaultValue = params.defaultValue;
-        DeviceEventEmitter.emit('jmDatepickerShow',{isShow,defaultValue});
+        console.log(defaultValue);
+        DeviceEventEmitter.emit('jmDatepickerShow',{isShow:isShow,defaultValue:defaultValue});
     }
 
     static hide() {
         let isShow = false;
-        DeviceEventEmitter.emit('jmDatepickerShow',{isShow});
+        DeviceEventEmitter.emit('jmDatepickerShow',{isShow:isShow});
     }
 
 

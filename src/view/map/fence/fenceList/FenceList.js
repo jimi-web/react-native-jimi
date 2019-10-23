@@ -202,9 +202,12 @@ export default class FenceList extends Component {
         if(this.state.isSelect){
             let list = this.state.fenceList;
             list[index].checked = !list[index].checked;
+            let delList = list.filter(item => item.checked ==true);
             this.setState({
                 fenceList:list,
-                delList:list.filter(item => item.checked ==true)
+                delList:delList,
+                allSelectText:delList.length === list.length ? '全不选' : '全选',
+                isAllSelect:delList.length === list.length ? true : false,
             });
         }else {
             //编辑
@@ -222,7 +225,9 @@ export default class FenceList extends Component {
         let list = this.inverse(false);
         this.setState({
             fenceList:list,
-            delList:[]
+            delList:[],
+            isAllSelect:false,
+            allSelectText:'全选'
         });
     }
 

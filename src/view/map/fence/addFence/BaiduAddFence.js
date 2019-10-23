@@ -71,13 +71,6 @@ export default class BaiduAddFence extends AddFenceUtils {
                         visible={true}
                         style={[{position:'relative',backgroundColor:'#fff0',height:34,width:74}]}
                     >
-                        {/* <View  style={[{backgroundColor:'#fff0',height:34,width:74,alignItems:'center'}]}>
-                            <View style={[{height:24,width:74,backgroundColor:'#3479F6',borderRadius:12,justifyContent:'center',alignItems:'center'}]}>
-                                <Text style={{color:'#fff',fontSize:11}}>半径:{this.state.radius}m</Text>
-                            </View>
-                            <View style={[{backgroundColor:'#3479F6',height:10,width:2}]}>
-                            </View>
-                        </View> */}
                         {this.radiusTip()}
                     </Overlay.InfoWindow>                  
                 </MapView>

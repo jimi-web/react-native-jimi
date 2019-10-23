@@ -66,7 +66,7 @@ export default class Position extends Component {
                             console.log('点击事件');
                             
                         }}
-                        getData={this.getPoint}
+                        // getData={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
                         deviceMarkerOptions={this.state.obj}

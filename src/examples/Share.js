@@ -16,15 +16,15 @@ export default class Share extends Component {
     }
 
     componentDidMount() {
-        Jimi.Share.show();
+        this.share.show();
     }
 
     render() {
         return <Jimi.Share 
+            ref={ref=>this.share=ref}
             onFile={()=>{
                 this.props.navigation.push('PrivacyAgreement');
             }}
         />;
-
     }
 }

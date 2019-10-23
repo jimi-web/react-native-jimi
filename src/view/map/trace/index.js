@@ -17,6 +17,7 @@ import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 import PositionUtils from '../position/index';
 import Styles from '../style/base';
 import MapStyles from '../style/trace';
+import Toast from 'teaset/components/Toast/Toast';
 
 export default class TraceUtils extends PositionUtils { 
     static propTypes = {
@@ -109,7 +110,7 @@ export default class TraceUtils extends PositionUtils {
                                     <Text style={MapStyles.text}>通讯时间：{deviceInfo.time?deviceInfo.time:'无'}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:'无'}</Text>
+                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:null}</Text>
                                 </View> 
                             </View>:null
                     }
@@ -286,6 +287,10 @@ export default class TraceUtils extends PositionUtils {
      * 导航
      */
     navigation = ()=>{
+        if(!this.state.deviceMarker){
+            Toast.message('无定位信息无法导航');
+            return;
+        }
         httpApp('jm_location.navigation',{
             latitude:this.state.deviceMarker.latitude,
             longitude:this.state.deviceMarker.longitude,

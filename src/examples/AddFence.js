@@ -15,7 +15,7 @@ export default class BaiduAddFence extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isBaidu:false
+            isBaidu:true
         };
     }
     

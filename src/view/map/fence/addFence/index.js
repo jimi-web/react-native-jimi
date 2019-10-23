@@ -124,21 +124,22 @@ export default class AddFenceUtils extends Component {
         return <View style={AddFenceStyles.addressList}>
             <ScrollView keyboardDismissMode={'on-drag'} keyboardShouldPersistTaps={'always'}>
                 {
-                    <TouchableOpacity 
-                        style={AddFenceStyles.addressListItem} 
-                        key={'addressListOne'}
-                        onPress={()=>{
-                            let deviceInfo = this.state.deviceInfo;
-                            this.onSelectAddress({
-                                ...this.state.fencePoint,
-                                longitude:deviceInfo.longitude,
-                                latitude:deviceInfo.latitude
-                            },deviceInfo.address);
-                        }}
-                    >
-                        <Text style={[AddFenceStyles.placename,{color:'#3479F6'}]}>{'【设备位置】'}</Text>
-                        <Text style={AddFenceStyles.fullAddress}>{this.state.deviceInfo.address}</Text>
-                    </TouchableOpacity>
+                    this.state.deviceInfo ?
+                        <TouchableOpacity 
+                            style={AddFenceStyles.addressListItem} 
+                            key={'addressListOne'}
+                            onPress={()=>{
+                                let deviceInfo = this.state.deviceInfo;
+                                this.onSelectAddress({
+                                    ...this.state.fencePoint,
+                                    longitude:deviceInfo.longitude,
+                                    latitude:deviceInfo.latitude
+                                },deviceInfo.address);
+                            }}
+                        >
+                            <Text style={[AddFenceStyles.placename,{color:'#3479F6'}]}>{'【设备位置】'}</Text>
+                            <Text style={AddFenceStyles.fullAddress}>{this.state.deviceInfo.address}</Text>
+                        </TouchableOpacity> :null
                 }
                 {
                     this.state.addressList.map((item,index)=>{
@@ -291,8 +292,6 @@ export default class AddFenceUtils extends Component {
 
     getGoogleZoom = (line)=>{
         const pointLength = line;
-        console.log( pointLength / (111 * 1000));
-        
         return pointLength / (111 * 1000);
     }
     
@@ -408,11 +407,15 @@ export default class AddFenceUtils extends Component {
             this.setState({
                 searchValue:value,
             });
-            MapSearch.requestSuggestion('',value).then((data)=>{
-                this.setState({
-                    addressList:data.sugList
+
+            if(!this.state.userMapType){
+                MapSearch.requestSuggestion('',value).then((data)=>{
+                    this.setState({
+                        addressList:data.sugList
+                    });
                 });
-            });
+            }
+
         }
     }
 
