@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     },
     dialogText:{
         flex:1,
-        padding:12,
+        padding:13,
         fontWeight:'bold',
         alignItems:'center',
     },

@@ -298,8 +298,9 @@ export default class Record extends Component {
     };
     render() {
         return (
-            <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' },{paddingBottom:isIphoneX()?iphoneXHeight(0):0}]}>
+            <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }]}>
                 <FlatList
+                    style={{paddingBottom:isIphoneX()?iphoneXHeight(55):55}}
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                     data={this.state.recordList}
@@ -308,9 +309,8 @@ export default class Record extends Component {
                     onEndReachedThreshold={0.2}
                     ListFooterComponent={this.renderFooter}
                 />
-                <View style={{ height:55, width: '100%',zIndex:999 }}>
+                <View style={{width: '100%',zIndex:999 }}>
                     <RecordControl
-                        height={isIphoneX()?iphoneXHeight(-25):55}
                         isPlay={this.state.isPlay}
                         isOpenSelect={this.state.isOpenSelect}
                         recordLength={this.state.recordLength}

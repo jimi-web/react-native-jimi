@@ -34,7 +34,7 @@ export default class RecordControl extends Component {
     render(){
         const {isOpenSelect,height} = this.props;
         return (
-            <BottomToolbars height={height}>
+            <BottomToolbars >
                 <View style={this.renderStyle()}>
                     {isOpenSelect?this.renderControl():this.renderDelete()}
                     {this.renderModal()}
@@ -128,7 +128,6 @@ export default class RecordControl extends Component {
                 flexDirection:'row',
                 // justifyContent:'center',
                 alginContent:'center',
-                backgroundColor:'#FBFBFB'
             }
         ].concat(style);
         return styles;

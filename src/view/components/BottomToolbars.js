@@ -43,7 +43,7 @@ export default class BottomToolbars extends Component {
             style:{marginVertical:0,position:'absolute',bottom:0}
         };
         return <BoxShadow setting={setting}>
-            <View style={[Styles.bottom,{height:getHeight,...this.props.style}]}>
+            <View style={[Styles.bottom,{height:getHeight,paddingBottom:isIphoneX()? iphoneXHeight(0):0,...this.props.style}]}>
                 {this.props.children}
             </View>
         </BoxShadow>;
