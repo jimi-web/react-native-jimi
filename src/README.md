@@ -61,3 +61,8 @@
 ## 方法
 [`<Api />` 接口](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Api.md)<br>
 
+
+## 日志
+###版本:'1.1.6'
+1.分享弹出框新增动画效果
+
