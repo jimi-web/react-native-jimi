@@ -17,7 +17,7 @@ import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 import PositionUtils from '../position/index';
 import Styles from '../style/base';
 import MapStyles from '../style/trace';
-import Toast from 'teaset/components/Toast/Toast';
+import {Toast} from 'teaset';
 
 export default class TraceUtils extends PositionUtils { 
     static propTypes = {
