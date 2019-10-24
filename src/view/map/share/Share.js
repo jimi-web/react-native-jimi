@@ -7,7 +7,7 @@
  * @LastEditTime: 2019-10-21 18:33:33
  */
 import React, {Component} from 'react';
-import {View,TouchableOpacity,Image,Text,Modal,StyleSheet,Dimensions,DeviceEventEmitter} from 'react-native';
+import {View,TouchableOpacity,Image,Text,Modal,StyleSheet,Dimensions,Animated} from 'react-native';
 import PropTypes from 'prop-types';
 import {httpApp} from '../../../http/basic';
 import {jmAjax,getEncoding} from '../../../http/business';
@@ -77,23 +77,33 @@ export default class Share extends Component {
             }],
             isDrawerShareShow:false,
             err:false,
-            message:'请先勾选同意'
+            message:'请先勾选同意',
+            fadeAnim: new Animated.Value(0),  // 透明度初始值设为0
         };
     }
 
 
-    isShow =(flag)=>{
+    isShow =(flag,value,toValue)=>{
         this.setState({
-            isDrawerShareShow:flag
+            isDrawerShareShow:flag,
+            fadeAnim:new Animated.Value(value)
+        },()=>{
+            Animated.spring(                  // 随时间变化而执行动画
+                this.state.fadeAnim,            // 动画中的变量值
+                {
+                    toValue: toValue,
+                    friction:9
+                }
+            ).start();  
         });
     }
 
     show = ()=>{
-        this.isShow(true);
+        this.isShow(true,0,1);
     }
 
     hide = ()=>{
-        this.isShow(false);
+        this.isShow(false,1,0);
     }
     
     
@@ -121,13 +131,17 @@ export default class Share extends Component {
     // }    
     
     render(){
+        const modalHeight = this.state.fadeAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [1, isIphoneX()?iphoneXHeight(337):337],
+        });
         return <Modal
             animationType="none"
             transparent={true}
             visible={this.state.isDrawerShareShow}
         >
-            <TouchableOpacity style={MapStyles.shadow} onPress={this.onCancel}></TouchableOpacity>
-            <View style={MapStyles.share}>
+            <TouchableOpacity style={MapStyles.shadow} onPress={this.hide}></TouchableOpacity>
+            <Animated.View style={[MapStyles.share,{height:modalHeight}]}>
                 <View style={MapStyles.shareTime}>
                     <Text style={MapStyles.shareTitle}>分享时间</Text>
                     <View style={MapStyles.shareSelectTime}>
@@ -175,19 +189,14 @@ export default class Share extends Component {
                     </View>
                 </View>
                 <View style={MapStyles.shareLine}></View>
-                <TouchableOpacity style={MapStyles.shareCancel} onPress={this.onCancel}>
+                <TouchableOpacity style={MapStyles.shareCancel} onPress={this.hide}>
                     <Text style={MapStyles.shareCancelText}>取消</Text>
                 </TouchableOpacity>
-            </View>
+            </Animated.View>
             <Toast message={this.state.message}></Toast>
         </Modal>;
     }
 
-    onCancel = ()=>{
-        this.setState({
-            isDrawerShareShow:false
-        });
-    }
 
     /**
      * 时间改变
@@ -255,9 +264,8 @@ export default class Share extends Component {
                 url:this.props.shareUrl+'?token='+token+'&encodingType='+res.encodType+'&encoding='+res.encoding,
                 title:this.props.shareTitle,
                 onSuccess: () => {
-                    this.setState({
-                        isDrawerShareShow:false
-                    });
+                    console.log('有进入');
+                    this.hide();
                 },
                 onFail: () => {
                     let message = '';

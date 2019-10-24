@@ -525,7 +525,7 @@ export default class Slider extends PureComponent {
             const trackStyle = this.getTrackStyle();
             // 如果value > oldValue，则代表两个滑块滑动位置互换，则更新渲染层级
             let tracks = [
-                React.createElement(View, { style: [{ borderRadius: trackWeight / 2 }, trackStyle], onLayout: this.measureTrack })
+                React.createElement(View, {key:vertical+'key',style: [{ borderRadius: trackWeight / 2 }, trackStyle], onLayout: this.measureTrack })
             ];
             // vertical的值和this.compareValue()值相同时，次滑块轴在底层，反之主滑块轴在底层
             if (vertical === this.compareValue()) {

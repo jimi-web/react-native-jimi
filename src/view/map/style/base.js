@@ -14,8 +14,8 @@ const Styles =  StyleSheet.create({
     btn:{
         position:'absolute',
         right:20,
-        // width:37,
-        // height:37,
+        width:37,
+        height:37,
         zIndex:100,
     },
     btnImg:{
