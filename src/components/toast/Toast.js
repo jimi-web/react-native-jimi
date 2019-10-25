@@ -7,68 +7,34 @@
  * @LastEditTime: 2019-10-15 14:45:57
  */
 import React, { Component } from 'react';
-import {
-    View,
-    StyleSheet,
-    Text,
-    DeviceEventEmitter
-} from 'react-native';
-import {isIphoneX,iphoneXHeight} from '../../libs/utils';
+import PropTypes from 'prop-types';
+import Overlay from '../overlay/overlay';
+import ToastView from '../toast/ToastView';
 
 export default class Toast extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            visible:false
-        };
-    }
-
-    componentDidMount() {
-        DeviceEventEmitter.addListener('jmToastShow', state=>{
-            this.setState({
-                visible:state
-            });
-        });
-    }
-
-    static show() {
-        DeviceEventEmitter.emit('jmToastShow',true);
-        setTimeout(()=>{
-            DeviceEventEmitter.emit('jmToastShow',false);
-        },1500);
-    }
+    static messageDefaultDuration = 'short';
+    static messageDefaultPosition = 'bottom';
 
 
-    render(){
-        return  <View style={Styles.tip}>
-            {
-                this.state.visible ? 
-                    <View style={Styles.text}>
-                        <Text style={{color:'#fff',fontSize:14}}>{this.props.message}</Text>
-                    </View>:
-                    null
+    static show(options){
+        let {duration, ...others} = options && typeof options === 'object' ? options : {};    
+        const overlay = Overlay.add(<ToastView {...others} />);
+        if (typeof duration !== 'number') {
+            switch (duration) {
+            case 'long': duration = 3500; break;
+            default: duration = 2000; break;
             }
-        </View>;
+        }
+        setTimeout(()=>{
+            Overlay.remove(overlay);
+        },duration);
+
+        return overlay;
+    }
+
+    static message(text, duration = this.messageDefaultDuration,position=this.messageDefaultPosition) {
+        return this.show({text, duration,position});
     }
 }
 
 
-const Styles =  StyleSheet.create({ 
-    tip:{
-        position:'absolute',
-        bottom:isIphoneX()?iphoneXHeight(30):30,
-        right:0,
-        left:0,
-        justifyContent:'center',
-        flexDirection:'row',
-        zIndex:2,
-        alignItems:'center'
-    },
-    text:{
-        padding:10,
-        paddingLeft:15,
-        paddingRight:15,
-        borderRadius:6,
-        backgroundColor:'#000000bd',
-    }
-});

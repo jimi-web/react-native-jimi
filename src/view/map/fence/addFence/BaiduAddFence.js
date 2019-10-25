@@ -50,7 +50,7 @@ export default class BaiduAddFence extends AddFenceUtils {
                         tag={0}
                         location={this.state.deviceInfo?{longitude:this.state.deviceInfo.longitude,latitude:this.state.deviceInfo.latitude}:{longitude:0,latitude:0}}
                         icon={this.props.deviceMarkerOptions.image}
-                        rotate={this.state.deviceInfo ? this.state.deviceInfo.direction :0 }
+                        rotate={this.state.deviceInfo ? this.state.deviceInfo.direction? this.state.deviceInfo.direction :0 :0 }
                     />
                     <Overlay.Marker
                         tag={1}
