@@ -11,7 +11,7 @@
 
 ## Static Methods
 | Method | Params | Returns | Notes |
-|---|---|---|---|---|
+|---|---|---|---|
 | Overlay | 无 | 无 | 继承Overlay所有静态方法 |
 | show | options | 无 | 显示自定义提示框 <br> - text: 提示文字 <br>- icon: 图标（string，elem，image） <br> - duration:时间（number） |
 | message | text, duration, position | 无 | 显示一个纯文本轻提示框。<br> duration 默认为 'short', position 默认为 'bottom' 。<br>默认值可通过 Toast.messageDefaultDuration 、 Toast.messageDefaultPosition 修改。 | 

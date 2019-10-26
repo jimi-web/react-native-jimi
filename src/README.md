@@ -58,6 +58,8 @@
 
 [`<Circle.Loading />`加载](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Loading.md)<br>
 
+[`<Circle.Toast />`提示](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Toast.md)<br>
+
 ## 方法
 [`<Api />` 接口](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Api.md)<br>
 
