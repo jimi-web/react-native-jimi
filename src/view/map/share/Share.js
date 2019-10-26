@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import {httpApp} from '../../../http/basic';
 import {jmAjax,getEncoding} from '../../../http/business';
 import api from '../../../api/index';
-import Toast from '../../../components/toast/Toast';
+import Toast from '../../../components/toast/OtherToast';
 import {Checkbox} from 'teaset';
 import Theme from '../../../components/themes';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';

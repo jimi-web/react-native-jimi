@@ -78,7 +78,7 @@ export default class AddFenceUtils extends Component {
     
     getFenceTitle = ()=>{
         let date = new Date();
-        return date.getFullYear()+''+date.getMonth() + 1+''+date.getDate()+''+date.getHours()+''+date.getMinutes()+''+date.getSeconds();
+        return date.getFullYear()+''+(date.getMonth() + 1)+''+date.getDate()+''+date.getHours()+''+date.getMinutes()+''+date.getSeconds();
     }
 
     /**
@@ -213,6 +213,7 @@ export default class AddFenceUtils extends Component {
     inputBoxElement = ()=>{
         return <InputBox 
             title={'请输入围栏名称'}
+            maxLength={15}
             onConfirm={(value)=>{
                 this.setState({
                     fenceTitle:value
@@ -415,7 +416,6 @@ export default class AddFenceUtils extends Component {
                     });
                 });
             }
-
         }
     }
 
@@ -453,9 +453,6 @@ export default class AddFenceUtils extends Component {
             fenceState:this.state.fenceState,
             fenceAddress:this.state.fenceAddress
         };
-
-        console.log(this.props.fenceId,'this.props.fenceId');
-        
 
         if(this.props.fenceId){
             data.fenceId = this.props.fenceId;

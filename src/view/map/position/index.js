@@ -226,7 +226,6 @@ export default class PositionUtils extends Component {
      */
     request = async()=>{
         let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress);
-
         this.setState({
             lastAddress:deviceInfo.address
         },()=>{
@@ -240,25 +239,27 @@ export default class PositionUtils extends Component {
      * 地址解析
      * @param {Object} data  定位信息
      */
-    geocoder = (data)=> {
-        jmAjax({
-            url:api.geocoder,
-            method:'GET',
-            data:{
-                latitude:data.latitude,
-                longitude:data.longitude,
-            }
-        }).then((res)=>{
-            let result = res.data;
-            data.address = result.location;
-            this.setState({
-                lastAddress:result.location
-            },()=>{
-                this.drawMarker(data);
-                this.onDeviceChange(data);
-            });
-        });
-    }
+    // geocoder = (data)=> {
+    //     jmAjax({
+    //         url:api.geocoder,
+    //         method:'GET',
+    //         data:{
+    //             latitude:data.latitude,
+    //             longitude:data.longitude,
+    //         }
+    //     }).then((res)=>{
+    //         console.log(res,'111111');
+            
+    //         let result = res.data;
+    //         data.address = result.location;
+    //         this.setState({
+    //             lastAddress:result.location
+    //         },()=>{
+    //             this.drawMarker(data);
+    //             this.onDeviceChange(data);
+    //         });
+    //     });
+    // }
 
     
     /**

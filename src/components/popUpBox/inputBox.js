@@ -19,7 +19,7 @@ import {
 import PropTypes from 'prop-types';
 import PopUpBox from './PopUpBox';
 import { Input } from 'teaset';
-import Toast from '../../components/toast/Toast';
+import Toast from '../../components/toast/OtherToast';
 
 export default class InputBox extends Component {
 

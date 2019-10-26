@@ -7,8 +7,9 @@
  * @LastEditTime: 2019-10-22 12:04:16
  */
 import React, {Component} from 'react';
-import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
+import {View,StyleSheet,Text,TouchableOpacity,ActivityIndicator} from 'react-native';
 import {Jimi} from '../index';
+import {Toast} from '../components/index';
 
 export default class Position extends Component {
     constructor(props) {
@@ -85,7 +86,10 @@ export default class Position extends Component {
 
     
     componentDidMount() {
-  
+        // Toast.show({
+        //     text:'哈哈哈哈',
+        //     icon: <ActivityIndicator size='large' color={'#fff'} />,
+        // });
     }
 
 

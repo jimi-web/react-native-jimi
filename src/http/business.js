@@ -16,7 +16,6 @@ import Loading from '../components/loading/Loading';
  */
 const request = (params) => {
     return new Promise((resolve) => {
-        console.log(params,33);
         httpApp('jm_net.request', {
             url: params.url,
             method: params.method,
@@ -39,7 +38,7 @@ const request = (params) => {
             },
             onFail: (res) => {
                 Loading.hide();
-                Toast.message('数据请求失败');
+                Toast.message('网络异常,请稍后再试');
             },
             onComplete: (res) => {
                 Loading.hide();
@@ -59,7 +58,7 @@ export const jmAjax = (params)=> {
                 let data = res;
                 params.data =  params.data?params.data:{};
                 if(params.encoding){
-                    // params.data.encoding = '201801051535007';
+                    // params.data.encoding = '869354040432859';
                     // params.data.encoding = '869354040432859';
                     params.data.encoding = data.encoding;
                 }

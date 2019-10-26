@@ -25,6 +25,7 @@ const FenceStyles =  StyleSheet.create({
         height:24
     },
     title:{
+        flex:1,
         flexDirection:'row',
         justifyContent:'space-between',
     },
@@ -33,12 +34,14 @@ const FenceStyles =  StyleSheet.create({
         marginLeft:8,
     },
     name:{
+        flex:1,
         color:'#4D4D4D',
-        fontSize:16
+        fontSize:16,
+        flexWrap:'wrap'
     },
     text:{
         color:'#A3A3A3',
-        fontSize:12
+        fontSize:12,
     },
     address:{
         marginTop:5
