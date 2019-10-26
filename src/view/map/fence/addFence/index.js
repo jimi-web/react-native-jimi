@@ -27,6 +27,7 @@ export default class AddFenceUtils extends Component {
         fillColor:PropTypes.string,
         deviceMarkerOptions:PropTypes.object,//终点marker
         onDeviceChange:PropTypes.func,//设备位置改变监听事件
+        getData:PropTypes.func
     };
     
     static defaultProps = {
@@ -327,7 +328,20 @@ export default class AddFenceUtils extends Component {
      * 获取当前围栏信息（编辑）
      */
     async getFence (){
-        let deviceInfo = await devicePosition();
+        if(this.props.getData){
+            this.props.getData((res)=>{
+                this.editFenceDefaultValue(res);
+            });
+        }else{
+            let deviceInfo = await devicePosition();
+            this.editFenceDefaultValue(deviceInfo);
+        }
+    }
+
+    /**
+     * 编辑围栏赋值
+     */
+    editFenceDefaultValue = (deviceInfo)=>{
         jmAjax({
             url:api.getFence,
             method:'GET',
@@ -357,11 +371,28 @@ export default class AddFenceUtils extends Component {
         });
     }
 
+
     /**
      * 创建一个新的围栏获取设备信息
      */
     async getDevicePosition () {
-        let deviceInfo = await devicePosition();
+        if(this.props.getData){
+            this.props.getData((res)=>{
+                let data = res;
+                this.addNewFenceDefaultValue(data);
+            });
+        }else {
+            let deviceInfo = await devicePosition();
+            this.addNewFenceDefaultValue(deviceInfo);
+        }
+    }
+
+
+    /**
+     * 新增围栏设置值
+     * 
+     */
+    addNewFenceDefaultValue =(deviceInfo)=>{
         this.setState({
             deviceInfo:deviceInfo,
             fencePoint:{
@@ -375,6 +406,9 @@ export default class AddFenceUtils extends Component {
             Loading.hide();
         });
     }
+
+
+
 
 
     /**

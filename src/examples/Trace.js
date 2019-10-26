@@ -34,7 +34,7 @@ export default class Track extends Component {
                         onMyChange = {(data)=>{
                             console.log(data,'我的位置');
                         }}
-                        isRefresh={false}
+                        isRefresh={true}
                         polylineOptions={playPolylineOptions}
                         onFile={()=>{
                             this.props.navigation.push('PrivacyAgreement');

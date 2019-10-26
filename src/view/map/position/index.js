@@ -213,7 +213,6 @@ export default class PositionUtils extends Component {
             this.props.getData((data)=>{
                 let res = data;
                 this.drawMarker(res);
-                this.onDeviceChange(res);
             });
         }else {
             this.request();
@@ -230,38 +229,10 @@ export default class PositionUtils extends Component {
             lastAddress:deviceInfo.address
         },()=>{
             this.drawMarker(deviceInfo);
-            this.onDeviceChange(deviceInfo);
         });
     }
 
 
-    /**
-     * 地址解析
-     * @param {Object} data  定位信息
-     */
-    // geocoder = (data)=> {
-    //     jmAjax({
-    //         url:api.geocoder,
-    //         method:'GET',
-    //         data:{
-    //             latitude:data.latitude,
-    //             longitude:data.longitude,
-    //         }
-    //     }).then((res)=>{
-    //         console.log(res,'111111');
-            
-    //         let result = res.data;
-    //         data.address = result.location;
-    //         this.setState({
-    //             lastAddress:result.location
-    //         },()=>{
-    //             this.drawMarker(data);
-    //             this.onDeviceChange(data);
-    //         });
-    //     });
-    // }
-
-    
     /**
      * 绘制marker
      * @param {Object} data  定位信息
@@ -279,6 +250,8 @@ export default class PositionUtils extends Component {
         data.gpsTime = new Date(data.gpsTime).Format('YYYY-MM-DD hh:mm:ss');
         data.time = new Date(data.time).Format('YYYY-MM-DD hh:mm:ss');
        
+        this.onDeviceChange(data);
+
         this.setState({
             markerPoint:point,
             locationData:data       
@@ -409,7 +382,10 @@ export default class PositionUtils extends Component {
      * 路况按钮
      */
     roadBtn = ()=> {
-        return <TouchableOpacity style={[Styles.btn,Styles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled})}>
+        return <TouchableOpacity style={[Styles.btn,Styles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled},()=>{
+            console.log(this.state.trafficEnabled,'路况');
+            
+        })}>
             <Image style={Styles.btnImg} source={this.state.trafficEnabled?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
         </TouchableOpacity>;
     }

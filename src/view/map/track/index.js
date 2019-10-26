@@ -214,8 +214,8 @@ export default class TrackUtils extends Component {
      */
     request = ()=> {
         let data = {
-            startTime:this.state.startDate,
-            endTime:this.state.endDate,
+            startTime:new Date(this.state.startDate.replace(/-/g,'/')).getTime(),
+            endTime:new Date(this.state.endDate.replace(/-/g,'/')).getTime(),
             posType:this.state.posType
         };
         jmAjax({
@@ -299,15 +299,6 @@ export default class TrackUtils extends Component {
      * 时间选择确认按钮
      */
     onConfirm = (data)=> {
-        let stdt=new Date(data.startDate.replace(/-/g,'/'));
-        let etdt=new Date(data.endDate.replace(/-/g,'/'));
-       
-        //相隔时间校验
-        if(parseInt((etdt-stdt)/ (1000 * 60 * 60 * 24))>this.props.dimDd){
-            Toast.message('选择的时间只允许在'+this.props.dimDd+'天之内');
-            return;
-        }
-
         this.setState({
             startDate:data.startDate,
             endDate:data.endDate

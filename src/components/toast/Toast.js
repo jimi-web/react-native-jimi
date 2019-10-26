@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import Overlay from '../overlay/overlay';
 import ToastView from '../toast/ToastView';
 
-export default class Toast extends Component {
+export default class Toast extends Overlay {
     static messageDefaultDuration = 'short';
     static messageDefaultPosition = 'bottom';
 

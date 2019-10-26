@@ -9,7 +9,7 @@
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity,ActivityIndicator} from 'react-native';
 import {Jimi} from '../index';
-import {Toast} from '../components/index';
+// import {Toast} from '../components/index';
 
 export default class Position extends Component {
     constructor(props) {
@@ -50,7 +50,7 @@ export default class Position extends Component {
                         trafficEnabled={false}
                         mapType={'standard'}
                         deviceMarkerOptions={obj}
-                        isRefresh={false}
+                        isRefresh={true}
                         ChangePositionBtn={car}
                         mylocationOptions={my}
                         mapTypeBtnStyle={styles.set}
@@ -86,10 +86,15 @@ export default class Position extends Component {
 
     
     componentDidMount() {
-        // Toast.show({
+        // let toast=Toast.show({
         //     text:'哈哈哈哈',
         //     icon: <ActivityIndicator size='large' color={'#fff'} />,
+        //     duration:100000
         // });
+
+        // setTimeout(()=>{
+        //     Toast.remove(toast);
+        // },3000);
     }
 
 
