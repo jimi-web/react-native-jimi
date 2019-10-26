@@ -3,12 +3,13 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 17:18:51
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-10-25 09:26:41
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet} from 'react-native';
 import {Button} from '../../components/index';
+import {Overlay,Dialog} from '../../components/index';
 
 export default class Home extends Component{
     constructor(props){
@@ -17,7 +18,6 @@ export default class Home extends Component{
             homeName:''
         };
     }
-    
     render(){
         return (
             <View style={styles.mainStyle}>
@@ -29,6 +29,7 @@ export default class Home extends Component{
                     <Button style={styles.btn} title={'测试'} onPress={()=>{this.props.navigation.push('Share');}} />  
                     <Button style={styles.btn} title={'录音'} onPress={()=>{this.props.navigation.push('Record');}} />  
                     <Button style={styles.btn} title={'围栏'} onPress={()=>{this.props.navigation.push('Fence');}} />  
+                    <Button style={styles.btn} title={'弹框'} onPress={()=>{Overlay.add(<Dialog></Dialog>);}} />  
                 </View>
             </View>
         );

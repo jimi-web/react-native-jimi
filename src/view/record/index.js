@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-23 15:12:08
+ * @LastEditTime: 2019-10-26 09:16:01
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -309,22 +309,20 @@ export default class Record extends Component {
                     onEndReachedThreshold={0.2}
                     ListFooterComponent={this.renderFooter}
                 />
-                <View style={{width: '100%',zIndex:999 }}>
-                    <RecordControl
-                        isPlay={this.state.isPlay}
-                        isOpenSelect={this.state.isOpenSelect}
-                        recordLength={this.state.recordLength}
-                        fileNumber={this.state.changeFileLength}
-                        recordType={this.state.recordType}
-                        isRecording={this.state.isRecording}
-                        insTimeArr={this.props.insTimeArr}
-                        onSelect={(type) => { this.onSelect(type); }}
-                        onEmpty={() => { this.onEmpty(); }}
-                        onDelete={() => { this.onDelete(); }}
-                        onConfirm={(data) => this.onConfirm(data)}
-                        onRecord={(data) => this.onRecord(data)}
-                    />
-                </View>
+                <RecordControl
+                    isPlay={this.state.isPlay}
+                    isOpenSelect={this.state.isOpenSelect}
+                    recordLength={this.state.recordLength}
+                    fileNumber={this.state.changeFileLength}
+                    recordType={this.state.recordType}
+                    isRecording={this.state.isRecording}
+                    insTimeArr={this.props.insTimeArr}
+                    onSelect={(type) => { this.onSelect(type); }}
+                    onEmpty={() => { this.onEmpty(); }}
+                    onDelete={() => { this.onDelete(); }}
+                    onConfirm={(data) => this.onConfirm(data)}
+                    onRecord={(data) => this.onRecord(data)}
+                />
                 {
                     this.renderLoading()
                 }
