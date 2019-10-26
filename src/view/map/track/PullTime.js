@@ -148,6 +148,15 @@ export default class PullTime extends Component {
      * 确定监听事件
      */
     onConfirm = ()=> {
+        let stdt=new Date(this.state.startDate.replace(/-/g,'/'));
+        let etdt=new Date(this.state.endDate.replace(/-/g,'/'));
+       
+        //相隔时间校验
+        if(parseInt((etdt-stdt)/ (1000 * 60 * 60 * 24))>this.props.dimDd){
+            Toast.message('选择的时间只允许在'+this.props.dimDd+'天之内');
+            return;
+        }
+
         this.setState({
             isShowPullTime:false
         });
@@ -214,7 +223,7 @@ export default class PullTime extends Component {
     datepickerOnConfirm = (value)=> {
         //不允许选择未来的日期
         let atPresent = new Date();
-        let getTime = new Date(value);
+        let getTime = new Date(value.replace(/-/g,'/'));
         if(getTime>atPresent){
             Toast.message('选择的时间不能大于当前时间');
             return;

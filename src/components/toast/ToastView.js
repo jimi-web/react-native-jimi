@@ -65,6 +65,8 @@ export default class ToastView extends Component {
     render(){
         let tip={
             padding:15,
+            paddingTop:10,
+            paddingBottom:10,
             borderRadius:6,
             backgroundColor:'#000000bd',
             justifyContent: this.props.position === 'top' ? 'flex-start' : this.props.position === 'bottom' ? 'flex-end' : 'center',

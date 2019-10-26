@@ -17,9 +17,6 @@
 
 
 ## Demo
-
-将加载框导入App.js里，设置全局，因所有业务组件均用到该组件
-
 ```
 
 import {Circle} from  'react-native-jimi';
