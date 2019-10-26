@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-26 09:16:01
+ * @LastEditTime: 2019-10-26 10:46:07
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -140,10 +140,10 @@ export default class Record extends Component {
             encodingType: true,
             data: params
         }).then(res => {
+            this.setState({
+                refreshing:false
+            });
             if (res.code) {
-                this.setState({
-                    refreshing:false
-                });
                 return;
             }
             this.totalPage = res.data.totalPage;
@@ -217,7 +217,6 @@ export default class Record extends Component {
         this.setState({
             recordList,
             initFile,
-            refreshing:false,
             isOpenSelect:1,
             params:serverParams
         });
@@ -309,6 +308,9 @@ export default class Record extends Component {
                     onEndReachedThreshold={0.2}
                     ListFooterComponent={this.renderFooter}
                 />
+                {
+                    this.renderLoading()
+                }
                 <RecordControl
                     isPlay={this.state.isPlay}
                     isOpenSelect={this.state.isOpenSelect}
@@ -323,10 +325,6 @@ export default class Record extends Component {
                     onConfirm={(data) => this.onConfirm(data)}
                     onRecord={(data) => this.onRecord(data)}
                 />
-                {
-                    this.renderLoading()
-                }
-
             </View>
         );
     }

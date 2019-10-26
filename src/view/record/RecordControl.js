@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-26 09:15:50
+ * @LastEditTime: 2019-10-26 10:45:37
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions} from 'react-native';
@@ -90,7 +90,6 @@ export default class RecordControl extends Component {
      * 开始录音
      */
     onRecord = () => {
-        console.log('111111111111');
         const {isRecording,recordLength,recordType} = this.props;
         let data = {
             recordLength:recordLength,

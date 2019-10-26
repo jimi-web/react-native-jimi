@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-14 11:46:05
+ * @LastEditTime: 2019-10-26 09:40:47
  */
 
 import React, {Component} from 'react';
@@ -85,7 +85,6 @@ export default class JmTopView extends Component {
                 </Animated.View>
                 {
                     elements.map((item,index) => {
-                        console.log(item,6666);
                         return (
                             <View key={item.key} style={styles.overlay} pointerEvents='box-none'>
                                 {item.element}
