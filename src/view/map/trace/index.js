@@ -52,7 +52,7 @@ export default class TraceUtils extends PositionUtils {
 
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             visualRange:null,//可视区域
             deviceMarker:null,
             myMarker:null,
@@ -64,7 +64,6 @@ export default class TraceUtils extends PositionUtils {
             distance:0,//两点间的距离
         };
     }
-
     componentWillMount() {
         this.onTouch();
     }
@@ -96,7 +95,7 @@ export default class TraceUtils extends PositionUtils {
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>距离{this.state.distance?this.state.distance:0}m</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>{deviceInfo.posType?this.posType(deviceInfo.posType):'无'}</Text>
+                        <Text style={MapStyles.text}>{deviceInfo.posType?this.posType(deviceInfo).text:'无'}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>{deviceInfo.gpsSpeed?deviceInfo.gpsSpeed:0}km/h</Text>
                     </View>
@@ -104,7 +103,7 @@ export default class TraceUtils extends PositionUtils {
                         this.state.pullState ?
                             <View>
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>定位时间：{deviceInfo.gpsTime?deviceInfo.gpsTime:'无'}</Text>
+                                    <Text style={MapStyles.text}>定位时间：{deviceInfo.posType?this.posType(deviceInfo).time:'无'}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
                                     <Text style={MapStyles.text}>通讯时间：{deviceInfo.time?deviceInfo.time:'无'}</Text>
@@ -220,7 +219,6 @@ export default class TraceUtils extends PositionUtils {
      * 监听设备位置
      */
     onDeviceChange = (data)=> {
-        console.log(data,'是否有数据');
         this.setState({
             deviceInfo:data
         },()=>{

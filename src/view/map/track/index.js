@@ -201,8 +201,7 @@ export default class TrackUtils extends Component {
             endTime:this.state.endDate,
             posType:this.state.posType
         };
-        console.log(data,'数据');
-        
+
         this.props.getData(data,(res)=>{
             this.getTrackData(res);
         });
@@ -398,7 +397,10 @@ export default class TrackUtils extends Component {
      */
     play =()=>{
         let trackData = this.state.trackData;
+        console.log(trackData.length);
         let currentProgress = this.state.progress; //当前播放进度
+        console.log(currentProgress);
+        console.log(this.state.totalProgress);
         let pointArr = null;
         this.timer = setInterval(()=>{
             //已播完
@@ -477,10 +479,15 @@ export default class TrackUtils extends Component {
      * 滑块事件
      */
     onSlidingComplete = (progress)=> {
+        console.log(progress,'多少数据');
+        
         if(this.state.isPlay){
             this.pause();
         }
-        if(progress > this.state.trackPolylinePoint.length || progress < 1){
+        if(progress > this.state.totalProgress-1 || progress < 1){
+            if(this.state.isPlay){
+                this.play();
+            }
             return;
         }
         let trackPolylinePoint = this.state.trackPolylinePoint;

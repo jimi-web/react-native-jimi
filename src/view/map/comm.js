@@ -9,6 +9,7 @@
 import {jmAjax} from '../../http/business';
 import gps from '../../libs/coversionPoint';
 import api from '../../api/index';
+import {Toast} from 'teaset';
 
 /**
  * 获取设备定位信息
@@ -21,7 +22,8 @@ export const getDevicePosition = ()=> {
             encoding:true,
             encodingType:true
         }).then((res)=>{
-            resolve(res.data);
+            let data = res.data;
+            resolve(data);
         }); 
     }); 
 }; 
@@ -48,29 +50,38 @@ export const geocoder = (data)=> {
     });
 };
 
+
+
+
 /**
  * 设备完整信息已经解析完地址的
  */
 export const devicePosition = async(lastPoint={},lastAddress)=> {
     let deviceInfo = await getDevicePosition();
-    console.log(deviceInfo,'deviceInfo111111');
-    console.log(lastPoint,'是否存在');
-    let address = '';
-    if(lastPoint.latitude){
-        console.log('出来');
-        let distance = gps.distance(lastPoint.latitude,lastPoint.longitude,deviceInfo.latitude,deviceInfo.longitude);
-        if(distance>10){
-            address = await geocoder(deviceInfo);
-        }else {
-            deviceInfo.address = lastAddress;
-            address = deviceInfo;
-        }
-    }else{
-        console.log('进入');
-        
-        address = await geocoder(deviceInfo);
-    } 
-    return address;
+    let info = '';
+    if(deviceInfo.latitude){
+        if(lastPoint.latitude){
+            let distance = gps.distance(lastPoint.latitude,lastPoint.longitude,deviceInfo.latitude,deviceInfo.longitude);
+            if(distance>10){
+                info = await geocoder(deviceInfo);
+                let baidu = gps.GPSToBaidu(info.latitude,info.longitude);
+                info.latitude = baidu.lat;
+                info.longitude = baidu.lng;
+            }else {
+                deviceInfo.address = lastAddress;
+                info = deviceInfo;
+            }
+        }else{
+            info = await geocoder(deviceInfo);
+            let baidu = gps.GPSToBaidu(info.latitude,info.longitude);
+            info.latitude = baidu.lat;
+            info.longitude = baidu.lng;
+        } 
+    }else {
+        Toast.message('请先激活设备');
+    }
+
+    return info;
 };
 
 

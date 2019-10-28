@@ -249,13 +249,14 @@ export default class PositionUtils extends Component {
         
         data.gpsTime = new Date(data.gpsTime).Format('YYYY-MM-DD hh:mm:ss');
         data.time = new Date(data.time).Format('YYYY-MM-DD hh:mm:ss');
+        data.otherPosTime = new Date(data.otherPosTime).Format('YYYY-MM-DD hh:mm:ss');
        
-        this.onDeviceChange(data);
-
         this.setState({
             markerPoint:point,
             locationData:data       
         },()=>{
+
+            this.onDeviceChange(this.state.locationData);
             if(this.state.userMapType){
                 this.showInfoWindow('markers');
             }else {
@@ -304,12 +305,12 @@ export default class PositionUtils extends Component {
             <View style={MapStyles.infoWindowItem}>
                 <Text style={[MapStyles.infoWindowTitle,{color:this.deviceState(this.state.locationData.deviceStatus).color,paddingTop:1}]}>{this.deviceState(this.state.locationData.deviceStatus).text}</Text>
                 <Text style={MapStyles.line}>|</Text>
-                <Text style={MapStyles.infoWindowTitle}>{this.posType(this.state.locationData.posType)}</Text>
+                <Text style={MapStyles.infoWindowTitle}>{this.posType().text}</Text>
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.gpsSpeed ? this.state.locationData.gpsSpeed:0}km/h</Text>
             </View>                              
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>定位时间：{this.state.locationData.gpsTime}</Text>
+                <Text style={MapStyles.infoWindowTitle}>定位时间：{this.posType().time}</Text>
             </View>     
             <View style={MapStyles.infoWindowItem}>
                 <Text style={MapStyles.infoWindowTitle}>通讯时间：{ this.state.locationData.time}</Text>
@@ -363,17 +364,21 @@ export default class PositionUtils extends Component {
     /**
      * 定位类型
      */
-    posType = (posType)=>{
-        let type = null;
-        switch (posType) {
+    posType = (deviceInfo)=>{
+        let data =deviceInfo ? deviceInfo :this.state.locationData;
+        let type = {};
+        switch (data.posType) {
         case 'GPS':
-            type = 'GPS定位';
+            type.text = 'GPS定位';
+            type.time = data.gpsTime;
             break;
         case 'LBS':
-            type = 'LBS定位';
+            type.text = 'LBS定位';
+            type.otherPosTime = data.otherPosTime;
             break;
         case 'WIFI':
-            type = 'WIFI定位';
+            type.text = 'WIFI定位';
+            type.otherPosTime = data.otherPosTime;
         } 
         return type;        
     }
