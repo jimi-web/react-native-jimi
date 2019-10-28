@@ -58,9 +58,9 @@ export const jmAjax = (params)=> {
                 let data = res;
                 params.data =  params.data?params.data:{};
                 if(params.encoding){
+                    params.data.encoding = '869354040432859';
                     // params.data.encoding = '869354040432859';
-                    // params.data.encoding = '869354040432859';
-                    params.data.encoding = data.encoding;
+                    // params.data.encoding = data.encoding;
                 }
                 if(params.encodingType){
                     params.data.encodingType = data.encodType;
