@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-29 11:25:53
+ * @LastEditTime: 2019-10-29 14:28:37
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -85,7 +85,9 @@ export default class Record extends Component {
         if(this.playAudioTimer){
             clearInterval(this.playAudioTimer);
         }
-        stopAudio();
+        if(this.state.isPlay){
+            stopAudio(this.userkey);
+        }
     }
     /**
      * 获取存储的录音信息
@@ -153,7 +155,8 @@ export default class Record extends Component {
                 pageNum:res.data.currentPage,
                 pageSize:res.data.pageSize
             };
-            this.ftmRecord(res.data.result,serverParams);
+            const initFile = this.state.recordList.concat(res.data.result);
+            this.ftmRecord(initFile,serverParams);
         });
     }
     /**
@@ -215,11 +218,10 @@ export default class Record extends Component {
             }
         });
         
-        const recordList = this.state.recordList.concat(data);
-        const initFile = this.state.recordList.concat(file);
+        // const recordList = this.state.recordList.concat();
         this.setState({
-            recordList,
-            initFile,
+            recordList:data,
+            initFile:file,
             isOpenSelect:1,
             params:serverParams
         });
@@ -302,7 +304,7 @@ export default class Record extends Component {
         return (
             <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }]}>
                 <FlatList
-                    style={{paddingBottom:isIphoneX()?iphoneXHeight(55):55}}
+                    style={{marginBottom:isIphoneX()?iphoneXHeight(55):55}}
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                     data={this.state.recordList}
@@ -354,8 +356,11 @@ export default class Record extends Component {
      * 滚动到底部
      */
     onEndReached = (number) => {
+        if(number.distanceFromEnd < 0){
+            return;
+        }
         const pageNum = this.state.params.pageNum + 1;
-        if(pageNum >= this.totalPage){
+        if(pageNum > this.totalPage){
             return;
         }
         if(this.state.isOpenSelect === 0){
@@ -378,6 +383,7 @@ export default class Record extends Component {
         if(!this.state.recordList.length){
             return null;
         }
+        console.log(this.totalPage,this.state.params.pageNum,23456);
         if(this.totalPage <= this.state.params.pageNum){
             return <View style={{alignItems:'center',padding:20}}>
                 <Text>{'没有更多数据了'}</Text>
@@ -486,7 +492,6 @@ export default class Record extends Component {
      */
     getStopRecordList = (data) => {
         return new Promise(resolve => {
-            console.log(this.userkey,89989);
             stopAudio(this.userkey).then(res => {
                 data.progress = 0;
                 data.type = 2;
@@ -727,10 +732,11 @@ export default class Record extends Component {
                             pageSize:10
                         };
                         setTimeout(() => {
+                            Toast.message('设备上传中，请耐心等待');
                             this.state.recordList = [];
                             this.state.initFile = [];
                             this.getServerRecordFile(listParams);
-                        },15000);
+                        },10000);
                         clearInterval(this.recordTimer);
                     }
                 }, 1000);
