@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-29 16:09:58
+ * @LastEditTime: 2019-10-29 17:37:11
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -305,7 +305,7 @@ export default class Record extends Component {
         return (
             <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }]}>
                 <FlatList
-                    style={{marginBottom:isIphoneX()?iphoneXHeight(55):55}}
+                    style={{marginBottom:55}}
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                     data={this.state.recordList}
@@ -357,7 +357,7 @@ export default class Record extends Component {
      * 滚动到底部
      */
     onEndReached = (number) => {
-        if(number.distanceFromEnd < 0){
+        if(number.distanceFromEnd < -25){
             return;
         }
         const pageNum = this.state.params.pageNum + 1;
@@ -385,16 +385,16 @@ export default class Record extends Component {
             return null;
         }
         if(this.totalPage <= this.state.params.pageNum){
-            return <View style={{alignItems:'center',padding:20}}>
+            return <View style={{alignItems:'center',padding:20,marginBottom:25}}>
                 <Text>{'没有更多数据了'}</Text>
             </View>;
         }
         if(this.state.isOpenSelect === 0){
-            return <View style={{alignItems:'center',padding:20}}>
+            return <View style={{alignItems:'center',padding:20,marginBottom:25}}>
                 <Text>{'请取消选择操作'}</Text>
             </View>;
         }
-        return <View style={{alignItems:'center',padding:20}}>
+        return <View style={{alignItems:'center',padding:20,marginBottom:25}}>
             <ActivityIndicator animating={true} color={'#ccc'}  />
             <Text>{'数据加载中，请稍后'}</Text>
         </View>;
