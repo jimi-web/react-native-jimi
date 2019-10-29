@@ -31,13 +31,20 @@
 |markerInfoWindow|Object|false | 有默认属性|自定义inforWindow属性<br>- isCustom:是否自定义(百度地图无需传)<br>- markerInfo:自定义内容<br>{<br>　　isCustom:false,<br>　　markerInfo:()=>{}<br>}|
 |roadBtnStyle|Object|false | 有默认样式 |设置路况图标样式 <br> {width:100,height:100}|
 |mapTypeBtnStyle|Object|false | 有默认样式 |设置地图图标样式 <br> {width:100,height:100}|
-|mapControls|Function|false | 无 |设置地图其他插件元素，如Marker，Circle，Polyline 等等 |
+|mapControls|Function|false | 无 |设置地图其他插件元素，如Marker，Circle，Polyline 等等 | 
+
 
 ## Events
 | Event Name | Returns | Notes |
 |---|---|---|
 |onDeviceChange|设备信息（参考几米圈定位信息接口）|当更新设备信息时会调用|
 |onMyChange|我的位置坐标|当更我的位置时会调用|
+
+## Static Methods
+| Method | Params | Returns | Notes |
+|---|---|---|---|
+| upDate | 无 | 无 | 数据更新|
+
 
 ## Demo
 例子一，默认定位

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-29 15:25:35
+ * @LastEditTime: 2019-10-26 17:51:10
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -18,30 +18,18 @@ let isHttpLocationGetShow = true;
  */
 const request = (params) => {
     return new Promise((resolve) => {
-        let header = null;
-        switch (params.data.header) {
-        case 0:
-            header = {
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
-            };
-            break;
-        case 1:
-            header = null;
-            break;
-        default:
-            header = {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            };
-            break;
-        }
         httpApp('jm_net.request', {
             url: params.url,
             method: params.method,
             data: JSON.stringify(params.data),
             // 提交参数的数据方式,这里以json的形式
-            headers:header,
+            headers:params.header ? {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
             onSuccess: (res) => {
                 Loading.hide();
                 if(res.code === 0){
@@ -65,39 +53,21 @@ const request = (params) => {
  * 数据请求
  * @param {Object} params 后台需要的参数url，method，data,如果需要encodingType 或者是encodingType 只要设置该参数为true
  */
-let isDeleteFlag  = [];
 export const jmAjax = (params)=> {
-    // 防止重复点击（暂时屏蔽，后续测试开放）
-    // for (let i = 0; i < isDeleteFlag.length; i++) {
-    //     const item = isDeleteFlag[i];
-    //     if(item.url === params.url){
-    //         return;
-    //     }
-        
-    // }
-    // isDeleteFlag.push(params);
     return new Promise((resolve) => { 
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
                 let data = res;
                 params.data =  params.data?params.data:{};
                 if(params.encoding){
-                    // params.data.encoding = '869354040432859';
-                    params.data.encoding = '869354040432859';
-                    // params.data.encoding = '869354040542244';
-                    // params.data.encoding = data.encoding;
                     // params.data.encoding = '201910281005000';
                     // params.data.encoding = '201910242000099';
-                    // params.data.encoding = data.encoding;
+                    params.data.encoding = data.encoding;
                 }
                 if(params.encodingType){
                     params.data.encodingType = data.encodType;
                 }
                 request(params).then((res)=>{
-                    // const index = isDeleteFlag.findIndex(item => {
-                    //     return item.url === params.url;
-                    // });
-                    // isDeleteFlag = isDeleteFlag.splice(index,index);
                     resolve(res);
                 });
             });

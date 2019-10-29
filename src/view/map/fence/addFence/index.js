@@ -474,10 +474,10 @@ export default class AddFenceUtils extends Component {
      * 保存
      */
     onSave = ()=> {
-        if(!this.state.fenceState){
-            Toast.message('请先选择进出围栏报警方式');
-            return;
-        }
+        // if(!this.state.fenceState){
+        //     Toast.message('请先选择进出围栏报警方式');
+        //     return;
+        // }
         //传入的数据
         let data = {
             fenceTitle:this.state.fenceTitle,

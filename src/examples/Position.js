@@ -63,9 +63,10 @@ export default class Position extends Component {
                     :
                     <Jimi.BaiduPosition
                         // isRefresh={false}
+                        // refreshTime={2000}
                         onMapClick={()=>{
                             console.log('点击事件');
-                            
+                            Jimi.BaiduPosition.upDate();
                         }}
                         // getData={this.getPoint}
                         trafficEnabled={false}

@@ -39,9 +39,9 @@ export default class Track extends Component {
                     <Jimi.BaiduTrack
                         // getData={this.getTrackPoints}
                         mapTypeBtnStyle={styles.set}
-                        polylineOptions = {polylineOptions}
-                        playPolylineOptions = {playPolylineOptions}
-                        playImg={playImg}
+                        // polylineOptions = {polylineOptions}
+                        // playPolylineOptions = {playPolylineOptions}
+                        // playImg={playImg}
                     >
                         {
                             this.customItem()

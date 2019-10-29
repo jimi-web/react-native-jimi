@@ -7,7 +7,7 @@
  * @LastEditTime: 2019-10-22 14:10:43
  */
 import React, {Component} from 'react';
-import {View,TouchableOpacity,Image,Text} from 'react-native';
+import {View,TouchableOpacity,Image,Text,DeviceEventEmitter,AsyncStorage} from 'react-native';
 import Styles from '../style/base';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
@@ -92,8 +92,8 @@ export default class PositionUtils extends Component {
             mapType:this.props.mapType,//地图类型
             // 当前手机位置
             phonePoint:{
-                latitude: null,
-                longitude: null, 
+                latitude: 0,
+                longitude: 0, 
             },            
             markerPoint:{
                 latitude:0,
@@ -113,6 +113,20 @@ export default class PositionUtils extends Component {
             visualRange:null
         };
     }
+
+
+    static upDate() {
+        DeviceEventEmitter.emit('jmPosition',{});
+    }
+
+    
+    componentWillMount(){
+        DeviceEventEmitter.addListener('jmPosition', ()=>{
+            this.getMarker();
+        });
+    }
+
+
 
     componentWillUnmount() {
         Loading.hide();
@@ -238,15 +252,19 @@ export default class PositionUtils extends Component {
      * @param {Object} data  定位信息
      */
     drawMarker = (data)=>{
-        //如果和上次地址一样则不渲染
-        if(this.state.markerPoint.latitude === data.latitude && this.state.markerPoint.longitude === data.longitude){
-            return;
-        }
         let point = {
             latitude:data.latitude,
             longitude: data.longitude,
         };
         
+        AsyncStorage.getItem('jmDeviceName').then((value)=>{
+            if(value != data.deviceName){
+                AsyncStorage.setItem('jmDeviceName', data.deviceName);
+            }
+        });
+       
+        
+
         data.gpsTime = new Date(data.gpsTime).Format('YYYY-MM-DD hh:mm:ss');
         data.time = new Date(data.time).Format('YYYY-MM-DD hh:mm:ss');
         data.otherPosTime = new Date(data.otherPosTime).Format('YYYY-MM-DD hh:mm:ss');
@@ -255,7 +273,6 @@ export default class PositionUtils extends Component {
             markerPoint:point,
             locationData:data       
         },()=>{
-
             this.onDeviceChange(this.state.locationData);
             if(this.state.userMapType){
                 this.showInfoWindow('markers');
@@ -388,7 +405,6 @@ export default class PositionUtils extends Component {
      */
     roadBtn = ()=> {
         return <TouchableOpacity style={[Styles.btn,Styles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled},()=>{
-            console.log(this.state.trafficEnabled,'路况');
             
         })}>
             <Image style={Styles.btnImg} source={this.state.trafficEnabled?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
