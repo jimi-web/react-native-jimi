@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-29 09:07:21
+ * @LastEditTime: 2019-10-29 10:34:28
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -70,9 +70,12 @@ export const jmAjax = (params)=> {
                 let data = res;
                 params.data =  params.data?params.data:{};
                 if(params.encoding){
+                    // params.data.encoding = '869354040432859';
+                    params.data.encoding = '869354040432859';
+                    // params.data.encoding = data.encoding;
                     // params.data.encoding = '201910281005000';
                     // params.data.encoding = '201910242000099';
-                    params.data.encoding = data.encoding;
+                    // params.data.encoding = data.encoding;
                 }
                 if(params.encodingType){
                     params.data.encodingType = data.encodType;

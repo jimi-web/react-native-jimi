@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-28 09:38:46
+ * @LastEditTime: 2019-10-29 11:05:40
  */
 
 import {
@@ -119,6 +119,7 @@ export const httpApp = (url, params) => {
     }
     
     const bodyJson = JSON.stringify(obj);
+    console.log(bodyJson,'传参');
     JMRNEngineManager.requestMethod(url, bodyJson);
     // 定义回调
     let callName = {};

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-24 09:21:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-08 11:54:31
+ * @LastEditTime: 2019-10-29 11:10:09
  */
 
 import {httpApp} from './basic';
@@ -29,9 +29,10 @@ export const playAudio = (url)=>{
 };
 
 
-export const stopAudio = ()=>{
+export const stopAudio = (data)=>{
     return new Promise((resolve,reject) => {
         httpApp('jm_media.stopAudio',{
+            userData:data,
             onSuccess:(res)=>{
                 resolve(res);
             },

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-28 10:47:57
+ * @LastEditTime: 2019-10-29 11:25:53
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -44,6 +44,7 @@ export default class Record extends Component {
     };
     constructor(props) {
         super(props);
+        this.userkey = null;
         this.overlayKey = 0;
         this.totalPage = 10;//总页数
         this.isFolder = false;//判断是否创建或是否拥有该文件夹
@@ -485,7 +486,8 @@ export default class Record extends Component {
      */
     getStopRecordList = (data) => {
         return new Promise(resolve => {
-            stopAudio().then(res => {
+            console.log(this.userkey,89989);
+            stopAudio(this.userkey).then(res => {
                 data.progress = 0;
                 data.type = 2;
                 this.state.recordList[data.index] = data;
@@ -560,6 +562,7 @@ export default class Record extends Component {
         const url = this.folderPath + item[i].fileName + item[i].ext;
         
         playAudio(url).then(res => {
+            this.userkey = res.userData;
             i++;
             data.type = 3;
             this.playAudioTimer = setInterval(()=> {
@@ -823,7 +826,7 @@ export default class Record extends Component {
                     <View>
                         {this.renderRecordImage(item)}
                     </View>
-                    <View style={{ paddingLeft: 10, flex: 1 }}>
+                    <View style={{ paddingLeft: 5, flex: 1 }}>
                         <Text style={{ color: '#4D4D4D', fontSize: 16 }}>
                             {item.createTimeFtm}
                         </Text>
@@ -877,7 +880,7 @@ export default class Record extends Component {
             img = require('../../assets/record/recording_list_undownload.png');
             break;
         }
-        return <TouchableOpacity activeOpacity={1} style={{paddingTop:5,paddingBottom:5}} onPress={fn}>
+        return <TouchableOpacity activeOpacity={1} style={{padding:5}} onPress={fn}>
             <Image source={img} />
         </TouchableOpacity>;
     }
