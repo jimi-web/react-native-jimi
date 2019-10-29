@@ -252,6 +252,9 @@ export default class PositionUtils extends Component {
      * @param {Object} data  定位信息
      */
     drawMarker = (data)=>{
+
+        console.log(data);
+        
         let point = {
             latitude:data.latitude,
             longitude: data.longitude,
@@ -391,11 +394,11 @@ export default class PositionUtils extends Component {
             break;
         case 'LBS':
             type.text = 'LBS定位';
-            type.otherPosTime = data.otherPosTime;
+            type.time = data.otherPosTime;
             break;
         case 'WIFI':
             type.text = 'WIFI定位';
-            type.otherPosTime = data.otherPosTime;
+            type.time = data.otherPosTime;
         } 
         return type;        
     }
