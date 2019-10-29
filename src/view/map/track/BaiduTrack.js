@@ -47,57 +47,41 @@ export default class BaiduTrack extends TrackUtils {
                     trafficEnabled={this.state.trafficEnabled}
                 >
                     {/* 起点 */}
-                    {
-                        this.state.startMarker.latitude ?
-                            <Overlay.Marker
-                                location={this.state.startMarker}
-                                icon={this.props.startMarkerOptions.image}
-                            />
-                            :
-                            null
-                    }
+                    <Overlay.Marker
+                        location={this.state.startMarker}
+                        icon={this.props.startMarkerOptions.image}
+                        visible={this.state.startMarker.latitude?true:false}
+                    />
+
                     {/* 终点 */}
-                    {
-                        this.state.endMarker.latitude ?
-                            <Overlay.Marker
-                                location={this.state.endMarker}
-                                icon={this.props.endMarkerOptions.image}
-                            />
-                            :
-                            null
-                    }
+                    <Overlay.Marker
+                        location={this.state.endMarker}
+                        icon={this.props.endMarkerOptions.image}
+                        visible={this.state.endMarker.latitude?true:false}
+                    />
+
                     {/* 设备 */}
-                    {
-                        this.state.deviceMarker.latitude ?
-                            <Overlay.Marker
-                                location={{latitude:this.state.deviceMarker.latitude,longitude:this.state.deviceMarker.longitude}}
-                                icon={this.props.deviceMarkerOptions.image}
-                                rotate={this.state.deviceMarker.direction}
-                            />
-                            :
-                            null
-                    }
-                    {
-                        this.state.pointArr.length > 0 ?
-                            <Overlay.Polyline
-                                width={this.props.playPolylineOptions ? this.props.playPolylineOptions.width ? this.props.playPolylineOptions.width :2 : 2}
-                                color={this.props.playPolylineOptions ? this.props.playPolylineOptions.color ? this.props.playPolylineOptions.color :'#50AE6F' : '#50AE6F'}
-                                visible={true}
-                                points={this.state.pointArr}/>
-                            :
-                            null
-                    }                    
+                    <Overlay.Marker
+                        location={{latitude:this.state.deviceMarker.latitude,longitude:this.state.deviceMarker.longitude}}
+                        icon={this.props.deviceMarkerOptions.image}
+                        rotate={this.state.deviceMarker.direction}
+                        visible={this.state.deviceMarker.latitude?true:false}
+                    />
+
+                    <Overlay.Polyline
+                        width={this.props.playPolylineOptions ? this.props.playPolylineOptions.width ? this.props.playPolylineOptions.width :2 : 2}
+                        color={this.props.playPolylineOptions ? this.props.playPolylineOptions.color ? this.props.playPolylineOptions.color :'#50AE6F' : '#50AE6F'}
+                        visible={true}
+                        points={this.state.pointArr}/>
+                   
                     {/* 整条轨迹 */}
-                    {
-                        this.state.trackPolylinePoint.length > 0 ?
-                            <Overlay.Polyline
-                                width={this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2}
-                                color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#50AE6F' : '#50AE6F'}
-                                visible ={this.state.isTrackPolylineShow}
-                                points={this.state.trackPolylinePoint}/>
-                            :
-                            null
-                    }
+
+                    <Overlay.Polyline
+                        width={this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2}
+                        color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#50AE6F' : '#50AE6F'}
+                        visible ={this.state.isTrackPolylineShow}
+                        points={this.state.trackPolylinePoint}/>
+         
                 </MapView>
                 <View style={MapStyles.bottomContent}>
                     {this.controller()}

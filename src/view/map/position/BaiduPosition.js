@@ -58,16 +58,11 @@ export default class BaiduPosition extends PositionUtils {
                         // visible ={this.state.markerPoint.latitude?true:false}
                     />
                 }
-                {
-                    this.state.phonePoint.latitude ?
-                        <Overlay.Marker
-                            tag={2}
-                            location={this.state.phonePoint}
-                            icon={this.props.mylocationOptions.image}
-                        />
-                        :
-                        null
-                }
+                <Overlay.Marker
+                    location={this.state.phonePoint}
+                    icon={this.props.mylocationOptions.image}
+                    visible ={this.state.phonePoint.latitude?true:false}
+                />
                 <Overlay.InfoWindow
                     ref={(e)=>{this.InfoWindowFunc=e;}}
                     style={[{position:'relative',backgroundColor:'#fff0',height:400,width:300}]}

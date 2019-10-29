@@ -224,6 +224,8 @@ export default class TrackUtils extends Component {
             encodingType:true,
             data:data
         }).then((res)=>{
+            console.log(res,'数据嘻嘻嘻嘻嘻嘻');
+            
             let result = res.data;
             this.getTrackData(result);
         });

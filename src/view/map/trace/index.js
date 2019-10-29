@@ -7,7 +7,7 @@
  * @LastEditTime: 2019-10-22 14:15:05
  */
 import React, {Component} from 'react';
-import {View,TouchableOpacity,Image,Text,PanResponder,Modal} from 'react-native';
+import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
 import PropTypes from 'prop-types';
 import {httpApp} from '../../../http/basic';
 import api from '../../../api/index';
@@ -57,6 +57,7 @@ export default class TraceUtils extends PositionUtils {
             deviceMarker:null,
             myMarker:null,
             deviceInfo:{},//设备信息
+            asyncStorageAeviceName:'',
             pullUpHeight:isIphoneX()?iphoneXHeight(80):80,//上拉框高度
             touchStart:null,
             pullState:0,//0为默认高度，1为上拉
@@ -65,7 +66,17 @@ export default class TraceUtils extends PositionUtils {
         };
     }
     componentWillMount() {
+        this.asyncStorageAeviceName();
         this.onTouch();
+    }
+
+    asyncStorageAeviceName = async () => {
+        let result = await AsyncStorage.getItem('jmDeviceName');
+        if(result){
+            this.setState({
+                asyncStorageAeviceName:result
+            });
+        }
     }
 
 
@@ -88,7 +99,7 @@ export default class TraceUtils extends PositionUtils {
                 </View>    
                 <View style={MapStyles.information}  {...this._panResponder.panHandlers}>
                     <View style={MapStyles.item}>
-                        <Text style={MapStyles.title}>{deviceInfo.deviceName?deviceInfo.deviceName:null}</Text>
+                        <Text style={MapStyles.title}>{deviceInfo.deviceName?deviceInfo.deviceName:this.state.asyncStorageAeviceName}</Text>
                     </View> 
                     <View style={[MapStyles.item,MapStyles.state]}>
                         <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color,paddingTop:1}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus).text:'离线'}</Text>
@@ -296,7 +307,7 @@ export default class TraceUtils extends PositionUtils {
 
             },
             onFail: () => {
-
+                Toast.message('请下载地图');
             },
             onComplete:()=>{
                 
