@@ -83,12 +83,11 @@ export const jmAjax = (params)=> {
                 params.data =  params.data?params.data:{};
                 if(params.encoding){
                     // params.data.encoding = '869354040432859';
-                    params.data.encoding = '869354040432859';
                     // params.data.encoding = '869354040542244';
                     // params.data.encoding = data.encoding;
                     // params.data.encoding = '201910281005000';
                     // params.data.encoding = '201910242000099';
-                    // params.data.encoding = data.encoding;
+                    params.data.encoding = data.encoding;
                 }
                 if(params.encodingType){
                     params.data.encodingType = data.encodType;
