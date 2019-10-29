@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-29 14:28:37
+ * @LastEditTime: 2019-10-29 14:59:27
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -359,6 +359,7 @@ export default class Record extends Component {
         if(number.distanceFromEnd < 0){
             return;
         }
+        
         const pageNum = this.state.params.pageNum + 1;
         if(pageNum > this.totalPage){
             return;
@@ -383,7 +384,6 @@ export default class Record extends Component {
         if(!this.state.recordList.length){
             return null;
         }
-        console.log(this.totalPage,this.state.params.pageNum,23456);
         if(this.totalPage <= this.state.params.pageNum){
             return <View style={{alignItems:'center',padding:20}}>
                 <Text>{'没有更多数据了'}</Text>

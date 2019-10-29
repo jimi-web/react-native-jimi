@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-29 14:31:04
+ * @LastEditTime: 2019-10-29 14:58:38
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -63,7 +63,17 @@ const request = (params) => {
  * 数据请求
  * @param {Object} params 后台需要的参数url，method，data,如果需要encodingType 或者是encodingType 只要设置该参数为true
  */
+let isDeleteFlag  = [];
 export const jmAjax = (params)=> {
+    // 防止重复点击（暂时屏蔽，后续测试开放）
+    // for (let i = 0; i < isDeleteFlag.length; i++) {
+    //     const item = isDeleteFlag[i];
+    //     if(item.url === params.url){
+    //         return;
+    //     }
+        
+    // }
+    // isDeleteFlag.push(params);
     return new Promise((resolve) => { 
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
@@ -72,8 +82,8 @@ export const jmAjax = (params)=> {
                 if(params.encoding){
                     // params.data.encoding = '869354040432859';
                     // params.data.encoding = '869354040432859';
-                    params.data.encoding = '869354040542244';
-                    // params.data.encoding = data.encoding;
+                    // params.data.encoding = '869354040542244';
+                    params.data.encoding = data.encoding;
                     // params.data.encoding = '201910281005000';
                     // params.data.encoding = '201910242000099';
                     // params.data.encoding = data.encoding;
@@ -82,6 +92,10 @@ export const jmAjax = (params)=> {
                     params.data.encodingType = data.encodType;
                 }
                 request(params).then((res)=>{
+                    // const index = isDeleteFlag.findIndex(item => {
+                    //     return item.url === params.url;
+                    // });
+                    // isDeleteFlag = isDeleteFlag.splice(index,index);
                     resolve(res);
                 });
             });
