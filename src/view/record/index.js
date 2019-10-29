@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-29 14:59:27
+ * @LastEditTime: 2019-10-29 15:24:20
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -640,7 +640,8 @@ export default class Record extends Component {
     }
     onConfirmEmpty = () => {
         const params = {
-            deleteFlag:1
+            deleteFlag:1,
+            header:1
         };
         this.deleteRecord(params).then(res => {
             if(res.code){
