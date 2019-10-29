@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-26 17:50:56
+ * @LastEditTime: 2019-10-28 10:47:57
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -213,6 +213,7 @@ export default class Record extends Component {
                 item.fileDate = parseDate(item.createTime);
             }
         });
+        
         const recordList = this.state.recordList.concat(data);
         const initFile = this.state.recordList.concat(file);
         this.setState({
@@ -599,6 +600,7 @@ export default class Record extends Component {
         const data = {
             deleteFlag:0,
             fileIds:dataArr.join(','),
+            header:1
         };
         this.deleteRecord(data).then(res => {
             if(res.code){

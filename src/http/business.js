@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-26 17:51:10
+ * @LastEditTime: 2019-10-28 10:52:42
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -16,18 +16,30 @@ import Loading from '../components/loading/Loading';
  */
 const request = (params) => {
     return new Promise((resolve) => {
+        let header = null;
+        switch (params.data.header) {
+        case 0:
+            header = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            };
+            break;
+        case 1:
+            header = null;
+            break;
+        default:
+            header = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            };
+            break;
+        }
         httpApp('jm_net.request', {
             url: params.url,
             method: params.method,
             data: JSON.stringify(params.data),
             // 提交参数的数据方式,这里以json的形式
-            headers:params.header ? {
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
+            headers:header,
             onSuccess: (res) => {
                 Loading.hide();
                 if(res.code === 0){
@@ -59,8 +71,8 @@ export const jmAjax = (params)=> {
                 params.data =  params.data?params.data:{};
                 if(params.encoding){
                     // params.data.encoding = '869354040432859';
-                    // params.data.encoding = '869354040432859';
-                    params.data.encoding = data.encoding;
+                    params.data.encoding = '869354040432859';
+                    // params.data.encoding = data.encoding;
                 }
                 if(params.encodingType){
                     params.data.encodingType = data.encodType;

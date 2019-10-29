@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:17:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-23 15:00:02
+ * @LastEditTime: 2019-10-28 10:46:20
  */
 import {Dimensions,Platform} from 'react-native';
 import Theme from '../components/themes/index';
@@ -34,19 +34,16 @@ export const iphoneXHeight = (initHeight = 0)=>{
  * @param {Number} time 时间简化显示处理
  */
 export const parseDate = (time) => {
-    var delta = Date.now() - time;
-    var d = parseInt(delta / 24 / 60 / 60 / 1000);
-    if (d < 0) {
-        return new Date(time).Format('YYYY-MM-DD');
-    }
-    if (d > 3) {
-        return new Date(time).Format('YYYY-MM-DD');
-    } else if (d > 2) {
-        return '前天';
-    } else if (d > 1) {
-        return '昨天';
-    } else {
+    var dZero = new Date(new Date().toLocaleDateString()).getTime();
+    var d = 24 * 60 * 60 * 1000;
+    if (time > dZero) {
         return '今天';
+    } else if (time > dZero - d) {
+        return '昨天';
+    } else if (time > dZero - d * 2) {
+        return '前天';
+    } else {
+        return new Date(time).Format('YYYY-MM-DD');
     }
 };
 

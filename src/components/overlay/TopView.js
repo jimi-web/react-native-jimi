@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-26 09:40:47
+ * @LastEditTime: 2019-10-28 13:38:55
  */
 
 import React, {Component} from 'react';
@@ -79,7 +79,7 @@ export default class JmTopView extends Component {
     render(){
         const {elements} = this.state;
         return (
-            <View style={{flex:1,backgroundColor:'red'}}>
+            <View style={{flex:1}}>
                 <Animated.View style={{flex:1}}> 
                     {this.props.children}
                 </Animated.View>

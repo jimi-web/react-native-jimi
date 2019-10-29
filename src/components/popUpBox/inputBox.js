@@ -3,8 +3,8 @@
  * @version:
  * @Author: xieruizhi
  * @Date: 2019-10-09 15:34:12
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 15:20:04
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-10-28 12:00:23
  */
 import React, { Component } from 'react';
 import {
@@ -28,7 +28,9 @@ export default class InputBox extends Component {
     }
 
     static defaultProps = {
-        onConfirm:()=>{}
+        onConfirm:()=>{ 
+            //
+        }
     }
 
 
