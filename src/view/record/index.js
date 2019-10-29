@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-29 15:30:41
+ * @LastEditTime: 2019-10-29 16:09:58
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -236,7 +236,8 @@ export default class Record extends Component {
                 method: 'DELETE',
                 encoding: true,
                 encodingType: true,
-                data:params
+                data:params,
+                header:1
             }).then(res => {
                 resolve(res);
             });
@@ -607,7 +608,6 @@ export default class Record extends Component {
         const data = {
             deleteFlag:0,
             fileIds:dataArr.join(','),
-            header:1
         };
         this.deleteRecord(data).then(res => {
             if(res.code){
@@ -639,8 +639,7 @@ export default class Record extends Component {
     }
     onConfirmEmpty = () => {
         const params = {
-            deleteFlag:1,
-            header:1
+            deleteFlag:1
         };
         this.deleteRecord(params).then(res => {
             if(res.code){
@@ -732,11 +731,11 @@ export default class Record extends Component {
                             pageSize:10
                         };
                         setTimeout(() => {
-                            Toast.message('设备上传中，请耐心等待');
                             this.state.recordList = [];
                             this.state.initFile = [];
                             this.getServerRecordFile(listParams);
                         },10000);
+                        Toast.message('设备上传中，请耐心等待');
                         clearInterval(this.recordTimer);
                     }
                 }, 1000);
