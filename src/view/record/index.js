@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-26 17:50:56
+ * @LastEditTime: 2019-10-29 14:59:27
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
@@ -44,6 +44,7 @@ export default class Record extends Component {
     };
     constructor(props) {
         super(props);
+        this.userkey = null;
         this.overlayKey = 0;
         this.totalPage = 10;//总页数
         this.isFolder = false;//判断是否创建或是否拥有该文件夹
@@ -84,7 +85,9 @@ export default class Record extends Component {
         if(this.playAudioTimer){
             clearInterval(this.playAudioTimer);
         }
-        stopAudio();
+        if(this.state.isPlay){
+            stopAudio(this.userkey);
+        }
     }
     /**
      * 获取存储的录音信息
@@ -152,7 +155,8 @@ export default class Record extends Component {
                 pageNum:res.data.currentPage,
                 pageSize:res.data.pageSize
             };
-            this.ftmRecord(res.data.result,serverParams);
+            const initFile = this.state.recordList.concat(res.data.result);
+            this.ftmRecord(initFile,serverParams);
         });
     }
     /**
@@ -213,11 +217,11 @@ export default class Record extends Component {
                 item.fileDate = parseDate(item.createTime);
             }
         });
-        const recordList = this.state.recordList.concat(data);
-        const initFile = this.state.recordList.concat(file);
+        
+        // const recordList = this.state.recordList.concat();
         this.setState({
-            recordList,
-            initFile,
+            recordList:data,
+            initFile:file,
             isOpenSelect:1,
             params:serverParams
         });
@@ -300,7 +304,7 @@ export default class Record extends Component {
         return (
             <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }]}>
                 <FlatList
-                    style={{paddingBottom:isIphoneX()?iphoneXHeight(55):55}}
+                    style={{marginBottom:isIphoneX()?iphoneXHeight(55):55}}
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                     data={this.state.recordList}
@@ -352,8 +356,12 @@ export default class Record extends Component {
      * 滚动到底部
      */
     onEndReached = (number) => {
+        if(number.distanceFromEnd < 0){
+            return;
+        }
+        
         const pageNum = this.state.params.pageNum + 1;
-        if(pageNum >= this.totalPage){
+        if(pageNum > this.totalPage){
             return;
         }
         if(this.state.isOpenSelect === 0){
@@ -484,7 +492,7 @@ export default class Record extends Component {
      */
     getStopRecordList = (data) => {
         return new Promise(resolve => {
-            stopAudio().then(res => {
+            stopAudio(this.userkey).then(res => {
                 data.progress = 0;
                 data.type = 2;
                 this.state.recordList[data.index] = data;
@@ -559,6 +567,7 @@ export default class Record extends Component {
         const url = this.folderPath + item[i].fileName + item[i].ext;
         
         playAudio(url).then(res => {
+            this.userkey = res.userData;
             i++;
             data.type = 3;
             this.playAudioTimer = setInterval(()=> {
@@ -599,6 +608,7 @@ export default class Record extends Component {
         const data = {
             deleteFlag:0,
             fileIds:dataArr.join(','),
+            header:1
         };
         this.deleteRecord(data).then(res => {
             if(res.code){
@@ -722,10 +732,11 @@ export default class Record extends Component {
                             pageSize:10
                         };
                         setTimeout(() => {
+                            Toast.message('设备上传中，请耐心等待');
                             this.state.recordList = [];
                             this.state.initFile = [];
                             this.getServerRecordFile(listParams);
-                        },15000);
+                        },10000);
                         clearInterval(this.recordTimer);
                     }
                 }, 1000);
@@ -821,7 +832,7 @@ export default class Record extends Component {
                     <View>
                         {this.renderRecordImage(item)}
                     </View>
-                    <View style={{ paddingLeft: 10, flex: 1 }}>
+                    <View style={{ paddingLeft: 5, flex: 1 }}>
                         <Text style={{ color: '#4D4D4D', fontSize: 16 }}>
                             {item.createTimeFtm}
                         </Text>
@@ -875,7 +886,7 @@ export default class Record extends Component {
             img = require('../../assets/record/recording_list_undownload.png');
             break;
         }
-        return <TouchableOpacity activeOpacity={1} style={{paddingTop:5,paddingBottom:5}} onPress={fn}>
+        return <TouchableOpacity activeOpacity={1} style={{padding:5}} onPress={fn}>
             <Image source={img} />
         </TouchableOpacity>;
     }
