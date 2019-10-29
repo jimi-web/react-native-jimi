@@ -277,8 +277,8 @@ export default class FenceList extends Component {
         //获取数据，删除信息
         delList.forEach((item,index)=>{
             delId.push(item.fenceId);
-            fenceList.splice(fenceList.findIndex(v => v.fenceId === item.fenceId),1);
-        });
+        });  
+
         jmAjax({
             url:api.fenceDel,
             method:'DELETE',
@@ -288,6 +288,9 @@ export default class FenceList extends Component {
             header:true
         }).then((res)=>{
             //更新数据
+            delList.forEach((item,index)=>{
+                fenceList.splice(fenceList.findIndex(v => v.fenceId === item.fenceId),1);
+            });
             this.setState({
                 fenceList:fenceList,
                 delList:[],

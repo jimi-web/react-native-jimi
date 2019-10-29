@@ -55,6 +55,7 @@ export default class BaiduPosition extends PositionUtils {
                         location={this.state.markerPoint}
                         icon={this.props.deviceMarkerOptions.image}
                         rotate={this.state.locationData ? this.state.locationData.direction ? this.state.locationData.direction :0  :0 }
+                        // visible ={this.state.markerPoint.latitude?true:false}
                     />
                 }
                 {
@@ -73,12 +74,13 @@ export default class BaiduPosition extends PositionUtils {
                     tag={1}
                     visible = {this.props.markerInfoWindow.visible}
                 >
-                    <View style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
+                    <View  style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
                         {
                        
                             this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.state.locationData ?this.markerInfo():null
                         }
                     </View> 
+                  
                     <View style={{position:'absolute',width: 0,height: 0,borderTopColor:'#fff',borderLeftColor:'transparent',borderRightColor:'transparent',borderLeftWidth:8,borderRightWidth:8,borderTopWidth:10,borderStyle:'solid',bottom:0,left:'50%',marginLeft:-5}}>
                     </View>
                 </Overlay.InfoWindow>
