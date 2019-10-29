@@ -15,9 +15,9 @@ import {Toast} from 'teaset';
 export default class Loading { 
     static customKey  = null
 
-    static show() {
+    static show(text) {
         this.customKey = Toast.show({
-            text: '正在加载...',
+            text: text?text:'加载中...',
             icon: <ActivityIndicator size='large' color={'#fff'} />,
             position: 'center',
             duration: 15000,

@@ -362,7 +362,7 @@ export default class AddFenceUtils extends Component {
                 radius:data.radius,
                 fenceState:data.fenceState,
                 fenceTitle:data.fenceTitle,
-                savefenceState:data.fenceState === 'all' ? ['in','out']:[data.fenceState],
+                savefenceState:data.fenceState === 'all' ? ['in','out']:data.fenceState?[data.fenceState]:[],
                 zoom:this.getZoom(data.radius*2)
             },()=>{
                 this.props.onDeviceChange && this.props.onDeviceChange(deviceInfo);
@@ -422,6 +422,8 @@ export default class AddFenceUtils extends Component {
         }else {
             fenceState.splice(index, 1);
         }
+        
+        console.log(fenceState);
         
         this.setState({
             fenceState:fenceState.length == 1 ?fenceState[0] :fenceState.length == 0 ? '':'all',
