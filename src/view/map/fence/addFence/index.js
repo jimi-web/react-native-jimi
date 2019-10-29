@@ -65,7 +65,7 @@ export default class AddFenceUtils extends Component {
                 longitudeDelta:0.007207207207207207  //106.60983654376228 0.0005647605017351509 最大值和最小值
             },
             radius:200, //半径
-            fenceTitle:this.getFenceTitle(),//围栏标题
+            fenceTitle:this.getFenceTitle(),//
             fenceAddress:'',//围栏地址
             addressList:[],
             savefenceState:[],

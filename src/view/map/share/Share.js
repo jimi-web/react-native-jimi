@@ -246,7 +246,7 @@ export default class Share extends Component {
             },
             encoding:true,
             encodingType:true,
-            header:true,
+            header:0,
         }).then((res)=>{ 
             let result = res.data;
             this.httpShare(data.state,result);

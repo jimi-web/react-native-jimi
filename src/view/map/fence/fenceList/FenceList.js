@@ -29,7 +29,8 @@ export default class FenceList extends Component {
         fenceStateImg:{
             in:require('../../../../assets/fence/fence_list_enter.png'),
             out:require('../../../../assets/fence/fence_list_out.png'),
-            all:require('../../../../assets/fence/fence_list_turnover.png')
+            all:require('../../../../assets/fence/fence_list_turnover.png'),
+            none:require('../../../../assets/fence/fence_list_off.png')
         }
     };
 
@@ -285,7 +286,7 @@ export default class FenceList extends Component {
             data:{
                 fenceIds:delId.join(',')
             },
-            header:true
+            header:0
         }).then((res)=>{
             //更新数据
             delList.forEach((item,index)=>{
@@ -327,6 +328,8 @@ export default class FenceList extends Component {
             break;
         case 'all':
             img = this.props.fenceStateImg.all;
+        case '':
+            img = this.props.fenceStateImg.none;
         }
         return img;
     } 
