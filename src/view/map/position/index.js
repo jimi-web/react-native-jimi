@@ -309,7 +309,7 @@ export default class PositionUtils extends Component {
             <View style={[MapStyles.infoWindowItem,MapStyles.infoWindowItemImei]}>
                 <Text style={MapStyles.imei}>{this.state.locationData.deviceName}</Text>
                 {
-                    this.state.locationData.powerPer ?
+                    this.state.locationData.powerPer != null ?
                         <View style={MapStyles.batterybg}>
                             <View style={MapStyles.batteryRight}></View>
                             <View style={{height:9,width:18}}>

@@ -264,18 +264,11 @@ export default class Share extends Component {
                 url:this.props.shareUrl+'?token='+token+'&encodingType='+res.encodType+'&encoding='+res.encoding,
                 title:this.props.shareTitle,
                 onSuccess: () => {
-                    console.log('有进入');
                     this.hide();
                 },
                 onFail: () => {
-                    let message = '';
-                    if(state == 'qq'){
-                        message = '未安装QQ无法分享';
-                    }else {
-                        message = '未安装微信无法分享';
-                    }
                     this.setState({
-                        message:message
+                        message:'分享失败'
                     },()=>{
                         Toast.show();
                     });
