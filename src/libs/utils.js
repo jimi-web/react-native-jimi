@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:17:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-28 10:46:20
+ * @LastEditTime: 2019-10-30 18:21:09
  */
 import {Dimensions,Platform} from 'react-native';
 import Theme from '../components/themes/index';
@@ -56,9 +56,9 @@ export const parseTime = (time) => {
     var m = parseInt(time / 60) % 60;
     var s = time % 60;
 
-    h = h > 10 ? h : `0${h}`;
-    m = m > 10 ? m : `0${m}`;
-    s = s > 10 ? s : `0${s}`;
+    h = h > 9 ? h : `0${h}`;
+    m = m > 9 ? m : `0${m}`;
+    s = s > 9 ? s : `0${s}`;
     
     return `${h}:${m}:${s}`;
 };
