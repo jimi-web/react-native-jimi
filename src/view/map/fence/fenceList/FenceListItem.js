@@ -10,6 +10,7 @@ import React, {Component} from 'react';
 import {View,Image,Text,TouchableOpacity} from 'react-native';
 import FenceStyles from '../../style/fenceList';
 import {Checkbox} from 'teaset';
+import {distance} from '../../comm';
 
 export default class FenceListItem extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ export default class FenceListItem extends Component {
             <View style={FenceStyles.info}>
                 <View style={FenceStyles.title}>
                     <Text style={FenceStyles.name}>{fenceTitle}</Text>
-                    <Text style={[FenceStyles.text,{width:70,textAlign:'right'}]}>半径:{radius}m</Text>
+                    <Text style={[FenceStyles.text,{width:80,textAlign:'right'}]}>半径:{distance(radius,true)}</Text>
                 </View>
                 <View> 
                     <Text style={[FenceStyles.text,FenceStyles.address]}>{fenceAddress}</Text>

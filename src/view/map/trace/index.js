@@ -18,6 +18,7 @@ import PositionUtils from '../position/index';
 import Styles from '../style/base';
 import MapStyles from '../style/trace';
 import {Toast} from 'teaset';
+import {distance} from '../comm';
 
 export default class TraceUtils extends PositionUtils { 
     static propTypes = {
@@ -104,7 +105,7 @@ export default class TraceUtils extends PositionUtils {
                     <View style={[MapStyles.item,MapStyles.state]}>
                         <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color,paddingTop:1}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus).text:'离线'}</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>距离{this.state.distance?this.state.distance:0}m</Text>
+                        <Text style={MapStyles.text}>距离{this.state.distance? distance(this.state.distance):0+'m'}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>{deviceInfo.posType?this.posType(deviceInfo).text:'无'}</Text>
                         <Text style={MapStyles.line}>|</Text>
@@ -314,4 +315,6 @@ export default class TraceUtils extends PositionUtils {
             }
         });
     }
+
+
 }

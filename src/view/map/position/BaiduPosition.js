@@ -63,22 +63,25 @@ export default class BaiduPosition extends PositionUtils {
                     icon={this.props.mylocationOptions.image}
                     visible ={this.state.phonePoint.latitude?true:false}
                 />
-                <Overlay.InfoWindow
-                    ref={(e)=>{this.InfoWindowFunc=e;}}
-                    style={[{position:'relative',backgroundColor:'#fff0',height:400,width:300}]}
-                    tag={1}
-                    visible = {this.props.markerInfoWindow.visible}
-                >
-                    <View  style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
-                        {
-                       
-                            this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.state.locationData ?this.markerInfo():null
-                        }
-                    </View> 
-                  
-                    <View style={{position:'absolute',width: 0,height: 0,borderTopColor:'#fff',borderLeftColor:'transparent',borderRightColor:'transparent',borderLeftWidth:8,borderRightWidth:8,borderTopWidth:10,borderStyle:'solid',bottom:0,left:'50%',marginLeft:-5}}>
-                    </View>
-                </Overlay.InfoWindow>
+                {
+                    this.state.markerPoint.latitude ?
+                        <Overlay.InfoWindow
+                            ref={(e)=>{this.InfoWindowFunc=e;}}
+                            style={[{position:'relative',backgroundColor:'#fff0',height:400,width:300}]}
+                            tag={1}
+                            visible = {this.props.markerInfoWindow.visible}
+                        >
+                            <View  style={{position:'absolute',bottom:10,flexDirection:'row',justifyContent:'center',width:300}}>
+                                {
+                      
+                                    this.props.markerInfoWindow.markerInfo ? this.props.markerInfoWindow.markerInfo() : this.state.locationData ?this.markerInfo():null
+                                }
+                            </View> 
+                 
+                            <View style={{position:'absolute',width: 0,height: 0,borderTopColor:'#fff',borderLeftColor:'transparent',borderRightColor:'transparent',borderLeftWidth:8,borderRightWidth:8,borderTopWidth:10,borderStyle:'solid',bottom:0,left:'50%',marginLeft:-5}}>
+                            </View>
+                        </Overlay.InfoWindow> :null
+                }
                 {
                     this.props.mapControls? this.props.mapControls():null
                 }

@@ -9,7 +9,6 @@
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
 import {MapSearch} from 'react-native-baidu-map-jm';
-import Loading from '../../../../components/loading/Loading';
 import PropTypes from 'prop-types';
 import Styles from '../../style/base';
 import api from '../../../../api/index';
@@ -17,8 +16,10 @@ import {jmAjax} from '../../../../http/business';
 import Slider from '../../../../components/slider/index';
 import AddFenceStyles from '../../style/addfence';
 import {SearchInput,Toast} from 'teaset';
-import {devicePosition,geocoder} from '../../comm';
-import InputBox from '../../../../components/popUpBox/inputBox';
+import {devicePosition,geocoder,distance} from '../../comm';
+import {InputBox,Loading} from '../../../../components/index';
+import gps from '../../../../libs/coversionPoint';
+
 
 export default class AddFenceUtils extends Component { 
     static propTypes = {
@@ -55,7 +56,7 @@ export default class AddFenceUtils extends Component {
                 latitudeDelta:0.010810810810810811,//145.5468733622675 0.00040644735832984225 最大值和最小值
                 longitudeDelta:0.007207207207207207  //106.60983654376228 0.0005647605017351509 最大值和最小值
             },
-            fenceState:'',//围栏状态
+            fenceState:'all',//围栏状态
             zoomingBtnHeight:85,
             deviceInfo:null,//设备信息
             fencePoint:{    //围栏坐标
@@ -65,7 +66,7 @@ export default class AddFenceUtils extends Component {
                 longitudeDelta:0.007207207207207207  //106.60983654376228 0.0005647605017351509 最大值和最小值
             },
             radius:200, //半径
-            fenceTitle:this.getFenceTitle(),//
+            fenceTitle:new Date().Format('YYYYMMDDhhmmss'),//
             fenceAddress:'',//围栏地址
             addressList:[],
             savefenceState:[],
@@ -77,11 +78,6 @@ export default class AddFenceUtils extends Component {
         Loading.hide();
     }
     
-    getFenceTitle = ()=>{
-        let date = new Date();
-        return date.getFullYear()+''+(date.getMonth() + 1)+''+date.getDate()+''+date.getHours()+''+date.getMinutes()+''+date.getSeconds();
-    }
-
     /**
      * 搜索元素
      */
@@ -334,6 +330,8 @@ export default class AddFenceUtils extends Component {
             });
         }else{
             let deviceInfo = await devicePosition();
+            console.log(deviceInfo);
+            
             this.editFenceDefaultValue(deviceInfo);
         }
     }
@@ -350,19 +348,21 @@ export default class AddFenceUtils extends Component {
             }
         }).then((res)=>{
             let data = res.data;
+            let baidu = gps.GPSToBaidu(data.latitude,data.longitude);
+            
             //编辑赋值
             this.setState({
                 deviceInfo:deviceInfo,
                 fencePoint:{
                     ...this.state.fencePoint,
-                    latitude:data.latitude,
-                    longitude:data.longitude  
+                    latitude:baidu.lat,
+                    longitude:baidu.lng  
                 },
                 fenceAddress:data.fenceAddress,
                 radius:data.radius,
                 fenceState:data.fenceState,
                 fenceTitle:data.fenceTitle,
-                savefenceState:data.fenceState === 'all' ? ['in','out']:[data.fenceState],
+                savefenceState:data.fenceState === 'all' ? ['in','out']:data.fenceState?[data.fenceState]:[],
                 zoom:this.getZoom(data.radius*2)
             },()=>{
                 this.props.onDeviceChange && this.props.onDeviceChange(deviceInfo);
@@ -423,6 +423,8 @@ export default class AddFenceUtils extends Component {
             fenceState.splice(index, 1);
         }
         
+        console.log(fenceState);
+        
         this.setState({
             fenceState:fenceState.length == 1 ?fenceState[0] :fenceState.length == 0 ? '':'all',
             savefenceState:fenceState
@@ -474,16 +476,19 @@ export default class AddFenceUtils extends Component {
      * 保存
      */
     onSave = ()=> {
-        // if(!this.state.fenceState){
-        //     Toast.message('请先选择进出围栏报警方式');
-        //     return;
-        // }
+        console.log(this.state.fencePoint.latitude);
+        console.log(this.state.fencePoint.longitude);
+        let baiduToChina = gps.baiduToChina(this.state.fencePoint.latitude,this.state.fencePoint.longitude);
+        console.log(baiduToChina);
+        let chinaToGPS = gps.chinaToGPS(baiduToChina.lat,baiduToChina.lng);
+        console.log(chinaToGPS);
+       
         //传入的数据
         let data = {
             fenceTitle:this.state.fenceTitle,
             radius:this.state.radius,
-            latitude:this.state.fencePoint.latitude,
-            longitude:this.state.fencePoint.longitude,
+            latitude:chinaToGPS.lat,
+            longitude:chinaToGPS.lng,
             fenceState:this.state.fenceState,
             fenceAddress:this.state.fenceAddress
         };
@@ -491,6 +496,9 @@ export default class AddFenceUtils extends Component {
         if(this.props.fenceId){
             data.fenceId = this.props.fenceId;
         }
+
+        console.log(data);
+        
 
         jmAjax({
             url:api.fenceSave,
@@ -542,7 +550,7 @@ export default class AddFenceUtils extends Component {
     radiusTip = ()=> {
         return <View  style={[{backgroundColor:'#fff0',height:34,width:74,alignItems:'center'}]}>
             <View style={[{height:24,width:74,backgroundColor:'#3479F6',borderRadius:12,justifyContent:'center',alignItems:'center'}]}>
-                <Text style={{color:'#fff',fontSize:11}}>半径:{this.state.radius}m</Text>
+                <Text style={{color:'#fff',fontSize:11}}>半径:{distance(this.state.radius,true)}</Text>
             </View>
             <View style={[{backgroundColor:'#3479F6',height:10,width:2}]}>
             </View>

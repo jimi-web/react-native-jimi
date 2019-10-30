@@ -7,11 +7,11 @@
  * @LastEditTime: 2019-10-22 14:24:40
  */
 import React, {Component} from 'react';
-import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
+import {View,TouchableOpacity,Image,Text,Slider} from 'react-native';
 import PropTypes from 'prop-types';
 import MapStyles from '../style/track';
-import {ActionSheet,Overlay} from 'teaset';
-import Datepicker from '../../../components/datepicker/Datepicker';
+import {ActionSheet} from 'teaset';
+import {distance} from '../comm';
 export default class Track extends Component {
     static propTypes = {
         onShowType:PropTypes.func,
@@ -69,7 +69,7 @@ export default class Track extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={MapStyles.speed}>
-                        <Text style={[MapStyles.speedText,{marginRight:15}]}>总里程：{deviceInformation.totalDistance?deviceInformation.totalDistance:0 }KM</Text>
+                        <Text style={[MapStyles.speedText,{marginRight:15}]}>总里程：{deviceInformation.totalDistance?distance(deviceInformation.totalDistance):0+'m' }</Text>
                         <Text style={[MapStyles.speedText,{fontSize:12}]}>|</Text>
                         <Text style={[MapStyles.speedText,{marginLeft:15}]}>时速：{deviceInformation.gpsSpeed?deviceInformation.gpsSpeed:0}km/h</Text>
                     </View>

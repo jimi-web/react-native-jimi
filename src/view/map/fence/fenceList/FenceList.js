@@ -271,6 +271,7 @@ export default class FenceList extends Component {
 
     
     del = ()=>{
+        Loading.show('删除中...');
         Overlay.remove(this.overlayKey);
         let delId = [];//给后台删除的数据
         let delList = this.state.delList;
@@ -288,6 +289,7 @@ export default class FenceList extends Component {
             },
             header:0
         }).then((res)=>{
+            Loading.hide();
             //更新数据
             delList.forEach((item,index)=>{
                 fenceList.splice(fenceList.findIndex(v => v.fenceId === item.fenceId),1);
@@ -328,8 +330,10 @@ export default class FenceList extends Component {
             break;
         case 'all':
             img = this.props.fenceStateImg.all;
+            break;
         case '':
             img = this.props.fenceStateImg.none;
+            
         }
         return img;
     } 

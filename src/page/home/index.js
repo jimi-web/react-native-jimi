@@ -26,7 +26,7 @@ export default class Home extends Component{
                     <Button style={styles.btn} title={'定位'} onPress={()=>{this.props.navigation.push('Position');}} />
                     <Button style={styles.btn} title={'轨迹'} onPress={()=>{this.props.navigation.push('Track');}} />
                     <Button style={styles.btn} title={'追踪'} onPress={()=>{this.props.navigation.push('Trace');}} />
-                    <Button style={styles.btn} title={'测试'} onPress={()=>{this.props.navigation.push('Share');}} />  
+                    <Button style={styles.btn} title={'测试'} onPress={()=>{this.props.navigation.push('PullView');}} />  
                     <Button style={styles.btn} title={'录音'} onPress={()=>{this.props.navigation.push('Record');}} />  
                     <Button style={styles.btn} title={'围栏'} onPress={()=>{this.props.navigation.push('Fence');}} />  
                     <Button style={styles.btn} title={'弹框'} onPress={()=>{Overlay.add(<Dialog></Dialog>);}} />  
