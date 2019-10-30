@@ -23,6 +23,8 @@ export const getDevicePosition = ()=> {
             encodingType:true
         }).then((res)=>{
             let data = res.data;
+            console.log(data,'111111返回结果');
+            
             resolve(data);
         }); 
     }); 
@@ -79,9 +81,26 @@ export const devicePosition = async(lastPoint={},lastAddress)=> {
         } 
     }else {
         Toast.message('请先激活设备');
+        return;
     }
 
     return info;
+};
+
+/**
+ * 计算距离
+ */
+export const distance = (distance,type)=>{
+    if(type){
+        return distance>1000 ? (distance/1000).toFixed(2)+'km':distance+'m';
+    }
+
+    if(distance>1){
+        return distance>1000 ? (distance/1000).toFixed(2)+'km':distance.toFixed(2)+'m';
+    }
+
+
+    return 0+'m';
 };
 
 

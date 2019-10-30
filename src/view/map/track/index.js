@@ -205,7 +205,6 @@ export default class TrackUtils extends Component {
         this.props.getData(data,(res)=>{
             this.getTrackData(res);
         });
-
     }
 
     /**
@@ -241,7 +240,6 @@ export default class TrackUtils extends Component {
                 this.getMarkPoint();
             });
         }else {
-            Toast.message('暂无轨迹');
             this.useDefaults();
         }        
     }
@@ -252,12 +250,16 @@ export default class TrackUtils extends Component {
      */
     getMarkPoint = () =>{
         //如果是重新查询条件，在播放中则暂停
+        console.log(this.state.isPlay,'为何为false');
+        
+
         if(this.state.isPlay){
             this.pause();
             this.setState({
                 isPlay:false
-            });
+            }); 
         }
+
         let trackData = this.state.trackData;
         let allPoint = this.getTrackPointArr();
         let pointArr=[];
@@ -406,6 +408,9 @@ export default class TrackUtils extends Component {
         let currentProgress = this.state.progress; //当前播放进度
         let pointArr = null;
         this.timer = setInterval(()=>{
+            console.log('为何还在走');
+            console.log(this.state.isPlay);
+            
             //已播完
             if(this.state.progress === this.state.totalProgress-1){
                 Toast.message('播放完成');
@@ -482,7 +487,9 @@ export default class TrackUtils extends Component {
      * 滑块事件
      */
     onSlidingComplete = (progress)=> {
-        console.log(progress);
+        if(this.state.trackData.length===0){
+            return;
+        }
         
         let trackPolylinePoint = this.state.trackPolylinePoint;
         if(this.state.isPlay){
@@ -532,6 +539,13 @@ export default class TrackUtils extends Component {
      * 恢复初始状态
      */
    useDefaults = ()=>{
+       if(this.state.isPlay){
+           this.pause();
+           this.setState({
+               isPlay:false
+           }); 
+       }
+       Toast.message('暂无轨迹');
        this.setState({
            trackData:[],
            startMarker:{
@@ -550,9 +564,6 @@ export default class TrackUtils extends Component {
            progress:0,
            totalProgress:0,
            pointArr:[]
-       },()=>{
-           console.log(this.state.trackPolylinePoint);
-          
        });
    }    
 }

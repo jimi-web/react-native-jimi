@@ -19,6 +19,7 @@ import Record from '../examples/Record';
 import PrivacyAgreement from '../view/map/share/PrivacyAgreement';
 import AddFence from '../examples/AddFence';
 import Share from '../examples/Share';
+import PullView from '../examples/PullView';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -107,6 +108,10 @@ const AppNavigator = createStackNavigator(
         Share:{
             screen:Share,
             navigationOptions:getOptions('分享')            
+        },
+        PullView:{
+            screen:PullView,
+            navigationOptions:getOptions('下拉')            
         },
     });
 
