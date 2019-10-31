@@ -231,12 +231,16 @@ export default class TraceUtils extends PositionUtils {
      * 监听设备位置
      */
     onDeviceChange = (data)=> {
-        this.setState({
-            deviceInfo:data
-        },()=>{
-            this.update(data,'deviceMarker');
+        if(data.latitude){
+            this.setState({
+                deviceInfo:data
+            },()=>{
+                this.update(data,'deviceMarker');
+                this.props.onDeviceChange &&  this.props.onDeviceChange(data);
+            });
+        }else{
             this.props.onDeviceChange &&  this.props.onDeviceChange(data);
-        });
+        }
     }
     
     /**
@@ -302,8 +306,8 @@ export default class TraceUtils extends PositionUtils {
             return;
         }
         httpApp('jm_location.navigation',{
-            latitude:this.state.deviceMarker.latitude,
-            longitude:this.state.deviceMarker.longitude,
+            latitude:this.state.deviceInfo.gpsLatitude,
+            longitude:this.state.deviceInfo.gpsLongitude,
             onSuccess: () => {
 
             },

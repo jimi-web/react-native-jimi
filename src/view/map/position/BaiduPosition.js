@@ -55,7 +55,7 @@ export default class BaiduPosition extends PositionUtils {
                         location={this.state.markerPoint}
                         icon={this.props.deviceMarkerOptions.image}
                         rotate={this.state.locationData ? this.state.locationData.direction ? this.state.locationData.direction :0  :0 }
-                        // visible ={this.state.markerPoint.latitude?true:false}
+                        visible ={this.state.markerPoint.latitude?true:false}
                     />
                 }
                 <Overlay.Marker

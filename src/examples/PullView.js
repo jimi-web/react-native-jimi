@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
-import {FlatList,Text,RefreshControl} from 'react-native';
-
+import {View,FlatList,Text,RefreshControl,ActivityIndicator} from 'react-native';
+import {isIphoneX,iphoneXHeight} from '../libs/utils';
 
 export default class PullView  extends Component {
     constructor(props) {
@@ -11,7 +11,7 @@ export default class PullView  extends Component {
     }
 
     render() {
-        return <FlatList style={{marginBottom:30}}
+        return <FlatList style={{marginBottom:isIphoneX()?iphoneXHeight(25):25,backgroundColor:'#eee'}}
             data={[
                 {key: 'Devin'},
                 {key: 'Jackson'},
@@ -86,16 +86,17 @@ export default class PullView  extends Component {
             ]}
             refreshControl={
                 <RefreshControl
-                    {...this.props}
+                    {...this.props.RefreshControl}
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                 />
             }
-
+            
             onEndReachedThreshold={0.2}
             extraData={this.state}
             renderItem={({item}) => <Text>{item.key}</Text>}
             keyExtractor={(item,index) => index.toString()}
+            ListFooterComponent={this.renderFooter}
         ></FlatList>;  
     }
 
@@ -110,5 +111,15 @@ export default class PullView  extends Component {
         this.setState({
             refreshing:true
         });
+    }
+
+    /**
+     * 底部提示
+     */
+    renderFooter = ()=> {
+        return <View style={[{alignItems:'center',padding:20},{...this.props.footerStyle}]}>
+            <ActivityIndicator animating={true} color={'#ccc'} {...this.props.footerIconStyle} />
+            <Text style={{marginTop:10}} >{'数据加载中，请稍后'}</Text>
+        </View>; 
     }
 }

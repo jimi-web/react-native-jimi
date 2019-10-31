@@ -11,6 +11,7 @@ import TopView from './overlay/TopView';
 import Theme from './themes/index';
 import Button from './button/button';
 import Dialog from './dialog';
+import Alert from './alert/index';
 import Overlay from './overlay/overlay';
 import Loading from './loading/Loading';
 import Toast from './toast/Toast';
@@ -26,7 +27,8 @@ const Circle = {
     Loading,
     Toast,
     PopUpBox,
-    InputBox
+    InputBox,
+    Alert
 };
 
 module.exports =  Circle;

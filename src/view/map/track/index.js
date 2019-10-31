@@ -237,6 +237,8 @@ export default class TrackUtils extends Component {
             this.setState({
                 trackData:result
             },()=>{
+                console.log(result);
+                
                 this.getMarkPoint();
             });
         }else {
@@ -250,9 +252,6 @@ export default class TrackUtils extends Component {
      */
     getMarkPoint = () =>{
         //如果是重新查询条件，在播放中则暂停
-        console.log(this.state.isPlay,'为何为false');
-        
-
         if(this.state.isPlay){
             this.pause();
             this.setState({
@@ -407,10 +406,7 @@ export default class TrackUtils extends Component {
         let trackData = this.state.trackData;
         let currentProgress = this.state.progress; //当前播放进度
         let pointArr = null;
-        this.timer = setInterval(()=>{
-            console.log('为何还在走');
-            console.log(this.state.isPlay);
-            
+        this.timer = setInterval(()=>{     
             //已播完
             if(this.state.progress === this.state.totalProgress-1){
                 Toast.message('播放完成');
@@ -422,8 +418,12 @@ export default class TrackUtils extends Component {
             //播放中
             currentProgress++;
             pointArr = this.state.trackPolylinePoint.slice(0,currentProgress+1);
+
+            
             if(!trackData[currentProgress].totalDistance){
                 trackData[currentProgress].totalDistance = this.countTotalTrack(pointArr); //计算总里程
+                console.log( trackData[currentProgress].totalDistance ,'哈哈哈哈哈哈哈总里程');
+                
             }
 
             let deviceMarker = trackData[currentProgress];
