@@ -60,8 +60,8 @@ export default class AddFenceUtils extends Component {
             zoomingBtnHeight:85,
             deviceInfo:null,//设备信息
             fencePoint:{    //围栏坐标
-                latitude:0,
-                longitude:0,
+                latitude:39.915,
+                longitude:116.404,
                 latitudeDelta:0.010810810810810811,//145.5468733622675 0.00040644735832984225 最大值和最小值
                 longitudeDelta:0.007207207207207207  //106.60983654376228 0.0005647605017351509 最大值和最小值
             },
@@ -330,9 +330,8 @@ export default class AddFenceUtils extends Component {
             });
         }else{
             let deviceInfo = await devicePosition();
-            console.log(deviceInfo);
-            
             this.editFenceDefaultValue(deviceInfo);
+            
         }
     }
 
@@ -352,7 +351,7 @@ export default class AddFenceUtils extends Component {
             
             //编辑赋值
             this.setState({
-                deviceInfo:deviceInfo,
+                deviceInfo:deviceInfo.latitude?deviceInfo:null,
                 fencePoint:{
                     ...this.state.fencePoint,
                     latitude:baidu.lat,
@@ -383,7 +382,13 @@ export default class AddFenceUtils extends Component {
             });
         }else {
             let deviceInfo = await devicePosition();
-            this.addNewFenceDefaultValue(deviceInfo);
+            if(deviceInfo.latitude){
+                this.addNewFenceDefaultValue(deviceInfo);
+            }else {
+                this.props.onDeviceChange && this.props.onDeviceChange(deviceInfo);
+                Loading.hide();
+            }
+           
         }
     }
 

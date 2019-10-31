@@ -242,7 +242,11 @@ export default class PositionUtils extends Component {
         this.setState({
             lastAddress:deviceInfo.address
         },()=>{
-            this.drawMarker(deviceInfo);
+            if(deviceInfo.latitude){
+                this.drawMarker(deviceInfo);
+            }else{
+                this.onDeviceChange(deviceInfo);
+            } 
         });
     }
 
@@ -267,7 +271,6 @@ export default class PositionUtils extends Component {
         });
        
         
-
         data.gpsTime = new Date(data.gpsTime).Format('YYYY-MM-DD hh:mm:ss');
         data.time = new Date(data.time).Format('YYYY-MM-DD hh:mm:ss');
         data.otherPosTime = new Date(data.otherPosTime).Format('YYYY-MM-DD hh:mm:ss');
@@ -447,6 +450,8 @@ export default class PositionUtils extends Component {
      * 监听数据变化
      */
     onDeviceChange = (data)=>{
+        console.log(data,'wushuju ');
+        
         this.props.onDeviceChange && this.props.onDeviceChange(data);
     }
 

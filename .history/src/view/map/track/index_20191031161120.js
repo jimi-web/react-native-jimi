@@ -419,9 +419,11 @@ export default class TrackUtils extends Component {
             currentProgress++;
             pointArr = this.state.trackPolylinePoint.slice(0,currentProgress+1);
 
+            debugger;
             if(!trackData[currentProgress].totalDistance){
+                
                 trackData[currentProgress].totalDistance = this.countTotalTrack(pointArr); //计算总里程
-
+                console.log( trackData[currentProgress].totalDistance ,'哈哈哈哈哈哈哈总里程');
             }
 
             let deviceMarker = trackData[currentProgress];

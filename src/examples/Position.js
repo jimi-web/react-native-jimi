@@ -8,7 +8,7 @@
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity,ActivityIndicator} from 'react-native';
-import {Jimi} from '../index';
+import {Jimi,Circle} from '../index';
 // import {Toast} from '../components/index';
 
 export default class Position extends Component {
@@ -49,7 +49,7 @@ export default class Position extends Component {
                         // getData={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
-                        deviceMarkerOptions={obj}
+                        // deviceMarkerOptions={obj}
                         isRefresh={true}
                         ChangePositionBtn={car}
                         mylocationOptions={my}
@@ -71,7 +71,7 @@ export default class Position extends Component {
                         // getData={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
-                        deviceMarkerOptions={this.state.obj}
+                        // deviceMarkerOptions={this.state.obj}
                         ChangePositionBtn={car}
                         mylocationOptions={my}
                         mapTypeBtnStyle={styles.set}

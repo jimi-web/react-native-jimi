@@ -60,6 +60,8 @@ export const geocoder = (data)=> {
  */
 export const devicePosition = async(lastPoint={},lastAddress)=> {
     let deviceInfo = await getDevicePosition();
+    deviceInfo.gpsLatitude = deviceInfo.latitude;
+    deviceInfo.gpsLongitude = deviceInfo.longitude;
     let info = '';
     if(deviceInfo.latitude){
         if(lastPoint.latitude){
@@ -80,8 +82,7 @@ export const devicePosition = async(lastPoint={},lastAddress)=> {
             info.longitude = baidu.lng;
         } 
     }else {
-        Toast.message('请先激活设备');
-        return;
+        info = deviceInfo;
     }
 
     return info;
@@ -91,6 +92,8 @@ export const devicePosition = async(lastPoint={},lastAddress)=> {
  * 计算距离
  */
 export const distance = (distance,type)=>{
+    console.log(distance,'计算');
+    
     if(type){
         return distance>1000 ? (distance/1000).toFixed(2)+'km':distance+'m';
     }
