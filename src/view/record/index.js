@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-29 17:37:11
+ * @LastEditTime: 2019-10-31 17:06:21
  */
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler,AppState,Platform } from 'react-native';
 import RecordControl from './RecordControl';
 import { jmAjax,getEncoding } from '../../http/business';
 import { createTheFolder } from '../../http/file';
@@ -44,6 +44,8 @@ export default class Record extends Component {
     };
     constructor(props) {
         super(props);
+        this.backRecordPlayLength = 0;//录音播放时长
+        this.backTimeLength = 0;//录音的时长
         this.userkey = null;
         this.overlayKey = 0;
         this.totalPage = 10;//总页数
@@ -70,6 +72,7 @@ export default class Record extends Component {
         this.getServerRecordFile(this.state.params);
         this.createFolder();
         this.getStorage();
+        this.getBackTime();
         // this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
         //     if (!this.state.isChangeScreen) {
         //         this.changeSreenDirection('portrait');
@@ -78,6 +81,7 @@ export default class Record extends Component {
         //     return false;
         // });
     }
+    
     componentWillUnmount(){
         if(this.recordTimer){
             clearInterval(this.recordTimer);
@@ -88,6 +92,40 @@ export default class Record extends Component {
         if(this.state.isPlay){
             stopAudio(this.userkey);
         }
+    }
+    /**
+     * 获取用户在后台的时间
+     */
+    getBackTime = () => {
+        // 监听用户后台
+        let backDate = 0;
+        AppState.addEventListener('change', (status) => {
+            if(this.isLeave){
+                return;
+            }
+            if(status == 'active'){
+                if(backDate != 0){
+                    
+                    this.backTimeLength  = parseInt((new Date().getTime() - backDate) / 1000);
+                    this.backRecordPlayLength = parseInt(new Date().getTime() - backDate);
+                    // console.log(this.backTimeLength,this.backRecordPlayLength,89401);
+                }
+            }else{
+                // console.log(this.isPlay,23456);
+                if(this.state.isPlay && Platform.OS === 'ios'){
+                    this.getPlayRecord().then(res => {
+                        this.getStopRecordList(res[0]).then(data => {
+                            this.setState({
+                                recordList:data,
+                                isPlay:false
+                            });
+                        });
+                    });
+                }   
+                this.backTimeLength = 0;
+                backDate = new Date().getTime();
+            }
+        });
     }
     /**
      * 获取存储的录音信息
@@ -143,7 +181,6 @@ export default class Record extends Component {
             encodingType: true,
             data: params
         }).then(res => {
-            // console.log(res,232323);
             this.setState({
                 refreshing:false
             });
@@ -155,7 +192,7 @@ export default class Record extends Component {
                 pageNum:res.data.currentPage,
                 pageSize:res.data.pageSize
             };
-            const initFile = this.state.recordList.concat(res.data.result);
+            const initFile = this.state.initFile.concat(res.data.result);
             this.ftmRecord(initFile,serverParams);
         });
     }
@@ -572,6 +609,10 @@ export default class Record extends Component {
             data.type = 3;
             this.playAudioTimer = setInterval(()=> {
                 data.progress += 100;
+                if(this.backRecordPlayLength && Platform !== 'ios'){
+                    data.progress  = data.progress + this.backRecordPlayLength;
+                    this.backRecordPlayLength = 0;
+                }
                 this.state.recordList[data.index] = data;
                 const recordList = JSON.parse(JSON.stringify(this.state.recordList));
                 this.setState({
@@ -698,7 +739,6 @@ export default class Record extends Component {
                 isRecording:!data.isRecording
             });
             // 录音结束之后重新刷新数据
-            
             if(this.state.recordType){
                 // 持续录音
                 if(data.isRecording){
@@ -716,7 +756,11 @@ export default class Record extends Component {
                 // 限时录音
                 let i = data.recordLength;
                 this.recordTimer = setInterval(() => {
-                    i--;
+                    i = i - 1;
+                    if(this.backTimeLength){
+                        i = i - this.backTimeLength;
+                        this.backTimeLength = 0;
+                    }
                     this.setState({
                         recordLength:i
                     });
