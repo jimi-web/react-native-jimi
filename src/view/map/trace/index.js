@@ -268,7 +268,7 @@ export default class TraceUtils extends PositionUtils {
                 //百度可视范围直接传值
                 this.setState({
                     visualRange:[deviceMarker,myMarker],
-                    distance:gps.distance(deviceMarker.latitude,deviceMarker.longitude,myMarker.latitude,myMarker.longitude).toFixed(2)
+                    distance:gps.distance(deviceMarker.latitude,deviceMarker.longitude,myMarker.latitude,myMarker.longitude)
                 },()=>{
                     //谷歌地图可视范围
                     if(this.refs.GooglePosition){
