@@ -559,8 +559,6 @@ export default class TrackUtils extends Component {
            totalProgress:0,
            pointArr:[],
            totalDistance:0
-       },()=>{
-           console.log(this.state.trackPolylinePoint,'已经无轨迹了');
        });
    }   
 }

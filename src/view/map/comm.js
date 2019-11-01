@@ -92,8 +92,6 @@ export const devicePosition = async(lastPoint={},lastAddress)=> {
  * 计算距离
  */
 export const distance = (distance,type)=>{
-    console.log(distance,'计算');
-    
     if(type){
         return distance>1000 ? (distance/1000).toFixed(2)+'km':distance+'m';
     }
@@ -101,8 +99,6 @@ export const distance = (distance,type)=>{
     if(distance>1){
         return distance>1000 ? (distance/1000).toFixed(2)+'km':distance.toFixed(2)+'m';
     }
-
-
     return 0+'m';
 };
 
