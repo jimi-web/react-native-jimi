@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-31 17:06:21
+ * @LastEditTime: 2019-11-04 15:38:00
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler,AppState,Platform } from 'react-native';
@@ -764,7 +764,7 @@ export default class Record extends Component {
                     this.setState({
                         recordLength:i
                     });
-                    if(i === 0){
+                    if(i <= 0){
                         this.setState({
                             isRecording:false,
                             recordLength:data.recordLength,
