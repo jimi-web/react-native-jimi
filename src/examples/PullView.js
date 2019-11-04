@@ -11,93 +11,96 @@ export default class PullView  extends Component {
     }
 
     render() {
-        return <FlatList style={{marginBottom:isIphoneX()?iphoneXHeight(25):25,backgroundColor:'#eee'}}
-            data={[
-                {key: 'Devin'},
-                {key: 'Jackson'},
-                {key: 'James'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'},
-                {key: 'Devin'},
-                {key: 'Jackson'},
-                {key: 'James'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'},
-                {key: 'Devin'},
-                {key: 'Jackson'},
-                {key: 'James'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'},
-                {key: 'Devin'},
-                {key: 'Jackson'},
-                {key: 'James'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'},
-                {key: 'Devin'},
-                {key: 'Jackson'},
-                {key: 'James'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'},
-                {key: 'Julie'},
-                {key: 'Devin'},
-                {key: 'Jackson'},
-                {key: 'James'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'},
-                {key: 'Devin'},
-                {key: 'Jackson'},
-                {key: 'James'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'},
-                {key: 'Devin'},
-                {key: 'Jackson'},
-                {key: 'James'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'},
-            ]}
-            refreshControl={
-                <RefreshControl
-                    {...this.props.RefreshControl}
-                    refreshing={this.state.refreshing}
-                    onRefresh={this.onRefresh}
-                />
-            }
+        return <View style={{flex:1}}>
+            <FlatList style={{marginBottom:isIphoneX()?iphoneXHeight(25):25,backgroundColor:'#eee'}}
+                data={[
+                    {key: 'Devin'},
+                    {key: 'Jackson'},
+                    {key: 'James'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                    {key: 'Devin'},
+                    {key: 'Jackson'},
+                    {key: 'James'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                    {key: 'Devin'},
+                    {key: 'Jackson'},
+                    {key: 'James'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                    {key: 'Devin'},
+                    {key: 'Jackson'},
+                    {key: 'James'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                    {key: 'Devin'},
+                    {key: 'Jackson'},
+                    {key: 'James'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                    {key: 'Julie'},
+                    {key: 'Devin'},
+                    {key: 'Jackson'},
+                    {key: 'James'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                    {key: 'Devin'},
+                    {key: 'Jackson'},
+                    {key: 'James'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                    {key: 'Devin'},
+                    {key: 'Jackson'},
+                    {key: 'James'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                ]}
+                refreshControl={
+                    <RefreshControl
+                        {...this.props.RefreshControl}
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.onRefresh}
+                    />
+                }
             
-            onEndReachedThreshold={0.2}
-            extraData={this.state}
-            renderItem={({item}) => <Text>{item.key}</Text>}
-            keyExtractor={(item,index) => index.toString()}
-            ListFooterComponent={this.renderFooter}
-        ></FlatList>;  
+                onEndReachedThreshold={0.2}
+                extraData={this.state}
+                renderItem={({item}) => <Text>{item.key}</Text>}
+                keyExtractor={(item,index) => index.toString()}
+                ListFooterComponent={this.renderFooter}
+            ></FlatList>
+        </View>
+        ;  
     }
 
 

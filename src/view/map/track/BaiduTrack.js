@@ -7,8 +7,8 @@
  * @LastEditTime: 2019-09-29 10:20:11
  */
 
-import React, {Component} from 'react';
-import {View,Platform,TouchableOpacity,Image,Text,Slider} from 'react-native';
+import React from 'react';
+import {View} from 'react-native';
 import {MapView,Overlay} from 'react-native-baidu-map-jm';
 import Styles from '../style/base';
 import MapStyles from '../style/track';
@@ -81,7 +81,7 @@ export default class BaiduTrack extends TrackUtils {
                         color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#50AE6F' : '#50AE6F'}
                         visible ={this.state.isTrackPolylineShow}
                         points={this.state.trackPolylinePoint}/>
-         
+
                 </MapView>
                 <View style={MapStyles.bottomContent}>
                     {this.controller()}

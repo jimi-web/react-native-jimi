@@ -69,7 +69,7 @@ export default class Track extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={MapStyles.speed}>
-                        <Text style={[MapStyles.speedText,{marginRight:15}]}>总里程：{deviceInformation.totalDistance?distance(deviceInformation.totalDistance):0+'m' }</Text>
+                        <Text style={[MapStyles.speedText,{marginRight:15}]}>总里程：{this.props.totalDistance?distance(this.props.totalDistance):0+'m' }</Text>
                         <Text style={[MapStyles.speedText,{fontSize:12}]}>|</Text>
                         <Text style={[MapStyles.speedText,{marginLeft:15}]}>时速：{deviceInformation.gpsSpeed?deviceInformation.gpsSpeed:0}km/h</Text>
                     </View>

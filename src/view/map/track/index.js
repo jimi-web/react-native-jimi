@@ -100,6 +100,7 @@ export default class TrackUtils extends Component {
             },//设备标记
             progress:0,//进度条
             totalProgress:0,//总进度条
+            totalDistance:0
         };
     }
 
@@ -154,6 +155,7 @@ export default class TrackUtils extends Component {
             isPlay={this.state.isPlay}
             deviceInformation={this.state.deviceMarker}
             onSlidingComplete={this.onSlidingComplete}
+            totalDistance={this.state.totalDistance}
         >
         </Controller>;      
     }
@@ -232,8 +234,6 @@ export default class TrackUtils extends Component {
      * 获取轨迹数据
      */
     getTrackData = (result)=>{
-        console.log(result);
-        
         Loading.hide();
         if(result.length>0){
             this.setState({
@@ -263,7 +263,6 @@ export default class TrackUtils extends Component {
         let allPoint = this.getTrackPointArr();
         let pointArr=[];
         pointArr.push(allPoint[0]); //初始化设备位置
-        trackData[0].totalDistance = 0;
         let deviceMarker = trackData[0];
         
         this.setState({
@@ -273,12 +272,16 @@ export default class TrackUtils extends Component {
             deviceMarker:deviceMarker,
             pointArr:pointArr,
             totalProgress:allPoint.length,
-            progress:0
+            progress:0,
+            totalDistance:this.countTotalTrack(allPoint)
         },()=>{
             //如果是谷歌地图则设置可视区域
             if(this.state.userMapType){
                 this.fitAllMarkers();
             }
+            console.log(this.state.totalDistance);
+            console.log(this.state.pointArr);
+            
         });   
     }
 
@@ -418,12 +421,6 @@ export default class TrackUtils extends Component {
             //播放中
             currentProgress++;
             pointArr = this.state.trackPolylinePoint.slice(0,currentProgress+1);
-
-            if(!trackData[currentProgress].totalDistance){
-                trackData[currentProgress].totalDistance = this.countTotalTrack(pointArr); //计算总里程
-
-            }
-
             let deviceMarker = trackData[currentProgress];
             
             this.setState({
@@ -514,7 +511,6 @@ export default class TrackUtils extends Component {
         }
         
 
-       
         //过滤轨迹线目前移动的点
         let pointArr = trackPolylinePoint.filter((item,index) => {
             return index < progress;
@@ -561,7 +557,8 @@ export default class TrackUtils extends Component {
            },
            progress:0,
            totalProgress:0,
-           pointArr:[]
+           pointArr:[],
+           totalDistance:0
        });
-   }    
+   }   
 }
