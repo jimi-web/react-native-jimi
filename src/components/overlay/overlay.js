@@ -24,8 +24,8 @@ import OverlayView from './OverlayView';
 
 let overlayKey = null;//全局遮罩只能一级级取消
 export default class Overlay extends JmTopView{
-    static add(view){
-        const element = <OverlayView onPress={() => super.remove(overlayKey)}>{view}</OverlayView>;
+    static add(view,isRemoveOverlay){
+        const element = <OverlayView isRemoveOverlay={isRemoveOverlay} onPress={() => super.remove(overlayKey)}>{view}</OverlayView>;
         let elements = React.cloneElement(element,);
         overlayKey = JmTopView.add(elements);
         return overlayKey;

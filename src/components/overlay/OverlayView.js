@@ -17,11 +17,13 @@ class OverlayView extends Component{
     static propTypes = {
         opacity:PropTypes.number,
         style:Text.propTypes.style,
+        isRemoveOverlay:PropTypes.bool
     };
     
       static defaultProps = {
           opacity:0.4,
-          style:{flex:1,justifyContent:'center',alignItems:'center'}
+          style:{flex:1,justifyContent:'center',alignItems:'center'},
+          isRemoveOverlay:true,
       }
       constructor(props){
           super(props);
@@ -68,18 +70,21 @@ class OverlayView extends Component{
           );
       }
     onPress = () => {
-        this.setState({
-            element:null
-        });
-        Animated.sequence([
-            Animated.timing(
-                this.state.opacity,
-                {
-                    toValue:0,
-                    duration:100
-                }
-            )
-        ]);
+        if(this.props.isRemoveOverlay){
+            this.setState({
+                element:null
+            });
+            Animated.sequence([
+                Animated.timing(
+                    this.state.opacity,
+                    {
+                        toValue:0,
+                        duration:100
+                    }
+                )
+            ]);
+        }
+
         this.props.onPress && this.props.onPress();
     }
     sequenceOpacity = ({opacity}) => {

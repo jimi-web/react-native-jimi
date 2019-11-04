@@ -38,6 +38,7 @@ export default class BaiduPosition extends PositionUtils {
     renderContent =()=>{
         return  <View style={MapStyles.map}>
             <MapView
+                ref={(e)=>this.mapViewFunc=e}
                 {...this.props}
                 mapType={this.state.mapType === 'standard' ? 1 : 2}
                 style={MapStyles.map}

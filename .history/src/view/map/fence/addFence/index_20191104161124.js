@@ -448,6 +448,8 @@ export default class AddFenceUtils extends Component {
 
             if(!this.state.userMapType){
                 MapSearch.requestSuggestion('中国',value).then((data)=>{
+                    console.log(data,'获取数据');
+                    
                     this.setState({
                         addressList:data.sugList
                     });

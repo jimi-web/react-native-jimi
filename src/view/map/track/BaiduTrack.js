@@ -46,6 +46,20 @@ export default class BaiduTrack extends TrackUtils {
                     visualRange = {this.state.trackPolylinePoint}
                     trafficEnabled={this.state.trafficEnabled}
                 >
+                    <Overlay.Polyline
+                        width={this.props.playPolylineOptions ? this.props.playPolylineOptions.width ? this.props.playPolylineOptions.width :2 : 2}
+                        color={this.props.playPolylineOptions ? this.props.playPolylineOptions.color ? this.props.playPolylineOptions.color :'#50AE6F' : '#50AE6F'}
+                        visible={true}
+                        points={this.state.pointArr}/>
+                   
+                    {/* 整条轨迹 */}
+
+                    <Overlay.Polyline
+                        width={this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2}
+                        color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#50AE6F' : '#50AE6F'}
+                        visible ={this.state.isTrackPolylineShow}
+                        points={this.state.trackPolylinePoint}/>
+
                     {/* 起点 */}
                     <Overlay.Marker
                         location={this.state.startMarker}
@@ -68,19 +82,7 @@ export default class BaiduTrack extends TrackUtils {
                         visible={this.state.deviceMarker.latitude?true:false}
                     />
 
-                    <Overlay.Polyline
-                        width={this.props.playPolylineOptions ? this.props.playPolylineOptions.width ? this.props.playPolylineOptions.width :2 : 2}
-                        color={this.props.playPolylineOptions ? this.props.playPolylineOptions.color ? this.props.playPolylineOptions.color :'#50AE6F' : '#50AE6F'}
-                        visible={true}
-                        points={this.state.pointArr}/>
-                   
-                    {/* 整条轨迹 */}
-
-                    <Overlay.Polyline
-                        width={this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2}
-                        color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#50AE6F' : '#50AE6F'}
-                        visible ={this.state.isTrackPolylineShow}
-                        points={this.state.trackPolylinePoint}/>
+       
 
                 </MapView>
                 <View style={MapStyles.bottomContent}>

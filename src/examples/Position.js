@@ -9,7 +9,7 @@
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity,ActivityIndicator} from 'react-native';
 import {Jimi,Circle} from '../index';
-// import {Toast} from '../components/index';
+import {Toast} from '../components/index';
 
 export default class Position extends Component {
     constructor(props) {
@@ -62,6 +62,7 @@ export default class Position extends Component {
                     </Jimi.GooglePosition>
                     :
                     <Jimi.BaiduPosition
+                        ref={(e)=>this.map=e}
                         // isRefresh={false}
                         // refreshTime={2000}
                         onMapClick={()=>{
@@ -92,6 +93,11 @@ export default class Position extends Component {
         //     icon: <ActivityIndicator size='large' color={'#fff'} />,
         //     duration:100000
         // });
+
+
+        
+
+        // let toast = Toast.loading();
 
         // setTimeout(()=>{
         //     Toast.remove(toast);

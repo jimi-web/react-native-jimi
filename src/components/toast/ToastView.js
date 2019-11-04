@@ -72,7 +72,7 @@ export default class ToastView extends Component {
             justifyContent: this.props.position === 'top' ? 'flex-start' : this.props.position === 'bottom' ? 'flex-end' : 'center',
             alignItems: 'center',
         };
-        return  <View style={tip}>
+        return  <View style={[tip,this.props.style]}>
             {this.renderContent()}
             {this.renderText()}
         </View>;
