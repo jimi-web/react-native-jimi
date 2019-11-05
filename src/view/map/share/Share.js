@@ -266,9 +266,13 @@ export default class Share extends Component {
                 onSuccess: () => {
                     this.hide();
                 },
-                onFail: () => {
+                onFail: (res) => {
+                    let message ='分享失败';
+                    if(res.code === -103){
+                        message = state === 'qq'?'未安装QQ' :'未安装微信';
+                    }
                     this.setState({
-                        message:'分享失败'
+                        message:message
                     },()=>{
                         Toast.show();
                     });

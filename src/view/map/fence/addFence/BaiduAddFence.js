@@ -35,6 +35,7 @@ export default class BaiduAddFence extends AddFenceUtils {
             }
             <View style={AddFenceStyles.map}>
                 <MapView
+                    ref={(e)=>this.mapViewFunc=e}
                     mapType={1}
                     zoom={this.state.zoom}
                     center={this.state.fencePoint}

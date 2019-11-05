@@ -66,7 +66,11 @@ export default class TraceUtils extends PositionUtils {
             distance:0,//两点间的距离
         };
     }
+
     componentWillMount() {
+        if(this.mapViewFunc){
+            this.mapViewFunc.reloadView();
+        }
         this.asyncStorageAeviceName();
         this.onTouch();
     }

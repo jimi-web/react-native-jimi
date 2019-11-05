@@ -23,8 +23,6 @@ export const getDevicePosition = ()=> {
             encodingType:true
         }).then((res)=>{
             let data = res.data;
-            console.log(data,'111111返回结果');
-            
             resolve(data);
         }); 
     }); 

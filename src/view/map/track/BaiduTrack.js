@@ -36,6 +36,7 @@ export default class BaiduTrack extends TrackUtils {
         return (
             <View style={Styles.container}>
                 <MapView
+                    ref={(e)=>this.mapViewFunc=e}
                     mapType={this.state.mapType === 'standard' ? 1 : 2}
                     style={Styles.container}
                     zoom={18}

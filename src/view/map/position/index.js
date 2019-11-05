@@ -121,12 +121,13 @@ export default class PositionUtils extends Component {
 
     
     componentWillMount(){
+        if(this.mapViewFunc){
+            this.mapViewFunc.reloadView();
+        }
         DeviceEventEmitter.addListener('jmPosition', ()=>{
             this.getMarker();
         });
     }
-
-
 
     componentWillUnmount() {
         Loading.hide();

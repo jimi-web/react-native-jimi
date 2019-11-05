@@ -74,6 +74,11 @@ export default class AddFenceUtils extends Component {
             isValuation:false
         };
     }
+    componentWillMount() {
+        if(this.mapViewFunc){
+            this.mapViewFunc.reloadView();
+        }
+    }
 
     componentWillUnmount() {
         Loading.hide();
@@ -515,8 +520,6 @@ export default class AddFenceUtils extends Component {
      * 地图移动停止状态
      */
     onMapStatusChangeFinish = (params)=>{
-        console.log(params);
-        
         if(this.state.isValuation){
             this.setState({
                 fencePoint:{
@@ -526,8 +529,10 @@ export default class AddFenceUtils extends Component {
             });
     
             if(!this.state.userMapType){
+                let baiduToChina = gps.baiduToChina(params.latitude,params.longitude);
+                let chinaToGPS = gps.chinaToGPS(baiduToChina.lat,baiduToChina.lng);
                 //解析地址
-                geocoder(params).then((res)=>{
+                geocoder({latitude:chinaToGPS.lat,longitude:chinaToGPS.lng}).then((res)=>{
                     this.setState({
                         fenceAddress:res.address
                     });

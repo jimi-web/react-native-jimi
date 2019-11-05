@@ -12,7 +12,7 @@ export default class PullView  extends Component {
 
     render() {
         return <View style={{flex:1}}>
-            <FlatList style={{marginBottom:isIphoneX()?iphoneXHeight(25):25,backgroundColor:'#eee'}}
+            <FlatList style={{backgroundColor:'#eee'}}
                 data={[
                     {key: 'Devin'},
                     {key: 'Jackson'},
@@ -120,7 +120,7 @@ export default class PullView  extends Component {
      * 底部提示
      */
     renderFooter = ()=> {
-        return <View style={[{alignItems:'center',padding:20},{...this.props.footerStyle}]}>
+        return <View style={[{alignItems:'center',padding:20,paddingBottom:isIphoneX()? iphoneXHeight(20):20},{...this.props.footerStyle}]}>
             <ActivityIndicator animating={true} color={'#ccc'} {...this.props.footerIconStyle} />
             <Text style={{marginTop:10}} >{'数据加载中，请稍后'}</Text>
         </View>; 
