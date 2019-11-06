@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-11-04 15:38:00
+ * @LastEditTime: 2019-11-04 17:07:42
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler,AppState,Platform } from 'react-native';
@@ -20,7 +20,6 @@ import {Toast} from 'teaset';
 import {Dialog,Overlay} from '../../components/index';
 
 export default class Record extends Component {
-
     static propTypes = {
         params: PropTypes.object,
         insTimeArr:PropTypes.array,
