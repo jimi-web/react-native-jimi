@@ -20,6 +20,7 @@ import PrivacyAgreement from '../view/map/share/PrivacyAgreement';
 import AddFence from '../examples/AddFence';
 import Share from '../examples/Share';
 import PullView from '../examples/PullView';
+import Switch from '../examples/Switch';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -112,6 +113,10 @@ const AppNavigator = createStackNavigator(
         PullView:{
             screen:PullView,
             navigationOptions:getOptions('下拉')            
+        },
+        Switch:{
+            screen:Switch,
+            navigationOptions:getOptions('开关')            
         },
     });
 

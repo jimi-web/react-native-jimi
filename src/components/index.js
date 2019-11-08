@@ -17,7 +17,8 @@ import Loading from './loading/Loading';
 import Toast from './toast/Toast';
 import PopUpBox from './popUpBox/PopUpBox';
 import InputBox from './popUpBox/inputBox';
-
+import PullList from './pullList/PullList';
+import Switch from './switch/Switch';
 const Circle = {
     TopView,
     Theme,
@@ -28,7 +29,9 @@ const Circle = {
     Toast,
     PopUpBox,
     InputBox,
-    Alert
+    Alert,
+    PullList,
+    Switch
 };
 
 module.exports =  Circle;

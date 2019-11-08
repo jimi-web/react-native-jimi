@@ -316,7 +316,7 @@ export default class TraceUtils extends PositionUtils {
 
             },
             onFail: () => {
-                Toast.message('请下载地图');
+                // Toast.message('请下载地图');
             },
             onComplete:()=>{
                 

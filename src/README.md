@@ -60,6 +60,9 @@
 
 [`<Circle.Toast />`提示](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Toast.md)<br>
 
+[`<Circle.PullList />`上拉加载下拉刷新](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/PullList.md)<br>
+
+[`<Circle.Switch />`开关](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Switch.md)
 ## 方法
 [`<Api />` 接口](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Api.md)<br>
 

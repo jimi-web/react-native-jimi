@@ -297,7 +297,8 @@ export default class FenceList extends Component {
             this.setState({
                 fenceList:fenceList,
                 delList:[],
-                isSelect:false
+                isSelect:false,
+                allSelectText:'全选'
             });
         }); 
     }

@@ -1,128 +1,150 @@
 import React,{Component} from 'react';
-import {View,FlatList,Text,RefreshControl,ActivityIndicator} from 'react-native';
-import {isIphoneX,iphoneXHeight} from '../libs/utils';
+import {View,Text,Image} from 'react-native';
+import PullList from '../components/pullList/PullList';
+
+let list = [{key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'},
+    {key: 'Devin'}];
+
 
 export default class PullView  extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            refreshing:false
+            refresStatus:false,
+            pullUpStatus:0,
+            testList:[],
+            totalNum:2,
+            pageNum:0
         };
     }
 
     render() {
         return <View style={{flex:1}}>
-            <FlatList style={{backgroundColor:'#eee'}}
-                data={[
-                    {key: 'Devin'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                    {key: 'Devin'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                    {key: 'Devin'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                    {key: 'Devin'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                    {key: 'Devin'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                    {key: 'Julie'},
-                    {key: 'Devin'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                    {key: 'Devin'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                    {key: 'Devin'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                ]}
-                refreshControl={
-                    <RefreshControl
-                        {...this.props.RefreshControl}
-                        refreshing={this.state.refreshing}
-                        onRefresh={this.onRefresh}
-                    />
-                }
-            
-                onEndReachedThreshold={0.2}
-                extraData={this.state}
+            <PullList style={{backgroundColor:'#eee'}}
+                data={this.state.testList}
                 renderItem={({item}) => <Text>{item.key}</Text>}
-                keyExtractor={(item,index) => index.toString()}
-                ListFooterComponent={this.renderFooter}
-            ></FlatList>
-        </View>
-        ;  
+                onRefresh={this.onRefresh}
+                pullUpStatus={this.state.pullUpStatus}
+                refresStatus={this.state.refresStatus}
+                onPullUp={this.onPullUp}
+                footerEmptyDataComponent={this.footerEmptyDataComponent()}
+                onFail={()=>{
+                    this.onPullUp();
+                }}
+            ></PullList>
+        </View>;  
     }
 
+    componentDidMount(){
+        this.init();
+    }
 
-    onRefresh = ()=>{
+    init =()=>{
         setTimeout(()=>{
             this.setState({
-                refreshing:false
+                testList:list,
+                refresStatus:false,
+                pullUpStatus:4,
+                pageNum:0
             });
         },3000);
 
         this.setState({
-            refreshing:true
+            refresStatus:true
         });
     }
 
-    /**
-     * 底部提示
-     */
-    renderFooter = ()=> {
-        return <View style={[{alignItems:'center',padding:20,paddingBottom:isIphoneX()? iphoneXHeight(20):20},{...this.props.footerStyle}]}>
-            <ActivityIndicator animating={true} color={'#ccc'} {...this.props.footerIconStyle} />
-            <Text style={{marginTop:10}} >{'数据加载中，请稍后'}</Text>
-        </View>; 
+
+    onRefresh = ()=>{
+        this.init();
+    }
+
+    onPullUp = ()=>{
+        //没有更多数据
+        if(this.state.pageNum===this.state.totalNum){
+            this.setState({
+                pullUpStatus:4,
+            });
+            return;
+        }
+
+
+        this.setState({
+            pullUpStatus:1,//数据加载中
+        },()=>{
+            //模拟数据请求
+            let pageNum = this.state.pageNum+1;
+            setTimeout(()=>{
+                let data = [];
+                for(let i=0;i<5;i++){
+                    data.push( {key: 'Julie'});
+                }
+                this.setState({
+                    testList:[...this.state.testList,...data],
+                    pageNum:pageNum
+                },()=>{
+                    this.setState({
+                        pullUpStatus:4,
+                    });
+                }); 
+            },2000);
+        });
+    }
+
+    footerEmptyDataComponent=()=>{
+        return <View style={{alignItems:'center',position:'absolute',width:280,height:168,top:'50%',left:'50%',marginLeft:-140,marginTop:-163}}>
+            <Image source={require('../assets/fence/list_empty.png')}></Image>
+            <Text style={{marginTop:20}}>暂无数据</Text>
+        </View>;
     }
 }
