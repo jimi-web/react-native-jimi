@@ -9,6 +9,10 @@
 
 
 const mainColor = '#3479F6';
+//default color
+const defaultColor = '#fff';
+//default text color
+const defaultTextColor = '#333';
 export default {
     //text
     fontSize:12,
@@ -42,5 +46,15 @@ export default {
     TextColorDanger:'#FF3535',
 
     //iphoneX兼容
-    iphoneXBottomDefault:25
+    iphoneXBottomDefault:25,
+
+    //Wheel
+    wheelColor: defaultColor,
+    wheelFontSize: 14,
+    wheelTextColor: defaultTextColor,
+    wheelHoleHeight: 28,
+    wheelHoleLineWidth: 1,
+    wheelHoleLineColor: '#ccc',
+    wheelMaskColor: defaultColor,
+    wheelMaskOpacity: 0.4,
 };

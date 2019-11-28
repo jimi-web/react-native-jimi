@@ -19,6 +19,8 @@ import PopUpBox from './popUpBox/PopUpBox';
 import InputBox from './popUpBox/inputBox';
 import PullList from './pullList/PullList';
 import Switch from './switch/Switch';
+import Drawer from './drawer/Drawer';
+import Wheel from './wheel/Wheel';
 const Circle = {
     TopView,
     Theme,
@@ -31,7 +33,9 @@ const Circle = {
     InputBox,
     Alert,
     PullList,
-    Switch
+    Switch,
+    Drawer,
+    Wheel
 };
 
 module.exports =  Circle;

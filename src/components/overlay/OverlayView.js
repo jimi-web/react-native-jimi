@@ -8,7 +8,7 @@
  */
 
 import React, {Component} from 'react';
-import {Text, View,StyleSheet,Animated,DeviceEventEmitter,TouchableOpacity} from 'react-native';
+import {Text, View,Animated,TouchableOpacity} from 'react-native';
 import JmTopView from './TopView';
 import Theme from '../themes/index';
 import PropTypes from 'prop-types';
@@ -57,18 +57,33 @@ class OverlayView extends Component{
       //     DeviceEventEmitter.removeAllListeners('sequenceOpacity');
       // }
       componentDidMount(){
-          this.sequenceOpacity({opacity:this.props.opacity});
+          this.sequenceOpacity();
       }
+
+
       render(){
           return (
               <View style={this.renderStyle()}>
                   <Animated.View style={{flex:1, width:'100%',height:'100%',backgroundColor:'#000',opacity:this.state.opacity}}>
                       <TouchableOpacity activeOpacity={0} onPress={this.onPress} style={{flex:1}}></TouchableOpacity>
                   </Animated.View>
-                  {this.state.element}
+                  {/* {this.state.element} */}
+                  <View style={this.buildStyle()} pointerEvents='box-none'>
+                      {this.renderContent()}
+                  </View>
               </View>
           );
       }
+
+      renderContent (){
+          return this.props.children;
+      }
+
+      buildStyle (){
+          let style = [{position:'absolute',zIndex:1001}].concat(style);
+          return style;
+      }
+
     onPress = () => {
         if(this.props.isRemoveOverlay){
             this.setState({
@@ -79,7 +94,7 @@ class OverlayView extends Component{
                     this.state.opacity,
                     {
                         toValue:0,
-                        duration:100
+                        duration:0
                     }
                 )
             ]);
@@ -87,20 +102,21 @@ class OverlayView extends Component{
 
         this.props.onPress && this.props.onPress();
     }
-    sequenceOpacity = ({opacity}) => {
-        Animated.sequence([
-            Animated.timing(
-                this.state.opacity,
-                {
-                    toValue:opacity,
-                    duration:100
-                }
-            )
-        ]).start(() => {
-            this.setState({
-                element:<View style={{position:'absolute',zIndex:1001}}>{this.props.children}</View>
-            });
-        });
+
+
+    get appearAnimates() {
+        let duration = 100;
+        let animates = [
+            Animated.timing(this.state.opacity, {
+                toValue: this.props.opacity,
+                duration,
+            })
+        ];
+        return animates;
+    }
+
+    sequenceOpacity = () => {
+        Animated.sequence(this.appearAnimates).start();
     }
 }
 

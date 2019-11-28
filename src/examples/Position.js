@@ -9,7 +9,7 @@
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity,ActivityIndicator} from 'react-native';
 import {Jimi,Circle} from '../index';
-import {Toast} from '../components/index';
+import Drawer from '../components/drawer/Drawer';
 
 export default class Position extends Component {
     constructor(props) {
@@ -88,6 +88,7 @@ export default class Position extends Component {
 
     
     componentDidMount() {
+       
         // let toast=Toast.show({
         //     text:'哈哈哈哈',
         //     icon: <ActivityIndicator size='large' color={'#fff'} />,
@@ -111,9 +112,10 @@ export default class Position extends Component {
     customItem = ()=>{
         return <View style={styles.customItem}>
             <TouchableOpacity onPress={()=>{
-                this.setState({
-                    isBaidu:!this.state.isBaidu
-                });
+                Drawer.open(<View style={{width:200,height:300,backgroundColor:'#fff'}}><Text>哈哈哈哈哈哈哈哈</Text></View>);
+                // this.setState({
+                //     isBaidu:!this.state.isBaidu
+                // });
             }}>
                 <Text>切换地图</Text>
             </TouchableOpacity>

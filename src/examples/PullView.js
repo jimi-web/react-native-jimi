@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {View,Text,Image} from 'react-native';
-import PullList from '../components/pullList/PullList';
+import {Circle} from '../index';
 
 let list = [{key: 'Devin'},
     {key: 'Devin'},
@@ -70,7 +70,7 @@ export default class PullView  extends Component {
 
     render() {
         return <View style={{flex:1}}>
-            <PullList style={{backgroundColor:'#eee'}}
+            <Circle.PullList style={{backgroundColor:'#eee'}}
                 data={this.state.testList}
                 renderItem={({item}) => <Text>{item.key}</Text>}
                 onRefresh={this.onRefresh}
@@ -81,7 +81,7 @@ export default class PullView  extends Component {
                 onFail={()=>{
                     this.onPullUp();
                 }}
-            ></PullList>
+            />
         </View>;  
     }
 

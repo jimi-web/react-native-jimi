@@ -1,6 +1,14 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: xieruizhi
+ * @Date: 2019-11-08 09:48:04
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-11-19 10:09:47
+ */
 import React,{Component} from 'react';
 import {View} from 'react-native';
-import Switch from '../components/switch/Switch';
+import {Circle} from '../index';
 
 export default class SwitchTest  extends Component {
 
@@ -10,10 +18,10 @@ export default class SwitchTest  extends Component {
 
 
     render(){
-        return <Switch value={true} onChange={(value)=>{
+        return <Circle.Switch value={true} onChange={(value)=>{
             console.log(value);
                 
-        }}></Switch>;
+        }}/>;
 
     }
 }

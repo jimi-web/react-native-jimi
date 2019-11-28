@@ -3,33 +3,30 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-19 18:18:47
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-23 17:47:20
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-11-26 18:24:44
  *
+ */
 /**
 * 获取小程序位置
 */
-import {httpApp,getObject} from './basic'; 
+import {httpApp} from './basic'; 
 import {getEncoding} from './business'; 
 export const getSmallAppPath = ()=>{
     return new Promise((resolve,reject) => {
         httpApp('jm_file.getSmallAppPath',{
             onSuccess:(res)=>{
-                const data = getObject(res);
-                resolve(data);
+                resolve(res);
             },
             onFail:(res)=>{
-                const data = res || '获取失败';
-                reject(data);
+                reject(res);
             },
             onComplete:()=>{
                 //
             }
         });
     });
-    
 };
-
 
 
 /**
@@ -38,21 +35,23 @@ export const getSmallAppPath = ()=>{
  * 当前的文件夹和文件保持一致
  */
 export const getFileList = (url)=>{
-    return new Promise((resolve,resject) => {
+    return new Promise((resolve,reject) => {
         getSmallAppPath().then(location => {
             getEncoding().then(data => {
                 const filePath = `${location.filePath}/${data.encoding}/${url}/`;
+                // const filePath = `${location.filePath}`;
+                console.log(filePath,'获取');
                 httpApp('jm_file.getFileList',{
                     filePath,
                     onSuccess:(res)=>{
-                        if(res){
-                            const data = getObject(res);
-                            resolve(data);
-                        }
+                        let result = {
+                            filePath:filePath,
+                            fileList:res
+                        };
+                        resolve(result);
                     },
-                    onFail:()=>{
-                        const data = res || '获取失败';
-                        reject(data);
+                    onFail:(res)=>{
+                        reject(res);
                     },
                     onComplete:()=>{
                         //
@@ -62,7 +61,6 @@ export const getFileList = (url)=>{
         });
     });
 };
-
 
 
 /**
@@ -77,15 +75,13 @@ export const createFolder = (url) => {
                 resolve(res);
             },
             onFail: (res) => {
-                const data = res || '获取失败';
-                reject(data);
+                reject(res);
             },
             onComplete: () => {
                 //
             }
         });
-    });
-        
+    });     
 };
 /**
  * 
@@ -93,7 +89,7 @@ export const createFolder = (url) => {
  * 当前文件夹名为当前小程序位置+imei，后续为自己想创建的文件夹，设计到多级使用/分隔
  */
 export const createTheFolder = (url) => {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve) => {
         getSmallAppPath().then(location => {
             getEncoding().then(data => {
                 const createUrl = `${location.filePath}/${data.encoding}/${url}/`;
@@ -103,4 +99,48 @@ export const createTheFolder = (url) => {
             });
         });
     });
+};
+
+/**
+ * 删除文件
+ * @param {Array} url 
+ */
+export const fileDelete = (url) => {
+    console.log(url,'删除');
+    return new Promise((resolve,reject) => {
+        httpApp('jm_file.delete', {
+            filePath: url.join(','),
+            onSuccess: (res) => {
+                console.log('删除成功');
+                resolve(res);
+            },
+            onFail: (res) => {
+                reject(res);
+            },
+            onComplete: () => {
+                //
+            }
+        });
+    });
+};
+
+/**
+ * 保存到相册
+ * @param  {string} url 图片路径
+ */
+export const saveToAlbum = (url) => {
+    return new Promise((resolve,reject) => {
+        httpApp('jm_image.saveToAlbum', {
+            filePath: url,
+            onSuccess: (res) => {
+                resolve(res);
+            },
+            onFail: (res) => {
+                reject(res);
+            },
+            onComplete: () => {
+                //
+            }
+        });
+    });     
 };

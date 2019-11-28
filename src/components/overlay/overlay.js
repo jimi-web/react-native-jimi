@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-10-14 10:59:56
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-26 17:02:01
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-11-25 14:04:33
  */
 /*
  * @Descripttion: 模态框
@@ -24,13 +24,20 @@ import OverlayView from './OverlayView';
 
 let overlayKey = null;//全局遮罩只能一级级取消
 export default class Overlay extends JmTopView{
-    static add(view,isRemoveOverlay){
-        const element = <OverlayView isRemoveOverlay={isRemoveOverlay} onPress={() => super.remove(overlayKey)}>{view}</OverlayView>;
-        let elements = React.cloneElement(element,);
+    static add(view,option){
+        const element = <OverlayView {...option}>{view}</OverlayView>;
+        let elements = React.cloneElement(element);
         overlayKey = JmTopView.add(elements);
         return overlayKey;
     }
     static remove(key){
         JmTopView.remove(key);
+    }
+
+    static show(overlayView){
+        let key;
+        let element = React.cloneElement(overlayView);
+        key = JmTopView.add(element);
+        return key;
     }
 }

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 13:46:43
+ * @LastEditTime: 2019-11-28 16:07:04
  -->
 # 几米圈标准小程序
 
@@ -38,10 +38,12 @@
 9. "react-native-fs": "2.13.3",
 10."prop-types": "15.7.2",
 11."react-native-gesture-handler": "1.3.0",
-
+12."react-native-photoview-jm": "1.0.22",
+13."react-native-video": "5.0.2",
 ```
 
 ## 组件
+# 业务组件
 [`<Jimi.BaiduPosition />`定位](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Position.md)<br>
 
 [`<Jimi.BaiduTrack />`轨迹](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Track.md)<br>
@@ -55,6 +57,8 @@
 [`<Jimi.Share />`分享](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Share.md)<br>
 
 [`<Jimi.Record />`录音](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Record.md)<br>
+
+# 基础组件
 
 [`<Circle.Loading />`加载](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Loading.md)<br>
 

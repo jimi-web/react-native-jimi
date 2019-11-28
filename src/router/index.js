@@ -4,12 +4,14 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 18:35:47
+ * @LastEditTime: 2019-11-27 09:37:06
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
 import {TabContainer} from './TabNav';
-import Photo from '../view/photo/index';
+import Photo from '../examples/Photo';
+import PhotoList from '../examples/PhotoList';
+import PhotoDeatil from '../examples/PhotoDeatil';
 import Position from '../examples/Position';
 import Track from '../examples/Track';
 import Trace from '../examples/Trace';
@@ -21,6 +23,7 @@ import AddFence from '../examples/AddFence';
 import Share from '../examples/Share';
 import PullView from '../examples/PullView';
 import Switch from '../examples/Switch';
+import GetWheel from '../examples/Wheel';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -65,6 +68,10 @@ const AppNavigator = createStackNavigator(
         Photo:{
             screen:Photo,
             navigationOptions:getOptions('相册')
+        },
+        PhotoList:{
+            screen:PhotoList,
+            navigationOptions:getOptions()
         },
         Position:{
             screen:Position,
@@ -118,6 +125,14 @@ const AppNavigator = createStackNavigator(
             screen:Switch,
             navigationOptions:getOptions('开关')            
         },
+        GetWheel:{
+            screen:GetWheel,
+            navigationOptions:getOptions('滚轮')            
+        },
+        PhotoDeatil:{
+            screen:PhotoDeatil,
+            navigationOptions:getOptions()            
+        },  
     });
 
 export const Root = createAppContainer(AppNavigator);

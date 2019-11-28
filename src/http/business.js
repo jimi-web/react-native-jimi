@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-31 18:11:55
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-11-27 18:22:42
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -65,16 +65,16 @@ const request = (params) => {
  * 数据请求
  * @param {Object} params 后台需要的参数url，method，data,如果需要encodingType 或者是encodingType 只要设置该参数为true
  */
-let isDeleteFlag  = [];
+// let isDeleteFlag  = [];
 export const jmAjax = (params)=> {
     // 防止重复点击（暂时屏蔽，后续测试开放）
-    for (let i = 0; i < isDeleteFlag.length; i++) {
-        const item = isDeleteFlag[i];
-        if(item.url === params.url){
-            return;
-        }   
-    }
-    isDeleteFlag.push(params);
+    // for (let i = 0; i < isDeleteFlag.length; i++) {
+    //     const item = isDeleteFlag[i];
+    //     if(item.url === params.url){
+    //         return;
+    //     }   
+    // }
+    // isDeleteFlag.push(params);
     return new Promise((resolve) => { 
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
@@ -92,10 +92,10 @@ export const jmAjax = (params)=> {
                     params.data.encodingType = data.encodType;
                 }
                 request(params).then((res)=>{
-                    const index = isDeleteFlag.findIndex(item => {
-                        return item.url === params.url;
-                    });
-                    isDeleteFlag = isDeleteFlag.splice(index,index);
+                    // const index = isDeleteFlag.findIndex(item => {
+                    //     return item.url === params.url;
+                    // });
+                    // isDeleteFlag = isDeleteFlag.splice(index,index);
                     resolve(res);
                 });
             });
@@ -227,6 +227,8 @@ export const getEncoding = () =>{
         }); 
     });
 };
+
+
 
 
 

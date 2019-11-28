@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View,Text,StyleSheet,TouchableOpacity,Animated} from 'react-native';
+import {View,StyleSheet,TouchableOpacity,Animated} from 'react-native';
 import PropTypes from 'prop-types';
 
 export default class Switch  extends Component {

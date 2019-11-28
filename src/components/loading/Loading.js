@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-16 14:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 11:43:51
+ * @LastEditTime: 2019-11-25 11:56:59
  */
 import React from 'react';
 import {
@@ -15,12 +15,12 @@ import {Toast} from 'teaset';
 export default class Loading { 
     static customKey  = null
 
-    static show(text) {
+    static show(text,icon=<ActivityIndicator size='large' color={'#fff'} />,duration=15000) {
         this.customKey = Toast.show({
             text: text?text:'加载中...',
-            icon: <ActivityIndicator size='large' color={'#fff'} />,
+            icon: icon,
             position: 'center',
-            duration: 15000,
+            duration: duration,
         });
     }
 
