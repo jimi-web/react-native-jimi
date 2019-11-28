@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-19 18:18:47
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-26 18:24:44
+ * @LastEditTime: 2019-11-28 17:43:11
  *
  */
 /**
@@ -44,6 +44,8 @@ export const getFileList = (url)=>{
                 httpApp('jm_file.getFileList',{
                     filePath,
                     onSuccess:(res)=>{
+                        console.log(res);
+                        
                         let result = {
                             filePath:filePath,
                             fileList:res
@@ -111,7 +113,6 @@ export const fileDelete = (url) => {
         httpApp('jm_file.delete', {
             filePath: url.join(','),
             onSuccess: (res) => {
-                console.log('删除成功');
                 resolve(res);
             },
             onFail: (res) => {

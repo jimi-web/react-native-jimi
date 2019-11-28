@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-27 11:36:09
+ * @LastEditTime: 2019-11-28 18:23:16
  */
 
 // import Photo from './photo/index';
@@ -25,7 +25,7 @@ import PhotoList from './photo/photoList/PhotoList';
 import Photograph from './photo/photoDeatil/Photograph';
 import Video from './photo/photoDeatil/Video';
 import PhotoDeatil from './photo/photoDeatil/PhotoDeatil';
-
+import Empty from './empty/Empty';
 
 const Jimi = {
     BaiduPosition,
@@ -44,6 +44,7 @@ const Jimi = {
     PhotoDeatil,
     Photograph,
     Video,
+    Empty
     
 };
 

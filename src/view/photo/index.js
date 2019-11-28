@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:52:42
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-28 14:54:36
+ * @LastEditTime: 2019-11-28 17:42:53
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,Image,TouchableOpacity,Dimensions,Platform} from 'react-native';
@@ -156,10 +156,6 @@ export default class Photo extends Component {
      * @param {Object} fileData 获取的本地数据
      */
     dataSort = async(fileData)=>{
-        //如果无本地数据
-        if(!fileData.fileList){
-            return;
-        }
         const filePath = fileData.filePath;
         const fileList = fileData.fileList.files;
         //获取视频时长
