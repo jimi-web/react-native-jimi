@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 18:05:38
+ * @LastEditTime: 2019-12-04 17:59:22
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -799,6 +799,8 @@ export default class Record extends Component {
                 }, 1000);
             }
         }).catch((res)=>{
+            console.log(res,'获取哈哈哈哈');
+            
             this.setState({
                 isBeginRecord:true
             });
