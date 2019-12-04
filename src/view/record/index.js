@@ -3,21 +3,22 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-11-04 15:38:00
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-12-04 14:01:38
  */
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, Slider,TouchableOpacity ,AsyncStorage,ActivityIndicator,BackHandler,AppState,Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
 import RecordControl from './RecordControl';
 import { jmAjax,getEncoding } from '../../http/business';
 import { createTheFolder } from '../../http/file';
 import { playAudio,stopAudio } from '../../http/media';
 import api from '../../api/index';
-import { parseDate,parseTime,isIphoneX,iphoneXHeight } from '../../libs/utils';
+import { parseDate,parseTime} from '../../libs/utils';
 import RNFS from 'react-native-fs';
 import PropTypes from 'prop-types';
 import {Toast} from 'teaset';
-import {Dialog,Overlay} from '../../components/index';
+import {Modal} from '../../components/index';
+import Empty from '../empty/Empty';
 
 export default class Record extends Component {
 
@@ -47,7 +48,7 @@ export default class Record extends Component {
         this.backRecordPlayLength = 0;//录音播放时长
         this.backTimeLength = 0;//录音的时长
         this.userkey = null;
-        this.overlayKey = 0;
+        // this.overlayKey = 0;
         this.totalPage = 10;//总页数
         this.isFolder = false;//判断是否创建或是否拥有该文件夹
         this.folderPath = '';//是否创建文件夹地址
@@ -66,6 +67,7 @@ export default class Record extends Component {
             initFile: [],//原始数据
             recordList: [],//格式化之后数据
             deleteRecordList:[],//删除录音深拷贝数据
+            isBeginRecord:true
         };
     }
     componentDidMount() {
@@ -341,18 +343,20 @@ export default class Record extends Component {
     render() {
         return (
             <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }]}>
-                <FlatList
-                    style={{marginBottom:55}}
-                    refreshing={this.state.refreshing}
-                    onRefresh={this.onRefresh}
-                    data={this.state.recordList}
-                    renderItem={this.renderItem}
-                    onEndReached={this.onEndReached}
-                    onEndReachedThreshold={0.2}
-                    ListFooterComponent={this.renderFooter}
-                />
                 {
-                    this.renderLoading()
+                    this.state.refreshing || this.state.recordList.length ? 
+                        <FlatList
+                            style={{marginBottom:55}}
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.onRefresh}
+                            data={this.state.recordList}
+                            renderItem={this.renderItem}
+                            onEndReached={this.onEndReached}
+                            onEndReachedThreshold={0.2}
+                            ListFooterComponent={this.renderFooter}
+                        />
+                        :
+                        this.renderLoading()
                 }
                 <RecordControl
                     isPlay={this.state.isPlay}
@@ -367,6 +371,7 @@ export default class Record extends Component {
                     onDelete={() => { this.onDelete(); }}
                     onConfirm={(data) => this.onConfirm(data)}
                     onRecord={(data) => this.onRecord(data)}
+                    isBeginRecord={this.state.isBeginRecord}
                 />
             </View>
         );
@@ -440,12 +445,7 @@ export default class Record extends Component {
      * 错误提示
      */
     renderLoading = () => {
-        if(this.state.recordList.length || this.state.refreshing){
-            return null;
-        }
-        return <TouchableOpacity activeOpacity={1} onPress={() => {this.getServerRecordFile({pageNum:1,pageSize:10});}} style={{width:'100%',height:'100%',justifyContent:'center',alignItems:'center',position:'absolute'}}>
-            <Image source={require('../../assets/record/list_empty.png')} />
-        </TouchableOpacity>;
+        return <Empty onPress={() => {this.getServerRecordFile({pageNum:1,pageSize:10});}} />;
     }
     /**
      * 
@@ -671,11 +671,17 @@ export default class Record extends Component {
      * 清空
      */
     onEmpty = () => {
-        const element = <Dialog
-            onConfirm={()=>{this.onConfirmEmpty();}}
-            onCancel={() => {Overlay.remove(this.overlayKey);}}
-        />; 
-        this.overlayKey = Overlay.add(element);
+        // const element = <Dialog
+        //     onConfirm={()=>{this.onConfirmEmpty();}}
+        //     onCancel={() => {Overlay.remove(this.overlayKey);}}
+        // />; 
+        // this.overlayKey = Overlay.add(element);
+        Modal.dialog({
+            contentText:'清空所有录音数据将不可恢复，是否确定？',
+            onConfirm:()=>{
+                this.onConfirmEmpty();
+            }
+        });
         
     }
     onConfirmEmpty = () => {
@@ -691,7 +697,7 @@ export default class Record extends Component {
                 recordList:[],
                 deleteRecordList:[]
             });
-            Overlay.remove(this.overlayKey);
+            // Overlay.remove(this.overlayKey);
             // const params = {
             //     pageNum:1,
             //     pageSize:10
@@ -713,7 +719,13 @@ export default class Record extends Component {
         }else{
             instruction = this.props.recordIns.replace('ins',data.recordLength);
         }
+        this.setState({
+            isBeginRecord:false
+        });
         this.setRecordInstruction(instruction).then(res => {
+            this.setState({
+                isBeginRecord:true
+            });
             if(res.code){
                 return Toast.message('指令发送失败');
             }

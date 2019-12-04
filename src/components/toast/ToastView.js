@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-10 16:01:37
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-25 14:18:00
+ * @LastEditTime: 2019-12-03 17:12:34
  */
 import React, { Component } from 'react';
 import {
@@ -26,6 +26,7 @@ export default class ToastView extends Component {
     };
     
       static defaultProps = {
+          position:'bottom'
       };
   
 

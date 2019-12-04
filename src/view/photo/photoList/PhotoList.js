@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:33:58
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-28 14:39:18
+ * @LastEditTime: 2019-12-04 13:51:49
  */
 import React, {Component} from 'react';
 import {View,Text,SectionList,StyleSheet,FlatList,TouchableOpacity,Image} from 'react-native';
@@ -51,14 +51,18 @@ export default class PhotoList extends Component {
     render(){
         let checkedListLen = this.state.checkedList.length;
         return <View style={Styles.content}>
-            <SectionList
-                style={this.state.isEdit?Styles.sectionList:{}}
-                keyExtractor={(item, index) => 'fileList'+index.toString()}
-                stickySectionHeadersEnabled={true}
-                renderSectionHeader={this._renderSectionHeader}
-                renderItem={this._renderItem}
-                sections={this.state.mediaList}
-            />
+            {
+                this.state.defaultList.length === 0? <Empty />:
+           
+                    <SectionList
+                        style={this.state.isEdit?Styles.sectionList:{}}
+                        keyExtractor={(item, index) => 'fileList'+index.toString()}
+                        stickySectionHeadersEnabled={true}
+                        renderSectionHeader={this._renderSectionHeader}
+                        renderItem={this._renderItem}
+                        sections={this.state.mediaList}
+                    />
+            }
             {
                 !this.state.isEdit ? 
                     <TouchableOpacity style={Styles.edit} onPress={()=>this.onEdit(true)}>
@@ -71,8 +75,6 @@ export default class PhotoList extends Component {
                             <TouchableOpacity activeOpacity={checkedListLen>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.delete}><Text style={[Styles.bottomToolbarsText,{color:checkedListLen>0?'#FF3535':'#e1e1e1'}]}> 删除</Text></TouchableOpacity>
                         </View>
                     </BottomToolbars>
-            }{
-                this.state.defaultList.length === 0? <Empty />:null
             }
         </View>;
     }

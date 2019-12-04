@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-27 09:37:06
+ * @LastEditTime: 2019-11-29 10:53:41
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -24,6 +24,7 @@ import Share from '../examples/Share';
 import PullView from '../examples/PullView';
 import Switch from '../examples/Switch';
 import GetWheel from '../examples/Wheel';
+import Datepicker from '../examples/Datepicker';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -133,6 +134,11 @@ const AppNavigator = createStackNavigator(
             screen:PhotoDeatil,
             navigationOptions:getOptions()            
         },  
+        Datepicker:{
+            screen:Datepicker,
+            navigationOptions:getOptions('日期选择器')            
+        },  
+        
     });
 
 export const Root = createAppContainer(AppNavigator);

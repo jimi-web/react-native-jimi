@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-28 16:59:58
+ * @LastEditTime: 2019-12-04 10:31:33
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
@@ -35,8 +35,12 @@ export default class GoogleTrace extends TraceUtils {
                 onMyChange={this.onMyChange}
                 onDeviceChange={this.onDeviceChange}
                 ChangePositionBtn={this.ChangePositionBtn()}
-                mapControls={this.polyline}
-            ></GooglePosition>
+                // mapControls={this.polyline}
+            >
+                {
+                    this.polyline()
+                }
+            </GooglePosition>
             {
                 this.whitespace()
             }

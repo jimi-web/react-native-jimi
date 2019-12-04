@@ -4,12 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-10-10 10:52:06
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-16 11:21:18
+ * @LastEditTime: 2019-12-03 16:15:10
  */
 import {jmAjax} from '../../http/business';
 import gps from '../../libs/coversionPoint';
 import api from '../../api/index';
-import {Toast} from 'teaset';
 
 /**
  * 获取设备定位信息
@@ -49,8 +48,6 @@ export const geocoder = (data)=> {
         });
     });
 };
-
-
 
 
 /**
@@ -100,4 +97,20 @@ export const distance = (distance,type)=>{
     return 0+'m';
 };
 
+
+/**
+ * 计算设备估计总里程
+ */
+export const  countTotalTrack = (track = []) => {
+    let totalMileage = 0;
+    for (let i = 0; i < track.length; i++) {
+        const item = track[i];
+        if(i > 0){
+            const itemSuper = track[i - 1];
+            totalMileage += gps.distance(item.latitude,item.longitude,itemSuper.latitude,itemSuper.longitude);
+        }
+    }
+   
+    return totalMileage;
+};
 

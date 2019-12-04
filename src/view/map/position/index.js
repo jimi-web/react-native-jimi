@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 14:10:43
+ * @LastEditTime: 2019-12-04 10:38:52
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,DeviceEventEmitter,AsyncStorage} from 'react-native';
@@ -80,6 +80,7 @@ export default class PositionUtils extends Component {
 
     constructor(props) {
         super(props);
+        this.timeInterval = null;
         this.state = {
             // 初始化中心点
             region:{
@@ -101,7 +102,7 @@ export default class PositionUtils extends Component {
             },
             isMyPosition :false,// 判断是否切换到我的位置
             isInit:false,//判断出否初始化结束
-            timeInterval:null,//计时器
+            // timeInterval:null,//计时器
             locationData:null,//定位的所有数据
             ChangePositionBtn:{
                 isShow:this.props.ChangePositionBtn.style ? true :this.props.ChangePositionBtn.isShow ? true : false,
@@ -131,7 +132,7 @@ export default class PositionUtils extends Component {
 
     componentWillUnmount() {
         Loading.hide();
-        clearInterval(this.state.timeInterval);
+        clearInterval(this.timeInterval);
     }
 
     /**
@@ -149,7 +150,7 @@ export default class PositionUtils extends Component {
             }
             
             if(this.props.isRefresh){
-                this.state.timeInterval = setInterval(() => {
+                this.timeInterval = setInterval(() => {
                     this.getMarker();
                     if(this.state.ChangePositionBtn.isShow){
                         this.getPhonePoint();
@@ -319,8 +320,11 @@ export default class PositionUtils extends Component {
                     this.state.locationData.powerPer != null ?
                         <View style={MapStyles.batterybg}>
                             <View style={MapStyles.batteryRight}></View>
-                            <View style={{height:9,width:18}}>
+                            <View style={{position:'relative',height:9,width:18}}>
                                 <View style={{width:this.batteryState().per+'%',height:'100%',backgroundColor:this.batteryState().bgColor,borderRadius:1}}></View>
+                                <View style={{position:'absolute',left:0,right:0,bottom:0,top:0}}>
+                                    <Text style={{textAlign:'center',color:'#000',fontSize:6,}}>{this.state.locationData.powerPer?this.state.locationData.powerPer+'%':0}</Text>
+                                </View>
                             </View>
                         </View>
                         :null

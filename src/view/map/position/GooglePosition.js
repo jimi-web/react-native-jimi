@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 14:41:15
+ * @LastEditTime: 2019-12-04 10:31:53
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -53,7 +53,8 @@ export default class GooglePosition extends PositionUtils {
                     {this.markers()}
                     {this.myMarker()}
                     {
-                        this.props.mapControls? this.props.mapControls():null
+                        // this.props.mapControls? this.props.mapControls():null
+                        this.props.children
                     }
                 </MapView>
                 {/* 按钮功能 */}

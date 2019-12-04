@@ -4,16 +4,16 @@
  * @Author: xieruizhi
  * @Date: 2019-11-25 15:32:34
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-25 15:42:12
+ * @LastEditTime: 2019-12-04 13:52:58
  */
 import React, {Component} from 'react';
-import {View,Image,Text,StyleSheet} from 'react-native';
+import {View,Image,Text,StyleSheet,TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 
 export default class Empty extends Component { 
 
     static propTypes = {
-       
+        onPress:PropTypes.func
     }
 
     static defaultProps = {
@@ -26,9 +26,13 @@ export default class Empty extends Component {
     }
 
     render() {
-        return <View style={Styles.empty}>
-            <Image source={this.props.source} />
-            <Text style={Styles.emptyText}>{this.props.text}</Text>
+        return <View style={{flex:1}}>
+            <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={this.props.onPress}>
+                <View style={Styles.empty}>
+                    <Image source={this.props.source} />
+                    <Text style={Styles.emptyText}>{this.props.text}</Text>
+                </View>
+            </TouchableOpacity>
         </View>;
     }
 }

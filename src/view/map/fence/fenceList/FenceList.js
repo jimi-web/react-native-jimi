@@ -4,19 +4,19 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 18:18:17
+ * @LastEditTime: 2019-12-04 11:47:13
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
-// import { withNavigation } from 'react-navigation';
 import PropTypes from 'prop-types';
 import Loading from '../../../../components/loading/Loading';
 import {jmAjax} from '../../../../http/business';
 import api from '../../../../api/index';
+import Empty from '../../../empty/Empty';
 import FenceListItem from './FenceListItem';
 import BottomToolbars from '../../../components/BottomToolbars';
 import FenceStyles from '../../style/fenceList';
-import {Dialog,Overlay} from '../../../../components/index';
+import {Modal} from '../../../../components/index';
 
 export default class FenceList extends Component { 
     static propTypes = {
@@ -83,11 +83,9 @@ export default class FenceList extends Component {
                             })
                         }
                         <View style={FenceStyles.space}></View>
-                    </ScrollView>:
-                    <View style={FenceStyles.empty}>
-                        <Image source={require('../../../../assets/fence/list_empty.png')} />
-                        <Text style={FenceStyles.emptyText}>暂无内容</Text>
-                    </View>
+                    </ScrollView>: <Empty />
+                   
+          
             }
             <BottomToolbars>
                 {this.bottomTool()}
@@ -272,7 +270,6 @@ export default class FenceList extends Component {
     
     del = ()=>{
         Loading.show('删除中...');
-        Overlay.remove(this.overlayKey);
         let delId = [];//给后台删除的数据
         let delList = this.state.delList;
         let fenceList = this.state.fenceList;
@@ -307,12 +304,12 @@ export default class FenceList extends Component {
      * 删除提示
      */
     deltip = ()=>{
-        const element = <Dialog
-            contentText={'确认删除围栏吗？'}
-            onConfirm={()=>{this.del();}}
-            onCancel={() => {Overlay.remove(this.overlayKey);}}
-        />; 
-        this.overlayKey = Overlay.add(element);
+        Modal.dialog({
+            contentText:'确认删除围栏吗？',
+            onConfirm:()=>{
+                this.del();
+            }
+        });
     }
 
 

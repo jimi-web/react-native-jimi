@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:27:14
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-28 13:38:55
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-12-02 10:46:03
  */
 
 import React, {Component} from 'react';
@@ -115,7 +115,6 @@ if (!AppRegistry.jmegisterComponentOld) {
 AppRegistry.registerComponent = function(appKey, componentProvider) {
     class JmRootElement extends Component {
         render() {
-            console.log(appKey,111111111);
             let Component = componentProvider();
             return (
                 <JmTopView>

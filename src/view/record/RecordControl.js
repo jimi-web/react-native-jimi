@@ -3,20 +3,20 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-26 10:45:37
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-12-03 17:18:56
  */
 import React, {Component} from 'react';
-import {View,Platform,TouchableOpacity,Image,Text,StyleSheet,Modal,Dimensions} from 'react-native';
-import {Button} from '../../components/index';
-import {Wheel,Toast} from 'teaset';
+import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
+import {Button,Drawer,Wheel} from '../../components/index';
 import BottomToolbars from '../components/BottomToolbars';
+import {Toast} from 'teaset';
 const {width} = Dimensions.get('window');
 export default class RecordControl extends Component {
     constructor(props){
         super(props);
+        this.selectTime=null;
         this.state = {
-            isVisible:false,
             time:'30s',
             index:0,
         };
@@ -37,7 +37,6 @@ export default class RecordControl extends Component {
             <BottomToolbars >
                 <View style={this.renderStyle()}>
                     {isOpenSelect?this.renderControl():this.renderDelete()}
-                    {this.renderModal()}
                 </View>
             </BottomToolbars>
         );
@@ -46,7 +45,7 @@ export default class RecordControl extends Component {
      * 轨迹声音录制控制面板
      */
     renderControl(){
-        const {recordLength,recordType,isRecording} = this.props;
+        const {recordLength,recordType,isRecording,isBeginRecord} = this.props;
         let text = '开始录音';
         let backgroundColor = isRecording?'#98BBF9':'#3479F6';
         let borderColor = isRecording?'#98BBF9':'#3479F6';
@@ -69,11 +68,19 @@ export default class RecordControl extends Component {
             </View>
             <View style={{flex:1}}>
                 {
-                    recordType == 0
-                        ?
-                        <Button onPress={this.onRecord} titleStyle={[styles.titleStyle]} style={[styles.buttonStyle,{backgroundColor,borderColor}]} title={`${text}（${this.ftmTime(recordLength)}）`}  />
+                    isBeginRecord?
+                        recordType == 0
+                            ?
+                            <Button  activeOpacity={isRecording?1:0} onPress={this.onRecord} titleStyle={[styles.titleStyle]} style={[styles.buttonStyle,{backgroundColor,borderColor}]} title={`${text}（${this.ftmTime(recordLength)}）`}  />
+                            :
+                            <Button onPress={this.onRecord} titleStyle={styles.titleStyle} style={styles.buttonStyle} title={text}  />
                         :
-                        <Button onPress={this.onRecord} titleStyle={styles.titleStyle} style={styles.buttonStyle} title={text}  />
+                        <Button  activeOpacity={1} titleStyle={styles.titleStyle} style={[styles.buttonStyle,{backgroundColor:'#98BBF9',borderColor:'#98BBF9'}]}>
+                            <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
+                                <ActivityIndicator size="small" color="#fff" />
+                                <Text style={{color:'#fff',marginLeft:10,fontSize:16}}>加载中...</Text>
+                            </View>
+                        </Button>
                 }
             </View>
         </View>;
@@ -83,7 +90,7 @@ export default class RecordControl extends Component {
         if(isRecording){
             return Toast.message('当前设备正在录音');
         }
-        this.setState({isVisible:true});
+        this.renderModal();
     }
    
     /**
@@ -96,7 +103,8 @@ export default class RecordControl extends Component {
             isRecording:isRecording
         };
         if(isRecording && recordType == 0){
-            return Toast.message('当前设备正在录音');
+            // return Toast.message('当前设备正在录音');
+            return;
         }
         this.props.onRecord && this.props.onRecord(data);
     }
@@ -138,35 +146,29 @@ export default class RecordControl extends Component {
     renderModal = () => {
         const {insTimeArr} = this.props;
         const time = insTimeArr;
-        return <Modal
-            animationType="slide"
-            transparent={true}
-            visible={this.state.isVisible}
-        >
-            <View style={styles.shadow}></View>
-            <View style={styles.datepicker}>
-                <View style={styles.header}>
-                    <TouchableOpacity activeOpacity={1} onPress={()=>{
-                        this.setState({isVisible:false});
-                    }} >
-                        <Text style={styles.headerText}>{'取消'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1} onPress={this.onConfirm} >
-                        <Text style={styles.headerText}>{'确定'}</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{backgroundColor:'#fff',justifyContent: 'center', alignItems: 'center'}}>
-                    <Wheel
-                        style={styles.wheelItem}
-                        itemStyle={styles.itemStyle}
-                        holeStyle= {styles.holeStyle}
-                        items={time}
-                        index={this.state.index}
-                        onChange={index => this.onDateChange(time[index],index)}
-                    />      
-                </View>
+        let modal = <View style={styles.datepicker}>
+            <View style={styles.header}>
+                <TouchableOpacity activeOpacity={1} onPress={()=>{
+                    Drawer.close(this.selectTime);
+                }} >
+                    <Text style={styles.headerText}>{'取消'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={1} onPress={this.onConfirm} >
+                    <Text style={styles.headerText}>{'确定'}</Text>
+                </TouchableOpacity>
             </View>
-        </Modal>;
+            <View style={{backgroundColor:'#fff',justifyContent: 'center', alignItems: 'center'}}>
+                <Wheel
+                    style={styles.wheelItem}
+                    itemStyle={styles.itemStyle}
+                    holeStyle= {styles.holeStyle}
+                    items={time}
+                    index={this.state.index}
+                    onChange={index => this.onDateChange(time[index],index)}
+                />      
+            </View>
+        </View>;
+        this.selectTime = Drawer.open(modal);
     }
     /**
      * 保存时间
@@ -178,9 +180,7 @@ export default class RecordControl extends Component {
         time = isNaN(time)?0:time;
         const type = this.state.time == '持续录音'?1:0;
         this.props.onConfirm &&  this.props.onConfirm({type,time});
-        this.setState({
-            isVisible:false
-        });
+        Drawer.close(this.selectTime);
     }
     /**
      * 选中图片
@@ -225,10 +225,10 @@ const styles = StyleSheet.create({
         opacity:0.8,
     },  
     datepicker:{
-        position:'absolute',
-        bottom:0,
+        // position:'absolute',
+        // bottom:0,
         width:width,
-        zIndex:1001
+        // zIndex:1001
     },
     header:{
         height: 49,

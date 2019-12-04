@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 17:51:18
+ * @LastEditTime: 2019-12-04 14:38:55
  */
 import React, {Component} from 'react';
 import {TouchableOpacity,Image} from 'react-native';
@@ -284,10 +284,7 @@ export default class TrackUtils extends Component {
             //如果是谷歌地图则设置可视区域
             if(this.state.userMapType){
                 this.fitAllMarkers();
-            }
-            console.log(this.state.totalDistance);
-            console.log(this.state.pointArr);
-            
+            }  
         });   
     }
 

@@ -4,12 +4,12 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-19 10:15:27
+ * @LastEditTime: 2019-12-03 15:02:12
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet} from 'react-native';
 import {Button} from '../../components/index';
-import {Overlay,Dialog} from '../../components/index';
+import {Modal} from '../../components/index';
 
 export default class Home extends Component{
     constructor(props){
@@ -32,7 +32,10 @@ export default class Home extends Component{
                     <Button style={styles.btn} title={'滚轮'} onPress={()=>{this.props.navigation.push('GetWheel');}} />  
                     <Button style={styles.btn} title={'录音'} onPress={()=>{this.props.navigation.push('Record');}} />  
                     <Button style={styles.btn} title={'围栏'} onPress={()=>{this.props.navigation.push('Fence');}} />  
-                    <Button style={styles.btn} title={'弹框'} onPress={()=>{Overlay.add(<Dialog></Dialog>);}} />  
+                    <Button style={styles.btn} title={'弹框'} onPress={()=>{Modal.dialog();}} />  
+                    <Button style={styles.btn} title={'日期选择器'} onPress={()=>{this.props.navigation.push('Datepicker');}} />  
+                    <Button style={styles.btn} title={'测试'} onPress={()=>{this.props.navigation.push('Test');}} />  
+                    
                 </View>
             </View>
         );
