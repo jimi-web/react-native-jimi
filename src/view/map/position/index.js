@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 10:38:52
+ * @LastEditTime: 2019-12-04 17:21:06
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,DeviceEventEmitter,AsyncStorage} from 'react-native';
@@ -323,7 +323,7 @@ export default class PositionUtils extends Component {
                             <View style={{position:'relative',height:9,width:18}}>
                                 <View style={{width:this.batteryState().per+'%',height:'100%',backgroundColor:this.batteryState().bgColor,borderRadius:1}}></View>
                                 <View style={{position:'absolute',left:0,right:0,bottom:0,top:0}}>
-                                    <Text style={{textAlign:'center',color:'#000',fontSize:6,}}>{this.state.locationData.powerPer?this.state.locationData.powerPer+'%':0}</Text>
+                                    <Text style={{textAlign:'center',color:'#000',fontSize:6,}}>{this.state.locationData.powerPer?this.state.locationData.powerPer+'%':null}</Text>
                                 </View>
                             </View>
                         </View>
