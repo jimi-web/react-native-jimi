@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-03 17:00:58
+ * @LastEditTime: 2019-12-04 15:39:05
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
@@ -124,7 +124,7 @@ export default class TraceUtils extends PositionUtils {
                                     <Text style={MapStyles.text}>通讯时间：{deviceInfo.time?deviceInfo.time:'无'}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:null}</Text>
+                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:null}{'\n'}</Text>
                                 </View> 
                             </View>:null
                     }
@@ -205,9 +205,9 @@ export default class TraceUtils extends PositionUtils {
 
     pullUp = ()=>{
         this.setState({
-            pullUpHeight:isIphoneX()?iphoneXHeight(160):160,
+            pullUpHeight:isIphoneX()?iphoneXHeight(180):180,
             pullState:1,
-            positionBtnHeight:90
+            positionBtnHeight:100
         });
     }
 

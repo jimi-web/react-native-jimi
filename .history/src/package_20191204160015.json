@@ -1,6 +1,6 @@
 {
     "name": "react-native-jimi",
-    "version": "1.4.1",
+    "version": "1.4.0",
     "description": "几米圈前端业务组件库",
     "main": "index.js",
     "scripts": {

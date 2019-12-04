@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-03 17:18:56
+ * @LastEditTime: 2019-12-04 16:46:58
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -87,7 +87,7 @@ export default class RecordControl extends Component {
     }
     onSelectTimeLength = () => {
         const {isRecording} = this.props;
-        if(isRecording){
+        if(isRecording || !this.props.isBeginRecord){
             return Toast.message('当前设备正在录音');
         }
         this.renderModal();
