@@ -104,6 +104,12 @@ export default class TrackUtils extends Component {
         };
     }
 
+    componentWillMount() {
+        if(this.mapViewFunc){
+            this.mapViewFunc.reloadView();
+        }
+    }
+
     componentDidMount() {
         this.onPullTime();
     }

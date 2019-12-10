@@ -136,6 +136,28 @@ export const httpExit = (callback) => {
 };
 
 /**
+ * 错误码
+ */
+const errorCode =(code)=>{
+    let message ='定位失败';
+    switch(code){
+    case -200:
+        message = '定位服务未打开';
+        break;
+    case -201:
+        message = '定位权限未申请';
+        break;
+    case -202:
+        message = '定位权限已关闭';
+        break;
+    default:
+        message = '定位失败';
+        break;
+    }
+    return message;
+};
+
+/**
  * 获取当前手机位置
  * @param {string} type 地图经纬度类型
  */
@@ -150,10 +172,9 @@ export const httpLocationGet = (type) =>{
             // 请求失败
             onFail: (res) => {
                 if(isHttpLocationGetShow){
-                    Toast.message('定位失败');
+                    Toast.message(errorCode(res.code));
                     isHttpLocationGetShow = false;
                 }
-                
             },
             // 请求失败或成功
             onComplete: () => {
@@ -162,6 +183,8 @@ export const httpLocationGet = (type) =>{
         }); 
     });
 };
+
+
 
 
 /**

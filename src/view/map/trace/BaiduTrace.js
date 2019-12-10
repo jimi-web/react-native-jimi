@@ -32,6 +32,7 @@ export default class BaiduTrace extends TraceUtils {
         return <View style={{flex:1}}>
             <BaiduPosition
                 {...this.props}
+                ref={(e)=>this.mapViewFunc=e}
                 onMyChange={this.onMyChange}
                 onDeviceChange={this.onDeviceChange}
                 visualRange={this.state.visualRange}

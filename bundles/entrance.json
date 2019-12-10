@@ -1,0 +1,12 @@
+﻿{
+    "deviceName":"react_native_jimi",
+    "versions":"V1.0.0",
+    "deviceType":"",
+    "launch_path":"index",
+    "navigationBarBackgroundColor":"#FFFFFF",  
+    "navigationBarTextStyle":"black",
+    "navigationStyle":"custom",     
+    "navigationBarTitleText":"",
+    "engineMode":"1",
+    "reactNativeModuleName":"JMRNSmallApp"
+}

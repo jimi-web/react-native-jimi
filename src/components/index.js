@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:28:59
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 09:31:07
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-11-06 09:34:03
  */
 
 import TopView from './overlay/TopView';
@@ -17,6 +17,7 @@ import Loading from './loading/Loading';
 import Toast from './toast/Toast';
 import PopUpBox from './popUpBox/PopUpBox';
 import InputBox from './popUpBox/inputBox';
+import Timeline from './timeline';
 
 const Circle = {
     TopView,
@@ -28,7 +29,8 @@ const Circle = {
     Toast,
     PopUpBox,
     InputBox,
-    Alert
+    Alert,
+    Timeline
 };
 
 module.exports =  Circle;
