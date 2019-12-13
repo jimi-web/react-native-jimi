@@ -4,10 +4,11 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 16:46:58
+ * @LastEditTime: 2019-12-10 15:01:42
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
+import {Theme} from '../../components/index';
 import {Button,Drawer,Wheel} from '../../components/index';
 import BottomToolbars from '../components/BottomToolbars';
 import {Toast} from 'teaset';
@@ -118,7 +119,7 @@ export default class RecordControl extends Component {
                 <Text style={[styles.letBorder,{color:'#000'}]}>{'取消'}</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={1} style={styles.deleteBtn} onPress={() => {this.props.onEmpty && this.props.onEmpty();}}>
-                <Text style={[styles.letBorder,{color:'#3479F6'}]}>{'清空'}</Text>
+                <Text style={[styles.letBorder,{color:Theme.buttonTextColorDefault}]}>{'清空'}</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={1} style={styles.deleteBtn}>
                 <Text style={[styles.letBorder,{color:'#FF3535'}]} onPress={() => {this.props.onDelete && this.props.onDelete();}}>{`删除(${fileNumber})`}</Text>
@@ -197,12 +198,12 @@ const styles = StyleSheet.create({
     buttonStyle:{
         width:165,
         height:40,
-        backgroundColor:'#3479F6',
+        backgroundColor:Theme.buttonBackColorPrimary,
         borderRadius:20,
     },
     titleStyle:{
-        color:'#fff',
-        fontSize:16
+        color:Theme.buttonTextColorPrimary,
+        fontSize:Theme.buttonFontLg
     },
     controlStyle:{
         flex:1,

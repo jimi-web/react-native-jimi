@@ -27,5 +27,8 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "devDependencies": {
+    "react-native-iconfont-cli": "^1.6.3"
   }
 }

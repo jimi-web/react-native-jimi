@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:28:59
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-03 15:01:15
+ * @LastEditTime: 2019-12-12 09:56:16
  */
 
 import TopView from './overlay/TopView';
@@ -23,6 +23,7 @@ import Drawer from './drawer/Drawer';
 import Wheel from './wheel/Wheel';
 import Datepicker from './datePickerDialog/DatePicker';
 import Modal from './modal/Modal';
+import Icon from './iconfont/Icon';
 
 const Circle = {
     TopView,
@@ -40,7 +41,8 @@ const Circle = {
     Drawer,
     Wheel,
     Datepicker,
-    Modal
+    Modal,
+    Icon
 };
 
 module.exports =  Circle;

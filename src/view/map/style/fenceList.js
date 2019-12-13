@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 16:02:08
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 09:39:59
+ * @LastEditTime: 2019-12-10 15:14:55
  */
 import {StyleSheet,Dimensions} from 'react-native';
 const {width} = Dimensions.get('window');
@@ -14,7 +14,7 @@ const FenceStyles =  StyleSheet.create({
     line:{
         flex:1,
         flexDirection:'row',
-        padding:15,
+        padding:Theme.fenceItemPadding,
         alignItems:'center',
         borderBottomWidth:1,
         borderColor:'#F7F7F7',
@@ -35,13 +35,13 @@ const FenceStyles =  StyleSheet.create({
     },
     name:{
         flex:1,
-        color:'#4D4D4D',
-        fontSize:16,
+        color:Theme.fenceTitleColor,
+        fontSize:Theme.fenceTitleSize,
         flexWrap:'wrap'
     },
     text:{
-        color:'#A3A3A3',
-        fontSize:12,
+        color:Theme.fenceAddressColor,
+        fontSize:Theme.fenceAddressSize,
     },
     address:{
         marginTop:5
@@ -80,7 +80,7 @@ const FenceStyles =  StyleSheet.create({
     },
     addText:{
         marginLeft:10,
-        color:'#fff',
+        color:Theme.buttonTextColorPrimary,
         fontSize:16
     },
     space:{
@@ -91,7 +91,7 @@ const FenceStyles =  StyleSheet.create({
         fontSize:17
     },
     allSelectText:{
-        color:Theme.TextColorPrimary
+        color:Theme.buttonTextColorDefault
     },
     btnItemLine:{
         color:'rgba(0, 0, 0, 0.1)'

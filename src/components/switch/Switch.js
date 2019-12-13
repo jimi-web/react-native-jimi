@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {View,StyleSheet,TouchableOpacity,Animated} from 'react-native';
 import PropTypes from 'prop-types';
+import Theme from '../themes/index';
 
 export default class Switch  extends Component {
 
@@ -16,8 +17,8 @@ export default class Switch  extends Component {
     static defaultProps = {
         style:{},
         value: false,
-        activeColor: '#4BD865',//打开状态颜色
-        defaultColor: '#fff',//关闭状态颜色
+        activeColor: Theme.switchActiveColor,//打开状态颜色
+        defaultColor: Theme.switchDefaultColor,//关闭状态颜色
         disabled:false,
         onValueChange:()=>{}
     }

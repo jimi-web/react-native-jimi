@@ -4,14 +4,14 @@
  * @Author: xieruizhi
  * @Date: 2019-09-16 09:59:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 17:40:14
+ * @LastEditTime: 2019-12-09 17:27:29
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,DeviceEventEmitter} from 'react-native';
 import PropTypes from 'prop-types';
 import {BoxShadow} from 'react-native-shadow';
 import MapStyles from '../style/track';
-import themes from '../../../components/themes';
+import {Theme} from '../../../components/index';
 import {SegmentedBar,ListRow,Toast} from 'teaset';
 import Datepicker from '../../../components/datepicker/Datepicker';
 
@@ -80,8 +80,8 @@ export default class PullTime extends Component {
                         <View style={MapStyles.tab}> 
                             <SegmentedBar 
                                 indicatorType={'customWidth'} 
-                                indicatorLineColor={themes.TextColorPrimary} 
-                                indicatorLineWidth={3} 
+                                indicatorLineColor={Theme.indicatorLineColor} 
+                                indicatorLineWidth={Theme.indicatorLineWidth} 
                                 indicatorWidth={26}
                                 indicatorPositionPadding={-8}
                                 activeIndex={this.state.activeIndex}
@@ -126,8 +126,6 @@ export default class PullTime extends Component {
                                 }} >
                               
                                     <Text style={[MapStyles.btnItemText]}>取消</Text>  
-                                
-                               
                                 </TouchableOpacity>  
                             </BoxShadow>
                             <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.confirm]} onPress={this.onConfirm} >

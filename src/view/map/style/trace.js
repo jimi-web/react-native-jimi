@@ -4,10 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 13:51:16
+ * @LastEditTime: 2019-12-09 15:27:26
  */
 import {StyleSheet,Dimensions} from 'react-native';
 const {width} = Dimensions.get('window');
+import {Theme} from '../../../components/index';
 
 const MapStyles =  StyleSheet.create({
     box:{
@@ -45,7 +46,7 @@ const MapStyles =  StyleSheet.create({
     },
     text:{
         fontSize:12,
-        color:'#666'
+        color:Theme.infoBoxText
     },
     state:{
         flexDirection:'row'

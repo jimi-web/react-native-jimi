@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-25 10:55:02
+ * @LastEditTime: 2019-12-09 17:06:43
  */
 import {StyleSheet,Dimensions} from 'react-native';
-import themes from '../../../components/themes';
+import {Theme} from '../../../components/index';
 const {width} = Dimensions.get('window');
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 
@@ -33,7 +33,7 @@ const MapStyles =  StyleSheet.create({
     },
     timeText:{
         fontSize:18,
-        color:'#000000',
+        color:Theme.timeTitle,
     },
     selectTimeIcon:{
         paddingLeft:20,
@@ -120,7 +120,7 @@ const MapStyles =  StyleSheet.create({
     },
     activeTitleStyle:{
         fontSize:16,
-        color:themes.TextColorPrimary
+        color:Theme.TextColorPrimary
     },
     listRow:{
         flexDirection:'row',
@@ -155,7 +155,7 @@ const MapStyles =  StyleSheet.create({
     },
     confirm:{
         color:'#fff',
-        backgroundColor:themes.buttonBackColorPrimary      
+        backgroundColor:Theme.buttonBackColorPrimary      
     },
     btnItemText:{
         fontSize:16,
@@ -168,8 +168,8 @@ const MapStyles =  StyleSheet.create({
         width:width
     },
     startEndImg :{
-        width:20,
-        height:34
+        width:Theme.startEndImgWidth,
+        height:Theme.startEndImgHeight,
     }
     
 });

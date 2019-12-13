@@ -4,10 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 15:39:05
+ * @LastEditTime: 2019-12-09 15:30:52
  */
-import React, {Component} from 'react';
+import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
+import {Theme} from '../../../components/index';
 import PropTypes from 'prop-types';
 import {httpApp} from '../../../http/basic';
 import api from '../../../api/index';
@@ -106,7 +107,7 @@ export default class TraceUtils extends PositionUtils {
                         <Text style={MapStyles.title}>{deviceInfo.deviceName?deviceInfo.deviceName:this.state.asyncStorageAeviceName}</Text>
                     </View> 
                     <View style={[MapStyles.item,MapStyles.state]}>
-                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus).color,paddingTop:1}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus).text:'离线'}</Text>
+                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).color,paddingTop:1}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).text:'离线'}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>距离{this.state.distance? distance(this.state.distance):0+'m'}</Text>
                         <Text style={MapStyles.line}>|</Text>
@@ -294,10 +295,10 @@ export default class TraceUtils extends PositionUtils {
         let op = {
             style:{
                 position:'absolute',
-                left:15,
+                left:Theme.myPositionBtnLeft,
                 bottom:this.state.positionBtnHeight,
-                width:37,
-                height:37,
+                width:Theme.controlBtnWidth,
+                height:Theme.controlBtnHeight,
                 zIndex:100,
                 ...this.props.ChangePositionBtn
             }

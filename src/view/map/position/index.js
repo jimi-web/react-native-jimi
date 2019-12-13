@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 17:21:06
+ * @LastEditTime: 2019-12-09 14:44:47
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,DeviceEventEmitter,AsyncStorage} from 'react-native';
@@ -13,8 +13,7 @@ import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
 import Loading from '../../../components/loading/Loading';
 import { devicePosition } from '../comm';
-import {httpLocationGet,jmAjax} from '../../../http/business';
-import api from '../../../api/index';
+import {httpLocationGet} from '../../../http/business';
 import PropTypes from 'prop-types';
 import '../../../libs/time';
 
@@ -258,9 +257,6 @@ export default class PositionUtils extends Component {
      * @param {Object} data  定位信息
      */
     drawMarker = (data)=>{
-
-        console.log(data);
-        
         let point = {
             latitude:data.latitude,
             longitude: data.longitude,
@@ -313,17 +309,18 @@ export default class PositionUtils extends Component {
         let infoBordeRadius = this.state.userMapType ? null : 8;
         let shadow = this.state.userMapType ?  null :MapStyles.infoWindowShadow;
         let spaceBetween = this.state.userMapType ? {padding:5,paddingBottom:0} :null;
+        let locationData = this.state.locationData;
         return <View style={[MapStyles.infoWindow,shadow,{borderRadius:infoBordeRadius},spaceBetween]}>
             <View style={[MapStyles.infoWindowItem,MapStyles.infoWindowItemImei]}>
-                <Text style={MapStyles.imei}>{this.state.locationData.deviceName}</Text>
+                <Text style={MapStyles.imei}>{locationData.deviceName}</Text>
                 {
-                    this.state.locationData.powerPer != null ?
+                    locationData.powerPer != null ?
                         <View style={MapStyles.batterybg}>
                             <View style={MapStyles.batteryRight}></View>
                             <View style={{position:'relative',height:9,width:18}}>
                                 <View style={{width:this.batteryState().per+'%',height:'100%',backgroundColor:this.batteryState().bgColor,borderRadius:1}}></View>
                                 <View style={{position:'absolute',left:0,right:0,bottom:0,top:0}}>
-                                    <Text style={{textAlign:'center',color:'#000',fontSize:6,}}>{this.state.locationData.powerPer?this.state.locationData.powerPer+'%':null}</Text>
+                                    <Text style={{textAlign:'center',color:'#000',fontSize:6,}}>{locationData.powerPer?locationData.powerPer+'%':null}</Text>
                                 </View>
                             </View>
                         </View>
@@ -331,20 +328,20 @@ export default class PositionUtils extends Component {
                 }
             </View>
             <View style={MapStyles.infoWindowItem}>
-                <Text style={[MapStyles.infoWindowTitle,{color:this.deviceState(this.state.locationData.deviceStatus).color,paddingTop:1}]}>{this.deviceState(this.state.locationData.deviceStatus).text}</Text>
+                <Text style={[MapStyles.infoWindowTitle,{color:this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).color,paddingTop:1}]}>{this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).text}</Text>
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{this.posType().text}</Text>
                 <Text style={MapStyles.line}>|</Text>
-                <Text style={MapStyles.infoWindowTitle}>{this.state.locationData.gpsSpeed ? this.state.locationData.gpsSpeed:0}km/h</Text>
+                <Text style={MapStyles.infoWindowTitle}>{locationData.gpsSpeed ? locationData.gpsSpeed:0}km/h</Text>
             </View>                              
             <View style={MapStyles.infoWindowItem}>
                 <Text style={MapStyles.infoWindowTitle}>定位时间：{this.posType().time}</Text>
             </View>     
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>通讯时间：{ this.state.locationData.time}</Text>
+                <Text style={MapStyles.infoWindowTitle}>通讯时间：{ locationData.time}</Text>
             </View>    
             <View style={[MapStyles.infoWindowItem,{paddingBottom:0}]}>
-                <Text style={MapStyles.infoWindowTitle}>地址：{this.state.locationData.address}{'\n'}                                                        
+                <Text style={MapStyles.infoWindowTitle}>地址：{locationData.address}{'\n'}                                                        
                 </Text>
             </View>     
         </View>;
@@ -353,29 +350,14 @@ export default class PositionUtils extends Component {
     /**
      * 设备状态
      */
-    deviceState =(deviceStatus)=>{
-        let stateOject = {};
-        switch (deviceStatus) {
-        case 0:
-            stateOject.text = '离线';
-            stateOject.color = '#000';
-            break;
-        case 1:
-            stateOject.text = '在线';
-            stateOject.color = '#13A887';
-            break;
-        case 2:
-            stateOject.text = '运动';
-            stateOject.color = '#13A887';
-            break;
-        case 3:
-            stateOject.text = '静止';
-            stateOject.color = '#F82E1B';
-            break;
-        case null:
-            stateOject.text = '离线';
-            stateOject.color = '#000'; 
+    deviceState =(deviceStatus,name)=>{
+        let stateOject = null;
+        let colorArray = [{text:'离线',color:'#000'},{text:'在线',color:'#13A887'}];
+        stateOject = deviceStatus ? colorArray[deviceStatus]:colorArray[0];
+        if(name){
+            stateOject.text = name;
         }
+
         return stateOject;
     }
 
@@ -455,8 +437,6 @@ export default class PositionUtils extends Component {
      * 监听数据变化
      */
     onDeviceChange = (data)=>{
-        console.log(data,'wushuju ');
-        
         this.props.onDeviceChange && this.props.onDeviceChange(data);
     }
 
