@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-12 14:36:06
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-11-06 09:35:50
+ * @LastEditTime: 2019-12-10 17:40:58
  */
 
 import React, {Component} from 'react';
@@ -23,7 +23,7 @@ export default class Home extends Component{
         return (
             <View style={styles.main}>
                 <Text style={{color:'#000',fontSize:20}}>{'这里是设置'}</Text>
-                <Timeline />
+                {/* <Timeline /> */}
             </View>
         );
     }

@@ -4,12 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 12:04:16
+ * @LastEditTime: 2019-12-03 15:24:41
  */
 import React, {Component} from 'react';
-import {View,StyleSheet,Text,TouchableOpacity,ActivityIndicator} from 'react-native';
-import {Jimi,Circle} from '../index';
-import {Toast} from '../components/index';
+import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
+import {Jimi} from '../index';
 
 export default class Position extends Component {
     constructor(props) {
@@ -23,10 +22,6 @@ export default class Position extends Component {
         };
     }
     render(){
-        // let obj= {
-        //     // style:styles.marker,
-            
-        // };
 
         let car = {
             isShow:true
@@ -86,23 +81,7 @@ export default class Position extends Component {
         </View>;  
     }
 
-    
-    componentDidMount() {
-        // let toast=Toast.show({
-        //     text:'哈哈哈哈',
-        //     icon: <ActivityIndicator size='large' color={'#fff'} />,
-        //     duration:100000
-        // });
 
-
-        
-
-        // let toast = Toast.loading();
-
-        // setTimeout(()=>{
-        //     Toast.remove(toast);
-        // },3000);
-    }
 
 
     /**

@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 11:57:48
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2019-12-25 16:09:42
  */
 
 // import Photo from './photo/index';
@@ -20,8 +20,13 @@ import BaiduAddFence from './map/fence/addFence/BaiduAddFence';
 import GoogleAddFence from './map/fence/addFence/GoogleAddFence';
 import Record from './record';
 import Share from './map/share/Share';
-
-
+import Photo from './photo/index';
+import PhotoList from './photo/photoList/PhotoList';
+import Photograph from './photo/photoDeatil/Photograph';
+import Video from './photo/photoDeatil/Video';
+import PhotoDeatil from './photo/photoDeatil/PhotoDeatil';
+import Empty from './empty/Empty';
+import RVC from './RVC/MonitorView';
 
 const Jimi = {
     BaiduPosition,
@@ -34,7 +39,15 @@ const Jimi = {
     BaiduAddFence,
     GoogleAddFence,
     Record,
-    Share
+    Share,
+    Photo,
+    PhotoList,
+    PhotoDeatil,
+    Photograph,
+    Video,
+    Empty,
+    RVC
+    
 };
 
 module.exports = Jimi;

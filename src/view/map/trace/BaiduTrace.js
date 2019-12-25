@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-08 11:21:45
+ * @LastEditTime: 2019-12-04 10:28:45
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
@@ -37,8 +37,11 @@ export default class BaiduTrace extends TraceUtils {
                 onDeviceChange={this.onDeviceChange}
                 visualRange={this.state.visualRange}
                 ChangePositionBtn={this.ChangePositionBtn()}
-                mapControls={this.polyline}
+                // mapControls={this.polyline}
             >
+                {
+                    this.polyline()
+                }
             </BaiduPosition>
             {
                 this.whitespace()
@@ -59,7 +62,7 @@ export default class BaiduTrace extends TraceUtils {
         return <Overlay.Polyline
             width={this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2}
             color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#F82E1B' : '#F82E1B'}
-            points={this.state.visualRange ? this.state.visualRange:[{latitude: 0, longitude: 0},{latitude: 0, longitude: 0}]}
+            points={this.state.visualRange.length>0 ? this.state.visualRange:[{latitude: 0, longitude: 0},{latitude: 0, longitude: 0}]}
         />;
     }   
 }

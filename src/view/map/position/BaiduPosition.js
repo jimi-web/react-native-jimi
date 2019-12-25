@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 10:41:23
+ * @LastEditTime: 2019-12-04 10:30:48
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -50,6 +50,11 @@ export default class BaiduPosition extends PositionUtils {
                 }}
                 visualRange = {this.props.visualRange ? this.props.visualRange :[this.props.initialRegion]}
             >  
+                <Overlay.Marker
+                    location={this.state.phonePoint}
+                    icon={this.props.mylocationOptions.image}
+                    visible ={this.state.phonePoint.latitude?true:false}
+                />
                 {
                     <Overlay.Marker
                         tag={1}
@@ -59,11 +64,6 @@ export default class BaiduPosition extends PositionUtils {
                         // visible ={this.state.markerPoint.latitude?true:false}
                     />
                 }
-                <Overlay.Marker
-                    location={this.state.phonePoint}
-                    icon={this.props.mylocationOptions.image}
-                    visible ={this.state.phonePoint.latitude?true:false}
-                />
                 {
                     this.state.markerPoint.latitude ?
                         <Overlay.InfoWindow
@@ -84,8 +84,9 @@ export default class BaiduPosition extends PositionUtils {
                         </Overlay.InfoWindow> :null
                 }
                 {
-                    this.props.mapControls? this.props.mapControls():null
+                    this.props.children
                 }
+
             </MapView> 
             {
                 this.roadBtn()

@@ -4,21 +4,20 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 14:15:05
+ * @LastEditTime: 2019-12-04 15:39:05
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
 import PropTypes from 'prop-types';
 import {httpApp} from '../../../http/basic';
 import api from '../../../api/index';
-import gps from '../../../libs/coversionPoint';
 import Share from '../share/Share';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 import PositionUtils from '../position/index';
 import Styles from '../style/base';
 import MapStyles from '../style/trace';
 import {Toast} from 'teaset';
-import {distance} from '../comm';
+import {distance,countTotalTrack} from '../comm';
 
 export default class TraceUtils extends PositionUtils { 
     static propTypes = {
@@ -54,7 +53,7 @@ export default class TraceUtils extends PositionUtils {
     constructor(props) {
         super(props);
         this.state = {
-            visualRange:null,//可视区域
+            visualRange:[],//可视区域
             deviceMarker:null,
             myMarker:null,
             deviceInfo:{},//设备信息
@@ -125,7 +124,7 @@ export default class TraceUtils extends PositionUtils {
                                     <Text style={MapStyles.text}>通讯时间：{deviceInfo.time?deviceInfo.time:'无'}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:null}</Text>
+                                    <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:null}{'\n'}</Text>
                                 </View> 
                             </View>:null
                     }
@@ -206,9 +205,9 @@ export default class TraceUtils extends PositionUtils {
 
     pullUp = ()=>{
         this.setState({
-            pullUpHeight:isIphoneX()?iphoneXHeight(160):160,
+            pullUpHeight:isIphoneX()?iphoneXHeight(180):180,
             pullState:1,
-            positionBtnHeight:90
+            positionBtnHeight:100
         });
     }
 
@@ -270,10 +269,15 @@ export default class TraceUtils extends PositionUtils {
             let myMarker = this.state.myMarker;
             if(deviceMarker && myMarker){
                 //百度可视范围直接传值
+                let visualRange = [...this.state.visualRange];
+                visualRange.push(deviceMarker);
+                
                 this.setState({
-                    visualRange:[deviceMarker,myMarker],
-                    distance:gps.distance(deviceMarker.latitude,deviceMarker.longitude,myMarker.latitude,myMarker.longitude)
+                    visualRange:visualRange,
                 },()=>{
+                    this.setState({
+                        distance:countTotalTrack(this.state.visualRange)
+                    });
                     //谷歌地图可视范围
                     if(this.refs.GooglePosition){
                         this.refs.GooglePosition.fitAllMarkers(this.state.visualRange);
@@ -316,7 +320,7 @@ export default class TraceUtils extends PositionUtils {
 
             },
             onFail: () => {
-                Toast.message('请下载地图');
+                // Toast.message('请下载地图');
             },
             onComplete:()=>{
                 

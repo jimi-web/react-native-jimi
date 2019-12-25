@@ -4,16 +4,11 @@
  * @Author: liujinyuan
  * @Date: 2019-10-12 14:01:19
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 18:11:08
+ * @LastEditTime: 2019-12-03 15:56:07
  */
 import React, {Component} from 'react';
-import {Text, View,StyleSheet,Animated,Image,TouchableOpacity,Modal} from 'react-native';
-import JmTopView from '../overlay/TopView';
-import Theme from '../themes/index';
+import {Text, View,StyleSheet,TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
-import button from '../button/button';
-
-
 
 export default class Dialog extends Component{
     static propTypes = {
@@ -21,7 +16,7 @@ export default class Dialog extends Component{
 
     };
     static defaultProps = {
-        contentText:'清空所有录音数据将不可恢复，是否确定？'
+        contentText:'是否删除?'
     };
     constructor(props){
         super(props);
@@ -50,9 +45,7 @@ const styles = StyleSheet.create({
     dialogMain:{
         width:270,
         borderRadius:12,
-        backgroundColor:'#fff',
-        // borderBottomColor:'#4D4D4D',
-        // borderStyle:StyleSheet.hairlineWidth,    
+        backgroundColor:'#fff',  
     },
     dialogContent:{
         width:'100%',

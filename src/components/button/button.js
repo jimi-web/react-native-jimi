@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-12 16:08:59
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-16 10:11:47
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-12-02 15:56:13
  */
 
 
@@ -105,9 +105,10 @@ export default class Button extends TouchableOpacity {
         // title = '';
         // style = {};
         return (
-            <TouchableOpacity onPress={this.props.onPress} style={this.renderStyle()}>
+            <TouchableOpacity onPress={this.props.onPress} style={this.renderStyle()}  activeOpacity={this.props.activeOpacity}>
                 {/* <Image source={icon}/> */}
                 {this.renderEl()}
+                {this.props.children}
             </TouchableOpacity>
         );
     }

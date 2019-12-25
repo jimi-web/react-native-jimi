@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-14 13:54:18
+ * @LastEditTime: 2019-12-04 14:52:12
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter} from 'react-native';
@@ -51,7 +51,6 @@ export default class Datepicker extends Component {
     static show(params) {
         let isShow = true;
         let defaultValue = params.defaultValue;
-        console.log(defaultValue);
         DeviceEventEmitter.emit('jmDatepickerShow',{isShow:isShow,defaultValue:defaultValue});
     }
 
@@ -77,11 +76,17 @@ export default class Datepicker extends Component {
         for (let i = 1; i <= daysCount; ++i) days.push(i);   
         // alert(year+'-'+month+'-'+day+'-'+hour+'-'+min);
         return <Modal
-            animationType="slide"
+            animationType="none"
             transparent={true}
             visible={this.state.isShowDatepicker}
         >
-            <View style={styles.shadow}></View>
+            <View style={styles.shadow}>
+                <TouchableOpacity style={{flex:1}} onPress={()=>{
+                    this.setState({
+                        isShowDatepicker:false
+                    });
+                }}></TouchableOpacity>
+            </View>
             <View style={styles.datepicker}>
                 <View style={styles.header}>
                     <TouchableOpacity activeOpacity={1} onPress={()=>{

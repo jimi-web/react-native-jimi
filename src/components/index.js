@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:28:59
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-11-06 09:34:03
+ * @LastEditTime: 2019-12-10 17:28:32
  */
 
 import TopView from './overlay/TopView';
@@ -17,7 +17,12 @@ import Loading from './loading/Loading';
 import Toast from './toast/Toast';
 import PopUpBox from './popUpBox/PopUpBox';
 import InputBox from './popUpBox/inputBox';
-import Timeline from './timeline';
+import PullList from './pullList/PullList';
+import Switch from './switch/Switch';
+import Drawer from './drawer/Drawer';
+import Wheel from './wheel/Wheel';
+import Datepicker from './datePickerDialog/DatePicker';
+import Modal from './modal/Modal';
 
 const Circle = {
     TopView,
@@ -30,7 +35,12 @@ const Circle = {
     PopUpBox,
     InputBox,
     Alert,
-    Timeline
+    PullList,
+    Switch,
+    Drawer,
+    Wheel,
+    Datepicker,
+    Modal
 };
 
 module.exports =  Circle;

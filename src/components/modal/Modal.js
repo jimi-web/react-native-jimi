@@ -1,29 +1,30 @@
 /*
  * @Descripttion: 
  * @version: 
- * @Author: liujinyuan
- * @Date: 2019-09-30 15:15:25
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-30 16:01:15
+ * @Author: xieruizhi
+ * @Date: 2019-12-03 14:40:22
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-12-03 15:46:54
  */
-import React, {Component} from 'react';
-import {Text, View,StyleSheet,Animated,Image,TouchableOpacity,Modal} from 'react-native';
-import TopView from '../overlay/TopView';
-import Theme from '../themes/index';
-import PropTypes from 'prop-types';
+import React from 'react';
+import Overlay from '../overlay/overlay';
+import Dialog  from '../dialog';
 
-export default class jmModal extends Component{
-    
-    constructor(props){
-        super(props);
-    }
-    render(){
-        return (
-            <View style={{height:60,backgroundColor:'red'}}>
-                <Text>{'弹框'}</Text>
-            </View>
-        );
+export default class Modal extends Overlay { 
+
+    //对话框
+    static dialog(parameter){
+        let dialog =  Overlay.add(<Dialog 
+            {...parameter}
+            onConfirm={()=>{
+                Overlay.remove(dialog);
+                parameter && parameter.onConfirm  && parameter.onConfirm();
+            }}
+            onCancel={()=>{
+                Overlay.remove(dialog);
+                parameter && parameter.onCancel  && parameter.onCancel();
+            }}
+        />);
+        return dialog;
     }
 }
-
-TopView.add(jmModal);

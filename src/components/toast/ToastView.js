@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-10 16:01:37
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 14:45:57
+ * @LastEditTime: 2019-12-03 17:12:34
  */
 import React, { Component } from 'react';
 import {
@@ -26,6 +26,7 @@ export default class ToastView extends Component {
     };
     
       static defaultProps = {
+          position:'bottom'
       };
   
 
@@ -45,7 +46,7 @@ export default class ToastView extends Component {
             image = icon;
         }
         return (
-            <View style={{paddingTop: 8, paddingBottom: 8}}>
+            <View style={{paddingBottom: 15}}>
                 {image}
             </View>
         );
@@ -65,9 +66,7 @@ export default class ToastView extends Component {
     render(){
         let tip={
             padding:15,
-            paddingTop:10,
-            paddingBottom:10,
-            borderRadius:6,
+            borderRadius:8,
             backgroundColor:'#000000bd',
             justifyContent: this.props.position === 'top' ? 'flex-start' : this.props.position === 'bottom' ? 'flex-end' : 'center',
             alignItems: 'center',

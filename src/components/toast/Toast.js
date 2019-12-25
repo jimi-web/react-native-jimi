@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-10 16:01:37
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-15 14:45:57
+ * @LastEditTime: 2019-11-25 14:09:12
  */
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
@@ -19,12 +19,12 @@ export default class Toast extends Overlay {
     static loadingDefaultPosition = 'center';
     static loadingDefaultText = '加载中...';
     static loadingDefaultIcon = <ActivityIndicator size='large' color={'#fff'} />;
-    static loadingDefaultStyle = {paddingTop:8,paddingBottom:10};
+    static loadingDefaultStyle = {paddingLeft:25,paddingRight:25};
 
 
     static show(options){
         let {duration, ...others} = options && typeof options === 'object' ? options : {};    
-        const overlay = Overlay.add(<ToastView {...others} />,true);
+        const overlay = Overlay.add(<ToastView {...others} />,{opacity:0});
         if (typeof duration !== 'number') {
             switch (duration) {
             case 'long': duration = 3500; break;

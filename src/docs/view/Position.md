@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 10:09:05
+ * @LastEditTime: 2019-12-03 15:45:28
  -->
 
 
@@ -31,7 +31,7 @@
 |markerInfoWindow|Object|false | 有默认属性|自定义inforWindow属性<br>- isCustom:是否自定义(百度地图无需传)<br>- markerInfo:自定义内容<br>{<br>　　isCustom:false,<br>　　markerInfo:()=>{}<br>}|
 |roadBtnStyle|Object|false | 有默认样式 |设置路况图标样式 <br> {width:100,height:100}|
 |mapTypeBtnStyle|Object|false | 有默认样式 |设置地图图标样式 <br> {width:100,height:100}|
-|mapControls|Function|false | 无 |设置地图其他插件元素，如Marker，Circle，Polyline 等等 | 
+|children|Function|false | 无 |在地图里其他插件子元素，如Marker，Circle，Polyline 等等 | 
 
 
 ## Events

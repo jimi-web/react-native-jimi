@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 16:16:49
+ * @LastEditTime: 2019-12-04 15:26:07
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -158,7 +158,7 @@ export default class AddFenceUtils extends Component {
                             }}
                         >
                             <Text style={AddFenceStyles.placename}>{item.key}</Text>
-                            <Text style={AddFenceStyles.fullAddress}>{item.city+item.district+item.key}</Text>
+                            <Text style={AddFenceStyles.fullAddress}>{item.city+item.district+item.key}{'\n'}</Text>
                         </TouchableOpacity>;
                     })
                 }

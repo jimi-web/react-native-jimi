@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 13:46:43
+ * @LastEditTime: 2019-12-04 14:52:43
  -->
 # 几米圈标准小程序
 
@@ -38,10 +38,12 @@
 9. "react-native-fs": "2.13.3",
 10."prop-types": "15.7.2",
 11."react-native-gesture-handler": "1.3.0",
-
+12."react-native-photoview-jm": "1.0.22",
+13."react-native-video": "5.0.2",
 ```
 
 ## 组件
+# 业务组件
 [`<Jimi.BaiduPosition />`定位](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Position.md)<br>
 
 [`<Jimi.BaiduTrack />`轨迹](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Track.md)<br>
@@ -56,15 +58,50 @@
 
 [`<Jimi.Record />`录音](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Record.md)<br>
 
-[`<Circle.Loading />`加载](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Loading.md)<br>
+[`<Jimi.Photo />`相册文件夹](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Photo.md)<br>
+
+[`<Jimi.PhotoList />`相册列表](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/PhotoList.md)<br>
+
+[`<Jimi.PhotoDeatil  />`图片和视频详情](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/PhotoDeatil.md)<br>
+
+[`<Jimi.Photograph  />`图片](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Photograph.md)<br>
+
+[`<Jimi.Video />`视频](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Video.md)<br>
+
+# 基础组件
 
 [`<Circle.Toast />`提示](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Toast.md)<br>
+
+[`<Circle.PullList />`上拉加载下拉刷新](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/PullList.md)<br>
+
+[`<Circle.Switch />`开关](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Switch.md)<br>
+
+[`<Circle.Drawer />`底部抽屉](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Drawer.md)<br>
+
+[`<Circle.Wheel />`滚轮](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Wheel.md)<br>
+
+[`<Circle.Modal />`模态框](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Modal.md)<br>
 
 ## 方法
 [`<Api />` 接口](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Api.md)<br>
 
 
+
+
 ## 日志
 ###版本:'1.1.6'
 1.分享弹出框新增动画效果
+
+###版本:'1.3.8'
+1.新增Modal组件,将对话框,提示框,输入框等集合在此,以便调用
+2.新增滚轮,底部抽屉,提示,时间选择器,上拉刷新下拉加载,开关,相册,无数据组件
+3.button组件新增可传入子元素
+4.追踪业务组件将设备和我的位置轨迹线改为设备运动中的轨迹线
+5.录音选择时间的弹出框改为使用底部抽屉,提示对话框改为已封装的Modal.dialog,wheel已换成自己封装的,新增发送指令加载中的按钮
+6.定位组件新增电量百分比
+7.围栏列表组件提示对话框改为已封装的Modal.dialog
+8.覆盖物组件overlay.js新增show方法,OverlayView.js修改了主体内容样式
+9.围栏业务组件和录音业务组建为空时候使用Empty无数据组件
+
+
 
