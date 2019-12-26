@@ -4,10 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 14:24:40
+ * @LastEditTime: 2019-12-09 16:48:57
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Slider} from 'react-native';
+import {Theme} from '../../../components/index';
 import PropTypes from 'prop-types';
 import MapStyles from '../style/track';
 import {ActionSheet} from 'teaset';
@@ -76,11 +77,11 @@ export default class Track extends Component {
                 </View>
                 <Slider
                     style={{width:'100%',height:30}}
-                    maximumTrackTintColor={'#C0BDC0'}
-                    minimumTrackTintColor={'#2D292D'}
+                    maximumTrackTintColor={Theme.maximumTrackTintColor}
+                    minimumTrackTintColor={Theme.minimumTrackTintColor}
                     thumbImage={require('../../../assets/track/Trajectory_Slider.png')}
                     minimumValue={0}
-                    thumbTintColor={'#333033'}
+                    thumbTintColor={Theme.thumbTintColor}
                     value={this.props.progress}
                     maximumValue={this.props.totalProgress}
                     onSlidingComplete = {(value)=>{this.onSlidingComplete(value);}}

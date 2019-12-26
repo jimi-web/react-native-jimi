@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-19 15:01:45
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-25 10:35:10
+ * @LastEditTime : 2019-12-26 15:36:17
  */
 
 
@@ -77,13 +77,15 @@ export default class RvcLoading extends Component {
         this.props.onAgain && this.props.onAgain();
     }
     getErrorMessage = () => {
-        const {errorCode} = this.props;
+        const {errorCode,errorMessage} = this.props;
+        if(errorMessage){
+            return errorMessage;
+        }
         const errArray = this.get();
-        console.log(errArray,errorCode,'获取的错误信息');
-        const errorMessage = errArray.filter(item => {
+        const errorMessages = errArray.filter(item => {
             return item.code == errorCode;
         });
-        const message = errorMessage.message || '连接超时';
+        const message = errorMessages[0].message || '连接超时';
         return message;
     }
 }             

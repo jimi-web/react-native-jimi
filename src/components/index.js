@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:28:59
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-12-10 17:28:32
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2019-12-25 16:16:09
  */
 
 import TopView from './overlay/TopView';
@@ -23,6 +23,7 @@ import Drawer from './drawer/Drawer';
 import Wheel from './wheel/Wheel';
 import Datepicker from './datePickerDialog/DatePicker';
 import Modal from './modal/Modal';
+import Icon from './iconfont/Icon';
 
 const Circle = {
     TopView,
@@ -40,7 +41,8 @@ const Circle = {
     Drawer,
     Wheel,
     Datepicker,
-    Modal
+    Modal,
+    Icon
 };
 
 module.exports =  Circle;

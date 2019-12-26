@@ -4,10 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 15:26:07
+ * @LastEditTime: 2019-12-10 16:24:00
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
+import {Theme} from '../../../../components/index';
 import {MapSearch} from 'react-native-baidu-map-jm';
 import PropTypes from 'prop-types';
 import Styles from '../../style/base';
@@ -35,7 +36,7 @@ export default class AddFenceUtils extends Component {
         fenceId:'',
         onSave:()=>{},
         strokeStyle:AddFenceStyles.strokeStyle,
-        fillColor:'#3479f61a',
+        fillColor:Theme.circleFillColor,
         deviceMarkerOptions:{
             style:Styles.deviceMarker,
             image:require('../../../../assets/map/device.png'),
@@ -140,7 +141,7 @@ export default class AddFenceUtils extends Component {
                                 },deviceInfo.address);
                             }}
                         >
-                            <Text style={[AddFenceStyles.placename,{color:'#3479F6'}]}>{'【设备位置】'}</Text>
+                            <Text style={[AddFenceStyles.placename,AddFenceStyles.deviceLocation]}>{'【设备位置】'}</Text>
                             <Text style={AddFenceStyles.fullAddress}>{this.state.deviceInfo.address}</Text>
                         </TouchableOpacity> :null
                 }
@@ -558,10 +559,10 @@ export default class AddFenceUtils extends Component {
      */
     radiusTip = ()=> {
         return <View  style={[{backgroundColor:'#fff0',height:34,width:74,alignItems:'center'}]}>
-            <View style={[{height:24,width:74,backgroundColor:'#3479F6',borderRadius:12,justifyContent:'center',alignItems:'center'}]}>
-                <Text style={{color:'#fff',fontSize:11}}>半径:{distance(this.state.radius,true)}</Text>
+            <View style={AddFenceStyles.radiusTip}>
+                <Text style={AddFenceStyles.radiusTipText} >半径:{distance(this.state.radius,true)}</Text>
             </View>
-            <View style={[{backgroundColor:'#3479F6',height:10,width:2}]}>
+            <View style={AddFenceStyles.radiusTipLine}>
             </View>
         </View>;
     }

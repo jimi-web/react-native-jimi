@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 10:28:45
+ * @LastEditTime: 2019-12-06 16:31:32
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
@@ -61,7 +61,7 @@ export default class BaiduTrace extends TraceUtils {
     polyline = ()=>{
         return <Overlay.Polyline
             width={this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2}
-            color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#F82E1B' : '#F82E1B'}
+            color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#50AE6F' : '#50AE6F'}
             points={this.state.visualRange.length>0 ? this.state.visualRange:[{latitude: 0, longitude: 0},{latitude: 0, longitude: 0}]}
         />;
     }   

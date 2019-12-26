@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-25 16:11:28
+ * @LastEditTime : 2019-12-26 15:41:01
  */
 import React, { Component } from 'react';
 import { View, T} from 'react-native';
@@ -19,12 +19,17 @@ export default class Record extends Component {
     );
     constructor(props){
         super(props);
+        this.params = {
+            key:'d0c67074f14e403d916379f6664414b2',
+            secret:'feef6c9e8ff94bfa95c2fc9b56b8c52a',
+            imei:'312345678912314'
+        };
     }
 
     render(){
         return (
             <View style={{flex:1}}>
-                <Jimi.RVC onReversal={(data) => this.onReversal(data)} />
+                <Jimi.RVC params={this.params} onReversal={(data) => this.onReversal(data)} />
             </View>
         );
     }

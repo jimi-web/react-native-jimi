@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-27 18:22:42
+ * @LastEditTime: 2019-12-04 17:56:37
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -17,7 +17,7 @@ let isHttpLocationGetShow = true;
  * @param {Object} params 后台需要的参数url，method，data
  */
 const request = (params) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         let header = null;
         switch (params.header) {
         case 0:
@@ -47,10 +47,12 @@ const request = (params) => {
                 if(res.code === 0){
                     resolve(res);
                 }else {
+                    reject(res);
                     Toast.message(`${res.message}[${res.code}]`);
                 }
             },
             onFail: (res) => {
+                reject(res);
                 Loading.hide();
                 Toast.message('网络异常,请稍后再试');
             },
@@ -75,7 +77,7 @@ export const jmAjax = (params)=> {
     //     }   
     // }
     // isDeleteFlag.push(params);
-    return new Promise((resolve) => { 
+    return new Promise((resolve,reject) => { 
         if(params.encoding || params.encodingType){
             getEncoding().then((res)=>{
                 let data = res;
@@ -97,11 +99,15 @@ export const jmAjax = (params)=> {
                     // });
                     // isDeleteFlag = isDeleteFlag.splice(index,index);
                     resolve(res);
+                }).catch((res)=>{
+                    reject(res);
                 });
             });
         }else {
             request(params).then((res)=>{
                 resolve(res);
+            }).catch((res)=>{
+                reject(res);
             });
         }
     });

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-03 15:24:41
+ * @LastEditTime: 2019-12-09 14:46:12
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -48,7 +48,7 @@ export default class Position extends Component {
                         isRefresh={true}
                         ChangePositionBtn={car}
                         mylocationOptions={my}
-                        mapTypeBtnStyle={styles.set}
+                        // mapTypeBtnStyle={styles.set}
                         // markerInfoWindow={markerInfoWindow}
                     >
                         {
@@ -70,7 +70,7 @@ export default class Position extends Component {
                         // deviceMarkerOptions={this.state.obj}
                         ChangePositionBtn={car}
                         mylocationOptions={my}
-                        mapTypeBtnStyle={styles.set}
+                        // mapTypeBtnStyle={styles.set}
                         // markerInfoWindow={markerInfoWindow}
                     >
                         {

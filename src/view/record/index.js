@@ -8,12 +8,12 @@
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
+import {Theme} from '../../components/index';
 import RecordControl from './RecordControl';
 import { jmAjax,getEncoding } from '../../http/business';
-import { createTheFolder } from '../../http/file';
-import { playAudio,stopAudio } from '../../http/media';
+import { createTheFolder,playAudio,stopAudio } from '../../http/index';
 import api from '../../api/index';
-import { parseDate,parseTime} from '../../libs/utils';
+import { parseDate,parseTime } from '../../libs/utils';
 import RNFS from 'react-native-fs';
 import PropTypes from 'prop-types';
 import {Toast} from 'teaset';
@@ -31,9 +31,9 @@ export default class Record extends Component {
 
     };
     static defaultProps = {
-        recordIns:'LY,ins#',
-        recordStutainTrue:'CXLY,ON,ins#',
-        recordStutainFalse:'CXLY,OFF#',
+        recordIns:'LY,ins#',//单个指令
+        recordStutainTrue:'CXLY,ON,ins#',  //持续录音
+        recordStutainFalse:'CXLY,OFF#',//关闭录音
         insSutainTime:30,
         params:{
             pageNum: 1,
@@ -106,7 +106,6 @@ export default class Record extends Component {
             }
             if(status == 'active'){
                 if(backDate != 0){
-                    
                     this.backTimeLength  = parseInt((new Date().getTime() - backDate) / 1000);
                     this.backRecordPlayLength = parseInt(new Date().getTime() - backDate);
                     // console.log(this.backTimeLength,this.backRecordPlayLength,89401);
@@ -315,7 +314,7 @@ export default class Record extends Component {
                 recordLength:this.state.recordLength
             }
         };
-        return new Promise((resolve) => {
+        return new Promise((resolve,reject) => {
             jmAjax({
                 url:api.instruction,
                 method: 'POST',
@@ -324,6 +323,8 @@ export default class Record extends Component {
                 data:params
             }).then(res => {
                 resolve(res);
+            }).catch((res)=>{
+                reject(res);
             });
         });
     }
@@ -338,7 +339,8 @@ export default class Record extends Component {
                 resolve(res);
             });
         });
-    };
+    }
+    
     render() {
         return (
             <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }]}>
@@ -688,13 +690,13 @@ export default class Record extends Component {
             deleteFlag:1
         };
         this.deleteRecord(params).then(res => {
-            if(res.code){
-                return Toast.message('录音已清空');
-            }
             this.setState({
                 isOpenSelect:1,
                 recordList:[],
+                initFile:[],
                 deleteRecordList:[]
+            },()=>{
+                Toast.message('录音已清空');
             });
             // Overlay.remove(this.overlayKey);
             // const params = {
@@ -721,13 +723,15 @@ export default class Record extends Component {
         this.setState({
             isBeginRecord:false
         });
+        console.log(instruction,'指令');
+        
         this.setRecordInstruction(instruction).then(res => {
             this.setState({
                 isBeginRecord:true
             });
-            if(res.code){
-                return Toast.message('指令发送失败');
-            }
+            // if(res.code){
+            //     return Toast.message('指令发送失败');
+            // }
             if(res.data){
                 const content = typeof res.data.content === 'string'?JSON.parse(res.data.content) : {};
                 if(!content._code){
@@ -795,6 +799,10 @@ export default class Record extends Component {
                     }
                 }, 1000);
             }
+        }).catch((res)=>{
+            this.setState({
+                isBeginRecord:true
+            });
         });
         
     }
@@ -887,12 +895,12 @@ export default class Record extends Component {
                         {this.renderRecordImage(item)}
                     </View>
                     <View style={{ paddingLeft: 5, flex: 1 }}>
-                        <Text style={{ color: '#4D4D4D', fontSize: 16 }}>
+                        <Text style={{ color: Theme.recordUploadTimeTextColor, fontSize: Theme.recordUploadTimeTextSize }}>
                             {item.createTimeFtm}
                         </Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, }}>
                             {this.renderRecordType(item)}
-                            <Text style={{ color: '#000', fontSize: 15 }}>{parseTime(item.timeLength)}</Text>
+                            <Text style={{ color: Theme.recordTimeTextColor, fontSize: Theme.recordTimeTextSize }}>{parseTime(item.timeLength)}</Text>
                         </View>
                     </View>
                 </View>
@@ -950,15 +958,14 @@ export default class Record extends Component {
      */
     renderRecordType(item) {
         let text;
-        let textColor = '#A3A3A3';
+        let textColor = Theme.recordTypeTextDefaultColor;
         switch (item.type) {
         case 0:
             text = item.recordType;
             break;
         case 1:
             text = '下载中…';
-            textColor = '#3479F6';
-            
+            textColor = Theme.recordTypeTextPrimaryColor;
             break;
         case 2:
             text = item.recordType;
@@ -976,7 +983,7 @@ export default class Record extends Component {
             text = item.recordType;
             break;
         }
-        return <Text style={{ color: textColor, fontSize: 11,width:120 }}>{text}</Text>;
+        return <Text style={{ color: textColor, fontSize: Theme.recordTypeTextSize,width:120 }}>{text}</Text>;
     }
 
 }
@@ -995,12 +1002,11 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         backgroundColor: '#fff',
-
     },
     contentStyle: {
         flexDirection: 'row',
         alignItems: 'center',
-        height: 70,
+        height: Theme.recordItemHeight,
         borderBottomColor: '#f7f7f7',
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderStyle: 'solid',

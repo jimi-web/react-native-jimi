@@ -3,8 +3,8 @@
  * @version:
  * @Author: xieruizhi
  * @Date: 2019-10-09 15:34:12
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-28 12:00:23
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2019-12-10 16:11:24
  */
 import React, { Component } from 'react';
 import {
@@ -16,6 +16,7 @@ import {
     Image,
     Platform
 } from 'react-native';
+import Theme from '../themes/index';
 import PropTypes from 'prop-types';
 import PopUpBox from './PopUpBox';
 import { Input } from 'teaset';
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
     },
     btnItemText: {
         fontSize: 17,
-        color: '#0076FF'
+        color: Theme.buttonTextColorDefault
     },
     inputName: {
         flex: 1,

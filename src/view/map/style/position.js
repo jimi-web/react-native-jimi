@@ -4,11 +4,11 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 10:17:53
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 12:02:57
+ * @LastEditTime: 2019-12-09 14:51:15
  */
 
-import {StyleSheet,Platform} from 'react-native';
-
+import {StyleSheet} from 'react-native';
+import {Theme} from '../../../components/index';
 
 const MapStyles =  StyleSheet.create({
     map:{
@@ -16,15 +16,15 @@ const MapStyles =  StyleSheet.create({
     },
     phonePointBtn:{
         position:'absolute',
-        left:15,
-        bottom:30,
-        width:37,
-        height:37,
+        left:Theme.myPositionBtnLeft,
+        bottom:Theme.myPositionBtnBottom,
+        width:Theme.controlBtnWidth,
+        height:Theme.controlBtnHeight,
         zIndex:100,
     },
     myMarker:{
-        width:32,
-        height:32
+        width:Theme.myPositionWith,
+        height:Theme.myPositionHeight
     },  
     infoWindow:{
         padding:15,

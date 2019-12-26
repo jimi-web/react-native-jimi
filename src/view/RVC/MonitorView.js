@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-25 16:08:45
+ * @LastEditTime : 2019-12-26 15:31:16
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -18,7 +18,7 @@ import RVCError from './RVCErrorHint';
 import RVCLoading from './RVCLoading';
 import RVCTimer from './RVCTimer';
 import PropTypes from 'prop-types';
-import {Modal,Toast} from '../../components/index';
+import {Toast} from '../../components/index';
 
 
 import { JMRTMPMonitorView} from 'react-native-rtmp-player-jm';
@@ -26,19 +26,21 @@ const { JMRTMPPlayerManager } = NativeModules;
 
 export default class MonitorView extends Component {
     static propTypes = {
-        topStatusIcon: PropTypes.array,
-        bottomStautsIcon:PropTypes.array,
-        leftBootomRN:PropTypes.element,
-        centerRn:PropTypes.element,
-        isSoundIcon:PropTypes.bool,
-        isTolkIcon:PropTypes.bool,
-        isRecordIcon:PropTypes.bool,
-        isSnapshotIcon:PropTypes.bool,
-        isSuspendedIcon:PropTypes.bool,
-        isScreenIcon:PropTypes.bool,
+        topStatusIcon: PropTypes.array,//顶部内容添加图标
+        bottomStautsIcon:PropTypes.array,//底部内容添加图标
+        isSoundIcon:PropTypes.bool,//是否开启声音控制按钮
+        isScreenIcon:PropTypes.bool,//是否开启全屏控制阿牛
+        isTolkIcon:PropTypes.bool,//是否开启对讲控制按钮
+        isRecordIcon:PropTypes.bool,//是否开启录制按钮
+        isSnapshotIcon:PropTypes.bool,//是否开启截图按钮
         isBackVideo:PropTypes.bool,
         RVCRatio:PropTypes.string,
         isStopWork:PropTypes.bool,//外部控制内部不能进行录像，对讲，静音,
+        params:PropTypes.object,//外部控制内部不能进行录像，对讲，静音,
+        LoadingElement:PropTypes.element,//加载组件
+        ErrorElement:PropTypes.element,//错误提示组件
+        LeftBootomRN:PropTypes.element,//视频左侧组件默认为null
+        CenterRn:PropTypes.element,//视频中间组件,设置该组件默认加载和错误提示失效
         
 
     }
@@ -46,18 +48,39 @@ export default class MonitorView extends Component {
         isSoundIcon:true,
         isTolkIcon:true,
         isSnapshotIcon:true,
-        isSuspendedIcon:true,
         isScreenIcon:true,
         isBackVideo:true,
         isRecordIcon:true,
         RVCRatio:'16:9',
         bottomStautsIcon:[],
         topStatusIcon:[],
-        isStopWork:false
+        isStopWork:false,
+
     }
 
+    /**
+     * 停止视频并回到释放SDK
+     */
+    static stop (){
+        DeviceEventEmitter.emit('jmStop');
+    }
+    /**
+     * 停止播放RVC
+     */
     static stopPlay (){
         DeviceEventEmitter.emit('jmStopPlay');
+    }
+    /**
+     * 停止播放RVC
+     */
+    static startPlay (){
+        DeviceEventEmitter.emit('jmStartPlay');
+    }
+    /**
+     * 停止播放RVC
+     */
+    static initialize (){
+        DeviceEventEmitter.emit('jmInitialize');
     }
 
     constructor(props){
@@ -83,6 +106,7 @@ export default class MonitorView extends Component {
             screenClickNum:0,//全屏状态下点击RVC的次数
             totalFrameCount:0,//当前视频速率
             isBusy:false,//RVC是否处于忙碌状态，如：录制中，对讲中，切换清晰度中
+            errorMessage:null,//RVC返回的错误信息
             
         };
         
@@ -121,7 +145,7 @@ export default class MonitorView extends Component {
     componentWillMount() {
         // RVC监听
         playStatusSubscription = this.state.rtmpManagerListener.addListener(JMRTMPPlayerManager.kOnStreamPlayerPlayStatus, (reminder) => {
-            this.props.onCustom && this.props.onCustom(reminder);//将自定义数据抛出去
+            this.props.onPlayReminder && this.props.onPlayReminder(reminder);//将自定义数据抛出去
             if (reminder.status == JMRTMPPlayerManager.videoStatusPrepare) {
                 console.log('准备播放视频');
                 this.setState({
@@ -137,7 +161,7 @@ export default class MonitorView extends Component {
             } else if (reminder.status == JMRTMPPlayerManager.videoStatusStop) {
                 this.setState({
                     isPlay:false,
-                    RVCStatus:3
+                    RVCStatus:3,
                 });
                 console.log('视频已停止播放');
             } else {
@@ -146,10 +170,11 @@ export default class MonitorView extends Component {
                 if(this.errorNumber > 4){
                     this.setState({
                         isPlay:false,
-                        RVCStatus:reminder.errCode
+                        RVCStatus:reminder.errCode,
+                        errorMessage:reminder.errMsg
                     });
                 }else{
-                    this.initialize();
+                    this.onStartPlay();
                 }
                 
             }
@@ -228,9 +253,12 @@ export default class MonitorView extends Component {
         receiveDeviceSubscription = this.state.rtmpManagerListener.addListener(JMRTMPPlayerManager.kOnStreamPlayerReceiveDeviceData, (reminder) => { console.log(reminder); });
 
         // 事件监听
-        DeviceEventEmitter.addListener('jmStopPlay', e => this.onStop(e));
+        DeviceEventEmitter.addListener('jmStop', e => this.onStop(e));
+        DeviceEventEmitter.addListener('jmStopPlay', e => this.onStopPlay(e));
+        DeviceEventEmitter.addListener('jmStartPlay', e => this.onStartPlay(e));
+        DeviceEventEmitter.addListener('jmInitialize', e => this.initialize(e));
+        
     }
-
     componentWillUnmount() {
         if (playStatusSubscription) playStatusSubscription.remove();
         if (talkStatusSubscription) talkStatusSubscription.remove();
@@ -239,7 +267,10 @@ export default class MonitorView extends Component {
         if (receiveDeviceSubscription) receiveDeviceSubscription.remove();
         this.onStop();
         // 事件释放
-        DeviceEventEmitter.removeAllListeners('jmStopPlay', e => this.onStop(e));
+        DeviceEventEmitter.removeAllListeners('jmStopPlay');
+        DeviceEventEmitter.removeAllListeners('jmStopPlay');
+        DeviceEventEmitter.removeAllListeners('jmStartPlay');
+        DeviceEventEmitter.removeAllListeners('jmInitialize');
     }
     render(){
         return (
@@ -299,7 +330,6 @@ export default class MonitorView extends Component {
             position:'relative',
             overflow:'hidden',
         };
-        console.log(styles,'加载',this.state.isScreen);
         return styles;
     }
     /**
@@ -350,7 +380,7 @@ export default class MonitorView extends Component {
      * 初始化页脚
      */
     renderFooter(){
-        const {bottomStautsIcon} = this.props;
+        const {bottomStautsIcon,isSoundIcon,isScreenIcon} = this.props;
         const {isScreen,isSound,screenClickNum} = this.state;
         let styles = null;
         if(isScreen){
@@ -384,11 +414,12 @@ export default class MonitorView extends Component {
         const soundIcon = isSound ?  require('../../assets/video/video_mute_on.png') : require('../../assets/video/video_mute_off.png');
         const iconStyle = {
             position:'absolute',
-            
         };
+        let screenElement = isScreenIcon?<TouchableOpacity key={'screen'} activeOpacity={0.3} onPress={this.onReversal} style={[iconStyle,{right:10}]}><Image source={screenIcon} /></TouchableOpacity>:null;
+        let soundElement = isSoundIcon?<TouchableOpacity key={'sound'} activeOpacity={0.3} onPress={this.onSound} style={[iconStyle,{right:50}]}><Image source={soundIcon} /></TouchableOpacity>:null;
         let iconArr =  [
-            <TouchableOpacity key={'screen'} activeOpacity={0.3} onPress={this.onReversal} style={[iconStyle,{right:10}]}><Image source={screenIcon} /></TouchableOpacity>,
-            <TouchableOpacity key={'sound'} activeOpacity={0.3} onPress={this.onSound} style={[iconStyle,{right:50}]}><Image source={soundIcon} /></TouchableOpacity>,
+            soundElement,
+            screenElement,
         ].concat(bottomStautsIcon);
         const element = 
             <View style={[styles]}>
@@ -438,21 +469,39 @@ export default class MonitorView extends Component {
         }
         const element = 
             <View style={styles}>
-                <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                    <TouchableOpacity onPress={this.onSnapshot}>
-                        <Image source={snapshotIcon} />
-                    </TouchableOpacity>
-                </View>
-                <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                    <TouchableOpacity onPress={this.onTalk}>
-                        <Image source={tolkIcon} />
-                    </TouchableOpacity>
-                </View>
-                <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                    <TouchableOpacity onPress={this.onRecord}>
-                        <Image source={recordIcon} />
-                    </TouchableOpacity>
-                </View>
+                {
+                    isSnapshotIcon
+                        ?
+                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                            <TouchableOpacity onPress={this.onSnapshot}>
+                                <Image source={snapshotIcon} />
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        null
+                }
+                {
+                    isTolkIcon
+                        ?
+                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                            <TouchableOpacity onPress={this.onTalk}>
+                                <Image source={tolkIcon} />
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        null
+                }
+                {
+                    isRecordIcon
+                        ?
+                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                            <TouchableOpacity onPress={this.onRecord}>
+                                <Image source={recordIcon} />
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        null
+                }
             </View>
         ;
         return element;
@@ -465,9 +514,6 @@ export default class MonitorView extends Component {
         if(leftBootomRN){
             return leftBootomRN;
         }
-        const styles = {
-            padding:20,
-        };
         let element = null;
         return element;
     }
@@ -477,14 +523,13 @@ export default class MonitorView extends Component {
     renderBottomHint = () => {
         let top = 5;
         if(this.state.isScreen){
-            bottom = 80;
+            bottom = Platform.OS == 'ios'?45:80;
             if(this.state.screenClickNum % 2 !== 0){
-                bottom = 40;
+                bottom = Platform.OS == 'ios'?5:40;
             }
         }else{
             bottom = 5;
         }
-        console.log(this.state.screenClickNum,bottom,1111);
         const element = <View style={{bottom,position:'absolute',zIndex:212,width:'100%',alignItems:'center'}}>
             {this.state.bottomHint}
         </View>;
@@ -494,32 +539,52 @@ export default class MonitorView extends Component {
      * 初始化中间提示
      */
     renderLoading = () => {
-        const {centerRn} = this.props;
-        const {RVCStatus} = this.state;
+        const {centerRn,ErrorElement,LoadingElement} = this.props;
+        const {RVCStatus,errorMessage} = this.state;
+        let Error = ErrorElement || <RVCError errorMessage={errorMessage} errorCode={RVCStatus} onAgain={this.initialize} />;
+        let Loading = LoadingElement || <RVCLoading />;
+        
+        if(centerRn){
+            return centerRn;
+        }
         let element = null;
         if(RVCStatus == 0){
             element = null;
         }else if(RVCStatus == 1){
-            element = <RVCLoading />;
+            element = Loading;
         }else if(RVCStatus == 2){
             element = null;
         }else if(RVCStatus == 3){
             element = null;
         }else if(RVCStatus > 3){
-            element = <RVCError errorCode={RVCStatus} onAgain={this.initialize} />;
+            element = Error;
         }
-        console.log(element,RVCStatus,'初始化提示');
         return element;
     }
     /** 
      * 视频初始化
      */
     initialize = () => {
-        const params = {
-            key:'d0c67074f14e403d916379f6664414b2',
-            secret:'feef6c9e8ff94bfa95c2fc9b56b8c52a',
-            imei:'312345678912314',
-        };
+        // const params = {
+        //     key:'d0c67074f14e403d916379f6664414b2',
+        //     secret:'feef6c9e8ff94bfa95c2fc9b56b8c52a',
+        //     imei:'312345678912314',
+        // };
+        const {params} = this.props;
+        if(!params){
+            return;
+        }
+        console.log(params,123);
+        if(typeof params.key != 'string'){
+            throw 'key 需要一个String类型';
+        }
+        if(typeof params.secret != 'string'){
+            throw 'secret 需要一个String类型';
+        }
+        if(typeof params.imei != 'string'){
+            throw 'imei 需要一个String类型';
+        }
+        
         this.setState({
             RVCStatus:1
         });
@@ -549,17 +614,21 @@ export default class MonitorView extends Component {
             isTolk:false,
             isSnapshot:false,
             isSound:false,
-            bottomHint:null
+            bottomHint:null,
+            isBusy:false,
+            screenClickNum:0,
+            totalFrameCount:0
         });
         this.backHandler = null;
         this.appState = null;
+        JMRTMPPlayerManager.deInitialize();
     }
     /**
      * 开启声音true为开启，false静音
      * 
      */
     onSound = () => {
-        if(this.state.RVCStatus == 2){
+        if(this.state.RVCStatus != 2){
             return;
         }
         if(this.state.isBusy){
@@ -569,12 +638,11 @@ export default class MonitorView extends Component {
             return;
         }
         const {isSound} = this.state;
-        console.log(isSound,'关闭声音');
         this.setState({
             isSound:!isSound
         },() => {
             JMRTMPPlayerManager.setMute(isSound);
-            this.props.onSound && this.props.onSound();// 关闭声音之后触发的函数
+            this.props.onSound && this.props.onSound(isSound);// 关闭声音之后触发的函数
         });
         
     }

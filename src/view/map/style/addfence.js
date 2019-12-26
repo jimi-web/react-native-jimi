@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:37:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 14:43:54
+ * @LastEditTime: 2019-12-10 16:23:53
  */
 import {StyleSheet,Dimensions} from 'react-native';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
@@ -100,11 +100,11 @@ const AddFenceStyles =  StyleSheet.create({
         color:'#A3A3A3'
     },
     alarmBtnActive:{
-        borderColor:'#FEA22D',
-        backgroundColor:'rgba(254, 162, 45, 0.1)'
+        borderColor:Theme.alarmBtnActiveBorderColor,
+        backgroundColor:Theme.alarmBtnActivegbColor,
     },
     alarmTextActive:{
-        color:'#FEA22D'
+        color:Theme.alarmBtnActiveBorderColor,
     },  
     save:{
         width:72,
@@ -122,7 +122,7 @@ const AddFenceStyles =  StyleSheet.create({
         alignItems:'center',
     },
     saveText:{
-        color:'#fff'
+        color:Theme.buttonTextColorPrimary,
     },
     addressList:{
         position:'absolute',
@@ -141,6 +141,9 @@ const AddFenceStyles =  StyleSheet.create({
         fontSize:14,
         color:'#4D4D4D'
     },
+    deviceLocation:{
+        color:Theme.TextColorPrimary
+    },
     fullAddress:{
         marginTop:5,
         fontSize:11,
@@ -148,7 +151,24 @@ const AddFenceStyles =  StyleSheet.create({
     },
     strokeStyle:{
         width:2,
-        color:Theme.buttonBackColorPrimary
+        color:Theme.circleStrokeStyle
+    },
+    radiusTip:{
+        height:24,
+        width:74,
+        backgroundColor:Theme.buttonBackColorPrimary,
+        borderRadius:12,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    radiusTipText:{
+        color:Theme.buttonTextColorPrimary,
+        fontSize:11
+    },
+    radiusTipLine:{
+        height:10,
+        width:2,
+        backgroundColor:Theme.buttonBackColorPrimary,
     }
 });
 
