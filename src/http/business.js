@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 17:56:37
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2019-12-26 11:22:29
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -19,27 +19,31 @@ let isHttpLocationGetShow = true;
 const request = (params) => {
     return new Promise((resolve,reject) => {
         let header = null;
-        switch (params.header) {
-        case 0:
-            header = {
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
-            };
-            break;
-        case 1:
-            header = null;
-            break;
-        default:
-            header = {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            };
-            break;
+        if( typeof params.header === 'number' && !isNaN(params.header)){
+            header = params.header;
+        }else{
+            switch (params.header) {
+            case 0:
+                header = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                };
+                break;
+            case 1:
+                header = null;
+                break;
+            default:
+                header = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                };
+                break;
+            }
         }
         httpApp('jm_net.request', {
             url: params.url,
-            method: params.method,
-            data: JSON.stringify(params.data),
+            method: params.method ? params.method : 'GET',
+            data: params.data ? JSON.stringify(params.data):{},
             // 提交参数的数据方式,这里以json的形式
             headers:header,
             onSuccess: (res) => {
@@ -65,7 +69,7 @@ const request = (params) => {
 
 /**
  * 数据请求
- * @param {Object} params 后台需要的参数url，method，data,如果需要encodingType 或者是encodingType 只要设置该参数为true
+ * @param {Object} params 后台需要的参数url，method，data,如果需要encoding 或者是encodingType 只要设置该参数为true
  */
 // let isDeleteFlag  = [];
 export const jmAjax = (params)=> {
@@ -167,7 +171,7 @@ const errorCode =(code)=>{
  * @param {string} type 地图经纬度类型
  */
 export const httpLocationGet = (type) =>{
-    return new Promise(function (resolve) {
+    return new Promise( (resolve,reject)=>{
         httpApp('jm_location.get', {
             type:type,
             onSuccess: (res) => {
@@ -180,6 +184,7 @@ export const httpLocationGet = (type) =>{
                     Toast.message(errorCode(res.code));
                     isHttpLocationGetShow = false;
                 }
+                reject(res)
             },
             // 请求失败或成功
             onComplete: () => {
@@ -202,8 +207,8 @@ export const httpSamllLocation = () =>{
                 const data = res;
                 resolve(data);
             },
-            onFail:()=>{
-                reject();
+            onFail:(res)=>{
+                reject(res);
             },
             onComplete:()=>{
                 //
@@ -216,7 +221,7 @@ export const httpSamllLocation = () =>{
  * 获取当前IMEI
  */
 export const getEncoding = () =>{
-    return new Promise((resolve)=> {
+    return new Promise((resolve,reject)=> {
         httpApp('jm_user.getEncoding', {
             onSuccess: (res) => {
                 let data =  res;
@@ -224,6 +229,7 @@ export const getEncoding = () =>{
             },
             // 请求失败
             onFail: () => {
+                reject();
                 Toast.message('设备唯一码请求失败');
             },
             // 请求失败或成功
