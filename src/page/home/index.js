@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
  * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-27 17:55:39
+ * @LastEditTime : 2019-12-27 18:12:06
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,SectionList,TouchableOpacity,Image} from 'react-native';
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:'#333',
         padding:10,
-        
+        backgroundColor:'#F7F7F7'
     },
     line:{
         height:44,
