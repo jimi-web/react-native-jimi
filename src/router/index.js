@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-29 10:53:41
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2019-12-25 16:11:56
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -25,6 +25,7 @@ import PullView from '../examples/PullView';
 import Switch from '../examples/Switch';
 import GetWheel from '../examples/Wheel';
 import Datepicker from '../examples/Datepicker';
+import RVC from '../examples/RVC';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -137,6 +138,9 @@ const AppNavigator = createStackNavigator(
         Datepicker:{
             screen:Datepicker,
             navigationOptions:getOptions('日期选择器')            
+        },  
+        RVC:{
+            screen:RVC,
         },  
         
     });

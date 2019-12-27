@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-10 11:59:33
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-12-10 17:28:43
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -21,7 +21,6 @@ import {Modal} from '../../components/index';
 import Empty from '../empty/Empty';
 
 export default class Record extends Component {
-
     static propTypes = {
         params: PropTypes.object,
         insTimeArr:PropTypes.array,

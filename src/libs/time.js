@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: liujinyuan
+ * @Date: 2019-09-11 16:49:43
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2019-11-19 09:46:18
+ */
 // 时间格式化
 Date.prototype.Format = function(formatStr) {
     var str = formatStr;
