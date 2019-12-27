@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-25 16:11:56
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2019-12-27 17:55:02
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -26,6 +26,7 @@ import Switch from '../examples/Switch';
 import GetWheel from '../examples/Wheel';
 import Datepicker from '../examples/Datepicker';
 import RVC from '../examples/RVC';
+import Dialog from '../examples/Dialog'
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -141,6 +142,9 @@ const AppNavigator = createStackNavigator(
         },  
         RVC:{
             screen:RVC,
+        },  
+        Dialog:{
+            screen:Dialog,
         },  
         
     });

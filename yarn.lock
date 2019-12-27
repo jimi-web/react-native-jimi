@@ -3636,8 +3636,8 @@ react-native-photoview-jm@1.0.22:
 
 react-native-rtmp-player-jm@^1.1.4:
   version "1.1.4"
-  resolved "https://registry.npmjs.org/react-native-rtmp-player-jm/-/react-native-rtmp-player-jm-1.1.4.tgz#3f91a0067d8b88416e7e5593b4405e243042caf7"
-  integrity sha512-BOFDtHErXAQXNyUp/xJyfKxHSXp5f4T0+JstZEwzTypNVh/uHRv5as6cyUBACPbH5LY49kRnBbe0MQJeliXg4Q==
+  resolved "https://registry.npm.taobao.org/react-native-rtmp-player-jm/download/react-native-rtmp-player-jm-1.1.4.tgz#3f91a0067d8b88416e7e5593b4405e243042caf7"
+  integrity sha1-P5GgBn2LiEFuflWTtEBeJDBCyvc=
   dependencies:
     react "16.6.3"
     react-native "0.58.6"
