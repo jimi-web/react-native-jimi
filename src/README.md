@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
  * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-28 13:50:03
+ * @LastEditTime : 2019-12-28 14:57:46
  -->
 # 几米圈标准小程序
 
@@ -121,5 +121,6 @@
 4.新增提示框，修改弹框的例子
 5.优化button组件,让其继承TouchableOpacity参数，新增其文档
 6.新增底部抽屉组件例子
-
+7. 添加麦克风权限接口
+8. 添加RVC业务组件及相关文档和实例
 

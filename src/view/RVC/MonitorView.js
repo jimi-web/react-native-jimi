@@ -4,14 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-26 15:31:16
+ * @LastEditTime : 2019-12-28 09:39:17
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
 
-import { jmAjax,getEncoding } from '../../http/business';
-import { createTheFolder } from '../../http/file';
-import { changeSreenDirection } from '../../http/media';
+
+import { changeSreenDirection,createTheFolder,getMicrophone } from '../../http';
 
 import api from '../../api/index';
 import RVCError from './RVCErrorHint';
@@ -82,6 +81,41 @@ export default class MonitorView extends Component {
     static initialize (){
         DeviceEventEmitter.emit('jmInitialize');
     }
+    /**
+     * 自定义指令
+     * @param {*} params 数据自定义
+     */
+    static sendCustomRequest (params){
+        console.log(params,'调用');
+        return new Promise((resolve,reject) => {
+            JMRTMPPlayerManager.sendCustomRequest(params).then(res => {
+                console.log(res,'回调');
+                resolve(res);
+            });
+        });
+    }
+
+
+    /**
+     * 播放回调
+     * @param {Array} params 回调数组
+     */
+    static startPlayback (params){
+        JMRTMPPlayerManager.startPlayback(params);
+    }
+
+    /**
+     * 切换摄像头，默认填true   
+     * @param {Bool} params 
+     */
+    static switchCamera (params){
+        return new Promise((resolve,reject) => {
+            JMRTMPPlayerManager.switchCamera(params).then(res => {
+                resolve(res);
+            });
+        });
+    }
+
 
     constructor(props){
         super(props);
@@ -213,8 +247,23 @@ export default class MonitorView extends Component {
                 });
             }
             if(status == 14){
-                Toast.message('请前往设置页打开麦克风权限');
-                
+                console.log('权限');
+                const ask = Platform.OS == 'ios'? 2 : 1;
+                getMicrophone(ask).then(res => {
+                    // 有权限则再次调用对讲
+                    console.log(res,'结果');
+                    if(res.code == 0){
+                        JMRTMPPlayerManager.startTalk();
+                    }
+                    //无权限取消状态
+                    if(res.code == -221){
+                        this.setState({
+                            isTolk:false,
+                            isBusy:false,
+                            bottomHint:null
+                        });
+                    }
+                });
             }
             
         });
@@ -250,7 +299,9 @@ export default class MonitorView extends Component {
                 totalFrameCount:Math.floor((reminder.videoBps + reminder.audioBPS) /1024 * 100)/100
             });
         });
-        receiveDeviceSubscription = this.state.rtmpManagerListener.addListener(JMRTMPPlayerManager.kOnStreamPlayerReceiveDeviceData, (reminder) => { console.log(reminder); });
+        receiveDeviceSubscription = this.state.rtmpManagerListener.addListener(JMRTMPPlayerManager.kOnStreamPlayerReceiveDeviceData, (reminder) => { 
+            this.props.onPlayBack && this.props.onPlayBack(reminder);
+        });
 
         // 事件监听
         DeviceEventEmitter.addListener('jmStop', e => this.onStop(e));
@@ -574,7 +625,6 @@ export default class MonitorView extends Component {
         if(!params){
             return;
         }
-        console.log(params,123);
         if(typeof params.key != 'string'){
             throw 'key 需要一个String类型';
         }

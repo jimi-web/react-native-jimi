@@ -4,12 +4,12 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-26 15:41:01
+ * @LastEditTime : 2019-12-28 09:53:31
  */
 import React, { Component } from 'react';
-import { View, T} from 'react-native';
+import { View} from 'react-native';
 import { Jimi } from '../index';
-
+import { Button } from '../components/index';
 export default class Record extends Component {
     static navigationOptions = ({ navigation, screenProps }) => (
         {
@@ -36,4 +36,5 @@ export default class Record extends Component {
     onReversal = (data) => {
         this.props.navigation.setParams({ param: data ? null : undefined});
     }
+
 }

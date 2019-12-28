@@ -3,13 +3,14 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-18 11:47:02
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-10 09:59:11
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2019-12-27 09:38:24
  */
 import {httpApp,httpBlue,httpWifi,httpWs,httpCameraState,httpCameraInfo,httpClose} from './basic'; 
 import {request,jmAjax,httpExit,httpLocationGet,httpSamllLocation,getEncoding} from './business';
 import {getSmallAppPath,getFileList,createFolder,createTheFolder,fileDelete,saveToAlbum} from './file';
 import {playAudio,getVideoFirstImage,saveVideoToAlbum,getVideoTime,changeSreenDirection,stopAudio} from './media';
+import { getMicrophone } from './permissions';
 
 const Applet  = {
     httpApp,
@@ -38,7 +39,9 @@ const Applet  = {
     getVideoFirstImage,
     saveVideoToAlbum,
     getVideoTime,
-    changeSreenDirection
+    changeSreenDirection,
+
+    getMicrophone
 };
 
 module.exports = Applet;
