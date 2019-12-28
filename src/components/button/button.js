@@ -3,13 +3,13 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-12 16:08:59
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-02 15:56:13
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2019-12-28 13:50:59
  */
 
 
-import React, {Component} from 'react';
-import {Text, View,StyleSheet,Animated,Image,TouchableOpacity} from 'react-native';
+import React from 'react';
+import {Text,TouchableOpacity} from 'react-native';
 import Theme from '../themes/index';
 import PropTypes from 'prop-types';
 export default class Button extends TouchableOpacity {
@@ -101,26 +101,12 @@ export default class Button extends TouchableOpacity {
         return titleEl;
     }
     render(){
-        // const {title,style}  = this.props;
-        // title = '';
-        // style = {};
         return (
-            <TouchableOpacity onPress={this.props.onPress} style={this.renderStyle()}  activeOpacity={this.props.activeOpacity}>
-                {/* <Image source={icon}/> */}
+            <TouchableOpacity  {...this.props} style={this.renderStyle()}>
                 {this.renderEl()}
                 {this.props.children}
             </TouchableOpacity>
         );
     }
-
 }
-
-
-// const styles = StyleSheet.create({
-//     borderStyle:{
-//         borderRadius:Theme.buttonBorderRadius,
-        
-//     }
-    
-// });
 
