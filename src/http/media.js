@@ -17,8 +17,7 @@ export const playAudio = (url)=>{
                 resolve(res);
             },
             onFail:(res)=>{
-                const data = res || '获取失败';
-                reject(data);
+                reject(res);
             },
             onComplete:()=>{
                 //

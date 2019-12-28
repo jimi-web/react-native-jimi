@@ -91,13 +91,16 @@ export const createFolder = (url) => {
  * 当前文件夹名为当前小程序位置+imei，后续为自己想创建的文件夹，设计到多级使用/分隔
  */
 export const createTheFolder = (url) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         getSmallAppPath().then(location => {
             getEncoding().then(data => {
                 const createUrl = `${location.filePath}/${data.encoding}/${url}/`;
                 createFolder(createUrl).then(res => {
                     resolve(createUrl);
-                });   
+                }).catch((res)=>{
+                    //失败回调
+                    reject(res)
+                });;   
             });
         });
     });

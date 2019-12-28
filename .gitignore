@@ -37,6 +37,7 @@ npm-debug.log
 yarn-error.log
 bundles/
 .history/
+*.zip
 
 # BUCK
 buck-out/
