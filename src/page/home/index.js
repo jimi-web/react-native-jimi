@@ -68,14 +68,14 @@ export default class Home extends Component{
             <View style={styles.mainStyle}>
                 <SectionList
                     renderItem={({ item, index, section }) =><TouchableOpacity style={styles.line} onPress={()=>this._onPress(item.url)}>
-                       <Text style={{flex:1}} key={index}>{item.title}</Text>
-                       <Image source={require('../../assets/nav/subordinate_arrow.png')}></Image>
+                        <Text style={{flex:1}} key={index}>{item.title}</Text>
+                        <Image source={require('../../assets/nav/subordinate_arrow.png')}></Image>
                     </TouchableOpacity>}
                     renderSectionHeader={({section}) =><Text style={styles.title}>{section.type}</Text>}
                     sections={this.state.menuList}
                 />
                 {/* <View > */}
-                    {/* <Button style={styles.btn} title={'RVC'} onPress={()=>{this.props.navigation.push('RVC');}} />
+                {/* <Button style={styles.btn} title={'RVC'} onPress={()=>{this.props.navigation.push('RVC');}} />
                     <Button style={styles.btn} title={'定位'} onPress={()=>{this.props.navigation.push('Position');}} />
                     <Button style={styles.btn} title={'轨迹'} onPress={()=>{this.props.navigation.push('Track');}} />
                     <Button style={styles.btn} title={'追踪'} onPress={()=>{this.props.navigation.push('Trace');}} />
