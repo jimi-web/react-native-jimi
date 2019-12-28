@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-15 11:51:38
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2019-12-28 16:39:28
  */
 
 //后台地址
@@ -30,7 +30,7 @@ const serverUrl = {
  * @param {String} url 服务器地址
  */
 const api  = {
-    server:'http://10.0.17.189:3000',//xieruizhi测试环境
+    server:'http://apis.jimimax.com',//xieruizhi测试环境
     // server:'http://10.0.17.227:3000',//liujinyuan测试环境
     /**
      * 
