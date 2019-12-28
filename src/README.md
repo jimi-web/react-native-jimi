@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-25 16:17:57
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2019-12-28 13:50:03
  -->
 # 几米圈标准小程序
 
@@ -70,6 +70,8 @@
 
 [`<Jimi.Video />`RVC(实时视频)](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/RVC.md)<br>
 
+[`<Jimi.Video />`数据空白](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Empty.md)<br>
+
 # 基础组件
 
 [`<Circle.Toast />`提示](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Toast.md)<br>
@@ -82,7 +84,14 @@
 
 [`<Circle.Wheel />`滚轮](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Wheel.md)<br>
 
-[`<Circle.Modal />`模态框](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Modal.md)<br>
+[`<Circle.Modal />`弹框](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Modal.md)
+
+[`<Circle.Icon />`图标](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Icon.md)
+
+[`<Circle.Button />`按钮](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Button.md)
+
+[`<Circle.Datepicker />`日历选择器](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Datepicker.md)
+<br>
 
 ## 方法
 [`<Api />` 接口](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Api.md)<br>
@@ -105,5 +114,12 @@
 8.覆盖物组件overlay.js新增show方法,OverlayView.js修改了主体内容样式
 9.围栏业务组件和录音业务组建为空时候使用Empty无数据组件
 
+###版本:'1.4.4'
+1.重新绘制首页界面
+2.新增基础api的文档
+3.新增空白页组件和图标组件文档、例子
+4.新增提示框，修改弹框的例子
+5.优化button组件,让其继承TouchableOpacity参数，新增其文档
+6.新增底部抽屉组件例子
 
 
