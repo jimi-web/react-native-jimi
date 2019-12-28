@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-25 16:17:57
+ * @LastEditTime : 2019-12-28 10:10:12
  -->
 # 几米圈标准小程序
 
@@ -104,6 +104,11 @@
 7.围栏列表组件提示对话框改为已封装的Modal.dialog
 8.覆盖物组件overlay.js新增show方法,OverlayView.js修改了主体内容样式
 9.围栏业务组件和录音业务组建为空时候使用Empty无数据组件
+
+###版本:'1.4.4'
+1. 添加麦克风权限接口
+2. 添加RVC业务组件及相关文档和实例
+
 
 
 
