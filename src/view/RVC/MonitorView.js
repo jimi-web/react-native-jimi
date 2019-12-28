@@ -4,15 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-28 09:39:17
+ * @LastEditTime : 2019-12-28 16:27:47
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
 
 
 import { changeSreenDirection,createTheFolder,getMicrophone } from '../../http';
-
-import api from '../../api/index';
 import RVCError from './RVCErrorHint';
 import RVCLoading from './RVCLoading';
 import RVCTimer from './RVCTimer';
@@ -40,8 +38,6 @@ export default class MonitorView extends Component {
         ErrorElement:PropTypes.element,//错误提示组件
         LeftBootomRN:PropTypes.element,//视频左侧组件默认为null
         CenterRn:PropTypes.element,//视频中间组件,设置该组件默认加载和错误提示失效
-        
-
     }
     static defaultProps = {
         isSoundIcon:true,
@@ -54,7 +50,6 @@ export default class MonitorView extends Component {
         bottomStautsIcon:[],
         topStatusIcon:[],
         isStopWork:false,
-
     }
 
     /**
@@ -242,6 +237,7 @@ export default class MonitorView extends Component {
                             bottomHint:null,
                             isBusy:false
                         });
+                        //
                         clearTimeout(timer);
                     },500);
                 });
@@ -392,6 +388,7 @@ export default class MonitorView extends Component {
         let styles = null;
         if(isScreen){
             // 全屏状态下点击视频隐藏操作框
+            //
             if(screenClickNum % 2 !== 0){
                 return null;
             }
@@ -804,10 +801,4 @@ export default class MonitorView extends Component {
             }
         }
     }
-
-
-
-    /**
-     * 方法
-     */
 }
