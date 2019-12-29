@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:48:19
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-27 18:25:40
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2019-12-28 16:30:04
  */
 import React, {Component} from 'react';
 import {Icon} from '../components/index';
@@ -13,11 +13,6 @@ import {Icon} from '../components/index';
 export default class Test extends Component { 
     constructor(props) {
         super(props);
-    }
-    
-    componentDidMount() {
-
-        
     }
 
     render() {

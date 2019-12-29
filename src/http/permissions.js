@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-24 09:21:33
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-27 09:38:42
+ * @LastEditTime : 2019-12-28 15:55:25
  */
 
 import {httpApp} from './basic';
@@ -20,7 +20,7 @@ export const getMicrophone = (ask) => {
                 resolve(res);
             },
             onFail:(res) => {
-                resolve(res);
+                reject(res);
             },
             onComplete:() => {
                 //
