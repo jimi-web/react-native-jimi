@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-24 15:28:09
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 13:44:51
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2019-12-29 14:18:15
  -->
 
 # `Toast` 提示框
@@ -34,6 +34,7 @@
 简单用法
 ```
 Toast.message('Toast message');
+Toast.message('Toast message',10,'top');
 
 ```
 

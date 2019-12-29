@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-10-10 16:01:37
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-03 17:12:34
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2019-12-29 10:57:36
  */
 import React, { Component } from 'react';
 import {
@@ -65,10 +65,13 @@ export default class ToastView extends Component {
 
     render(){
         let tip={
-            padding:15,
+            paddingTop:8,
+            paddingBottom:8,
+            paddingLeft:12,
+            paddingRight:12,
             borderRadius:8,
             backgroundColor:'#000000bd',
-            justifyContent: this.props.position === 'top' ? 'flex-start' : this.props.position === 'bottom' ? 'flex-end' : 'center',
+            // justifyContent: this.props.position === 'top' ? 'flex-start' : this.props.position === 'bottom' ? 'flex-end' : 'center',
             alignItems: 'center',
         };
         return  <View style={[tip,this.props.style]}>
