@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-28 16:27:47
+ * @LastEditTime : 2019-12-29 17:14:47
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -205,8 +205,8 @@ export default class MonitorView extends Component {
                 }else{
                     this.onStartPlay();
                 }
-                
             }
+
 
         });
         // 对讲回调                                      
@@ -485,8 +485,8 @@ export default class MonitorView extends Component {
         const recordIcon = isRecord?require('../../assets/video/video_recording_press.png') : require('../../assets/video/video_recording_normal.png');
         const tolkIcon = isTolk?require('../../assets/video/video_voice_press.png') : require('../../assets/video/video_voice_normal.png');
         const snapshotIcon = isSnapshot?require('../../assets/video/video_photo_press.png') : require('../../assets/video/video_photo_normal.png');
-
         let styles = null;
+       
         if(isScreen){
             // 全屏状态下点击视频隐藏操作框
             if(screenClickNum % 2 !== 0){
@@ -495,7 +495,7 @@ export default class MonitorView extends Component {
             const right = (this.screenHeight - this.screenWidth * 16 / 9) / 2 + 10;
             styles = {
                 right,
-                height:this.screenWidth - 80,
+                height:this.screenWidth - 80, 
                 justifyContent:'center',
                 alignItems:'center',
                 position:'absolute',
@@ -515,6 +515,7 @@ export default class MonitorView extends Component {
                 backgroundColor:'#fff'
             };
         }
+        
         const element = 
             <View style={styles}>
                 {

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-28 14:57:46
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2019-12-28 16:42:48
  -->
 # 几米圈标准小程序
 
@@ -40,6 +40,7 @@
 11."react-native-gesture-handler": "1.3.0",
 12."react-native-photoview-jm": "1.0.22",
 13."react-native-video": "5.0.2",
+14."react-native-rtmp-player-jm": "1.1.4",
 ```
 
 ## 组件
