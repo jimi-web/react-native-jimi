@@ -126,7 +126,7 @@ const AppNavigator = createStackNavigator(
         },
         PullView:{
             screen:PullView,
-            navigationOptions:getOptions('下拉')            
+            navigationOptions:getOptions('上拉刷新下拉加载')            
         },
         Switch:{
             screen:Switch,
@@ -149,18 +149,23 @@ const AppNavigator = createStackNavigator(
         },  
         Dialog:{
             screen:Dialog,
+            navigationOptions:getOptions('弹框')     
         },  
         Icon:{
             screen:Icon,
+            navigationOptions:getOptions('图标')     
         }, 
         Empty:{
             screen:Empty,
+            navigationOptions:getOptions('数据空白')     
         }, 
         Button:{
             screen:Button,
+            navigationOptions:getOptions('按钮')     
         },
         Drawer:{
             screen:Drawer,
+            navigationOptions:getOptions('底部抽屉')     
         }     
     });
 
