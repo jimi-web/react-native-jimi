@@ -14,7 +14,7 @@ import {jmAjax,getEncoding} from '../../../http/business';
 import api from '../../../api/index';
 import Toast from '../../../components/toast/OtherToast';
 import {Checkbox} from 'teaset';
-import Theme from '../../../components/themes';
+import {Theme,Icon} from '../../../components/index';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 const {width} = Dimensions.get('window');
 
@@ -63,15 +63,15 @@ export default class Share extends Component {
             activeValue:3600,
             isChecked:false,
             shareType:[{
-                img:require('../../../assets/trace/track_share_weixin.png'),
+                img:'track_share_weixin',
                 value:'wx',
                 key:'微信'
             },{
-                img:require('../../../assets/trace/track_share_pengyouquan.png'),
+                img:'track_share_pengyouquan',
                 value:'pyq',
                 key:'朋友圈'
             },{
-                img:require('../../../assets/trace/track_share_qq.png'),
+                img:'track_share_qq',
                 value:'qq',
                 key:'QQ'
             }],
@@ -181,7 +181,7 @@ export default class Share extends Component {
                         {
                             this.state.shareType.map((item,index)=>{
                                 return <TouchableOpacity style={MapStyles.shareTypeImgBtn} key={'shareTypeImg'+index} onPress={()=>this.onShareTypeChange(item.value)}>
-                                    <Image source={item.img}></Image>
+                                    <Icon name={item.img} size={46} />
                                     <Text style={MapStyles.shareTypeImgBtnText}>{item.key}</Text>
                                 </TouchableOpacity>;
                             })

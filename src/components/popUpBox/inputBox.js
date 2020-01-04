@@ -17,6 +17,7 @@ import {
     Platform
 } from 'react-native';
 import Theme from '../themes/index';
+import {Icon}from '../iconfont/Icon'
 import PropTypes from 'prop-types';
 import PopUpBox from './PopUpBox';
 import { Input } from 'teaset';
@@ -115,9 +116,7 @@ export default class InputBox extends Component {
                                         });
                                     }}
                                 >
-                                    <Image
-                                        source={require('../../assets/fence/list_delete.png')}
-                                    ></Image>
+                                    <Icon name={'list_delete'} size={14} />
                                 </TouchableOpacity>
                                 : null}
                         </View>

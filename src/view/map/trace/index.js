@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
-import {Theme} from '../../../components/index';
+import {Theme,Icon} from '../../../components/index';
 import PropTypes from 'prop-types';
 import {httpApp} from '../../../http/basic';
 import api from '../../../api/index';
@@ -86,7 +86,7 @@ export default class TraceUtils extends PositionUtils {
 
 
     pullUpBox = ()=>{ 
-        let pullUpDownImg = this.state.pullState === 0 ?require('../../../assets/trace/track_operating_expand.png'):require('../../../assets/trace/track_operating_contract.png');
+        let pullUpDownImg = this.state.pullState === 0 ? 'track_operating_expand' :'track_operating_contract';
         let deviceInfo = this.state.deviceInfo;
         return (
             <View  activeOpacity={1} style={[MapStyles.box,{height:this.state.pullUpHeight}]}>
@@ -99,7 +99,7 @@ export default class TraceUtils extends PositionUtils {
                     <TouchableOpacity style={MapStyles.pullUp} onPress={()=>{
                         this.pullUpDown();
                     }}>
-                        <Image source={pullUpDownImg}></Image>
+                        <Icon name={pullUpDownImg} size={'100%'} />
                     </TouchableOpacity>
                 </View>    
                 <View style={MapStyles.information}  {...this._panResponder.panHandlers}>
@@ -141,7 +141,8 @@ export default class TraceUtils extends PositionUtils {
         return <TouchableOpacity style={[Styles.btn,Styles.shareBtn,this.props.shareBtnStyle]}  activeOpacity={0.5} onPress={()=>{
             this.share.show();
         }}>
-            <Image style={Styles.btnImg} source={require('../../../assets/trace/track_map_share.png')} />
+            <Icon name={'track_map_share'} size={'100%'} />
+            {/* <Image style={Styles.btnImg} source={require('../../../assets/trace/track_map_share.png')} /> */}
         </TouchableOpacity>;
     }
 

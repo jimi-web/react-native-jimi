@@ -15,7 +15,7 @@ import RVCError from './RVCErrorHint';
 import RVCLoading from './RVCLoading';
 import RVCTimer from './RVCTimer';
 import PropTypes from 'prop-types';
-import {Toast} from '../../components/index';
+import {Toast,Icon} from '../../components/index';
 
 
 import { JMRTMPMonitorView} from 'react-native-rtmp-player-jm';
@@ -458,13 +458,21 @@ export default class MonitorView extends Component {
                 alignItems:'center'
             };
         }
-        const screenIcon = isScreen ? require('../../assets/video/video_full_screen_off.png') : require('../../assets/video/video_full_screen_on.png');
-        const soundIcon = isSound ?  require('../../assets/video/video_mute_on.png') : require('../../assets/video/video_mute_off.png');
+        const screenIcon = isScreen ? 'video_full_screen_off' : 'video_full_screen_on';
+        const soundIcon = isSound ?  'video_mute_on' : 'video_mute_off';
         const iconStyle = {
             position:'absolute',
         };
-        let screenElement = isScreenIcon?<TouchableOpacity key={'screen'} activeOpacity={0.3} onPress={this.onReversal} style={[iconStyle,{right:10}]}><Image source={screenIcon} /></TouchableOpacity>:null;
-        let soundElement = isSoundIcon?<TouchableOpacity key={'sound'} activeOpacity={0.3} onPress={this.onSound} style={[iconStyle,{right:50}]}><Image source={soundIcon} /></TouchableOpacity>:null;
+        let screenElement = isScreenIcon?
+            <TouchableOpacity key={'screen'} activeOpacity={0.3} onPress={this.onReversal} style={[iconStyle,{right:10}]}>
+                <Icon name={screenIcon} size={28} color={'#fff'} />
+            </TouchableOpacity>
+        :null;
+        let soundElement = isSoundIcon?
+            <TouchableOpacity key={'sound'} activeOpacity={0.3} onPress={this.onSound} style={[iconStyle,{right:50}]}>
+                <Icon name={soundIcon} size={28}  color={'#fff'} />
+            </TouchableOpacity>
+            :null;
         let iconArr =  [
             soundElement,
             screenElement,
@@ -482,9 +490,9 @@ export default class MonitorView extends Component {
     renderTool(){
         const {isRecordIcon,isTolkIcon,isSnapshotIcon} = this.props;
         const {isRecord,isTolk,isSnapshot,isScreen,screenClickNum} = this.state;
-        const recordIcon = isRecord?require('../../assets/video/video_recording_press.png') : require('../../assets/video/video_recording_normal.png');
-        const tolkIcon = isTolk?require('../../assets/video/video_voice_press.png') : require('../../assets/video/video_voice_normal.png');
-        const snapshotIcon = isSnapshot?require('../../assets/video/video_photo_press.png') : require('../../assets/video/video_photo_normal.png');
+        const recordIcon = isRecord?'video_recording_press' : 'video_recording_normal';
+        const tolkIcon = isTolk?'video_voice_press' : 'video_voice_normal';
+        const snapshotIcon = isSnapshot? 'video_photo_normal': 'video_photo_normal';
 
         let styles = null;
         if(isScreen){
@@ -522,7 +530,8 @@ export default class MonitorView extends Component {
                         ?
                         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
                             <TouchableOpacity onPress={this.onSnapshot}>
-                                <Image source={snapshotIcon} />
+                                {/* <Image source={snapshotIcon} /> */}
+                                <Icon name={snapshotIcon} size={50} />
                             </TouchableOpacity>
                         </View>
                         :
@@ -533,7 +542,8 @@ export default class MonitorView extends Component {
                         ?
                         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
                             <TouchableOpacity onPress={this.onTalk}>
-                                <Image source={tolkIcon} />
+                                {/* <Image source={tolkIcon} /> */}
+                                <Icon name={tolkIcon} size={90} />
                             </TouchableOpacity>
                         </View>
                         :
@@ -544,7 +554,8 @@ export default class MonitorView extends Component {
                         ?
                         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
                             <TouchableOpacity onPress={this.onRecord}>
-                                <Image source={recordIcon} />
+                                {/* <Image source={recordIcon} /> */}
+                                <Icon name={recordIcon} size={50} />
                             </TouchableOpacity>
                         </View>
                         :

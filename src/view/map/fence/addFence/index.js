@@ -8,7 +8,7 @@
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
-import {Theme} from '../../../../components/index';
+import {Theme,Icon} from '../../../../components/index';
 import {MapSearch} from 'react-native-baidu-map-jm';
 import PropTypes from 'prop-types';
 import Styles from '../../style/base';
@@ -114,7 +114,7 @@ export default class AddFenceUtils extends Component {
                             Keyboard.dismiss();
                         });
                     }}>
-                        <Image source={require('../../../../assets/fence/list_delete.png')}></Image>
+                        <Icon name={'list_delete'}  size={14}/>
                     </TouchableOpacity>:null
             }
         </View>;
@@ -191,7 +191,7 @@ export default class AddFenceUtils extends Component {
                 <TouchableOpacity onPress={()=>{
                     InputBox.show(this.state.fenceTitle);
                 }}>
-                    <Image source={require('../../../../assets/fence/fence_map_name-edit.png')}></Image>
+                    <Icon name={'trajectory_play_edit_time'} size={20}   />
                 </TouchableOpacity>
             </View>
             <Text style={AddFenceStyles.address}>{this.state.fenceAddress}</Text>
@@ -247,7 +247,7 @@ export default class AddFenceUtils extends Component {
                                 height:30,
                                 alignItems:'center',
                             }}>
-                            <Image style={{width:30,height:30}}source={require('../../../../assets/fence/fence_map_zoom.png')}></Image>
+                            <Icon name={'fence_map_zoom'} size={30} />
                         </View>
                     );
                 }}

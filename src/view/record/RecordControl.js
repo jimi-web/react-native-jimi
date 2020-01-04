@@ -8,7 +8,7 @@
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
-import {Theme} from '../../components/index';
+import {Theme,Icon} from '../../components/index';
 import {Button,Drawer,Wheel} from '../../components/index';
 import BottomToolbars from '../components/BottomToolbars';
 import {Toast} from 'teaset';
@@ -59,11 +59,11 @@ export default class RecordControl extends Component {
         return <View style={styles.controlStyle}>
             <View style={styles.touchStyle}>
                 <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {this.props.onSelect && this.props.onSelect(0);}}>
-                    <Image source={require('../../assets/record/operating_select.png')} />
+                    <Icon name={'operating_select_disable'} size={20} />
                     <Text style={{fontSize:10,color:'#979797'}}>{'选择'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={1} style={{paddingLeft:20}} onPress={this.onSelectTimeLength}>
-                    <Image source={require('../../assets/record/recording_operating_duration.png')} />
+                    <Icon name={'recording_operating_duration'} size={21} />
                     <Text style={{fontSize:10,color:'#979797'}}>{'时长'}</Text>
                 </TouchableOpacity>
             </View>

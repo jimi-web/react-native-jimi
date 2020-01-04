@@ -10,7 +10,7 @@ import React, {Component} from 'react';
 import {TouchableOpacity,Image} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../style/base';
-import Loading from '../../../components/loading/Loading';
+import { Icon,Loading } from '../../../components/index'
 import MapStyles from '../style/track';
 import Controller from './TrackController';
 import {Toast} from 'teaset';
@@ -64,9 +64,9 @@ export default class TrackUtils extends Component {
         dimDd:7,
         // customItem:null,
         playImg:{
-            play:require('../../../assets/track/play.png'),
-            pause:require('../../../assets/track/pause.png')
-        }
+            play:'trajectory_play_on',
+            pause:'trajectory_play_off'
+        },
     }
 
     constructor(props) {
@@ -123,7 +123,7 @@ export default class TrackUtils extends Component {
      */
     roadBtn = ()=> {
         return <TouchableOpacity style={[Styles.btn,Styles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled})}>
-            <Image style={Styles.btnImg} source={this.state.trafficEnabled?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
+             <Icon name={this.state.trafficEnabled?'map_road-condition_on':'map_road-condition_off'} size={'100%'} />
         </TouchableOpacity>;
     }
 
@@ -132,7 +132,7 @@ export default class TrackUtils extends Component {
      */
     mapTypeBtn = ()=> {
         return <TouchableOpacity style={[Styles.btn,Styles.mapTypeBtn,this.props.mapTypeBtnStyle]}   activeOpacity={1} onPress={this.setMapType}>
-            <Image style={Styles.btnImg} source={this.state.mapType==='standard'?require('../../../assets/map/layer.png'):require('../../../assets/map/home_icon_live-action.png')} />
+            <Icon name={this.state.mapType==='standard'?'map_cutover_off':'map_cutover_on'} size={'100%'} />
         </TouchableOpacity>; 
     }
 
