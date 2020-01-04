@@ -42,7 +42,7 @@ export default class Home extends Component{
                     title:'数据空白',
                     url:'Empty'
                 }
-            ]
+                ]
             },{
                 type:'基础组件',
                 data:[{

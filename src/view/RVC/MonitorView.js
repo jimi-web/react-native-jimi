@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-28 16:27:47
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2020-01-04 18:24:47
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -205,8 +205,8 @@ export default class MonitorView extends Component {
                 }else{
                     this.onStartPlay();
                 }
-                
             }
+
 
         });
         // 对讲回调                                      
@@ -495,6 +495,7 @@ export default class MonitorView extends Component {
         const snapshotIcon = isSnapshot? 'video_photo_normal': 'video_photo_normal';
 
         let styles = null;
+       
         if(isScreen){
             // 全屏状态下点击视频隐藏操作框
             if(screenClickNum % 2 !== 0){
@@ -503,7 +504,7 @@ export default class MonitorView extends Component {
             const right = (this.screenHeight - this.screenWidth * 16 / 9) / 2 + 10;
             styles = {
                 right,
-                height:this.screenWidth - 80,
+                height:this.screenWidth - 80, 
                 justifyContent:'center',
                 alignItems:'center',
                 position:'absolute',
@@ -523,6 +524,7 @@ export default class MonitorView extends Component {
                 backgroundColor:'#fff'
             };
         }
+        
         const element = 
             <View style={styles}>
                 {
