@@ -11,6 +11,7 @@ import {View,Image,Text,TouchableOpacity} from 'react-native';
 import FenceStyles from '../../style/fenceList';
 import {Checkbox} from 'teaset';
 import {distance} from '../../comm';
+import {Icon} from '../../../../components/index';
 
 export default class FenceListItem extends Component {
     constructor(props) {
@@ -34,8 +35,9 @@ export default class FenceListItem extends Component {
                             checkedIcon={<Image style={{width: 24, height: 24}} source={require('../../../../assets/record/checkbox_pre.png')} />}
                             uncheckedIcon={<Image style={{width: 24, height: 24}} source={require('../../../../assets/record/checkbox_nor.png')} />}
                         />:
-                        <Image style={FenceStyles.icon} source={source}>  
-                        </Image>
+                            typeof(source) == 'string'?
+                            <Icon name={source} size={24}/>:
+                            <Image style={FenceStyles.icon} source={source} />   
                 }
             </View>
             <View style={FenceStyles.info}>

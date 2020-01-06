@@ -10,6 +10,7 @@ import React, {Component} from 'react';
 import {View,StyleSheet,Text,Image,TouchableOpacity,Dimensions,Platform} from 'react-native';
 import {getFileList,createTheFolder,getVideoTime,getVideoFirstImage} from '../../http/index';
 import PropTypes from 'prop-types';
+import {Icon} from '../../components/index';
 const {width} =Dimensions.get('window');
 
 export default class Photo extends Component { 
@@ -28,8 +29,8 @@ export default class Photo extends Component {
     }
 
     static defaultProps = {
-        placeholderImg:require('../../assets/photo/photo_photo.png'),
-        placeholderVideo:require('../../assets/photo/photo_viedo.png'),
+        placeholderImg:'photo_photo',
+        placeholderVideo:'photo_viedo',
         videoType:['mp4','3gp','avi','mov']
     }
 
@@ -59,7 +60,7 @@ export default class Photo extends Component {
                 </View>
                 <View style={ Styles.fileType}>
                     {this.fileTypeName('本地相册',this.state.localPhoto.length,true)}
-                    {this.fileTypeName('远程相册',this.state.longPhoto.length,true)}
+                    {this.fileTypeName('远程相册',this.state.longPhoto.length)}
                 </View>
             </View>
             <View style={Styles.line}></View>
@@ -94,7 +95,8 @@ export default class Photo extends Component {
                     imageList.length>0?
                         <Image style={{width:'100%',height:'100%',borderRadius:2}} resizeMode={'cover'} source={{uri:urlHead+url}}></Image>
                         :
-                        <Image style={{borderRadius:2}} resizeMode={'center'} source={placeholder}></Image>
+                        // <Image style={{borderRadius:2}} resizeMode={'center'} source={placeholder}></Image>
+                        <Icon name={placeholder} size={50} />
                 }
             </TouchableOpacity>
         </View>;

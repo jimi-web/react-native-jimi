@@ -8,10 +8,10 @@
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,DeviceEventEmitter,AsyncStorage} from 'react-native';
+import { Icon,Loading } from '../../../components/index'
 import Styles from '../style/base';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
-import Loading from '../../../components/loading/Loading';
 import { devicePosition } from '../comm';
 import {httpLocationGet} from '../../../http/business';
 import PropTypes from 'prop-types';
@@ -63,8 +63,8 @@ export default class PositionUtils extends Component {
         ChangePositionBtn:{
             isShow:true,
             style:MapStyles.phonePointBtn,
-            markerImg:require('../../../assets/map/position_map_current-position.png'),
-            myPositionImg:require('../../../assets/map/map_phone_position.png')
+            markerImg:'map_phone_position',
+            myPositionImg:' map_current_position'
         },
         isRefresh:true,
         refreshTime:15000,
@@ -105,8 +105,8 @@ export default class PositionUtils extends Component {
             locationData:null,//定位的所有数据
             ChangePositionBtn:{
                 isShow:this.props.ChangePositionBtn.style ? true :this.props.ChangePositionBtn.isShow ? true : false,
-                markerImg:this.props.ChangePositionBtn.markerImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/position_map_current-position.png'),
-                myPositionImg:this.props.ChangePositionBtn.myPositionImg ? this.props.ChangePositionBtn.markerImg : require('../../../assets/map/map_phone_position.png')                
+                markerImg:this.props.ChangePositionBtn.markerImg ? this.props.ChangePositionBtn.markerImg : 'map_current_position',
+                myPositionImg:this.props.ChangePositionBtn.myPositionImg ? this.props.ChangePositionBtn.myPositionImg :'map_phone_position'               
             },
             userMapType:0,//0为百度，1为谷歌
             lastAddress:null,//上一次定位点的地址
@@ -115,8 +115,9 @@ export default class PositionUtils extends Component {
     }
 
 
-    static upDate() {
-        DeviceEventEmitter.emit('jmPosition',{});
+    upDate =()=>{
+        // DeviceEventEmitter.emit('jmPosition',{});
+        this.getMarker();
     }
 
     
@@ -124,9 +125,9 @@ export default class PositionUtils extends Component {
         if(this.mapViewFunc){
             this.mapViewFunc.reloadView();
         }
-        DeviceEventEmitter.addListener('jmPosition', ()=>{
-            this.getMarker();
-        });
+        // DeviceEventEmitter.addListener('jmPosition', ()=>{
+        //     this.getMarker();
+        // });
     }
 
     componentWillUnmount() {
@@ -400,7 +401,7 @@ export default class PositionUtils extends Component {
         return <TouchableOpacity style={[Styles.btn,Styles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled},()=>{
             
         })}>
-            <Image style={Styles.btnImg} source={this.state.trafficEnabled?require('../../../assets/map/road_active.png'):require('../../../assets/map/road.png')} />
+            <Icon name={this.state.trafficEnabled?'map_road-condition_on':'map_road-condition_off'} size={'100%'} />
         </TouchableOpacity>;
     }
 
@@ -409,7 +410,7 @@ export default class PositionUtils extends Component {
      */
     mapTypeBtn = ()=> {
         return <TouchableOpacity style={[Styles.btn,Styles.mapTypeBtn,this.props.mapTypeBtnStyle]}   activeOpacity={1} onPress={this.setMapType}>
-            <Image style={Styles.btnImg} source={this.state.mapType==='standard'?require('../../../assets/map/layer.png'):require('../../../assets/map/home_icon_live-action.png')} />
+            <Icon name={this.state.mapType==='standard'?'map_cutover_off':'map_cutover_on'} size={'100%'} />
         </TouchableOpacity>; 
     }
 
@@ -422,7 +423,12 @@ export default class PositionUtils extends Component {
                 onPress={()=>{
                     this.changeMarker();
                 }}> 
-                <Image style={MapStyles.btnImg} source={this.state.isMyPosition? this.state.ChangePositionBtn.myPositionImg :this.state.ChangePositionBtn.markerImg} />
+                {
+                    typeof(this.state.ChangePositionBtn.myPositionImg)=='string' ? 
+                    <Icon name={this.state.isMyPosition?this.state.ChangePositionBtn.myPositionImg :this.state.ChangePositionBtn.markerImg} size={'100%'} />
+                    :
+                    <Image style={MapStyles.btnImg} source={this.state.isMyPosition? this.state.ChangePositionBtn.myPositionImg :this.state.ChangePositionBtn.markerImg} /> 
+                }
             </TouchableOpacity>:null;
     }
 

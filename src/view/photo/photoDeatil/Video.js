@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Dimensions, Image, Text, Slider, TouchableWithoutFeedback, TouchableOpacity, StyleSheet} from 'react-native';
 import Video from 'react-native-video';
+import {Icon} from '../../../components/index';
 import {changeSreenDirection} from '../../../http/index';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 import PropTypes from 'prop-types';
@@ -63,9 +64,7 @@ export default class VideoScreen extends Component {
                     {
                         this.state.isFullScreen ? 
                             this.state.showVideoControl ?this.props.isGoBackShow? <TouchableOpacity style={[styles.back,{left:isIphoneX()?iphoneXHeight(15):15}]}  activeOpacity={1} onPress={() => { this.onControlShrinkPress(); }}>
-                                <Image
-                                    source={require('../../../assets/photo/goBack.png')}
-                                /> 
+                                <Icon name={'back_chevron_black'} size={'100%'} color={'#fff'} />
                             </TouchableOpacity>:null:null:null
                     }
                     <Video
@@ -117,10 +116,7 @@ export default class VideoScreen extends Component {
                             {
                                 this.state.isPlaying ? null :
                                     <TouchableWithoutFeedback onPress={() => { this.onPressPlayButton(); }}>
-                                        <Image
-                                            style={styles.playButton}
-                                            source={require('../../../assets/photo/icon_download.png')}
-                                        />
+                                        <Icon name={'trajectory_play_on'} color={'#fff'} size={50} />
                                     </TouchableWithoutFeedback>
                             }
                         </View>
@@ -130,10 +126,11 @@ export default class VideoScreen extends Component {
                             <View style={[styles.control, {width: this.state.videoWidth,height:this.state.isFullScreen?isIphoneX()?iphoneXHeight(50):50:50}]}>
                                 <View style={{width: this.state.videoWidth,height:50, flexDirection: 'row',alignItems:'center'}}>
                                     <TouchableOpacity activeOpacity={0.3} onPress={() => { this.onControlPlayPress(); }}>
-                                        <Image
+                                        {/* <Image
                                             style={[styles.playControl,{marginLeft:this.state.isFullScreen?isIphoneX()?iphoneXHeight(15):15:15}]}
                                             source={this.state.isPlaying ? require('../../../assets/photo/video_icon_stop.png') : require('../../../assets/photo/video_icon_play.png')}
-                                        />
+                                        /> */}
+                                        <Icon  style={{marginLeft:this.state.isFullScreen?isIphoneX()?iphoneXHeight(15):15:15}} name={this.state.isPlaying ? 'zanting':'bofang'} size={20} color={'#fff'}/>
                                     </TouchableOpacity>
                                     <Text style={styles.time}>{formatTime(this.state.currentTime)}</Text>
                                     <Slider
@@ -149,10 +146,11 @@ export default class VideoScreen extends Component {
                                     />
                                     <Text style={styles.time}>{formatTime(this.state.duration)}</Text>
                                     <TouchableOpacity activeOpacity={0.3} onPress={() => { this.onControlShrinkPress(); }}>
-                                        <Image
+                                        {/* <Image
                                             style={[styles.shrinkControl,{marginRight:this.state.isFullScreen?isIphoneX()?iphoneXHeight(15):15:15}]}
                                             source={this.state.isFullScreen ? require('../../../assets/photo/icon_shrinkage_screen.png') : require('../../../assets/photo/icon_screen_full.png')}
-                                        />
+                                        /> */}
+                                        <Icon  style={{marginRight:this.state.isFullScreen?isIphoneX()?iphoneXHeight(15):15:15}}  name={this.state.isFullScreen ? 'video_full_screen_off' : 'video_full_screen_on'} size={35} color={'#fff'} />
                                     </TouchableOpacity>
                                 </View>
                             </View> : null
@@ -379,8 +377,8 @@ const styles = StyleSheet.create({
         position:'absolute',
         top:35,
         left:15,
-        width:36,
-        height:36,
+        width:25,
+        height:25,
         borderRadius:3,
         zIndex:20
     }

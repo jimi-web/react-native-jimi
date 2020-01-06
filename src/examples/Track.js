@@ -29,10 +29,10 @@ export default class Track extends Component {
             width:3
         };
 
-        let playImg = {
-            play:require('../assets/track/ratioX1.png'),
-            pause:require('../assets/track/repeat.png')
-        };
+        // let playImg = {
+        //     play:require('../assets/track/ratioX1.png'),
+        //     pause:require('../assets/track/repeat.png')
+        // };
         return <View style={{flex:1}}>
             {
                 this.state.isBaidu ? 

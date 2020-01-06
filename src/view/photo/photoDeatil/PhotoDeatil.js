@@ -3,13 +3,14 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:52:42
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-28 16:08:42
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2020-01-04 11:15:13
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native';
 import Photograph from './Photograph';
 import Video from './Video';
+import {Icon} from '../../../components/index';
 import BottomToolbars from '../../components/BottomToolbars';
 import {batchFileDelete,batchSaveToAlbum} from '../file';
 import PropTypes from 'prop-types';
@@ -72,11 +73,11 @@ export default class PhotoDeatil extends Component {
                     <BottomToolbars>
                         <View style={Styles.bottomToolbars}>
                             <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={this.delete}>
-                                <Image style={Styles.bottomToolbarsIcon} source={require('../../../assets/photo/photo_details_save.png')}></Image>
+                                <Icon name={'photo_details_delete'} size={22}></Icon>
                                 <Text style={[Styles.bottomToolbarsText]}>删除</Text>
                             </TouchableOpacity>
                             <TouchableOpacity  style={Styles.bottomToolbarsBtn} onPress={this.save} >
-                                <Image style={Styles.bottomToolbarsIcon}  source={require('../../../assets/photo/photo_details_delete.png')}></Image>
+                                <Icon name={'photo_details_save'} size={22}></Icon>
                                 <Text style={[Styles.bottomToolbarsText]}>保存至本地</Text>
                             </TouchableOpacity>
                         </View>

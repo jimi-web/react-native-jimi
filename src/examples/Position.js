@@ -15,9 +15,9 @@ export default class Position extends Component {
         super(props);
         this.state = {
             isBaidu:true,
-            obj:{
-                image:require('../assets/map/video.png')
-            },
+            // obj:{
+            //     image:require('../assets/map/video.png')
+            // },
             isSetImg:true
         };
     }
@@ -27,9 +27,9 @@ export default class Position extends Component {
             isShow:true
         };
 
-        let my = {
-            image:require('../assets/map/trajectory_map_phone_position.png'),
-        };
+        // let my = {
+        //     image:require('../assets/map/trajectory_map_phone_position.png'),
+        // };
 
         let markerInfoWindow = {
             isCustom:true,
@@ -47,7 +47,7 @@ export default class Position extends Component {
                         // deviceMarkerOptions={obj}
                         isRefresh={true}
                         ChangePositionBtn={car}
-                        mylocationOptions={my}
+                        // mylocationOptions={my}
                         // mapTypeBtnStyle={styles.set}
                         // markerInfoWindow={markerInfoWindow}
                     >
@@ -62,14 +62,14 @@ export default class Position extends Component {
                         // refreshTime={2000}
                         onMapClick={()=>{
                             console.log('点击事件');
-                            Jimi.BaiduPosition.upDate();
+                            this.map.upDate();
                         }}
                         // getData={this.getPoint}
                         trafficEnabled={false}
                         mapType={'standard'}
                         // deviceMarkerOptions={this.state.obj}
                         ChangePositionBtn={car}
-                        mylocationOptions={my}
+                        // mylocationOptions={my}
                         // mapTypeBtnStyle={styles.set}
                         // markerInfoWindow={markerInfoWindow}
                     >
@@ -164,9 +164,9 @@ export default class Position extends Component {
         };
         if(!this.state.isSetImg){
             this.setState({
-                obj:{
-                    image:require('../assets/map/video_actve.png') 
-                },
+                // obj:{
+                //     image:require('../assets/map/video_actve.png') 
+                // },
                 isSetImg:!this.state.isSetImg
             });
         }else{

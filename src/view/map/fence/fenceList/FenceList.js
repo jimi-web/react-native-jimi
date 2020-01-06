@@ -9,14 +9,13 @@
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
 import PropTypes from 'prop-types';
-import Loading from '../../../../components/loading/Loading';
 import {jmAjax} from '../../../../http/business';
 import api from '../../../../api/index';
 import Empty from '../../../empty/Empty';
 import FenceListItem from './FenceListItem';
 import BottomToolbars from '../../../components/BottomToolbars';
 import FenceStyles from '../../style/fenceList';
-import {Modal} from '../../../../components/index';
+import {Modal,Loading,Icon} from '../../../../components/index';
 
 export default class FenceList extends Component { 
     static propTypes = {
@@ -27,10 +26,10 @@ export default class FenceList extends Component {
 
     static defaultProps = {
         fenceStateImg:{
-            in:require('../../../../assets/fence/fence_list_enter.png'),
-            out:require('../../../../assets/fence/fence_list_out.png'),
-            all:require('../../../../assets/fence/fence_list_turnover.png'),
-            none:require('../../../../assets/fence/fence_list_off.png')
+            in:'fence_list_enter',
+            out:'fence_list_out',
+            all:'fence_list_turnover',
+            none:'fence_list_off'
         }
     };
 
@@ -104,17 +103,17 @@ export default class FenceList extends Component {
                         {
                             this.state.fenceList.length>0 ?
                                 <TouchableOpacity onPress={()=>this.onSelect(true)}>
-                                    <Image source={require('../../../../assets/fence/operating_select.png')}/>
+                                    <Icon name={'operating_select_disable'} size={20} />
                                     <Text style={{fontSize:10,marginTop:2,color:'#979797'}}>选择</Text>
                                 </TouchableOpacity>
                                 :
                                 <TouchableOpacity activeOpacity={1}>
-                                    <Image source={require('../../../../assets/fence/operating_select_disable.png')}/>
+                                    <Icon name={'operating_select_disable'} size={20} color={'#E9E9E9'} />
                                     <Text style={{fontSize:10,marginTop:2,color:'#E9E9E9'}}>选择</Text>
                                 </TouchableOpacity> }
                         <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} 
                             onPress={()=>{this.props.onAddEditFence && this.props.onAddEditFence();}}>
-                            <Image source={require('../../../../assets/fence/fence_operating_add.png')}/>
+                            <Icon name={'fence_operating_add'} size={15} color={'#fff'} />
                             <Text style={FenceStyles.addText}>添加围栏</Text>
                         </TouchableOpacity>
                     </View>:

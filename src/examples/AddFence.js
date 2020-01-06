@@ -25,7 +25,7 @@ export default class BaiduAddFence extends Component {
         return  <View style={{flex:1}}>
             {
                 this.state.isBaidu ? <Jimi.BaiduAddFence
-                    getData = {this.getPoint}
+                    // getData = {this.getPoint}
                     fenceId={params?params.fenceId:''}
                     onSave={()=>{
                         this.props.navigation.goBack();

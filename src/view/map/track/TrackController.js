@@ -8,7 +8,7 @@
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Slider} from 'react-native';
-import {Theme} from '../../../components/index';
+import {Theme,Icon} from '../../../components/index';
 import PropTypes from 'prop-types';
 import MapStyles from '../style/track';
 import {ActionSheet} from 'teaset';
@@ -29,8 +29,8 @@ export default class Track extends Component {
     static defaultProps = {
         isPlay:false,
         playImg:{
-            play:require('../../../assets/track/play.png'),
-            pause:require('../../../assets/track/pause.png')
+            play:'trajectory_play_on',
+            pause:'trajectory_play_off'
         },
         onSlidingComplete:()=>{
             
@@ -44,13 +44,13 @@ export default class Track extends Component {
             selectTimeType:0,//选择时间类型，0为开始时间，1为结束时间
             speedOption:{   //存放速度的配置
                 speed:700,
-                img:require('../../../assets/track/ratioX1.png')
+                img:'trajectory_play_X'
             },
             showTypeText:'全部',
             playOptionImg:this.props.playImg.play,
             trackOptopn:{ //存放显示和隐藏按钮的配置
                 isShow:true,
-                img:require('../../../assets/track/track.png')
+                img:'trajectory_play_line_on'
             }
         };
     }
@@ -66,7 +66,7 @@ export default class Track extends Component {
                     <View style={MapStyles.time}>
                         <Text style={MapStyles.timeText}>{deviceInformation.gpsTime ?new Date(deviceInformation.gpsTime).Format('YYYY-MM-DD hh:mm:ss'):new Date(new Date(new Date().Format('yyyy/MM/dd')+' 00:00').getTime()).Format('YYYY-MM-DD hh:mm')}</Text>
                         <TouchableOpacity activeOpacity={1} style={MapStyles.selectTimeIcon} onPress={this.onPullTime}>
-                            <Image style={MapStyles.timeIcon} source={require('../../../assets/track/edit_time.png')} />
+                            <Icon  name={'trajectory_play_edit_time'}  size={20} />
                         </TouchableOpacity>
                     </View>
                     <View style={MapStyles.speed}>
@@ -88,20 +88,25 @@ export default class Track extends Component {
                 />
                 <View style={MapStyles.bottomBtn}>
                     <TouchableOpacity activeOpacity={1} onPress={this.onTrackShow}>
-                        <Image style={{width:22,height:22}} source={this.state.trackOptopn.img} />
+                        <Icon  name={this.state.trackOptopn.img}  size={22} />
                     </TouchableOpacity>                    
                     <TouchableOpacity activeOpacity={1} onPress={this.onReplay}>
-                        <Image style={{width:22,height:22}} source={require('../../../assets/track/repeat.png')} />
+                        <Icon  name={'trajectory_play_replay'}  size={22} />
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1} onPress={this.onPlay}>
-                        <Image style={{width:48,height:48}} source={this.state.playOptionImg} />
+                    <TouchableOpacity activeOpacity={1} onPress={this.onPlay}> 
+                        {
+                           typeof(this.state.playOptionImg) == 'string' ? 
+                           <Icon  name={this.state.playOptionImg}  size={48} />:
+                           <Image style={{width:48,height:48}} source={this.state.playOptionImg} />
+                        }
+                       
                     </TouchableOpacity>   
                     <TouchableOpacity activeOpacity={1} onPress={this.onSpeed}>
-                        <Image style={{width:22,height:22}} source={this.state.speedOption.img} />
+                        <Icon  name={this.state.speedOption.img}  size={22} />
                     </TouchableOpacity>    
                     <TouchableOpacity activeOpacity={1} style={MapStyles.playControllerTextStyle}  onPress={this.showType}  >
                         <Text style={{fontSize:14,color:'#5E5E5E'}}>{this.state.showTypeText}</Text>
-                        <Image style={{width:5,height:8}} source={require('../../../assets/track/feather-chevron-arrow.png')} />
+                        <Icon  name={'trajectory_time_selection_arrow1'}  size={10} />
                     </TouchableOpacity>                                                                  
                 </View>
             </View>
@@ -144,13 +149,13 @@ export default class Track extends Component {
         let img = null;
         if(this.state.speedOption.speed == 700){
             speed = 100;
-            img = require('../../../assets/track/ratioX2.png');
+            img = 'trajectory_play_X1'
         }else if(this.state.speedOption.speed == 100){
             speed = 70;
-            img = require('../../../assets/track/ratioX3.png');
+            img = 'trajectory_play_X2'
         }else {
             speed = 700;
-            img = require('../../../assets/track/ratioX1.png');
+            img = 'trajectory_play_X'
         }
 
         this.setState({
@@ -183,7 +188,7 @@ export default class Track extends Component {
         this.setState({
             playOption:{
                 isPlay:true,
-                img:require('../../../assets/track/pause.png')
+                img:'trajectory_play_off'
             }
         },()=>{
             this.props.onReplay &&  this.props.onReplay();
@@ -195,7 +200,7 @@ export default class Track extends Component {
      */
     onTrackShow = ()=>{
         let isShow = !this.state.trackOptopn.isShow ? true : false;
-        let img = !this.state.trackOptopn.isShow ? require('../../../assets/track/track.png') : require('../../../assets/track/track_hide.png');
+        let img = !this.state.trackOptopn.isShow ? 'trajectory_play_line_on' : 'trajectory_play_line_off';
         this.setState({
             trackOptopn:{
                 isShow:isShow,

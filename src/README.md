@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-02 15:06:36
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2020-01-04 18:25:09
  -->
 # 几米圈标准小程序
 
@@ -69,9 +69,10 @@
 
 [`<Jimi.Video />`视频](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Video.md)<br>
 
-[`<Jimi.Video />`RVC(实时视频)](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/RVC.md)<br>
+[`<Jimi.RVC />`RVC(实时视频)](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/RVC.md)<br>
 
-[`<Jimi.Video />`数据空白](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Empty.md)<br>
+[`<Jimi.Empty />`数据空白](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Empty.md)<br>
++'
 
 # 基础组件
 
@@ -125,3 +126,4 @@
 7. 添加麦克风权限接口
 8. 添加RVC业务组件及相关文档和实例
 9. 优化toast不能自定义位置问题,与样式问题
+10. 使用字体图标替换掉所有的图片
