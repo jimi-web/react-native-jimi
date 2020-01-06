@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-29 17:14:47
+ * @LastEditTime : 2020-01-03 17:05:31
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -619,6 +619,7 @@ export default class MonitorView extends Component {
         //     secret:'feef6c9e8ff94bfa95c2fc9b56b8c52a',
         //     imei:'312345678912314',
         // };
+ 
         const {params} = this.props;
         if(!params){
             return;

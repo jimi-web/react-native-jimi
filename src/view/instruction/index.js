@@ -4,20 +4,20 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-29 14:39:02
+ * @LastEditTime : 2020-01-06 09:53:21
  */
 import React, { Component } from 'react';
-import {View,Text} from 'react';
-
-export default class Instruction extends Component {
+import {View,Text,ScrollView} from 'react';
+import Instruction from './instruction';
+export default class Instructions extends Component {
     
+
     constructor(props){
         super(props);
     }
-    
     render(){
         return (
-            <View>指令相关</View>
+            <Instruction />
         );
     }
 }
