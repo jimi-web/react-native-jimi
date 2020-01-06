@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-06 10:01:25
+ * @LastEditTime : 2020-01-06 10:13:16
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react';
@@ -31,6 +31,6 @@ export default class Instruction extends Component {
         );
     }
     renderInstruction = () => {
-        
+        //
     }
 }

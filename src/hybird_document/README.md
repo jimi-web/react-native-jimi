@@ -45,6 +45,8 @@
  - 进入菜单<b>我的</b>中点击<em>体验中心</em> 进入到当前启动的小程序。（手机网络需和电脑网络处于同一个网段）
  - 摇一摇开启Debug模式，选择<em>Debug JS Remotely</em> 可在浏览器控制台查看小程序log。
 
+ - [ios调试视频](./image/RPReplay_Final1577950612.mp4)
+
  <video src="./image/RPReplay_Final1577950612.mp4" controls="controls" width="640" height="360">您的浏览器不支持播放该视频！</video>
 
 #### android
@@ -52,6 +54,8 @@
  - 点击顶部文字进入修改环境，选择<em>国内正式环境</em> 、<em>RN直调</em> ，点击保存。
  - 进入菜单<b>我的</b>中点击<em>体验中心</em> ,输入appID（随意）和imei进入小程序。
  - 摇一摇开启Debug模式，选择<em>Debug JS Remotely</em> 可在浏览器控制台查看小程序log。
+ 
+ - [android调试视频](./image/20200102141327.mp4)
  
  <video src="./image/20200102141327.mp4" controls="controls" width="640" height="360">您的浏览器不支持播放该视频！</video>
 
