@@ -50,28 +50,33 @@ export default class PullList  extends Component {
 
     render() {
         return <View style={{position:'relative',flex:1}}>
-            <FlatList 
-                data={this.props.data}
-                refreshControl={
-                    <RefreshControl
-                        {...this.props.refreshControl}
-                        refreshing={this.props.refresStatus}
-                        onRefresh={this.props.onRefresh}
-                    />
-                }
-                onEndReachedThreshold={0.2}
-                onEndReached={this.props.onPullUp}
-                extraData={this.props}
-                renderItem={this.props.renderItem}
-                keyExtractor={(item,index) => index.toString()+'pullList'}
-                ListFooterComponent={this.renderFooter}
-            ></FlatList>
+            {
+                this.renderContent()
+            }
             {
                 this.props.pullUpStatus === 0 ? this.footerEmptyDataComponent():null
             }
         </View>;  
     }
 
+    renderContent = ()=>{
+        return <FlatList 
+            data={this.props.data}
+            refreshControl={
+                <RefreshControl
+                    {...this.props.refreshControl}
+                    refreshing={this.props.refresStatus}
+                    onRefresh={this.props.onRefresh}
+                />
+            }
+            onEndReachedThreshold={0.2}
+            onEndReached={this.props.onPullUp}
+            extraData={this.props}
+            renderItem={this.props.renderItem}
+            keyExtractor={(item,index) => index.toString()+'pullList'}
+            ListFooterComponent={this.renderFooter}
+        />
+    }
 
     footerRefreshingComponent =()=>{
         let defaultElem =  <View style={[{alignItems:'center',paddingTop:20,height:isIphoneX()?iphoneXHeight(80):80},{...this.props.footerStyle}]}>
