@@ -232,6 +232,11 @@ export default class TrackUtils extends Component {
             data:data
         }).then((res)=>{
             let result = res.data;
+            result.forEach((res)=> {
+                let baidu = gps.GPSToBaidu(res.latitude,res.longitude);
+                res.latitude = baidu.lat;
+                res.longitude = baidu.lng;
+            });
             this.getTrackData(result);
         });
     }
