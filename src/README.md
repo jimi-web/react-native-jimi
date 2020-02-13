@@ -78,7 +78,9 @@
 
 [`<Circle.Toast />`提示](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Toast.md)<br>
 
-[`<Circle.PullList />`上拉加载下拉刷新](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/PullList.md)<br>
+[`<Circle.PullList />`上拉加载下拉刷新（无分组列表）](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/PullList.md)<br>
+
+[`<Circle.GroupList />`上拉加载下拉刷新（分组列表）](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/GroupList.md)<br>
 
 [`<Circle.Switch />`开关](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Switch.md)<br>
 

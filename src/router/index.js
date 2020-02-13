@@ -21,7 +21,9 @@ import Record from '../examples/Record';
 import PrivacyAgreement from '../view/map/share/PrivacyAgreement';
 import AddFence from '../examples/AddFence';
 import Share from '../examples/Share';
+import PullList from '../examples/PullList';
 import PullView from '../examples/PullView';
+import GroupList from '../examples/GroupList';
 import Switch from '../examples/Switch';
 import GetWheel from '../examples/Wheel';
 import Datepicker from '../examples/Datepicker';
@@ -125,10 +127,18 @@ const AppNavigator = createStackNavigator(
             screen:Share,
             navigationOptions:getOptions('分享')            
         },
+        PullList:{
+            screen:PullList,
+            navigationOptions:getOptions('普通列表')            
+        },
+        GroupList:{
+            screen:GroupList,
+            navigationOptions:getOptions('分组列表')            
+        },
         PullView:{
             screen:PullView,
-            navigationOptions:getOptions('上拉刷新下拉加载')            
-        },
+            navigationOptions:getOptions('上拉刷新下拉加载')        
+        },        
         Switch:{
             screen:Switch,
             navigationOptions:getOptions('开关')            

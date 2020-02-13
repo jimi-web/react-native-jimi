@@ -33,4 +33,9 @@ export default class IconTest extends Component {
         return <Icon name='weixinzhifu' size={100} color={'red'} rotation={50}></Icon>;
     }
 }
+
 ```
+
+
+## Icon
+![avatar](../../assets/doc/icon.png)

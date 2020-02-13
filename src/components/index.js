@@ -18,6 +18,7 @@ import Toast from './toast/Toast';
 import PopUpBox from './popUpBox/PopUpBox';
 import InputBox from './popUpBox/inputBox';
 import PullList from './pullList/PullList';
+import GroupList from './pullList/GroupList';
 import Switch from './switch/Switch';
 import Drawer from './drawer/Drawer';
 import Wheel from './wheel/Wheel';
@@ -37,6 +38,7 @@ const Circle = {
     InputBox,
     Alert,
     PullList,
+    GroupList,
     Switch,
     Drawer,
     Wheel,

@@ -64,7 +64,7 @@ export default class PositionUtils extends Component {
             isShow:true,
             style:MapStyles.phonePointBtn,
             markerImg:'map_phone_position',
-            myPositionImg:' map_current_position'
+            myPositionImg:'map_current_position'
         },
         isRefresh:true,
         refreshTime:15000,

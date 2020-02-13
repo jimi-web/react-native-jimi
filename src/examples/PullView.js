@@ -1,150 +1,43 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: xieruizhi
+ * @Date: 2019-12-27 17:43:23
+ * @LastEditors  : xieruizhi
+ * @LastEditTime : 2019-12-28 10:30:35
+ */
 import React,{Component} from 'react';
-import {View,Text,Image} from 'react-native';
-import {Circle} from '../index';
+import {View,StyleSheet,Text,Dimensions} from 'react-native';
+const {width} = Dimensions.get('window');
+import { Circle } from '../index';
 
-let list = [{key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'},
-    {key: 'Devin'}];
+const { Button }  = Circle;
 
-
-export default class PullView  extends Component {
-    constructor(props) {
+export default class PullView extends Component { 
+    
+    constructor(props){
         super(props);
-        this.state = {
-            refresStatus:false,
-            pullUpStatus:0,
-            testList:[],
-            totalNum:2,
-            pageNum:0
-        };
-    }
-
-    render() {
-        return <View style={{flex:1}}>
-            <Circle.PullList style={{backgroundColor:'#eee'}}
-                data={this.state.testList}
-                renderItem={({item}) => <Text>{item.key}</Text>}
-                onRefresh={this.onRefresh}
-                pullUpStatus={this.state.pullUpStatus}
-                refresStatus={this.state.refresStatus}
-                onPullUp={this.onPullUp}
-                footerEmptyDataComponent={this.footerEmptyDataComponent()}
-                onFail={()=>{
-                    this.onPullUp();
-                }}
-            />
-        </View>;  
     }
 
     componentDidMount(){
-        this.init();
-    }
-
-    init =()=>{
-        setTimeout(()=>{
-            this.setState({
-                testList:list,
-                refresStatus:false,
-                pullUpStatus:4,
-                pageNum:0
-            });
-        },3000);
-
-        this.setState({
-            refresStatus:true
-        });
+        
     }
 
 
-    onRefresh = ()=>{
-        this.init();
+    render(){
+        return <View>
+        <Button title={'普通列表'} onPress={()=>this._onPress('PullList')} style={styles.btn}></Button>
+        <Button title={'分组列表'} onPress={()=>this._onPress('GroupList')} style={styles.btn}></Button>
+    </View>
     }
 
-    onPullUp = ()=>{
-        //没有更多数据
-        if(this.state.pageNum===this.state.totalNum){
-            this.setState({
-                pullUpStatus:4,
-            });
-            return;
-        }
-
-
-        this.setState({
-            pullUpStatus:1,//数据加载中
-        },()=>{
-            //模拟数据请求
-            let pageNum = this.state.pageNum+1;
-            setTimeout(()=>{
-                let data = [];
-                for(let i=0;i<5;i++){
-                    data.push( {key: 'Julie'});
-                }
-                this.setState({
-                    testList:[...this.state.testList,...data],
-                    pageNum:pageNum
-                },()=>{
-                    this.setState({
-                        pullUpStatus:4,
-                    });
-                }); 
-            },2000);
-        });
-    }
-
-    footerEmptyDataComponent=()=>{
-        return <View style={{alignItems:'center',position:'absolute',width:280,height:168,top:'50%',left:'50%',marginLeft:-140,marginTop:-163}}>
-            <Image source={require('../assets/fence/list_empty.png')}></Image>
-            <Text style={{marginTop:20}}>暂无数据</Text>
-        </View>;
-    }
+    _onPress = (name)=>{
+        this.props.navigation.push(name);
+    }  
 }
+
+const styles = StyleSheet.create({
+    btn:{
+        margin:10
+    }
+});
