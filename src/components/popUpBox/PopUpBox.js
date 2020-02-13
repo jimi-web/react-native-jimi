@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-10-09 15:34:12
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 09:30:17
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2020-01-13 10:02:41
  */
 import React, {Component} from 'react';
 import {StyleSheet,Modal,TouchableOpacity} from 'react-native';
@@ -12,13 +12,15 @@ import PropTypes from 'prop-types';
 
 export default class PopUpBox extends Component {
     static propTypes = {
-        visible:PropTypes.bool,//是否开启路况
+        visible:PropTypes.bool,
         onShadow:PropTypes.func
     }
 
     static defaultProps = {
         visible:false,
-        onShadow:()=>{}
+        onShadow:()=>{
+            //
+        }
     }
 
     render() {

@@ -30,7 +30,9 @@ export default class PullList  extends Component {
         refreshControl:{},
         activityIndicator:{},
         data:[],
-        renderItem:()=>{},
+        renderItem:()=>{
+            //
+        },
         refresStatus:false,
         pullUpStatus:0,
         footerStyle:{},
@@ -38,8 +40,12 @@ export default class PullList  extends Component {
         footerFailureText:'点击重新加载',
         footerNoMoreDataText:'没有更多数据了',
         footerEmptyDataText:'暂无内容', 
-        onRefresh:()=>{},
-        onPullUp:()=>{}
+        onRefresh:()=>{
+            //
+        },
+        onPullUp:()=>{
+            //
+        }
     };
 
 

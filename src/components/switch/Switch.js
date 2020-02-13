@@ -20,7 +20,9 @@ export default class Switch  extends Component {
         activeColor: Theme.switchActiveColor,//打开状态颜色
         defaultColor: Theme.switchDefaultColor,//关闭状态颜色
         disabled:false,
-        onValueChange:()=>{}
+        onValueChange:()=>{
+            //
+        }
     }
 
     constructor(props) {

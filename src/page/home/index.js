@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-28 14:59:51
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2020-01-07 11:03:25
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,SectionList,TouchableOpacity,Image} from 'react-native';
@@ -17,31 +17,35 @@ export default class Home extends Component{
         this.state = {
             menuList:[{
                 type:'业务组件',
-                data:[{
-                    title:'RVC',
-                    url:'RVC'
-                },{
-                    title:'定位',
-                    url:'Position'
-                },{
-                    title:'轨迹',
-                    url:'Track'
-                },{
-                    title:'追踪',
-                    url:'Trace'
-                },{
-                    title:'围栏',
-                    url:'Fence'
-                },{
-                    title:'相册',
-                    url:'Photo'
-                },{
-                    title:'录音',
-                    url:'Record'
-                },{
-                    title:'数据空白',
-                    url:'Empty'
-                }
+                data:[
+                    {
+                        title:'指令',
+                        url:'Instruction'
+                    },{
+                        title:'RVC',
+                        url:'RVC'
+                    },{
+                        title:'定位',
+                        url:'Position'
+                    },{
+                        title:'轨迹',
+                        url:'Track'
+                    },{
+                        title:'追踪',
+                        url:'Trace'
+                    },{
+                        title:'围栏',
+                        url:'Fence'
+                    },{
+                        title:'相册',
+                        url:'Photo'
+                    },{
+                        title:'录音',
+                        url:'Record'
+                    },{
+                        title:'数据空白',
+                        url:'Empty'
+                    }
                 ]
             },{
                 type:'基础组件',

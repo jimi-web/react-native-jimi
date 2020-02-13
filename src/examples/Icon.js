@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-12-27 17:43:23
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2020-01-02 10:24:24
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2020-01-07 16:26:46
  */
 import React,{Component} from 'react';
 import {View,FlatList,Dimensions,ScrollView,Text} from 'react-native';
@@ -111,11 +111,11 @@ export default class IconExample extends Component {
                 'video_mute_on',
                 'video_mute_off',
             ]
-        }
+        };
     }
 
     componentDidMount(){
-    
+        //
     }
 
     render(){
@@ -126,11 +126,11 @@ export default class IconExample extends Component {
                         return <View style={{width:width/2,alignItems:'center',marginTop:15}}>
                             <Icon name={item} size={30}></Icon>
                             <Text style={{fontSize:10}}>{item}</Text>
-                        </View>
+                        </View>;
                     })
                 }
                 <View style={{width:width,height:80}}></View>
             </View>
-      </ScrollView> ;
+        </ScrollView> ;
     }
 }

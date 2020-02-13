@@ -3,13 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
-<<<<<<< HEAD
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-03 17:05:31
-=======
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2020-01-04 18:24:47
->>>>>>> 129ca47bc8aefbeb2925abd155410a0f5664bf1e
+ * @LastEditTime : 2020-01-10 09:48:35
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -472,7 +467,7 @@ export default class MonitorView extends Component {
             <TouchableOpacity key={'screen'} activeOpacity={0.3} onPress={this.onReversal} style={[iconStyle,{right:10}]}>
                 <Icon name={screenIcon} size={28} color={'#fff'} />
             </TouchableOpacity>
-        :null;
+            :null;
         let soundElement = isSoundIcon?
             <TouchableOpacity key={'sound'} activeOpacity={0.3} onPress={this.onSound} style={[iconStyle,{right:50}]}>
                 <Icon name={soundIcon} size={28}  color={'#fff'} />

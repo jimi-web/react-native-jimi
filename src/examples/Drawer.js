@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-12-27 17:43:23
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-28 10:30:35
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2020-01-13 10:05:45
  */
 import React,{Component} from 'react';
 import {View,StyleSheet,Text,Dimensions} from 'react-native';
@@ -18,15 +18,10 @@ export default class Drawerample extends Component {
     constructor(props){
         super(props);
     }
-
-    componentDidMount(){
-        
-    }
-
     render(){
         return <View>
-        <Button title={'底部抽屉'} onPress={this._onPress} style={styles.btn}></Button>
-    </View>
+            <Button title={'底部抽屉'} onPress={this._onPress} style={styles.btn}></Button>
+        </View>;
     }
 
     _onPress = ()=>{

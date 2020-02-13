@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-28 10:31:39
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2020-01-07 11:15:43
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -31,6 +31,7 @@ import Icon from '../examples/Icon';
 import Empty from '../examples/Empty';
 import Button from '../examples/Button';
 import Drawer from '../examples/Drawer';
+import Instruction from '../examples/Instruction';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -166,7 +167,11 @@ const AppNavigator = createStackNavigator(
         Drawer:{
             screen:Drawer,
             navigationOptions:getOptions('底部抽屉')     
-        }     
+        },     
+        Instruction:{
+            screen:Instruction,
+            navigationOptions:getOptions('指令')     
+        },
     });
 
 export const Root = createAppContainer(AppNavigator);

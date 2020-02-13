@@ -3,8 +3,8 @@
  * @version:
  * @Author: xieruizhi
  * @Date: 2019-10-09 15:34:12
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-10 16:11:24
+ * @LastEditors  : liujinyuan
+ * @LastEditTime : 2020-01-10 09:53:07
  */
 import React, { Component } from 'react';
 import {
@@ -17,7 +17,7 @@ import {
     Platform
 } from 'react-native';
 import Theme from '../themes/index';
-import {Icon}from '../iconfont/Icon'
+import {Icon}from '../iconfont/Icon';
 import PropTypes from 'prop-types';
 import PopUpBox from './PopUpBox';
 import { Input } from 'teaset';

@@ -4,12 +4,12 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-06 09:53:21
+ * @LastEditTime : 2020-01-07 11:14:48
  */
 import React, { Component } from 'react';
-import {View,Text,ScrollView} from 'react';
-import Instruction from './instruction';
-export default class Instructions extends Component {
+import {View,Text,ScrollView} from 'react-native';
+import InstructionContent from '../view/instruction/instruction';
+export default class Instruction extends Component {
     
 
     constructor(props){
@@ -17,7 +17,7 @@ export default class Instructions extends Component {
     }
     render(){
         return (
-            <Instruction />
+            <InstructionContent></InstructionContent>
         );
     }
 }
