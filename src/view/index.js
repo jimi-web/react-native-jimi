@@ -21,7 +21,8 @@ import GoogleAddFence from './map/fence/addFence/GoogleAddFence';
 import Record from './record';
 import Share from './map/share/Share';
 import Photo from './photo/index';
-import PhotoList from './photo/photoList/PhotoList';
+import LocalPhotoList from './photo/photoList/LocalPhotoList';
+import LongPhotoList from './photo/photoList/LongPhotoList';
 import Photograph from './photo/photoDeatil/Photograph';
 import Video from './photo/photoDeatil/Video';
 import PhotoDeatil from './photo/photoDeatil/PhotoDeatil';
@@ -42,7 +43,8 @@ const Jimi = {
     Record,
     Share,
     Photo,
-    PhotoList,
+    LocalPhotoList,
+    LongPhotoList,
     PhotoDeatil,
     Photograph,
     Video,

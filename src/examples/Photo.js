@@ -30,7 +30,7 @@ export default class Photo extends Component {
 
     render(){
         return <Jimi.Photo onSelect={(data)=>{
-            this.props.navigation.push('PhotoList',{fileType:data.fileType,mediaList:data.mediaList,title:data.title});}}
+            this.props.navigation.push('PhotoList',{fileType:data.fileType,title:data.title,mediaList:data.mediaList});}}
         ref={(e)=>this.photo =e} />;
     }
 

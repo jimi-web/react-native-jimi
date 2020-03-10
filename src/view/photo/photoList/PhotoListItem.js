@@ -25,7 +25,7 @@ export default class PhotoListItem extends Component{
         const {index,url,isEdit,checked,videoTime} = this.props;
         return <View style={[Styles.img,{marginRight:index+1%4===0?0:1}]}>
             <TouchableOpacity style={Styles.imgTouch} activeOpacity={1} onPress={this.props.onSelect} >
-                <ImageBackground style={{position:'relative',flex:1}} source={{uri:url}}>
+                <ImageBackground style={{position:'relative',width:'100%',height:'100%'}} source={{uri:url}}>
                     <Text style={Styles.videoTime}>{videoTime}</Text>
                     {
                         isEdit?

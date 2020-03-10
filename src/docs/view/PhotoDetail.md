@@ -12,10 +12,7 @@
 | Prop | Type | required | Default | Note |
 |---|---|---|---|---|
 | style | Object | false | false | 主体样式，可修改底部颜色 |
-| url | String | true | false | 单张图片或者是视频的路径 |
-| videoCover | String | true | false | 视频封面第一帧 |
-| videoType | Array[String] | false | ['mp4','3gp','avi','mov'] | 支持的视频类型 |
-| fileType | Number | true | 无 | 文件类型，0为本地相册，1为远程相册 |
+| data | Object | true | false | 文件数据 |
 | mediaType | String | true | 无 | 文件格式，mp4，png等等 |
 | isGoBackShow | Boolean | false | false | 视频全屏时候是否显示箭头返回 |
 | children | Elem | false | false | 可在组建内嵌套子级元素 |
@@ -40,18 +37,20 @@ export default class PhotoDeatil extends Component {
         header:navigation.getParam('isShow')
     });
 
+
     constructor(props){
         super(props);
     }
 
     render(){
-        const {item} = this.props.navigation.state.params;
-        return <Jimi.PhotoDeatil url={item.url} fileType={0} mediaType={item.type}  videoCover={item.videoFirstImagePath?item.videoFirstImagePath:item.url}
+        const {item,callBack} = this.props.navigation.state.params;
+        return <Jimi.PhotoDeatil 
+            data= {item}
             onDelete={()=>{
+                callBack(item)
                 //删除文件后返回上一页
                 this.props.navigation.goBack();
             }}
-
             onChangeSreen={(value)=>{
                 //当视频全屏时，去掉头部导航
                 this.props.navigation.setParams({

@@ -21,6 +21,8 @@ const serverUrl = {
     recordList:'/record/module/file/page',//获取录音列表
     instruction:'/proxy/module/instruction/sendInstruct',//发送指令
     deleteRecord:'/record/module/file',//删除录音
+    queryDeviceVideoPicFile: '/videopic/module/queryDeviceVideoPicFile',//获取视频和照片数据
+    deleteDeviceVideoPicFile:'/videopic/module/deleteDeviceVideoPicFile'//删除视频和照片
 };
 
 
