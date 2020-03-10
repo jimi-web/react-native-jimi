@@ -7,28 +7,26 @@
  * @LastEditTime : 2020-01-04 11:15:13
  */
 import React, {Component} from 'react';
-import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native';
+import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
 import Photograph from './Photograph';
 import Video from './Video';
 import {Icon} from '../../../components/index';
 import BottomToolbars from '../../components/BottomToolbars';
-import {batchFileDelete,batchSaveToAlbum} from '../file';
+import {createTheFolder} from '../../../http/index';
+import {batchFileDelete,batchSaveToAlbum,deleteDeviceVideoPicFile,downloadFile} from '../file';
 import PropTypes from 'prop-types';
 
 export default class PhotoDeatil extends Component { 
 
     static propTypes = {
-        url:PropTypes.string.isRequired,
         videoType:PropTypes.array,
         onDelete:PropTypes.func,
         onSave:PropTypes.func,
-        fileType:PropTypes.number.isRequired,
-        mediaType:PropTypes.string.isRequired,
-        videoCover:PropTypes.string,
         onChangeSreen:PropTypes.func,
         isGoBackShow:PropTypes.bool,//是否返回箭头
         onPlayChange:PropTypes.func,//播放状态回调
-        style:PropTypes.object
+        style:PropTypes.object,
+        isFullScreen:PropTypes.bool
     }
     
 
@@ -45,17 +43,21 @@ export default class PhotoDeatil extends Component {
     constructor(props){
         super(props);
         this.state = {
-            urlHead:this.props.fileType !== 1 ? 'file:///':'',//判断是否网络图片，0为本地，1为远程
-        };
+            isFullScreen:this.props.isFullScreen
+        }
     }
 
     render(){
-        const {url,mediaType,videoType,videoCover} = this.props;
+        const {data,videoType} = this.props;
+        console.log(data,'图片');
+        
+        const fileUrl = data.hasOwnProperty('isDown')?data.isDown?data.url:data.fileUrl:data.url;//区分远程相册和本地相册，区分是否下载过的远程相册
+        const videoCover = data.videoFirstImagePath?data.videoFirstImagePath:fileUrl;
         return <View style={[Styles.content,{...this.props.style}]}>
             {
-                videoType.indexOf(mediaType)>-1?<Video 
-                    url={this.state.urlHead+url} 
-                    videoCover={this.state.urlHead+videoCover} 
+                videoType.includes(data.type)?<Video 
+                    url={fileUrl} 
+                    videoCover={videoCover} 
                     onChangeSreen={(value)=>{
                         this.setState({
                             isFullScreen:value
@@ -66,7 +68,7 @@ export default class PhotoDeatil extends Component {
                     onPlayChange={(value)=>{
                         this.props.onPlayChange(value);
                     }}
-                />:<Photograph url={url} />
+                />:<Photograph url={fileUrl} />
             }
             {
                 !this.state.isFullScreen ?
@@ -90,18 +92,39 @@ export default class PhotoDeatil extends Component {
      * 删除
      */
     delete = ()=>{
-        batchFileDelete([this.props.url],()=>{
-            this.props.onDelete && this.props.onDelete();
-        });
+        let data = this.props.data;
+        if(data.hasOwnProperty('isDown')){
+            //远程相册删除
+            deleteDeviceVideoPicFile({
+                longFileIds:[data.fileId],
+                localFileIds:[data.isDown ? data.url :''],
+                callBack:()=>{
+                    this.props.onDelete && this.props.onDelete();
+                }
+            })
+        }else{
+            //本地相册删除
+            batchFileDelete([data.url],()=>{
+                this.props.onDelete && this.props.onDelete();
+            });
+        }
     }
 
     /**
      * 保存到本地
      */
-    save =()=>{
-        batchSaveToAlbum([this.props.url],this.props.videoType,()=>{
-            this.props.onSave && this.props.onSave();
-        });
+    save = async()=>{
+        let data = this.props.data;
+        if(data.hasOwnProperty('isDown')){
+            let filePath = await createTheFolder('jmlongPhotoListData');
+            downloadFile([data],filePath,this.props.videoType,()=>{
+                this.props.onSave && this.props.onSave();
+            });
+        }else {
+            batchSaveToAlbum([data.url],this.props.videoType,()=>{
+                this.props.onSave && this.props.onSave();
+            });
+        }
     }
 }
 

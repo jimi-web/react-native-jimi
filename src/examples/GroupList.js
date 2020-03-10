@@ -81,10 +81,12 @@ export default class GroupList  extends Component {
     }
 
     onPullUp = ()=>{
+        console.log('');
+        
         //没有更多数据
         if(this.state.pageNum===this.state.totalNum){
             this.setState({
-                pullUpStatus:4,
+                pullUpStatus:2,
             });
             return;
         }
@@ -105,7 +107,7 @@ export default class GroupList  extends Component {
                     pageNum:pageNum
                 },()=>{
                     this.setState({
-                        pullUpStatus:4,
+                        pullUpStatus:2,
                     });
                 }); 
             },2000);

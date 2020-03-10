@@ -44,8 +44,6 @@ export const getFileList = (url)=>{
                 httpApp('jm_file.getFileList',{
                     filePath,
                     onSuccess:(res)=>{
-                        console.log(res);
-                        
                         let result = {
                             filePath:filePath,
                             fileList:res
@@ -133,6 +131,8 @@ export const fileDelete = (url) => {
  * @param  {string} url 图片路径
  */
 export const saveToAlbum = (url) => {
+    console.log(url,'saveToAlbum');
+    
     return new Promise((resolve,reject) => {
         httpApp('jm_image.saveToAlbum', {
             filePath: url,
@@ -140,6 +140,7 @@ export const saveToAlbum = (url) => {
                 resolve(res);
             },
             onFail: (res) => {
+                console.log(res,'报错');
                 reject(res);
             },
             onComplete: () => {

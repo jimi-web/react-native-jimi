@@ -8,9 +8,10 @@
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,Image,TouchableOpacity,Dimensions,Platform} from 'react-native';
-import {getFileList,createTheFolder,getVideoTime,getVideoFirstImage} from '../../http/index';
+import {getVideoTime,getVideoFirstImage} from '../../http/index';
 import PropTypes from 'prop-types';
 import {Icon} from '../../components/index';
+import {queryDeviceVideoPicFile,getLocalList} from './file';
 const {width} =Dimensions.get('window');
 
 export default class Photo extends Component { 
@@ -19,10 +20,12 @@ export default class Photo extends Component {
         placeholderImg:  PropTypes.oneOfType([
             PropTypes.shape({uri: PropTypes.string}), 
             PropTypes.number,
+            PropTypes.string
         ]),
         placeholderVideo:PropTypes.oneOfType([
             PropTypes.shape({uri: PropTypes.string}), 
             PropTypes.number,
+            PropTypes.string
         ]),
         videoType:PropTypes.array,
         onSelect:PropTypes.func.isRequired
@@ -39,6 +42,7 @@ export default class Photo extends Component {
         this.state = {
             localPhoto:[], //本地相册
             longPhoto:[], //远程相册
+            longPhotoTotal:0,
             localVideo:[], //本地视频
             fileTypeItemHeight:160,//文件夹高度
             fileTypeItemHeightChange:false,//用来判断文件夹高度是否改变
@@ -47,27 +51,32 @@ export default class Photo extends Component {
 
 
     componentDidMount(){
-        this.getLocalList('jmPhotoListData');
+        this.upDate();
     }
 
     render(){
+        let localPhotoimg = this.state.localPhoto.length>0? this.state.localPhoto[0].videoFirstImage? this.state.localPhoto[0].videoFirstImage:this.state.localPhoto[0].url:null;  
+        console.log(this.state.localPhoto);
+        
+        let longPhotoimg = this.state.longPhoto.length>0?this.state.longPhoto[0].thumbnailUrl?this.state.longPhoto[0].thumbnailUrl:this.state.longPhoto[0].fileUrl:null;
+        let localVideoimg = this.state.localVideo.length>0?this.state.localVideo[0].videoFirstImage:null;
         return <View style={Styles.content}>
             <View>
                 <Text style={Styles.header}>相册</Text>
                 <View style={ Styles.fileType}>
-                    {this.fileTypeItem(0,this.state.localPhoto,this.props.placeholderImg,'本地相册',true)}
-                    {this.fileTypeItem(1,this.state.longPhoto,this.props.placeholderImg,'远程相册')}
+                    {this.fileTypeItem(0,localPhotoimg,this.props.placeholderImg,'本地相册',this.state.localPhoto,true)}
+                    {this.fileTypeItem(1,longPhotoimg,this.props.placeholderImg,'远程相册')}
                 </View>
                 <View style={ Styles.fileType}>
                     {this.fileTypeName('本地相册',this.state.localPhoto.length,true)}
-                    {this.fileTypeName('远程相册',this.state.longPhoto.length)}
+                    {this.fileTypeName('远程相册',this.state.longPhotoTotal)}
                 </View>
             </View>
             <View style={Styles.line}></View>
             <View>
                 <Text style={Styles.header}>视频</Text>
                 <View style={ Styles.fileType}>
-                    {this.fileTypeItem(0,this.state.localVideo,this.props.placeholderVideo,'本地视频',true)}
+                    {this.fileTypeItem(0,localVideoimg,this.props.placeholderVideo,'本地视频',this.state.localVideo,true)}
                     <View style={Styles.fileTypeItem}>
                     </View>
                 </View>
@@ -82,20 +91,18 @@ export default class Photo extends Component {
 
     /**
      * 文件按钮
-     *  @param {String} type 类型
-     *  @param {Array} imageList 图片列表
+     *  @param {Array} img 显示第一张图片
+     *  @param {String} placeholder 替代图
+     *  @param {String} name 文件夹名
      *  @param {Boolean} isRight 是否有右边距
      */
-    fileTypeItem = (fileType,imageList,placeholder,name,isRight)=>{
-        let urlHead = fileType?'':'file:///';
-        let url = imageList.length>0?imageList[0].videoFirstImage? imageList[0].videoFirstImage:imageList[0].url:null;
+    fileTypeItem = (fileType,img,placeholder,name,mediaList,isRight)=>{
         return <View style={[Styles.fileTypeItem,{marginRight:isRight?25:0}]} onLayout={this.fileTypeItemOnLayout}>
-            <TouchableOpacity style={[Styles.imgBtn,{height:this.state.fileTypeItemHeight}]} activeOpacity={1} onPress={()=>{this.onTouch({fileType:fileType,mediaList:imageList,title:name});}}>
+            <TouchableOpacity style={[Styles.imgBtn,{height:this.state.fileTypeItemHeight}]} activeOpacity={1} onPress={()=>{this.onTouch({fileType:fileType,title:name,mediaList:mediaList});}}>
                 {
-                    imageList.length>0?
-                        <Image style={{width:'100%',height:'100%',borderRadius:2}} resizeMode={'cover'} source={{uri:urlHead+url}}></Image>
+                    img?
+                        <Image style={{width:'100%',height:'100%',borderRadius:2}} resizeMode={'cover'} source={{uri:img}}></Image>
                         :
-                        // <Image style={{borderRadius:2}} resizeMode={'center'} source={placeholder}></Image>
                         <Icon name={placeholder} size={50} />
                 }
             </TouchableOpacity>
@@ -128,29 +135,15 @@ export default class Photo extends Component {
     }
 
     /**
-     * 获取本地数据
-     * @param {String} name 存储媒体文件夹名称
-     */
-    getLocalList = async(name)=> {
-        try {
-            let fileData = await getFileList(name);
-            this.dataSort(fileData);
-        } catch (error) {
-            if(error.code === -14){
-                let fileUrl = await createTheFolder(name);
-                if(fileUrl){
-                    let fileData = await getFileList(name);
-                    this.dataSort(fileData);
-                }
-            }
-        }
-    }
-
-    /**
      * 数据更新
      */
     upDate =()=>{
-        this.getLocalList('jmPhotoListData');
+        getLocalList('jmlongPhotoListData',(fileData)=>{
+            console.log(fileData,'更新数据');
+            
+            this.dataSort(fileData)
+        });
+        this.getFirstLongImg();
     }
 
     /**
@@ -160,6 +153,13 @@ export default class Photo extends Component {
     dataSort = async(fileData)=>{
         const filePath = fileData.filePath;
         const fileList = fileData.fileList.files;
+        if(fileList.length===0){
+            this.setState({
+                localPhoto:[],
+                localVideo:[]
+            });
+            return;
+        }
         //获取视频时长
         let getTime = await getVideoTime(fileList.join(','));
         //获取视频第一帧
@@ -171,7 +171,7 @@ export default class Photo extends Component {
         let localPhoto = [];
         fileList.forEach((item,index) => {
             let obj = {};
-            obj.url = item;
+            obj.url = 'file:///'+item;
             let fileName = item.split(filePath)[1];
             obj.time = Number(fileName.split('.')[0]);
             let type = fileName.split('.')[1];
@@ -181,7 +181,7 @@ export default class Photo extends Component {
                 obj.videoTime = getTime[index].videoTime;
                 //苹果手机需要第一帧
                 if(Platform.OS == 'ios'){
-                    obj.videoFirstImage = firstImg[index].videoFirstImagePath;
+                    obj.videoFirstImage = 'file:///'+firstImg[index].videoFirstImagePath;
                 }
                 videoList.push(obj);
             }
@@ -206,6 +206,21 @@ export default class Photo extends Component {
      */
     onTouch = (data)=>{
         this.props.onSelect(data);
+    }
+
+    /**
+     * 获取远程相册第一张图片缩略图
+     */
+    getFirstLongImg = async()=>{
+        let img = await queryDeviceVideoPicFile({pageNum:1,pageSize:1});
+        
+        if(img.result.length === 0){
+            return;
+        }
+        this.setState({
+            longPhoto:[...img.result],
+            longPhotoTotal:img.totalRecord
+        })
     }
 }
 

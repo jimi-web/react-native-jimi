@@ -117,8 +117,8 @@ export const httpApp = (url, params) => {
             obj[key] = params[key];
         }
     }
-    
     const bodyJson = JSON.stringify(obj);
+   
     
     JMRNEngineManager.requestMethod(url, bodyJson);
     // 定义回调
