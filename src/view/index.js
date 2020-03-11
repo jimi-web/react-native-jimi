@@ -28,6 +28,7 @@ import Video from './photo/photoDeatil/Video';
 import PhotoDeatil from './photo/photoDeatil/PhotoDeatil';
 import Empty from './empty/Empty';
 import RVC from './RVC/MonitorView';
+import FlowCard from './flowCard/index';
 
 const Jimi = {
     BaiduPosition,
@@ -48,8 +49,8 @@ const Jimi = {
     Photograph,
     Video,
     Empty,
-    RVC
-    
+    RVC,
+    FlowCard
 };
 
 module.exports = Jimi;

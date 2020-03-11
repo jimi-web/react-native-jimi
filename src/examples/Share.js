@@ -7,7 +7,6 @@
  * @LastEditTime: 2019-10-17 18:31:25
  */
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import { Jimi } from '../index';
 
 export default class Share extends Component {

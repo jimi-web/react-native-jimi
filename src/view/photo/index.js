@@ -28,13 +28,15 @@ export default class Photo extends Component {
             PropTypes.string
         ]),
         videoType:PropTypes.array,
-        onSelect:PropTypes.func.isRequired
+        onSelect:PropTypes.func.isRequired,
+        filePath:PropTypes.string
     }
 
     static defaultProps = {
         placeholderImg:'photo_photo',
         placeholderVideo:'photo_viedo',
-        videoType:['mp4','3gp','avi','mov']
+        videoType:['mp4','3gp','avi','mov'],
+        filePath:'jmLocalPhotoList'
     }
 
     constructor(props){
@@ -138,7 +140,7 @@ export default class Photo extends Component {
      * 数据更新
      */
     upDate =()=>{
-        getLocalList('jmlongPhotoListData',(fileData)=>{
+        getLocalList(this.props.filePath,(fileData)=>{
             console.log(fileData,'更新数据');
             
             this.dataSort(fileData)

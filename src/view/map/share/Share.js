@@ -31,7 +31,6 @@ export default class Share extends Component {
 
     static defaultProps = {
         checkedTitle:'《使用协议和隐私政策》',
-        routerName:'PrivacyAgreement',
         shareUrl:api.shareUrl,
         shareTitle:'我的实时位置',
         shareText:'点击查看我现在在哪里吧！'

@@ -34,6 +34,7 @@ import Empty from '../examples/Empty';
 import Button from '../examples/Button';
 import Drawer from '../examples/Drawer';
 import Instruction from '../examples/Instruction';
+import FlowCard from '../examples/FlowCard';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -110,6 +111,10 @@ const AppNavigator = createStackNavigator(
         Fence:{
             screen:Fence,
             navigationOptions:getOptions('围栏')            
+        },
+        FlowCard:{
+            screen:FlowCard,
+            navigationOptions:getOptions('流量卡')            
         },
         AddFence:{
             screen:AddFence,
