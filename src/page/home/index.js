@@ -19,6 +19,10 @@ export default class Home extends Component{
                 type:'业务组件',
                 data:[
                     {
+                        title:'详情',
+                        url:'Details'
+                    },
+                    {
                         title:'流量卡',
                         url:'FlowCard'
                     },

@@ -36,7 +36,8 @@ import Drawer from '../examples/Drawer';
 import Instruction from '../examples/Instruction';
 import FlowCard from '../examples/FlowCard';
 import MediaSyn from '../examples/MediaSyn';
-
+import Details from '../examples/Detail';
+import IconLibrary from '../examples/IconLibrary';
 const getOptions = (title) => {
     let headerTitle = {};
     if(title){
@@ -117,6 +118,10 @@ const AppNavigator = createStackNavigator(
             screen:FlowCard,
             navigationOptions:getOptions('流量卡')            
         },
+        Details:{
+            screen:Details,
+            navigationOptions:getOptions('详情')            
+        },
         AddFence:{
             screen:AddFence,
             navigationOptions: ({ navigation }) => (
@@ -192,6 +197,10 @@ const AppNavigator = createStackNavigator(
             screen:MediaSyn,
             navigationOptions:getOptions('媒体同步')     
         },
+        IconLibrary:{
+            screen:IconLibrary,
+            navigationOptions:getOptions('图标库')     
+        }
     });
 
 export const Root = createAppContainer(AppNavigator);

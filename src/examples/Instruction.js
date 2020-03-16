@@ -159,7 +159,7 @@ export default class Instruction extends Component {
     }
     render(){
         return (
-            <Jimi.Instruction instructionArr={this.data} onArrowButton={(data) => onArrowButton()}></Jimi.Instruction>
+            <Jimi.Instruction instructionArr={this.data} onArrowButton={(data) => this.onArrowButton(data)}></Jimi.Instruction>
         );
     }
     onArrowButton = (data) => {

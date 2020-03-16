@@ -31,6 +31,9 @@ import RVC from './RVC/MonitorView';
 import FlowCard from './flowCard/index';
 import MediaSyc from './mediaSyn/MediaSyn';
 import Instruction from './instruction/instruction';
+import Details from './details/index';
+import IconLibrary from './details/IconLibrary';
+
 const Jimi = {
     BaiduPosition,
     GooglePosition,
@@ -51,10 +54,11 @@ const Jimi = {
     Video,
     Empty,
     RVC,
-    FlowCard
+    FlowCard,
     MediaSyc,
-    Instruction
-    
+    Instruction,
+    Details,
+    IconLibrary
 };
 
 module.exports = Jimi;
