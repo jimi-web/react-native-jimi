@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-25 16:09:42
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-10 15:50:02
  */
 
 // import Photo from './photo/index';
@@ -29,7 +29,8 @@ import PhotoDeatil from './photo/photoDeatil/PhotoDeatil';
 import Empty from './empty/Empty';
 import RVC from './RVC/MonitorView';
 import FlowCard from './flowCard/index';
-
+import MediaSyc from './mediaSyn/MediaSyn';
+import Instruction from './instruction/instruction';
 const Jimi = {
     BaiduPosition,
     GooglePosition,
@@ -51,6 +52,9 @@ const Jimi = {
     Empty,
     RVC,
     FlowCard
+    MediaSyc,
+    Instruction
+    
 };
 
 module.exports = Jimi;

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-07 11:15:43
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-10 14:37:05
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -35,6 +35,7 @@ import Button from '../examples/Button';
 import Drawer from '../examples/Drawer';
 import Instruction from '../examples/Instruction';
 import FlowCard from '../examples/FlowCard';
+import MediaSyn from '../examples/MediaSyn';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -186,6 +187,10 @@ const AppNavigator = createStackNavigator(
         Instruction:{
             screen:Instruction,
             navigationOptions:getOptions('指令')     
+        },
+        MediaSyn:{
+            screen:MediaSyn,
+            navigationOptions:getOptions('媒体同步')     
         },
     });
 
