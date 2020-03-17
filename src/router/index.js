@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 16:29:20
+ * @LastEditTime: 2020-03-17 18:56:58
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -34,11 +34,12 @@ import Empty from '../examples/Empty';
 import Button from '../examples/Button';
 import Drawer from '../examples/Drawer';
 import Instruction from '../examples/Instruction';
+import FlowCard from '../examples/FlowCard';
 import MediaSyn from '../examples/MediaSyn';
 import MediaContral from '../examples/MediaContral';
 import Instructions from '../examples/Instructions';
-
-
+import Details from '../examples/Detail';
+import IconLibrary from '../examples/IconLibrary';
 const getOptions = (title) => {
     let headerTitle = {};
     if(title){
@@ -114,6 +115,14 @@ const AppNavigator = createStackNavigator(
         Fence:{
             screen:Fence,
             navigationOptions:getOptions('围栏')            
+        },
+        FlowCard:{
+            screen:FlowCard,
+            navigationOptions:getOptions('流量卡')            
+        },
+        Details:{
+            screen:Details,
+            navigationOptions:getOptions('详情')            
         },
         AddFence:{
             screen:AddFence,
@@ -198,6 +207,10 @@ const AppNavigator = createStackNavigator(
             screen:Instructions,
             navigationOptions:getOptions('指令详情')     
         },
+        IconLibrary:{
+            screen:IconLibrary,
+            navigationOptions:getOptions('图标库')     
+        }
     });
 
 export const Root = createAppContainer(AppNavigator);

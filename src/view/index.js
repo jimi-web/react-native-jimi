@@ -28,9 +28,16 @@ import Video from './photo/photoDeatil/Video';
 import PhotoDeatil from './photo/photoDeatil/PhotoDeatil';
 import Empty from './empty/Empty';
 import RVC from './RVC/MonitorView';
+import FlowCard from './flowCard/index';
 import MediaSyc from './mediaSyn/MediaSyn';
 import Instruction from './instruction/instruction';
+<<<<<<< HEAD
 import MediaContral from './mediaSyn/MediaContral';
+=======
+import Details from './details/index';
+import IconLibrary from './details/IconLibrary';
+
+>>>>>>> e4ae9e3d24c2a58fd5bd92f063450bbecc469b4e
 const Jimi = {
     BaiduPosition,
     GooglePosition,
@@ -51,10 +58,16 @@ const Jimi = {
     Video,
     Empty,
     RVC,
+    FlowCard,
     MediaSyc,
     Instruction,
+<<<<<<< HEAD
     MediaContral
     
+=======
+    Details,
+    IconLibrary
+>>>>>>> e4ae9e3d24c2a58fd5bd92f063450bbecc469b4e
 };
 
 module.exports = Jimi;

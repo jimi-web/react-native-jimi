@@ -152,7 +152,6 @@ export default class TraceUtils extends PositionUtils {
     drawerShare = ()=> {
         return <Share 
             checkedTitle ={this.props.checkedTitle}
-            routerName ={this.props.routerName}
             shareUrl ={this.props.shareUrl}
             shareTitle ={this.props.shareTitle}
             shareText ={this.props.shareText}

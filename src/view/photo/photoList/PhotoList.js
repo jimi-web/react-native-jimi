@@ -399,7 +399,7 @@ export default class PhotoList extends Component {
 
 }
 
-const Styles = StyleSheet.create({
+    const Styles = StyleSheet.create({
     content:{
         position:'relative',
         flex:1,

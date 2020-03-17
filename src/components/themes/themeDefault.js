@@ -126,7 +126,8 @@ export default {
 
     //Switch
     switchActiveColor:'#4BD865',
-    switchDefaultColor:defaultColor
+    switchDefaultColor:defaultColor,
 
-    
+    //iconTable
+    iconActiveBgColor:mainColor,
 };

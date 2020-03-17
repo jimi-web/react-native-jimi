@@ -22,7 +22,11 @@ const serverUrl = {
     instruction:'/proxy/module/instruction/sendInstruct',//发送指令
     deleteRecord:'/record/module/file',//删除录音
     queryDeviceVideoPicFile: '/videopic/module/queryDeviceVideoPicFile',//获取视频和照片数据
-    deleteDeviceVideoPicFile:'/videopic/module/deleteDeviceVideoPicFile'//删除视频和照片
+    deleteDeviceVideoPicFile:'/videopic/module/deleteDeviceVideoPicFile',//删除视频和照片
+    encodeUserInfo:'/sim/encodeUserInfo',//获取加密流量卡加密信息
+    updateDeviceName:'/locator/updateDeviceName',//修改名称
+    updateDeviceInfo:'/locator/updateDeviceInfo',//修改图标
+    initLocatorInfo:'/locator/initLocatorInfo',//查询设备详情
 };
 
 

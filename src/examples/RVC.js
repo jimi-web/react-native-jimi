@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import { View} from 'react-native';
 import { Jimi } from '../index';
-import { Button } from '../components/index';
+
 export default class Record extends Component {
     static navigationOptions = ({ navigation, screenProps }) => (
         {
