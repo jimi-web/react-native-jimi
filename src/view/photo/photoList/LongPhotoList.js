@@ -129,7 +129,7 @@ export default class LongPhotoList extends LocalPhotoList {
             //数据请求失败
             this.setState({
                 pullUpStatus:3
-            })
+            });
         });
     }
 
@@ -165,7 +165,7 @@ export default class LongPhotoList extends LocalPhotoList {
             {
                 this._editBtn()
             }
-        </View>    
+        </View>;    
     }
 
     /**
@@ -203,7 +203,7 @@ export default class LongPhotoList extends LocalPhotoList {
             pageNum:this.state.pageNum+1,
         },()=>{
             this.getLongPhotoList();
-        })
+        });
     } 
 
     onFail = ()=>{
@@ -212,7 +212,7 @@ export default class LongPhotoList extends LocalPhotoList {
             pullUpStatus:1
         },()=>{
             this.getLongPhotoList();
-        })        
+        });        
     }
 
     /**
@@ -224,17 +224,17 @@ export default class LongPhotoList extends LocalPhotoList {
         downloadFile(defaultCheckedList,this.state.localPhotoData.filePath,this.props.videoType,()=>{
             //更新数据
             defaultCheckedList.forEach((list)=>{
-               defaultList.forEach((item)=>{
+                defaultList.forEach((item)=>{
                     if(list.fileName===item.fileName){
-                        item.url = list.url
+                        item.url = list.url;
                     }
-               })
-            })
+                });
+            });
             this.setState({
                 defaultList:defaultList
             },()=>{
                 this.onEdit(false);
-            })
+            });
         });
     }
 
@@ -258,16 +258,16 @@ export default class LongPhotoList extends LocalPhotoList {
             callBack:()=>{
                 defaultCheckedList.forEach((list)=>{
                     defaultList.forEach((item,index)=>{
-                         if(list.fileName===item.fileName){
+                        if(list.fileName===item.fileName){
                             defaultList.splice(index,1);
-                         }
-                    })
-                 })
-                 this.setState({
-                     defaultList:defaultList
-                 },()=>{
-                     this.onEdit(false);
-                 })
+                        }
+                    });
+                });
+                this.setState({
+                    defaultList:defaultList
+                },()=>{
+                    this.onEdit(false);
+                });
             }
         });
     }
@@ -281,6 +281,6 @@ export default class LongPhotoList extends LocalPhotoList {
         },()=>{
             this.props.onLongPhotoListChange(defaultList);
             this.setData();
-        })
+        });
     }
-};
+}

@@ -4,10 +4,11 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:17:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-10-30 18:21:09
+ * @LastEditTime: 2020-03-12 17:38:42
  */
 import {Dimensions,Platform} from 'react-native';
 import Theme from '../components/themes/index';
+import md5 from './md5';
 /**
  * 兼容ios
  */
@@ -62,3 +63,75 @@ export const parseTime = (time) => {
     
     return `${h}:${m}:${s}`;
 };
+
+
+/**
+ * 
+ * @param {object} MIFIParams 需要进行加密的参数
+ */
+export const sginMd5 = (secret,MIFIParams) => {
+    let key = [];
+    for(let item in MIFIParams){
+        key.push(item);
+    }
+    key.sort();
+    //拼接字符串 result = imei123456sign123456；
+    let result = '';
+    key.forEach(function (value) {
+        result += value + MIFIParams[value];
+    });
+
+    //md5加密
+    let data = md5(secret + result + secret);
+    //转16进制并且转大写
+    data = data.toString(16).toUpperCase();
+    return data;
+};
+
+
+/**
+     * 日期转换
+     */
+dateConversion = (day)=>{
+    let param = new Date(day.replace(/-/g,'/'));
+    let date = new Date();
+    var today = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+    var yestday = new Date(today - 24*3600*1000).getTime();
+    let week = ['周日','周一','周二','周三','周四','周五','周六'];
+    if(today === param.getTime()){
+        return '今天';
+    }
+    if(yestday === param.getTime()){
+        return '昨天';
+    }
+    let sundayTime =  new Date(today - date.getDay()*24*3600*1000).getTime(); 
+    if(param.getTime()>=sundayTime){
+        return week[param.getDay()];
+    }
+    return day;
+};
+
+
+// /**
+//  * 
+//  * @param {object} MIFIParams 需要进行加密的参数
+//  */
+// export const sginMd5 = (secret,MIFIParams) => {
+//     let key = [];
+//     for(let item in MIFIParams){
+//         key.push(item);
+//     }
+//     key.sort((a,b) => {
+//         return  a.charCodeAt() - b.charCodeAt();
+//     });
+//     console.log(key,111);
+//     //拼接字符串 result = imei123456sign123456；
+//     let result = '';
+//     key.forEach(function (value) {
+//         result += value + MIFIParams[value];
+//     });
+//     //md5加密
+//     let data = secret + result;
+//     //转16进制并且转大写
+//     return data;
+// };

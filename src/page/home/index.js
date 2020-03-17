@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-10 14:36:46
+ * @LastEditTime: 2020-03-16 09:47:19
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,SectionList,TouchableOpacity,Image} from 'react-native';
@@ -18,6 +18,10 @@ export default class Home extends Component{
             menuList:[{
                 type:'业务组件',
                 data:[
+                    {
+                        title:'远程拍摄',
+                        url:'MediaContral'
+                    },
                     {
                         title:'媒体同步',
                         url:'MediaSyn'

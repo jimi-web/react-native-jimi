@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-16 09:56:46
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-17 18:18:12
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,TextInput } from 'react-native';
@@ -20,18 +20,29 @@ export default class InsArrowButton extends Component {
         };
     }
     render(){
+        let {isShow} = this.props;
         let {content,value} = this.props.data;
-        return <View style={this.renderStyle()}>
+        return(
             <View>
-                <Text style={{fontSize:14}}>{content.text}</Text>
                 {
-                    content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null
+                    isShow ? 
+
+                        <View style={this.renderStyle()}>
+                            <View>
+                                <Text style={{fontSize:14}}>{content.text}</Text>
+                                {
+                                    content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null
+                                }
+                            </View>
+                            <View>
+                                <TextInput onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={50} placeholder={content.placeholder} defaultValue={value}></TextInput>
+                            </View>
+                        </View >
+                        :
+                        null
                 }
             </View>
-            <View>
-                <TextInput onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={50} placeholder={content.placeholder} defaultValue={value}></TextInput>
-            </View>
-        </View >;
+        );  
     }
     renderStyle = () => {
         const {border} = this.props.data;

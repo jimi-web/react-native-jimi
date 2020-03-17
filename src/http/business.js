@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-26 11:22:29
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-12 13:57:54
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -48,7 +48,7 @@ const request = (params) => {
             headers:header,
             onSuccess: (res) => {
                 Loading.hide();
-                if(res.code === 0){
+                if(res.code <= 0){
                     resolve(res);
                 }else {
                     reject(res);
@@ -186,7 +186,7 @@ export const httpLocationGet = (type) =>{
                     Toast.message(errorCode(res.code));
                     isHttpLocationGetShow = false;
                 }
-                reject(res)
+                reject(res);
             },
             // 请求失败或成功
             onComplete: () => {

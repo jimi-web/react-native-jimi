@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:33:58
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 13:51:49
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-13 09:09:57
  */
 import React, {Component} from 'react';
 import {View,Text,SectionList,StyleSheet,FlatList,TouchableOpacity,Image} from 'react-native';
@@ -88,7 +88,7 @@ export default class PhotoList extends Component {
             extraData={this.state}
             data={info.item.mediaItem}
             renderItem={this._chidlRenderItem}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => index.toStr+ing()}
             numColumns={4}
         />;
     }

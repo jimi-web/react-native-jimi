@@ -3,15 +3,15 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-26 14:28:40
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2020-01-04 18:28:14
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-11 18:51:37
  */
 import Icon from './assets';
 import Circle from './components';
 import Jimi from './view';
 import Applet from './http/index';
 import Api from './api/index';
-Api.setServer('http://test.api.jimimax.com');
+Api.setServer('http://apis.jimimax.com');
 
 const Jm  = {
     Icon,

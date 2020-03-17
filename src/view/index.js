@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-10 15:50:02
+ * @LastEditTime: 2020-03-16 09:41:36
  */
 
 // import Photo from './photo/index';
@@ -30,6 +30,7 @@ import Empty from './empty/Empty';
 import RVC from './RVC/MonitorView';
 import MediaSyc from './mediaSyn/MediaSyn';
 import Instruction from './instruction/instruction';
+import MediaContral from './mediaSyn/MediaContral';
 const Jimi = {
     BaiduPosition,
     GooglePosition,
@@ -51,7 +52,8 @@ const Jimi = {
     Empty,
     RVC,
     MediaSyc,
-    Instruction
+    Instruction,
+    MediaContral
     
 };
 
