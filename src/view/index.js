@@ -60,7 +60,7 @@ const Jimi = {
     Instruction,
     MediaContral,
     Details,
-    IconLibrary
+    IconLibrary,
 };
 
 module.exports = Jimi;

@@ -88,7 +88,7 @@ export default class PhotoList extends Component {
             extraData={this.state}
             data={info.item.mediaItem}
             renderItem={this._chidlRenderItem}
-            keyExtractor={(item, index) => index.toStr+ing()}
+            keyExtractor={(item, index) => index.toString()}
             numColumns={4}
         />;
     }

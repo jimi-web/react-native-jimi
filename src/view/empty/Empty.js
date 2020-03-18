@@ -43,6 +43,7 @@ export default class Empty extends Component {
                     <Text style={Styles.emptyText}>{this.props.text}</Text>
                 </View>
             </TouchableOpacity>
+            {this.props.children}
         </View>;
     }
 }
