@@ -200,7 +200,8 @@ const AppNavigator = createStackNavigator(
         IconLibrary:{
             screen:IconLibrary,
             navigationOptions:getOptions('图标库')     
-        }
+        },
+        
     });
 
 export const Root = createAppContainer(AppNavigator);

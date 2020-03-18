@@ -27,6 +27,12 @@ const serverUrl = {
     updateDeviceName:'/locator/updateDeviceName',//修改名称
     updateDeviceInfo:'/locator/updateDeviceInfo',//修改图标
     initLocatorInfo:'/locator/initLocatorInfo',//查询设备详情
+    instructList:'/proxy/module/instruction/instructList',//获取指令列表
+    userInit:'/locator/alarm/setting/init',//用户初始化
+    alarmList:'/locator/alarm/setting/list',//报警列表
+    enableState:'/locator/alarm/setting/enableState',//修改报警状态
+    alarmMode:'/locator/alarm/setting/mode',//获取报警方式的设置信息
+    setAlarmState:'/locator/alarm/setting/state'//设置报警方式状
 };
 
 

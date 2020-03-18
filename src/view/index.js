@@ -58,7 +58,7 @@ const Jimi = {
     MediaSyc,
     Instruction,
     Details,
-    IconLibrary
+    IconLibrary,
 };
 
 module.exports = Jimi;

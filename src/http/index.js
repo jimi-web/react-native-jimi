@@ -11,6 +11,7 @@ import {request,jmAjax,httpExit,httpLocationGet,httpSamllLocation,getEncoding} f
 import {getSmallAppPath,getFileList,createFolder,createTheFolder,fileDelete,saveToAlbum} from './file';
 import {playAudio,getVideoFirstImage,saveVideoToAlbum,getVideoTime,changeSreenDirection,stopAudio} from './media';
 import { getMicrophone } from './permissions';
+import {authorizationProcess} from './authorization';//授权
 
 const Applet  = {
     httpApp,
@@ -41,7 +42,8 @@ const Applet  = {
     getVideoTime,
     changeSreenDirection,
 
-    getMicrophone
+    getMicrophone,
+    authorizationProcess,
 };
 
 module.exports = Applet;
