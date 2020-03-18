@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: liujinyuan
+ * @Date: 2020-03-10 16:51:08
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-18 10:00:28
+ -->
 ## 打开设备wifi热点
 调用地址：http://smarthome.jimicloud.com/route/app
 参数 | 类型  | 说明 

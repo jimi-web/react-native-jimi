@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 18:54:08
+ * @LastEditTime: 2020-03-18 14:25:07
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image} from 'react-native';
@@ -35,14 +35,17 @@ export default class Instruction extends Component {
     }
     constructor(props){ 
         super(props);
-        this.insArr = JSON.parse(JSON.stringify(this.props.instructionArr));
+        // this.insArr = JSON.parse(JSON.stringify(this.props.instructionArr));
+        this.state = {
+            insArr:JSON.parse(JSON.stringify(this.props.instructionArr))
+        };
     }
     render(){
         return (
             <ScrollView style={{backgroundColor:'#f7f7f7',flex:1}}>
                 {
                     this.props.hint ? 
-                        <View style={{justifyContent:'center',alignItems:'center',paddingTop:10,paddingBottom:10,backgroundColor:'rgba(254, 116, 45, 0.5)'}}>
+                        <View style={{justifyContent:'center',padding:10,backgroundColor:'rgba(254, 116, 45, 0.5)'}}>
                             <Text style={{color:'#FE742D'}}>{this.props.hint}</Text>
                         </View>
                         :
@@ -58,7 +61,7 @@ export default class Instruction extends Component {
                     this.props.isButton
                         ?
                         <View style={{marginTop:40,marginBottom:40,alignItems:'center'}}>
-                            <Button onPress={() => this.onButton()} title={'发送指令'} />
+                            <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={'发送指令'} />
                         </View>
                         :
                         null
@@ -74,8 +77,6 @@ export default class Instruction extends Component {
         const styles = [
             {
                 justifyContent:'center',
-                paddingLeft:15,
-                paddingRight:15,
                 width:'100%',
                 backgroundColor:'#fff',
             }
@@ -87,35 +88,38 @@ export default class Instruction extends Component {
     */
     renderInstruction = (item,index) => {
         let isShow = true; 
-        if(item.contral){
-            isShow = this.insArr[item.contral].value;
+        if(item.contral !== undefined){
+            isShow = this.state.insArr[item.contral].value;
         }
-       
+        if(!isShow &&(item.type != 'switch' || item.type != arrowButton)){
+            return null;
+        }
         let element = null;
+        let style = item.style || [];
         switch (item.type) {
         case 'switch':
-            element = <InsSwitch index={index} data={item} onValueChange={(data,index) => this.onIns(data,index)} />;
+            element = <InsSwitch style={[baseStyle.leftOrRight,style]} index={index} data={item} onValueChange={(data,index) => this.onIns(data,index)} />;
             break;
         case 'select':
-            element = <InsSelect  isShow={isShow} index={index} data={item} onSelect={(data,index) => this.onIns(data,index)}  />;
+            element = <InsSelect style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onSelect={(data,index) => this.onIns(data,index)}  />;
             break;
         case 'multiSelect':
-            element = <InsMultiSelect isShow={isShow} index={index} data={item} onMultiSelect={(data,index) => this.onIns(data,index)} />;
+            element = <InsMultiSelect style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onMultiSelect={(data,index) => this.onIns(data,index)} />;
             break;
         case 'input':
-            element = <InsInput isShow={isShow} index={index} data={item} onInput={(data,index) => this.onIns(data,index)} />;
+            element = <InsInput style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onInput={(data,index) => this.onIns(data,index)} />;
             break;
         case 'title':
-            element = <View index={index} style={[baseStyle.bottomBorderStyle,{flex:1,justifyContent:'center',height:50}]}><Text>{item.content}</Text></View>;  
+            element = <View index={index} style={[baseStyle.leftOrRight,{flex:1,justifyContent:'center',paddingTop:12,paddingBottom:12,backgroundColor:'#f7f7f7'},style]}><Text>{item.content}</Text></View>;  
             break;
         case 'arrowButton':
-            element = <InsArrowButton index={index} data={item} onPress={(item) => this.onArrowButton(item,index)} />;  
+            element = <InsArrowButton style={[baseStyle.leftOrRight,style]} index={index} data={item} onPress={(item) => this.onArrowButton(item,index)} />;  
             break;
         case 'modelSelect':
-            element = <InsModelSelect isShow={isShow} index={index} data={item} onPress={(data,index) => this.onIns(data,index)} />;  
+            element = <InsModelSelect style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onPress={(data,index) => this.onIns(data,index)} />;  
             break;
         case 'step':
-            element = <InsStep isShow={isShow} index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
+            element = <InsStep style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
             break;
         case 'element':
             element = item.data;
@@ -135,8 +139,8 @@ export default class Instruction extends Component {
      * 点击发送按钮
       */
      onButton = () => {
-         const ins = this.getIns(this.insArr);
-         this.setInstruction(this.insArr,ins);
+         const ins = this.getIns(this.state.insArr);
+         this.setInstruction(this.state.insArr,ins);
      }
 
     /*
@@ -149,7 +153,7 @@ export default class Instruction extends Component {
             const item = data[i];
             if(item.insID){
                 if(item.contral !== undefined){
-                    if(this.insArr[item.contral].value){
+                    if(this.state.insArr[item.contral].value){
                       
                         ins = ins.replace(item.insID,item.insValue);
                     }else{
@@ -166,18 +170,22 @@ export default class Instruction extends Component {
     * 触发指令统一方法
     */
    onIns = (data,index) => {
-       this.insArr[index]  = data;
-       
-       const ins = this.getIns(this.insArr);
+       this.state.insArr[index]  = data;
+       const insArr = JSON.parse(JSON.stringify(this.state.insArr));
+       this.setState({
+           insArr
+       });
+       const ins = this.getIns(this.state.insArr);
        const inProps = {
            ins,
-           insArr:this.insArr
+           insArr:this.state.insArr
        };
+       console.log(ins,111);
        this.props.onIns && this.props.onIns(inProps);
        if(this.props.isButton){
            return;
        }
-       this.setInstruction(this.insArr,ins);
+       this.setInstruction(this.state.insArr,ins);
         
    }
    /*

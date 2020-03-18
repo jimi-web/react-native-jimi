@@ -4,22 +4,22 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 10:38:06
+ * @LastEditTime: 2020-03-18 11:19:19
  */
 import React, {Component} from 'react';
-import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList} from 'react-native';
+import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import Applet from '../../http/index';
-import {Toast} from '../../components/index';
+import {Toast,Modal} from '../../components/index';
 import baseStyle from '../baseStyle';
-// import 'react-native-ftp-jm';
+import 'react-native-ftp-jm';
 import { Checkbox } from 'teaset';
-// const { JMFTPSyncFileManager,JMUDPScoketManager} = NativeModules;
+const { JMFTPSyncFileManager,JMUDPScoketManager} = NativeModules;
 import {sginMd5,dateConversion,isIphoneX,iphoneXHeight} from '../../libs/utils';
 import api from '../../api/index';
 import PhotoListTitle from '../photo/photoList/PhotoListTitle';
 const imgWith = Dimensions.get('window').width;
-// const JMUDPScoket = new NativeEventEmitter(JMUDPScoketManager);
+const JMUDPScoket = new NativeEventEmitter(JMUDPScoketManager);
 import BottomToolbars from '../components/BottomToolbars';
 export default class MediaSyn extends Component {
     static propTypes = {
@@ -39,7 +39,7 @@ export default class MediaSyn extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isConnect:false,//当前设备是否连接
+            isConnect:true,//当前设备是否连接
             isEdit:false,
             connectText:'正在连接',
             fileChecked:[],//选中的文件
@@ -140,11 +140,11 @@ export default class MediaSyn extends Component {
         };
     }
     componentDidMount(){
-        // Applet.createTheFolder('mediaFile').then(res => {
-        //     this.localUrl = res;
-        // });
-        // this.onDeviceMifi();
-        // this.getSocketMessage();
+        Applet.createTheFolder('mediaFile').then(res => {
+            this.localUrl = res;
+        });
+        this.onDeviceMifi();
+        this.getSocketMessage();
     }
     
     render() {
@@ -189,10 +189,6 @@ export default class MediaSyn extends Component {
                         null
                 }
             </View>
-            
-                
-
-           
         );
         
     }
@@ -286,89 +282,7 @@ export default class MediaSyn extends Component {
              fileChecked
          });
      }
-     /*
-    * 开启设备wifi热点
-     */
-     onDeviceMifi = () => {
-         let data = {
-             cmdCode:'WIFI,ON',
-             cmdType:0,
-             cmdId:12345,
-             isSync:0,
-             offLineFlag:0,
-             instructSetting:{isOpen:'ON'}
-         };
-         //  let sectet = '695c1a459c1911e7bedb00219b9a2ef3';
-         //  let sign = `${sectet}method${data[method]}instruct${data[instruct]}imei${data[imei]}app_key${data[app_key]}accessToken${data[accessToken]}`;
-         //  console.log(data.sign,2312312);
-         Applet.jmAjax({
-             url:api.instruction,
-             method:'POST',
-             data:data,
-             encoding:'357730090466120',
-             encodingType:true
-         }).then(res => { 
-             console.log(res,'结果');
-             this.onConfigSocket();
-             
-         });
-     }
-     /*
-    * 配置socket参数
-     */
-     onConfigSocket = () => {
-         JMUDPScoketManager.configUDPSocket('255.255.255.255',1712,5000).then(res => {
-             console.log(res,'socket连接后的值');
-             this.sendSocket();
-         })
-             .catch(res => {
-                 console.log(res,'配置socket参数失败');
-             });
-     }
-     /*
-     *发送socket指令
-      */
-    sendSocket = () => {
-        const data = 'jimi';
-        JMUDPScoketManager.send('jimi',1).then(res => {
-            console.log(res,'发送socket指令的值');
-            
-            
-        });
-    }
-    /*
-    *   接受scoket
-     */
-     getSocketMessage = () => {
-
-         JMUDPScoket.addListener('listeningUDPScoketCellBack',(reminder) => {
-             console.log(reminder,'小程序接受的参数');
-         });
-     }
-    /**
-     * 连接设备
-     */
-    onConnect = () => {
-        Applet.getWifiStatus.then(res => {
-            if(res != 1200){
-                return Toast.message('请连接wifi');   
-            }
-            JMFTPSyncFileManager.configFtpSyncFile(this.props.config)
-                .then(res => {
-                    JMFTPSyncFileManager.connectFTP().then(res => {
-                        this.setState({
-                            isConnect:true
-                        });
-                    });
-
-                })
-                .catch(res => {
-                    Toast.message('连接错误');
-                });
-        });
-    }
-
-    /**
+     /**
      * 数据格式化
      * @param {Array} list 
      */
@@ -392,6 +306,94 @@ export default class MediaSyn extends Component {
             } 
         }
         return classifyData;
+    }
+     /*
+    * 开启设备wifi热点
+     */
+     onDeviceMifi = () => {
+         let data = {
+             cmdCode:'WIFI,ON',
+             cmdType:0,
+             cmdId:12345,
+             isSync:0,
+             offLineFlag:0,
+             instructSetting:{isOpen:'ON'}
+         };
+         //  let sectet = '695c1a459c1911e7bedb00219b9a2ef3';
+         //  let sign = `${sectet}method${data[method]}instruct${data[instruct]}imei${data[imei]}app_key${data[app_key]}accessToken${data[accessToken]}`;
+         //  console.log(data.sign,2312312);
+         Applet.jmAjax({
+             url:api.instruction,
+             method:'POST',
+             data:data,
+             encoding:'357730090466120',
+             encodingType:true
+         }).then(res => { 
+             console.log(res,'结果');
+             if(Platform.OS === 'ios'){
+                 Modal.dialog({
+                     contentText:'是否跳转到设置连接WIFI',
+                     onConfirm:()=>{
+                         Applet.skipSetWifi();
+                     },
+                 });
+             }
+             this.onConfigSocket();
+             
+         });
+     }
+     /*
+    * 配置socket参数
+     */
+     onConfigSocket = () => {
+         JMUDPScoketManager.configUDPSocket('255.255.255.255',1712,5000).then(res => {
+             console.log(res,'socket连接后的值');
+             this.sendSocket();
+         })
+             .catch(res => {
+                 console.log(res,'配置socket参数失败');
+             });
+     }
+     /*
+     *发送socket指令
+      */
+    sendSocket = () => {
+        JMUDPScoketManager.send('jimi',1).then(res => {
+            console.log(res,'发送socket指令的值');
+            
+            
+        });
+    }
+    /*
+    *   接受scoket
+     */
+     getSocketMessage = () => {
+         JMUDPScoket.addListener('listeningUDPScoketCellBack',(reminder) => {
+             const data = JSON.parse(reminder);
+             if(data.code == 1){
+                 this.onConnect(data);
+                 JMUDPScoket.closeSocket();
+             }
+         });
+     }
+    /**
+     * 连接设备
+     */
+    onConnect = (data) => {
+        Applet.getWifiStatus.then(res => {
+            JMFTPSyncFileManager.configFtpSyncFile(data)
+                .then(res => {
+                    JMFTPSyncFileManager.connectFTP().then(res => {
+                        this.setState({
+                            isConnect:true
+                        });
+                    });
+
+                })
+                .catch(() => {
+                    Toast.message('连接错误');
+                });
+        });
     }
     /**
      * 查看图片

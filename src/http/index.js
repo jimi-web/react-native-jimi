@@ -4,13 +4,13 @@
  * @Author: xieruizhi
  * @Date: 2019-09-18 11:47:02
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 15:38:26
+ * @LastEditTime: 2020-03-18 10:19:29
  */
 import {httpApp,httpBlue,httpWifi,httpWs,httpCameraState,httpCameraInfo,httpClose} from './basic'; 
 import {request,jmAjax,httpExit,httpLocationGet,httpSamllLocation,getEncoding} from './business';
 import {getSmallAppPath,getFileList,createFolder,createTheFolder,fileDelete,saveToAlbum} from './file';
 import {playAudio,getVideoFirstImage,saveVideoToAlbum,getVideoTime,changeSreenDirection,stopAudio} from './media';
-import { getMicrophone } from './permissions';
+import { getMicrophone,skipSetWifi } from './permissions';
 import {getWifiState} from './wifi';
 
 const Applet  = {
@@ -43,7 +43,8 @@ const Applet  = {
     getVideoTime,
     changeSreenDirection,
 
-    getMicrophone
+    getMicrophone,
+    skipSetWifi
 };
 
 module.exports = Applet;

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-16 15:11:25
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-07 14:37:39
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-18 11:31:04
  */
 import {StyleSheet} from 'react-native';
 
@@ -15,6 +15,10 @@ const baseStyle = {
         borderStyle:'solid',
         borderBottomColor:'#f7f7f7',
         borderBottomWidth:StyleSheet.hairlineWidth
+    },
+    leftOrRight:{
+        paddingLeft:15,
+        paddingRight:15
     }
 };
 

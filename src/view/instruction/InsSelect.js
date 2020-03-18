@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-15 17:54:30
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-18 13:56:32
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
@@ -39,7 +39,7 @@ export default class InsSelect extends Component {
                 <Text style={{fontSize:14}}>{item.text}</Text>
             </View>
             <View>
-                {value == item.value?<Icon name={'photo_save_success'} color={`${baseStyle.mainColor}`}/> : null}
+                {value == item.value?<Icon name={'gou'} color={`${baseStyle.mainColor}`}/> : null}
             </View>
         </View >;
         return element;
