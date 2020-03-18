@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-18 11:47:02
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-27 09:38:24
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-17 15:38:26
  */
 import {httpApp,httpBlue,httpWifi,httpWs,httpCameraState,httpCameraInfo,httpClose} from './basic'; 
 import {request,jmAjax,httpExit,httpLocationGet,httpSamllLocation,getEncoding} from './business';
@@ -12,8 +12,10 @@ import {getSmallAppPath,getFileList,createFolder,createTheFolder,fileDelete,save
 import {playAudio,getVideoFirstImage,saveVideoToAlbum,getVideoTime,changeSreenDirection,stopAudio} from './media';
 import { getMicrophone } from './permissions';
 import {authorizationProcess} from './authorization';//授权
+import {getWifiState} from './wifi';
 
 const Applet  = {
+    getWifiState,
     httpApp,
     httpBlue,
     httpWifi,

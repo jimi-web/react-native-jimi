@@ -2,18 +2,25 @@
  * @Descripttion: 
  * @version: 
  * @Author: liujinyuan
- * @Date: 2019-11-25 15:32:34
+ * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-10 15:49:42
+ * @LastEditTime: 2020-03-17 10:38:06
  */
 import React, {Component} from 'react';
-import {View,Image,Text,StyleSheet,TouchableOpacity} from 'react-native';
+import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList} from 'react-native';
 import PropTypes from 'prop-types';
 import Applet from '../../http/index';
 import {Toast} from '../../components/index';
 import baseStyle from '../baseStyle';
-import {JMFTPSyncFileManager} from 'react-native-ftp-jm';
-
+// import 'react-native-ftp-jm';
+import { Checkbox } from 'teaset';
+// const { JMFTPSyncFileManager,JMUDPScoketManager} = NativeModules;
+import {sginMd5,dateConversion,isIphoneX,iphoneXHeight} from '../../libs/utils';
+import api from '../../api/index';
+import PhotoListTitle from '../photo/photoList/PhotoListTitle';
+const imgWith = Dimensions.get('window').width;
+// const JMUDPScoket = new NativeEventEmitter(JMUDPScoketManager);
+import BottomToolbars from '../components/BottomToolbars';
 export default class MediaSyn extends Component {
     static propTypes = {
         config:PropTypes.object,
@@ -32,39 +39,319 @@ export default class MediaSyn extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isConnect:false,//当前ftp是否连接
+            isConnect:false,//当前设备是否连接
+            isEdit:false,
+            connectText:'正在连接',
+            fileChecked:[],//选中的文件
+            fileList:[
+                {
+                    type:'title',
+                    time:new Date().getTime()
+                },
+                {
+                    fileName:'1',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'2',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'3',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'4',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'5',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'5',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'5',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    type:'title',
+                    time:new Date().getTime()
+                },
+                {
+                    fileName:'1',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'2',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'3',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'4',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'5',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'5',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                },
+                {
+                    fileName:'5',
+                    fileSize:2000,
+                    filePath:'',
+                    checkbox:false
+                }
+            ],
         };
     }
     componentDidMount(){
-        this.onConnect();
-        createTheFolder('mediaFile').then(res => {
-            this.localUrl = res;
-        });
+        // Applet.createTheFolder('mediaFile').then(res => {
+        //     this.localUrl = res;
+        // });
+        // this.onDeviceMifi();
+        // this.getSocketMessage();
     }
     
     render() {
-        return <View style={{flex:1,backgroundColor:'#343836'}}>
-            <View style={{flex:8}}>
-                <Text style={{padding:20,color:'#fff',textAlign:'center'}}>同步前请先链接设备的wifi热点</Text>
-                <Text style={{color:'#fff'}}>{'未连接'}</Text>
+        const fileLength = this.state.fileChecked;
+        return (
+            <View style={{flex:1,backgroundColor:'#303030'}}>
+                {
+                    this.state.isConnect
+                        ?
+                        <ScrollView style={{flex:1,backgroundColor:'#fff'}}>
+                            <View style={{flexDirection:'row',flexWrap: 'wrap'}}>
+                                {
+                                    this.state.fileList.map((item,index) => {
+                                        return <View key={index}>
+                                            {this.renderItem(item,index)}
+                                        </View>;
+                                    })
+                                }
+                            </View>
+                        </ScrollView>
+                            
+                        :
+                        this.renderLoading()
+                }
+               
+                {
+                    this.state.isConnect
+                        ?
+                        this.state.isEdit ? 
+                            <BottomToolbars>
+                                <View style={Styles.bottomToolbars}>
+                                    <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={()=>{this.setState({isEdit:false});}}><Text style={[Styles.bottomToolbarsText,{color:'#000'}]}>{fileLength>0?'取消（'+fileLength+'）':'取消'}</Text></TouchableOpacity>
+                                    <TouchableOpacity activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.save}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#3479F6':'#e1e1e1'}]}>保存至本地</Text></TouchableOpacity>
+                                    <TouchableOpacity activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.delete}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#FF3535':'#e1e1e1'}]}> 删除</Text></TouchableOpacity>
+                                </View>
+                            </BottomToolbars>
+                            :
+                            <TouchableOpacity style={Styles.edit} onPress={()=>this.setState({isEdit:true})}>
+                                <Image source={require('../../assets/photo/photo_list_management.png')}></Image>
+                            </TouchableOpacity>
+                        :
+                        null
+                }
             </View>
-            <View style={{backgroundColor:'#fff',flex:2}}>
-                <TouchableOpacity activeOpacity={0.7} onPress={() => this.onPhoto}>
-                    <Text style={[baseStyle.bootomBorderStyle,{textAlign:'center',height:60,lineHeight:60}]}>照片</Text>
-                </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.7} onPress={() => this.onVideo}>
-                    <Text style={{textAlign:'center',height:60,lineHeight:60}}>视频</Text>
-                </TouchableOpacity>
+            
+                
+
+           
+        );
+        
+    }
+    /*
+    *渲染加载时的页面
+     */
+    renderLoading(){
+        const element = 
+        <View style={{flex:1}}>
+            <View style={{backgroundColor:'rgba(254, 116, 45, 0.2)',height:32}}>
+                <Text style={{color:'#FE742D',lineHeight:32,paddingLeft:10}}>同步前请先链接设备的wifi热点</Text>
+            </View>
+            <View style={{flex:6,alignItems:'center',justifyContent: 'center'}}>
+                <ImageBackground style={{width:268,height:280,alignItems:'center'}} source={require('../../assets/media/Connect_pic.png')}>
+                    <Text style={{color:'#fff',marginTop:50}}>{this.state.connectText}</Text>
+                    <Image style={{marginTop:30}} source={require('../../assets/media/Connect_WiFi.gif')} />
+                </ImageBackground>
+            </View>
+            <View style={{flex:3,alignItems:'center'}}>
+                <View style={{flexDirection:'row',paddingTop:60}}>
+                    <Text style={{fontSize:15,color:'#fff'}}>WIFI名称：</Text>
+                    <Text style={{fontSize:15,color:'#fff'}}>131654798798</Text>
+                </View>
+                <View style={{flexDirection:'row',paddingTop:30}}>
+                    <Text style={{fontSize:15,color:'#fff'}}>WIFI密码：</Text>
+                    <Text style={{fontSize:15,color:'#fff'}}>131654798798</Text>
+                </View>
             </View>
         </View>;
+        return element;
     }
+    /*
+    * 渲染加载后的页面
+     */
+    renderItem = (item,index) => {
+        const {isEdit} = this.state;
+        let element = null;
+        if(item.type == 'title'){
+            element = <View style={{width:imgWith,paddingTop:10,paddingBottom:10,justifyContent:'space-around'}}>
+                <Text>{item.time}</Text>
+                {
+                    isEdit?
+                        <Checkbox 
+                            onChange={this.onSelect}
+                            checked={item.checked}
+                            style={Styles.checkbox}
+                            checkedIcon={<Image style={{width: 21, height: 21, }} source={require('../../assets/photo/checkbox_pre.png')} />}
+                            uncheckedIcon={<Image style={{width: 21, height: 21,}} source={require('../../assets/photo/checkbox_nor.png')} />}
+                        />
+                        :
+                        null
+                }
+            </View>;
+        }else{
+            element = <View style={[Styles.img,{marginRight:index+1%4===0?0:1}]}>
+                <TouchableOpacity style={Styles.imgTouch} activeOpacity={1} onPress={this.onSelect.bind(item,index)} >
+                    <ImageBackground style={{position:'relative',width:'100%',height:'100%',backgroundColor:'#ccc'}}>
+                        {/* <Text style={Styles.videoTime}>{item.fileName}</Text> */}
+                        {
+                            isEdit?
+                                <Checkbox 
+                                    onChange={this.onSelect}
+                                    checked={item.checked}
+                                    style={Styles.checkbox}
+                                    checkedIcon={<Image style={{width: 21, height: 21, }} source={require('../../assets/photo/checkbox_pre.png')} />}
+                                    uncheckedIcon={<Image style={{width: 21, height: 21,}} source={require('../../assets/photo/checkbox_nor.png')} />}
+                                />
+                                :
+                                null
+                        }
+                                
+                    </ImageBackground>
+                </TouchableOpacity>
+            </View>;
+        }
+        
+        return element;
+    }
+    /*
+    * 选择图片或视频
+     */
+     onSelect = (item,index) => {
+         item.checked = !item.checked;
+         this.state.fileList[index] = item;
+         const fileList = JSON.parse(JSON.stringify(this.state.fileList));
+         const fileChecked = fileList.find(item => {
+             return item.checked === true;
+         });
+         this.setState({
+             fileList,
+             fileChecked
+         });
+     }
+     /*
+    * 开启设备wifi热点
+     */
+     onDeviceMifi = () => {
+         let data = {
+             cmdCode:'WIFI,ON',
+             cmdType:0,
+             cmdId:12345,
+             isSync:0,
+             offLineFlag:0,
+             instructSetting:{isOpen:'ON'}
+         };
+         //  let sectet = '695c1a459c1911e7bedb00219b9a2ef3';
+         //  let sign = `${sectet}method${data[method]}instruct${data[instruct]}imei${data[imei]}app_key${data[app_key]}accessToken${data[accessToken]}`;
+         //  console.log(data.sign,2312312);
+         Applet.jmAjax({
+             url:api.instruction,
+             method:'POST',
+             data:data,
+             encoding:'357730090466120',
+             encodingType:true
+         }).then(res => { 
+             console.log(res,'结果');
+             this.onConfigSocket();
+             
+         });
+     }
+     /*
+    * 配置socket参数
+     */
+     onConfigSocket = () => {
+         JMUDPScoketManager.configUDPSocket('255.255.255.255',1712,5000).then(res => {
+             console.log(res,'socket连接后的值');
+             this.sendSocket();
+         })
+             .catch(res => {
+                 console.log(res,'配置socket参数失败');
+             });
+     }
+     /*
+     *发送socket指令
+      */
+    sendSocket = () => {
+        const data = 'jimi';
+        JMUDPScoketManager.send('jimi',1).then(res => {
+            console.log(res,'发送socket指令的值');
+            
+            
+        });
+    }
+    /*
+    *   接受scoket
+     */
+     getSocketMessage = () => {
+
+         JMUDPScoket.addListener('listeningUDPScoketCellBack',(reminder) => {
+             console.log(reminder,'小程序接受的参数');
+         });
+     }
     /**
      * 连接设备
      */
     onConnect = () => {
         Applet.getWifiStatus.then(res => {
             if(res != 1200){
-                Toast.message('请连接wifi');   
+                return Toast.message('请连接wifi');   
             }
             JMFTPSyncFileManager.configFtpSyncFile(this.props.config)
                 .then(res => {
@@ -79,6 +366,32 @@ export default class MediaSyn extends Component {
                     Toast.message('连接错误');
                 });
         });
+    }
+
+    /**
+     * 数据格式化
+     * @param {Array} list 
+     */
+    dataStructure = (list,exists)=>{
+        //先升序
+        list.sort((a, b)=> {
+            return this.dateToTime(b.fullTime)>this.dateToTime(a.fullTime) ? 1 : -1;
+        });
+        //在设置索引
+        list.forEach((item,index)=>{item.index=index;});
+        
+        //根据时间分组
+        let classifyData = [];
+        for (let key of list) {
+            if(!classifyData[key.date]) {
+                let arr = [];
+                arr.push(key);
+                classifyData[key.date] = arr;
+            }else {
+                classifyData[key.date].push(key);
+            } 
+        }
+        return classifyData;
     }
     /**
      * 查看图片
@@ -132,3 +445,59 @@ export default class MediaSyn extends Component {
     }
     
 }
+
+
+
+const Styles = StyleSheet.create({
+    img:{
+        position:'relative',
+        width: imgWith/4-1,
+        height: imgWith/4-1,
+        backgroundColor:'#000',
+        marginTop:1
+    },
+    imgTouch:{
+        width:'100%',
+        height:'100%',
+    },
+    checkbox:{
+        position:'absolute',
+        bottom:6,
+        right:6
+    },
+    videoTime:{
+        position:'absolute',
+        bottom:3,
+        right:6,
+        color:'#fff'
+    },
+    content:{
+        position:'relative',
+        flex:1,
+        backgroundColor:'#F7F7F7',
+    },
+    edit:{
+        position:'absolute',
+        right:10,
+        bottom:isIphoneX()?iphoneXHeight(10):10
+    },
+    bottomToolbars:{
+        flex:1,
+        flexDirection:'row'
+    },
+    bottomToolbarsBtn:{
+        flex:1
+    },
+    bottomToolbarsText:{
+        fontSize:17,
+        height:54,
+        lineHeight:54,
+        textAlign:'center'
+    },
+    sectionList:{
+        marginBottom:isIphoneX()?iphoneXHeight(54):54
+    },
+    itemList:{
+        marginBottom:10
+    }
+});

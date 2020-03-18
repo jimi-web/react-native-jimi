@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-10 14:49:33
+ * @LastEditTime: 2020-03-17 18:54:08
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image} from 'react-native';
@@ -19,6 +19,7 @@ import InsInput from './InsInput';
 import InsModelSelect from './InsModelSelect';
 import InsStep from './InsStep';
 import Api from '../../api';
+import {jmAjax} from '../../http/index';
 export default class Instruction extends Component {
 
     static propTypes = {
@@ -29,7 +30,7 @@ export default class Instruction extends Component {
 
     static defaultProps = {
         instruction:'21323,ins1,ins2,ins3,ins4,ins5,ins6#',
-        isButton:true,
+        isButton:false,
         
     }
     constructor(props){ 
@@ -40,6 +41,14 @@ export default class Instruction extends Component {
         return (
             <ScrollView style={{backgroundColor:'#f7f7f7',flex:1}}>
                 {
+                    this.props.hint ? 
+                        <View style={{justifyContent:'center',alignItems:'center',paddingTop:10,paddingBottom:10,backgroundColor:'rgba(254, 116, 45, 0.5)'}}>
+                            <Text style={{color:'#FE742D'}}>{this.props.hint}</Text>
+                        </View>
+                        :
+                        null
+                }
+                {
                     this.props.instructionArr.map((item,index) => {
                         return <View key={index} style={this.renderItemStyle()}>{this.renderInstruction(item,index)}</View>;
                     })
@@ -49,7 +58,7 @@ export default class Instruction extends Component {
                     this.props.isButton
                         ?
                         <View style={{marginTop:40,marginBottom:40,alignItems:'center'}}>
-                            <Button title={'发送指令'} />
+                            <Button onPress={() => this.onButton()} title={'发送指令'} />
                         </View>
                         :
                         null
@@ -77,19 +86,24 @@ export default class Instruction extends Component {
     *渲染指令
     */
     renderInstruction = (item,index) => {
+        let isShow = true; 
+        if(item.contral){
+            isShow = this.insArr[item.contral].value;
+        }
+       
         let element = null;
         switch (item.type) {
         case 'switch':
             element = <InsSwitch index={index} data={item} onValueChange={(data,index) => this.onIns(data,index)} />;
             break;
         case 'select':
-            element = <InsSelect index={index} data={item} onSelect={(data,index) => this.onIns(data,index)}  />;
+            element = <InsSelect  isShow={isShow} index={index} data={item} onSelect={(data,index) => this.onIns(data,index)}  />;
             break;
         case 'multiSelect':
-            element = <InsMultiSelect index={index} data={item} onMultiSelect={(data,index) => this.onIns(data,index)} />;
+            element = <InsMultiSelect isShow={isShow} index={index} data={item} onMultiSelect={(data,index) => this.onIns(data,index)} />;
             break;
         case 'input':
-            element = <InsInput index={index} data={item} onInput={(data,index) => this.onIns(data,index)} />;
+            element = <InsInput isShow={isShow} index={index} data={item} onInput={(data,index) => this.onIns(data,index)} />;
             break;
         case 'title':
             element = <View index={index} style={[baseStyle.bottomBorderStyle,{flex:1,justifyContent:'center',height:50}]}><Text>{item.content}</Text></View>;  
@@ -98,10 +112,10 @@ export default class Instruction extends Component {
             element = <InsArrowButton index={index} data={item} onPress={(item) => this.onArrowButton(item,index)} />;  
             break;
         case 'modelSelect':
-            element = <InsModelSelect index={index} data={item} onPress={(data,index) => this.onIns(data,index)} />;  
+            element = <InsModelSelect isShow={isShow} index={index} data={item} onPress={(data,index) => this.onIns(data,index)} />;  
             break;
         case 'step':
-            element = <InsStep index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
+            element = <InsStep isShow={isShow} index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
             break;
         case 'element':
             element = item.data;
@@ -117,6 +131,13 @@ export default class Instruction extends Component {
      onArrowButton = (data) => {
          this.props.onArrowButton && this.props.onArrowButton(data);
      }
+     /*
+     * 点击发送按钮
+      */
+     onButton = () => {
+         const ins = this.getIns(this.insArr);
+         this.setInstruction(this.insArr,ins);
+     }
 
     /*
     *匹配指令统一方法
@@ -127,7 +148,16 @@ export default class Instruction extends Component {
         for (let i = 0; i < data.length; i++) {
             const item = data[i];
             if(item.insID){
-                ins = ins.replace(item.insID,item.insValue);
+                if(item.contral !== undefined){
+                    if(this.insArr[item.contral].value){
+                      
+                        ins = ins.replace(item.insID,item.insValue);
+                    }else{
+                        ins = ins.replace(item.insID,'');
+                    }
+                }else{
+                    ins = ins.replace(item.insID,item.insValue);
+                }
             }
         }
         return ins;
@@ -136,8 +166,8 @@ export default class Instruction extends Component {
     * 触发指令统一方法
     */
    onIns = (data,index) => {
-       const {instruction} = this.props;
        this.insArr[index]  = data;
+       
        const ins = this.getIns(this.insArr);
        const inProps = {
            ins,
@@ -155,6 +185,7 @@ export default class Instruction extends Component {
      */
     setInstruction = (params,instrution) => {
         const url = Api.instruction;
+        console.log('内容：',instrution,'参数：',params);
         const data = {
             encodingType:'IMEI',
             cmdCode:instrution,

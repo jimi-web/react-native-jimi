@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-10 15:50:02
+ * @LastEditTime: 2020-03-18 09:13:00
  */
 
 // import Photo from './photo/index';
@@ -31,6 +31,7 @@ import RVC from './RVC/MonitorView';
 import FlowCard from './flowCard/index';
 import MediaSyc from './mediaSyn/MediaSyn';
 import Instruction from './instruction/instruction';
+import MediaContral from './mediaSyn/MediaContral';
 import Details from './details/index';
 import IconLibrary from './details/IconLibrary';
 
@@ -57,6 +58,7 @@ const Jimi = {
     FlowCard,
     MediaSyc,
     Instruction,
+    MediaContral,
     Details,
     IconLibrary,
 };
