@@ -55,8 +55,6 @@ export const geocoder = (data)=> {
  */
 export const devicePosition = async(lastPoint={},lastAddress)=> {
     let deviceInfo = await getDevicePosition();
-    console.log(deviceInfo);
-    
     deviceInfo.gpsLatitude = deviceInfo.latitude;
     deviceInfo.gpsLongitude = deviceInfo.longitude;
     let info = '';

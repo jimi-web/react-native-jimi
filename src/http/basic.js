@@ -118,7 +118,6 @@ export const httpApp = (url, params) => {
         }
     }
 
-    console.log(obj);
     
     const bodyJson = JSON.stringify(obj);
    

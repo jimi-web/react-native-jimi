@@ -25,6 +25,19 @@ export default class Switch  extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            value:nextProps.value,
+            backgroundColor: new Animated.Value(nextProps.value ? 75 : -75),
+            width: new Animated.Value(nextProps.value ? 75 : -75),
+            height: new Animated.Value(nextProps.value ? 75 : -75),
+            left:new Animated.Value(nextProps.value ? 75 : -75),
+            borderWidth:new Animated.Value(nextProps.value ? 75 : -75),
+        })
+    }
+
+
+
     constructor(props) {
         super(props);
         this.state ={

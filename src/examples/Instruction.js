@@ -28,16 +28,21 @@ export default class Instruction extends Component {
                 data:{
                     isButton:true,
                     instruction:'SOS,ins1,ins2,ins3,ins4#',
+                    hint:'SOS号码用于接收报警短信以及SOS报警，支持3-20位数字SOS号码设置',
                     instructionArr:[
                         {
                             type:'switch',
                             content:{
-                                text:'SOS设置'
+                                text:'SOS设置或删除'
                             },
                             value:true,
                             insID:'ins1',
                             insSymmetry:{true:'A',false:'D'},
                             insValue:'A'
+                        },
+                        {
+                            type:'title',
+                            content:'',
                         },
                         {
                             type:'input',
