@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-16 09:41:36
+ * @LastEditTime: 2020-03-18 09:13:00
  */
 
 // import Photo from './photo/index';
@@ -31,13 +31,10 @@ import RVC from './RVC/MonitorView';
 import FlowCard from './flowCard/index';
 import MediaSyc from './mediaSyn/MediaSyn';
 import Instruction from './instruction/instruction';
-<<<<<<< HEAD
 import MediaContral from './mediaSyn/MediaContral';
-=======
 import Details from './details/index';
 import IconLibrary from './details/IconLibrary';
 
->>>>>>> e4ae9e3d24c2a58fd5bd92f063450bbecc469b4e
 const Jimi = {
     BaiduPosition,
     GooglePosition,
@@ -61,13 +58,9 @@ const Jimi = {
     FlowCard,
     MediaSyc,
     Instruction,
-<<<<<<< HEAD
-    MediaContral
-    
-=======
+    MediaContral,
     Details,
     IconLibrary
->>>>>>> e4ae9e3d24c2a58fd5bd92f063450bbecc469b4e
 };
 
 module.exports = Jimi;

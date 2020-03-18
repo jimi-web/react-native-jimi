@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-16 09:47:19
+ * @LastEditTime: 2020-03-18 09:15:05
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,SectionList,TouchableOpacity,Image} from 'react-native';
@@ -19,17 +19,16 @@ export default class Home extends Component{
                 type:'业务组件',
                 data:[
                     {
-<<<<<<< HEAD
                         title:'远程拍摄',
-                        url:'MediaContral'
-=======
+                        url:'MediaContral',
+                    },
+                    {
                         title:'详情',
                         url:'Details'
                     },
                     {
                         title:'流量卡',
                         url:'FlowCard'
->>>>>>> e4ae9e3d24c2a58fd5bd92f063450bbecc469b4e
                     },
                     {
                         title:'媒体同步',

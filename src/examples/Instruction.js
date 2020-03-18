@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 18:52:27
+ * @LastEditTime: 2020-03-18 09:20:21
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';
@@ -139,7 +139,7 @@ export default class Instruction extends Component {
                 border:true,
                 data:{
                     isButton:true,
-                    instruction:'MOVING,ins1,0#',
+                    instruction:'MOVING,ins1,ins2#',
                     hint:'移动半径范围：100~1000 单位：米',
                     instructionArr:[
                         {
