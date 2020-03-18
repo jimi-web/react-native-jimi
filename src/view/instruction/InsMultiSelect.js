@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-16 09:52:14
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-18 13:56:42
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
@@ -48,7 +48,7 @@ export default class InsMultiSelect extends Component {
                 <Text style={{fontSize:14}}>{item.text}</Text>
             </View>
             <View>
-                {isSelect?<Icon name={'photo_save_success'} color={`${baseStyle.mainColor}`}/> : null}
+                {isSelect?<Icon name={'gou'} color={`${baseStyle.mainColor}`}/> : null}
             </View>
         </View >;
         return element;

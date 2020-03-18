@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-12 13:57:36
+ * @LastEditTime: 2020-03-18 10:54:54
  */
 
 import {
@@ -98,8 +98,6 @@ export const guids = () => {
  * @param {Object} params 传参
  */
 export const httpApp = (url, params) => {
-    // console.log(params);
-    
     // 生成回调的名称，同一页面不能出现两个相同的回调名，因此回调名采用uuid
     const callbackName = guids();
 
@@ -120,8 +118,6 @@ export const httpApp = (url, params) => {
 
     
     const bodyJson = JSON.stringify(obj);
-   
-    
     JMRNEngineManager.requestMethod(url, bodyJson);
     // 定义回调
     let callName = {};

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-15 11:11:58
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-18 11:34:00
  */
 import React, { Component } from 'react';
 import {View,Text,StyleSheet} from 'react-native';
@@ -21,7 +21,12 @@ export default class InsSwitch extends Component {
         return <View style={this.renderStyle()}>
             <View>
                 <Text style={{fontSize:14}}>{content.text}</Text>
-                <Text style={{fontSize:10}}>{content.viceText}</Text>
+                {
+                    content.viceText?
+                        <Text style={{fontSize:10}}>{content.viceText}</Text>
+                        :
+                        null
+                }
             </View>
             <View>
                 {
