@@ -22,7 +22,7 @@ export default class InsArrowButton extends Component {
            
             <View style={{justifyContent:'center',flexDirection:'row',alignItems:'center'}}>
                 <View style={{marginRight:10}}>
-                    <Image style={{width:22,height:22,backgroundColor:'#ccc'}} source={{uri:'https://facebook.github.io/react-native/img/tiny_logo.png'}} />
+                    <Image style={{width:22,height:22,backgroundColor:'#ccc'}} source={typeof content.img == 'string'?{uri:content.img}:content.img} />
                 </View>
                 <View>
                     <Text style={{fontSize:14}}>{content.text}</Text>

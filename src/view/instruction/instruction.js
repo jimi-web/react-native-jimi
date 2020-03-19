@@ -26,6 +26,7 @@ export default class Instruction extends Component {
         instructionArr:PropTypes.array,
         instruction:PropTypes.string,
         isButton:PropTypes.bool,//是否需要按钮，当开启该按钮时，除确定外，所有事件都不会触发指令
+        id:PropTypes.number
     }
 
     static defaultProps = {
@@ -68,6 +69,10 @@ export default class Instruction extends Component {
                 }
             </ScrollView>
         );
+    }
+
+    componentWillMount(){
+        console.log(this.state.instructionArr,'instructionArrinstructionArrinstructionArrinstructionArr');
     }
     /**
      * 渲染每一行的样式
@@ -198,7 +203,7 @@ export default class Instruction extends Component {
             encodingType:'IMEI',
             cmdCode:instrution,
             cmdType:0,
-            cmdId:0,
+            cmdId:this.props.id,
             isSync:0,
             offLineFlag:0,
             platform:'app',
@@ -208,7 +213,7 @@ export default class Instruction extends Component {
         jmAjax({
             url,
             data,
-            method:'post',
+            method:'POST',
             encoding:true,
             encodingType:true,
         }).then(res => {

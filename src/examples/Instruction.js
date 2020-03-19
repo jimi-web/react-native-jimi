@@ -43,6 +43,10 @@ export default class Instruction extends Component {
                         {
                             type:'title',
                             content:'',
+                            style:{
+                                paddingTop:0,
+                                paddingBottom:0
+                            }
                         },
                         {
                             type:'input',
