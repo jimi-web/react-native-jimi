@@ -14,6 +14,7 @@ export default class Details extends Component {
         data:PropTypes.object.isRequired,
         onSetUpIcon:PropTypes.func,//监听设置图标点击事件
         detailMarginRight:PropTypes.number,//无图标的文字间距
+        onDeviceNameChange:PropTypes.func
     }
 
     static defaultProps = {
@@ -31,7 +32,7 @@ export default class Details extends Component {
                 if(data.type === 'deviceIcon' && key=== 'deviceIcon'){
                     data.value = iconList.filter((item)=>item.key===nextPropsData[key])[0].icon('#888',30);
                 }
-
+                
                 if(key === data.type && key!='deviceIcon'){
                     data.value = nextPropsData[key];
                 }
@@ -155,6 +156,7 @@ export default class Details extends Component {
                 this.setState({
                     setUpList:setUpList
                 },()=>{
+                    this.props.onDeviceNameChange(deviceName);
                     Toast.message('修改成功','short','center')
                 });
         });

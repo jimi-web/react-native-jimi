@@ -171,6 +171,7 @@ export default class Instruction extends Component {
         }
         return ins;
     }
+    
     /*
     * 触发指令统一方法
     */
@@ -185,13 +186,11 @@ export default class Instruction extends Component {
            ins,
            insArr:this.state.insArr
        };
-       console.log(ins,111);
        this.props.onIns && this.props.onIns(inProps);
        if(this.props.isButton){
            return;
        }
        this.setInstruction(this.state.insArr,ins);
-        
    }
    /*
     *发送指令公用方法
@@ -208,7 +207,7 @@ export default class Instruction extends Component {
             offLineFlag:0,
             platform:'app',
             offLineInsType:'customIns',
-            instructSetting:params
+            instructSetting:{data:params}
         };
         jmAjax({
             url,
@@ -218,8 +217,8 @@ export default class Instruction extends Component {
             encodingType:true,
         }).then(res => {
             const insProps = {
-                pnarams,
-                istrution
+                params,
+                instrution 
             };
             this.props.setInstruction && this.props.setInstruction(insProps);
         });
