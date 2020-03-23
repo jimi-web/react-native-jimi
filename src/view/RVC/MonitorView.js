@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-10 09:48:35
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-23 15:39:35
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -38,6 +38,7 @@ export default class MonitorView extends Component {
         ErrorElement:PropTypes.element,//错误提示组件
         LeftBootomRN:PropTypes.element,//视频左侧组件默认为null
         CenterRn:PropTypes.element,//视频中间组件,设置该组件默认加载和错误提示失效
+        toolArr:PropTypes.array,//底部工具列表
     }
     static defaultProps = {
         isSoundIcon:true,
@@ -50,6 +51,7 @@ export default class MonitorView extends Component {
         bottomStautsIcon:[],
         topStatusIcon:[],
         isStopWork:false,
+        toolArr:['screenshots','camera','record','tolk'],
     }
 
     /**
@@ -81,10 +83,8 @@ export default class MonitorView extends Component {
      * @param {*} params 数据自定义
      */
     static sendCustomRequest (params){
-        console.log(params,'调用');
         return new Promise((resolve,reject) => {
             JMRTMPPlayerManager.sendCustomRequest(params).then(res => {
-                console.log(res,'回调');
                 resolve(res);
             });
         });
@@ -125,6 +125,7 @@ export default class MonitorView extends Component {
             rtmpManagerListener:new NativeEventEmitter(JMRTMPPlayerManager),
             isScreen:false,//是否全屏，初始化该组件为false
             isRecord:false,//是否开启录制,
+            isCamera:false,//是否转换摄像头
             isTolk:false,//是否开启对讲
             isSnapshot:false,//是否开启截屏
             isSound:true,//当前声音是否开启
@@ -488,20 +489,18 @@ export default class MonitorView extends Component {
      * 初始化工具
      */
     renderTool(){
-        const {isRecordIcon,isTolkIcon,isSnapshotIcon} = this.props;
-        const {isRecord,isTolk,isSnapshot,isScreen,screenClickNum} = this.state;
-        const recordIcon = isRecord?'video_recording_press' : 'video_recording_normal';
-        const tolkIcon = isTolk?'video_voice_press' : 'video_voice_normal';
-        const snapshotIcon = isSnapshot? 'video_photo_normal': 'video_photo_normal';
-
+        const {toolArr} = this.props;
+        const {isScreen,screenClickNum} = this.state;
         let styles = null;
-       
+        let status = 0;
+        let width = this.screenWidth / 3;
+        let height = 90;
         if(isScreen){
             // 全屏状态下点击视频隐藏操作框
             if(screenClickNum % 2 !== 0){
                 return null;
             }
-            const right = (this.screenHeight - this.screenWidth * 16 / 9) / 2 + 10;
+            const right = (this.screenHeight - this.screenWidth * 16 / 9) / 2 + 20;
             styles = {
                 right,
                 height:this.screenWidth - 80, 
@@ -510,62 +509,91 @@ export default class MonitorView extends Component {
                 position:'absolute',
                 backgroundColor:'transparent',
                 zIndex:455,
-                top:20
+                top:40,
+                flexWrap:'wrap'
                 
             };
+            status = 1;
+            width = 50;
+            height = 50;
         }else{
             styles = {
                 width:this.screenWidth,
                 justifyContent:'center',
                 alignItems:'center',
                 flexDirection:'row',
-                padding:10,
                 marginTop:20,
-                backgroundColor:'#fff'
+                backgroundColor:'#fff',
+                flexWrap:'wrap',
             };
+            let width = this.screenWidth / 3;
+            let height = 90;
+            status = 0;
         }
-        
+        console.log(this.screenWidth,111);
         const element = 
             <View style={styles}>
                 {
-                    isSnapshotIcon
-                        ?
-                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                            <TouchableOpacity onPress={this.onSnapshot}>
-                                {/* <Image source={snapshotIcon} /> */}
-                                <Icon name={snapshotIcon} size={50} />
-                            </TouchableOpacity>
-                        </View>
-                        :
-                        null
-                }
-                {
-                    isTolkIcon
-                        ?
-                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                            <TouchableOpacity onPress={this.onTalk}>
-                                {/* <Image source={tolkIcon} /> */}
-                                <Icon name={tolkIcon} size={90} />
-                            </TouchableOpacity>
-                        </View>
-                        :
-                        null
-                }
-                {
-                    isRecordIcon
-                        ?
-                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                            <TouchableOpacity onPress={this.onRecord}>
-                                {/* <Image source={recordIcon} /> */}
-                                <Icon name={recordIcon} size={50} />
-                            </TouchableOpacity>
-                        </View>
-                        :
-                        null
+                    toolArr.map(item => {
+                        return <View style={{width:width,height:height,marginTop:10,justifyContent:'center',alignItems:'center'}} key={item}>{this.renderToolItem(item,status)}</View>;
+                    })
                 }
             </View>
         ;
         return element;
+    }
+    /**
+     * 渲染工具栏 子工具
+     */
+    renderToolItem = (type,status) => {
+        const {isRecord,isTolk,isSnapshot,isCamera} = this.state;
+        const recordIcon = isRecord?'video_recording_press' : 'video_recording_normal';
+        const tolkIcon = isTolk?'video_voice_press' : 'video_voice_normal';
+        const snapshotIcon = isSnapshot? 'video_photo_normal': 'video_photo_normal';
+        const cameraIcon = isCamera? 'trajectory_play_replay': 'trajectory_play_replay';
+        //截图
+        const screenshots =  <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity onPress={this.onSnapshot}>
+                {/* <Image source={snapshotIcon} /> */}
+                <Icon name={snapshotIcon} size={50} />
+            </TouchableOpacity>
+        </View>;
+        //录制
+        const record =   <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity onPress={this.onRecord}>
+                {/* <Image source={recordIcon} /> */}
+                <Icon name={recordIcon} size={50} />
+            </TouchableOpacity>
+        </View>;
+        //对讲
+        const tolk = <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity onPress={this.onTalk}>
+                {/* <Image source={tolkIcon} /> */}
+                <Icon name={tolkIcon} size={90} />
+            </TouchableOpacity>
+        </View>;
+        //摄像头
+        const camera =  <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity onPress={this.onCamera}>
+                {/* <Image source={snapshotIcon} /> */}
+                <Icon name={cameraIcon} size={50} />
+            </TouchableOpacity>
+        </View>;
+        let element = {
+            screenshots,
+            record,
+            tolk,
+            camera
+
+        };
+        if(status){
+            if(type == 'screenshots' || type == 'record'){
+                return element[type];
+            }else{
+                return null;
+            }
+        }
+        return element[type];
     }
     /**
      * 初始化底部左侧提示
@@ -814,5 +842,17 @@ export default class MonitorView extends Component {
                 });
             }
         }
+    }
+    /**
+     * 切换摄像头
+     */
+    onCamera = () => {
+        JMRTMPPlayerManager.switchCamera(false,true).then(res => {
+            console.log(res,'摄像头是否切换成功');
+            this.setState({
+                isCamera:!this.state.isCamera
+            });
+            this.onStartPlay();
+        });
     }
 }

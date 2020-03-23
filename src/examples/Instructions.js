@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-17 16:22:00
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 18:52:55
+ * @LastEditTime: 2020-03-23 10:44:53
  */
 import React, { Component } from 'react';
 import { Jimi } from '../index';

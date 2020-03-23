@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:17:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-12 17:38:42
+ * @LastEditTime: 2020-03-18 14:55:39
  */
 import {Dimensions,Platform} from 'react-native';
 import Theme from '../components/themes/index';
@@ -90,9 +90,9 @@ export const sginMd5 = (secret,MIFIParams) => {
 
 
 /**
-     * 日期转换
-     */
-dateConversion = (day)=>{
+ * 日期转换
+ */
+export const dateConversion = (day)=>{
     let param = new Date(day.replace(/-/g,'/'));
     let date = new Date();
     var today = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();

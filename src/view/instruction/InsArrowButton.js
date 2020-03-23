@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-17 09:52:52
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-18 15:41:48
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,Image} from 'react-native';
@@ -22,7 +22,7 @@ export default class InsArrowButton extends Component {
            
             <View style={{justifyContent:'center',flexDirection:'row',alignItems:'center'}}>
                 <View style={{marginRight:10}}>
-                    <Image style={{width:22,height:22,backgroundColor:'#ccc'}} source={{uri:'https://facebook.github.io/react-native/img/tiny_logo.png'}} />
+                    <Image style={{width:22,height:22,backgroundColor:'#ccc'}} source={{uri:content.img}} />
                 </View>
                 <View>
                     <Text style={{fontSize:14}}>{content.text}</Text>

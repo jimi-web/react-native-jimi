@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-16 15:11:25
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 11:31:04
+ * @LastEditTime: 2020-03-23 10:34:51
  */
 import {StyleSheet} from 'react-native';
 
@@ -13,7 +13,7 @@ const baseStyle = {
     mainFontSize:16,
     bottomBorderStyle:{
         borderStyle:'solid',
-        borderBottomColor:'#f7f7f7',
+        borderBottomColor:'#eee',
         borderBottomWidth:StyleSheet.hairlineWidth
     },
     leftOrRight:{

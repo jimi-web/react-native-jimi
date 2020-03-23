@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 10:54:54
+ * @LastEditTime: 2020-03-20 15:53:25
  */
 
 import {
@@ -21,12 +21,16 @@ const jmRNEngineManagerListener = new NativeEventEmitter(JMRNEngineManager);
 //基础事件回调
 jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSEventMethod, (reminder) => {
     let obj = JSON.parse(reminder);
+    if(obj.callback === 'jmDeviceWifiCallback'){
+        
+        this[obj.callback](obj.data);
+        return;
+    }
     let methods = obj.callback.split('.');
     //蓝牙特殊处理回调
     if (methods[0] === 'jmDeviceBlueCallback') {
         methods[1] = 'onCallBack';
     }
-
     try {
         this[methods[0]][methods[1]](obj.data);
     } catch (error) {
@@ -142,9 +146,7 @@ const getParams = (url, params) => {
     const body = {
         command: url,
     };
-    if (params.data) {
-        body.data = params.data;
-    }
+    body[params];
     return body;
 };
 
@@ -153,13 +155,19 @@ const getParams = (url, params) => {
  * @param {String} url 请求地址
  * @param {Object} params 传参
  */
-const otherInterface = (url, params) => {
-    const body = getParams(url, params);
+const otherInterface = (url, params,callback) => {
+    const body  = {
+        ... params.data
+    };
+    body[params.name] = params.name;
+    body['command'] = params.command;
+    
     const bodyJson = JSON.stringify(body);
-    JMRNEngineManager.requestMethod(params.url, bodyJson);
+    console.log(bodyJson,'连接时的参数');
+    JMRNEngineManager.requestMethod(url, bodyJson);
     this[params.name] = (res) => {
         let obj = getObject(res);
-        params.callback && params.callback(obj);
+        callback(obj);
     };
 };
 
@@ -179,17 +187,19 @@ export const httpBlue = (url, params) => {
 };
 
 /**
- * wifi请求方法(未测试)
+ * wifi请求方法(测试通过)
  * @param {String} url 请求地址
  * @param {Object} params 传参
  */
-export const httpWifi = (url, params) => {
-    let data = {
-        ...params
+export const httpWifi = (url, callback,params) => {
+    const data = {
+        name:'jmDeviceWifiCallback',
+        command:url,
+        data:params
     };
-    data.url = 'jm_dev_wifi.command';
-    data.name = 'jmDeviceWifiCallback';
-    otherInterface(url, params);
+    otherInterface('jm_dev_wifi.command', data,(res) =>{
+        callback(res);
+    });
 };
 
 /**

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 09:20:21
+ * @LastEditTime: 2020-03-23 10:44:43
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';
@@ -367,11 +367,12 @@ export default class Instruction extends Component {
     }
     render(){
         return (
+           
             <Jimi.Instruction instructionArr={this.data} onArrowButton={(data) => this.onArrowButton(data)}></Jimi.Instruction>
         );
     }
     onArrowButton = (data) => {
-        const params = data.data;
+        const params = JSON.parse(JSON.stringify(data.data));
         this.props.navigation.navigate('Instructions',params);
     }
 }

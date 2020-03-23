@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-28 09:53:31
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-23 15:19:09
  */
 import React, { Component } from 'react';
 import { View} from 'react-native';
@@ -20,9 +20,10 @@ export default class Record extends Component {
     constructor(props){
         super(props);
         this.params = {
-            key:'d0c67074f14e403d916379f6664414b2',
-            secret:'feef6c9e8ff94bfa95c2fc9b56b8c52a',
-            imei:'312345678912314'
+            key:'69dcc204c82e4861a7a763c6bb3f4b96',
+            secret:'fcb0f7e8ec9e4ed89d632240f4e1b8b9',
+            imei:'357730090535536'
+
         };
     }
 

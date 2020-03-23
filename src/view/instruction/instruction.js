@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 14:25:07
+ * @LastEditTime: 2020-03-23 10:50:35
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image} from 'react-native';
@@ -194,6 +194,7 @@ export default class Instruction extends Component {
     setInstruction = (params,instrution) => {
         const url = Api.instruction;
         console.log('内容：',instrution,'参数：',params);
+        const instructSetting = {data:params};
         const data = {
             encodingType:'IMEI',
             cmdCode:instrution,
@@ -203,12 +204,12 @@ export default class Instruction extends Component {
             offLineFlag:0,
             platform:'app',
             offLineInsType:'customIns',
-            instructSetting:params
+            instructSetting:instructSetting
         };
         jmAjax({
             url,
             data,
-            method:'post',
+            method:'POST',
             encoding:true,
             encodingType:true,
         }).then(res => {
