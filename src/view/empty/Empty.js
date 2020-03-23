@@ -20,15 +20,6 @@ export default class Empty extends Component {
     static defaultProps = {
         source:require('../../assets/fence/list_empty.png'),
         text:'暂无内容',
-        imgStyle:{
-            position:'absolute',
-            top:'50%',
-            left:'50%',
-            width:280,
-            height:218,
-            marginLeft:-140,
-            marginTop:-163,
-        }
     }
 
     constructor(props){
@@ -38,7 +29,7 @@ export default class Empty extends Component {
     render() {
         return <View style={{flex:1}}>
             <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={this.props.onPress}>
-                <View style={this.props.imgStyle}>
+                <View style={[Styles.imgStyle,this.props.imgStyle]}>
                     <Image source={this.props.source} />
                     <Text style={Styles.emptyText}>{this.props.text}</Text>
                 </View>
@@ -54,5 +45,14 @@ const Styles = StyleSheet.create({
         fontSize:16,
         color:'#979797',
         textAlign:'center'
+    },
+    imgStyle:{
+        position:'absolute',
+        top:'50%',
+        left:'50%',
+        width:280,
+        height:218,
+        marginLeft:-140,
+        marginTop:-163,        
     }
 });

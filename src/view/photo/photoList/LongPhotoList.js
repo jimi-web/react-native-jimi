@@ -118,7 +118,7 @@ export default class LongPhotoList extends LocalPhotoList {
             data = [...longList,...this.state.defaultList];//合并原来的数据和新增加数据
             this.setState({
                 refresStatus:false,
-                pullUpStatus:4,
+                pullUpStatus:data.length>0?4:0,
                 defaultList:data,
                 totalNum:list.totalPage,
             },()=>{
@@ -179,16 +179,12 @@ export default class LongPhotoList extends LocalPhotoList {
      * 上拉加载
      */
     onPullUp = (number) => {
-        console.log(number);
         
         if(number.distanceFromEnd < -25){
             return;
         }
 
         //没有更多数据
-        console.log(this.state.pageNum);
-        console.log(this.state.totalNum);
-        console.log(this.state.pageNum > this.state.totalNum,'this.state.pageNum > this.state.totalNum');
         
         if(this.state.pageNum > this.state.totalNum){
             this.setState({

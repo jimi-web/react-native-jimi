@@ -49,7 +49,7 @@ const api  = {
      * @param {Object} api 添加一个地址
      */
     setApi:function(api){
-        Object.assign(this,api);
+        Object.assign(serverUrl,api);
     },
     /**
      * 

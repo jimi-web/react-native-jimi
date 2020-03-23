@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-23 10:50:35
+ * @LastEditTime: 2020-03-23 15:45:27
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image} from 'react-native';
@@ -26,6 +26,7 @@ export default class Instruction extends Component {
         instructionArr:PropTypes.array,
         instruction:PropTypes.string,
         isButton:PropTypes.bool,//是否需要按钮，当开启该按钮时，除确定外，所有事件都不会触发指令
+        id:PropTypes.number
     }
 
     static defaultProps = {
@@ -68,6 +69,10 @@ export default class Instruction extends Component {
                 }
             </ScrollView>
         );
+    }
+
+    componentWillMount(){
+        console.log(this.state.instructionArr,'instructionArrinstructionArrinstructionArrinstructionArr');
     }
     /**
      * 渲染每一行的样式
@@ -166,6 +171,7 @@ export default class Instruction extends Component {
         }
         return ins;
     }
+    
     /*
     * 触发指令统一方法
     */
@@ -180,13 +186,11 @@ export default class Instruction extends Component {
            ins,
            insArr:this.state.insArr
        };
-       console.log(ins,111);
        this.props.onIns && this.props.onIns(inProps);
        if(this.props.isButton){
            return;
        }
        this.setInstruction(this.state.insArr,ins);
-        
    }
    /*
     *发送指令公用方法
@@ -194,17 +198,16 @@ export default class Instruction extends Component {
     setInstruction = (params,instrution) => {
         const url = Api.instruction;
         console.log('内容：',instrution,'参数：',params);
-        const instructSetting = {data:params};
         const data = {
             encodingType:'IMEI',
             cmdCode:instrution,
             cmdType:0,
-            cmdId:0,
+            cmdId:this.props.id,
             isSync:0,
             offLineFlag:0,
             platform:'app',
             offLineInsType:'customIns',
-            instructSetting:instructSetting
+            instructSetting:{data:params}
         };
         jmAjax({
             url,
@@ -214,8 +217,8 @@ export default class Instruction extends Component {
             encodingType:true,
         }).then(res => {
             const insProps = {
-                pnarams,
-                istrution
+                params,
+                instrution 
             };
             this.props.setInstruction && this.props.setInstruction(insProps);
         });
