@@ -73,8 +73,6 @@ const request = (params) => {
  */
 // let isDeleteFlag  = [];
 export const jmAjax = (params)=> {
-    console.log(params,'dd');
-    
     // 防止重复点击（暂时屏蔽，后续测试开放）
     // for (let i = 0; i < isDeleteFlag.length; i++) {
     //     const item = isDeleteFlag[i];

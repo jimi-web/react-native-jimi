@@ -7,12 +7,10 @@
  * @LastEditTime: 2020-03-17 15:30:00
  */
 import React, {Component} from 'react';
-import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList} from 'react-native';
+import {View,Image,TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import Applet from '../../http/index';
-import {Toast,Drawer,Button} from '../../components/index';
-import baseStyle from '../baseStyle';
-import {sginMd5,dateConversion,isIphoneX,iphoneXHeight} from '../../libs/utils';
+import {Toast,Drawer} from '../../components/index';
 import api from '../../api/index';
 import ContralPanel from './ContralPanel';
 
@@ -112,14 +110,14 @@ export default class MediaContral extends Component {
         const {timeConfig,lensConfig} = this.props;
         this.type = type;
         if(type == 'photo'){
-            Drawer.open(
+          this.open = Drawer.open(
                 <View>
                     <ContralPanel lensConfig={lensConfig} onIns={(data) => this.onIns(data)}/>
                 </View>
             );
         }
         if(type == 'video'){
-            Drawer.open(
+            this.open =  Drawer.open(
                 <View>
                     <ContralPanel timeConfig={timeConfig} lensConfig={lensConfig} onIns={(data) => this.onIns(data)}/>
                 </View>
@@ -145,8 +143,8 @@ export default class MediaContral extends Component {
     * 发送指令
      */
      onIns = (data) => {
-         const {photoIns,videoIns} = this.props;
-         console.log(data,222);
+        Drawer.close(this.open);
+        const {photoIns,videoIns} = this.props;
          let cmCode = null;
          if(this.type == 'photo'){
              console.log(cmCode,111);
@@ -155,9 +153,8 @@ export default class MediaContral extends Component {
              cmCode = videoIns.replace('ins1',data.lens.value);
              cmCode = cmCode.replace('ins2',data.time.value);
          }  
-         console.log(cmCode,111);
          let params = {
-             cmdCode:'WIFI,ON',
+             cmdCode:cmCode,
              cmdType:0,
              cmdId:12345,
              isSync:0,
@@ -168,10 +165,10 @@ export default class MediaContral extends Component {
              url:api.instruction,
              method:'POST',
              data:params,
-             encoding:'357730090466120',
+             encoding:true,
              encodingType:true
          }).then(res => { 
-             console.log(res,'结果');
+            Toast.message('指令发送成功！');
          });
      }
     

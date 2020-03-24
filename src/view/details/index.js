@@ -24,12 +24,20 @@ export default class Details extends Component {
 
     componentWillReceiveProps(nextProps){
         //数据发生变化则更新
+        this.init(nextProps);
+    }
+
+    componentWillMount() {
+        this.init(this.props);
+    }
+
+    init = (nextProps)=> {
         let nextPropsData = nextProps.data;
         let setUpList = this.state.setUpList;
         Object.keys(nextPropsData).forEach((key)=>{
             setUpList.forEach((data)=>{
                 //图标更新
-                if(data.type === 'deviceIcon' && key=== 'deviceIcon'){
+                if(data.type === 'deviceIcon' && key=== 'deviceIcon' && nextPropsData[key] ){
                     data.value = iconList.filter((item)=>item.key===nextPropsData[key])[0].icon('#888',30);
                 }
                 
