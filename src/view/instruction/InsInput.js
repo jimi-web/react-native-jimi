@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 18:18:12
+ * @LastEditTime: 2020-03-18 17:30:30
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,TextInput } from 'react-native';
@@ -64,8 +64,10 @@ export default class InsArrowButton extends Component {
         const {data,index} = this.props;
         const {rule} = data.content;
         data.value = this.state.inputValue;
-        if(!rule.test(data.value)){
-            return Toast.message('您当前输入的格式有误！');
+        if(rule){
+            if(!rule.test(data.value)){
+                return Toast.message('您当前输入的格式有误！');
+            }
         }
         data.insValue = data.value;
         this.props.onInput && this.props.onInput(data,index);
