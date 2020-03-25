@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-25 16:12:13
+ * @LastEditTime: 2020-03-25 16:28:28
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList, Platform,NetInfo} from 'react-native';
@@ -714,17 +714,6 @@ export default class MediaSyn extends Component {
         // .catch((res) => {
         //     console.log(res,pathArr[7],'失败信息');
         // });
-    }
-
-    /**
-     * 上传ftp文件
-     */
-    uploadFTPFile = (data) => {
-        const config = {
-            path:'/mnt/sdcard1/DVRMEDIA/CarRecorder/PHOTO/',
-            locaUrl:'',
-            
-        };
     }
     /**
      * 下载指定文件

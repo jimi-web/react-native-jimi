@@ -151,7 +151,7 @@ export default class LocalPhotoList extends Component {
             checkedList:[],
             defaultCheckedList:[]
         },()=>{
-            console.log(sectionListFormat);
+            console.log(this.state.mediaList);
         });
     }
 
@@ -286,6 +286,7 @@ export default class LocalPhotoList extends Component {
             }
         }
 
+
         this.setState({
             checkedList:checkedList,
             mediaList:this.state.mediaList,
@@ -368,6 +369,7 @@ export default class LocalPhotoList extends Component {
             checkedList = data.listUrl;
             defaultCheckedList = data.list;
         });
+
         this.setState({
             checkedList:checkedList,
             defaultCheckedList:defaultCheckedList,

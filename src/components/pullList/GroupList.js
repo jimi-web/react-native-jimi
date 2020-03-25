@@ -33,7 +33,7 @@ export default class GroupList  extends PullList {
         }
         renderItem={this.props.renderItem}
         renderSectionHeader={this.props.renderSectionHeader}
-        onEndReachedThreshold={0.2}
+        onEndReachedThreshold={this.props.onEndReachedThreshold}
         onEndReached={this.props.onPullUp}
         extraData={this.props}
         keyExtractor={(item,index) => index.toString()+'pullList'}

@@ -30,6 +30,10 @@ export const iphoneXHeight = (initHeight = 0)=>{
     return initHeight+Theme.iphoneXBottomDefault;
 };
 
+export const iphoneXStyle = (initHeight = 0)=>{
+    return isIphoneX()?iphoneXHeight(initHeight):initHeight;
+}
+
 /**
  * 
  * @param {Number} time 时间简化显示处理

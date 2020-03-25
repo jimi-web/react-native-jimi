@@ -7,20 +7,9 @@
  * @LastEditTime: 2020-03-16 14:24:30
  */
 import React, {Component} from 'react';
-import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList} from 'react-native';
+import {View,Image,Text,StyleSheet,TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
-import Applet from '../../http/index';
-import {Toast} from '../../components/index';
-import baseStyle from '../baseStyle';
-// import 'react-native-ftp-jm';
-import { Checkbox } from 'teaset';
-// const { JMFTPSyncFileManager,JMUDPScoketManager} = NativeModules;
-import {sginMd5,dateConversion,isIphoneX,iphoneXHeight} from '../../libs/utils';
-import api from '../../api/index';
-import PhotoListTitle from '../photo/photoList/PhotoListTitle';
-const imgWith = Dimensions.get('window').width;
-// const JMUDPScoket = new NativeEventEmitter(JMUDPScoketManager);
-import BottomToolbars from '../components/BottomToolbars';
+import {iphoneXStyle} from '../../libs/utils';
 export default class MediaContral extends Component {
     static propTypes = {
         timeConfig:PropTypes.array,//时间配置
@@ -40,7 +29,7 @@ export default class MediaContral extends Component {
     render(){
         const {timeConfig,lensConfig} = this.state;
         return (
-            <View style={{backgroundColor:'#fff',paddingLeft:20,paddingRight:20}}>
+            <View style={{backgroundColor:'#fff',paddingLeft:20,paddingRight:20,paddingBottom:iphoneXStyle(0)}}>
                 {
                     timeConfig.length
                         ?
@@ -134,7 +123,6 @@ export default class MediaContral extends Component {
          });
          this.props.onIns && this.props.onIns(data);
      }
-    
 }
 
 

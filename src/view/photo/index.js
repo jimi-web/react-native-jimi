@@ -58,9 +58,7 @@ export default class Photo extends Component {
 
     render(){
         let localPhotoimg = this.state.localPhoto.length>0? this.state.localPhoto[0].videoFirstImage? this.state.localPhoto[0].videoFirstImage:this.state.localPhoto[0].url:null;  
-        console.log(this.state.localPhoto);
-        
-        let longPhotoimg = this.state.longPhoto.length>0?this.state.longPhoto[0].thumbnailUrl?this.state.longPhoto[0].thumbnailUrl:this.state.longPhoto[0].fileUrl:null;
+        let longPhotoimg = this.state.longPhoto.length>0?this.state.longPhoto[0].thumbnailUrl?this.state.longPhoto[0].thumbnailUrl+'?imageView2/0/w/200/h/200':this.state.longPhoto[0].fileUrl+'?imageView2/0/w/200/h/200':null;
         let localVideoimg = this.state.localVideo.length>0?this.state.localVideo[0].videoFirstImage:null;
         return <View style={Styles.content}>
             <View>

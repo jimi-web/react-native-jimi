@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-23 16:07:03
+ * @LastEditTime: 2020-03-25 16:26:40
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,Image} from 'react-native';
@@ -22,7 +22,7 @@ export default class InsArrowButton extends Component {
            
             <View style={{justifyContent:'center',flexDirection:'row',alignItems:'center'}}>
                 <View style={{marginRight:10}}>
-                    <Image source={typeof content.img == 'string'?{uri:content.img}:content.img} />
+                    <Image style={{width:22,height:22}} source={typeof content.img == 'string'?{uri:content.img}:content.img} />
                 </View>
                 <View>
                     <Text style={{fontSize:14}}>{content.text}</Text>

@@ -4,15 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-25 16:24:02
+ * @LastEditTime: 2020-03-25 16:26:00
  */
 import React, {Component} from 'react';
-import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList} from 'react-native';
+import {View,Image,TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import Applet from '../../http/index';
-import {Toast,Drawer,Button} from '../../components/index';
-import baseStyle from '../baseStyle';
-import {sginMd5,dateConversion,isIphoneX,iphoneXHeight} from '../../libs/utils';
+import {Toast,Drawer} from '../../components/index';
 import api from '../../api/index';
 import ContralPanel from './ContralPanel';
 
@@ -166,13 +164,13 @@ export default class MediaContral extends Component {
              url:api.instruction,
              method:'POST',
              data:params,
-             encoding:'357730090466120',
+             encoding:true,
              encodingType:true
          }).then(res => { 
+             Drawer.close(this.drawer);
              if(res.code){
                  return;
              }
-             Drawer.close(this.drawer);
              Toast.message('拍摄成功');
          });
      }
