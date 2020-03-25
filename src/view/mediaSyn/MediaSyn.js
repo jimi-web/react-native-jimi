@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-23 15:23:44
+ * @LastEditTime: 2020-03-25 16:12:13
  */
 import React, {Component} from 'react';
-import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList, Platform} from 'react-native';
+import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList, Platform,NetInfo} from 'react-native';
 import PropTypes from 'prop-types';
 import Applet from '../../http/index';
 import {Toast,Modal} from '../../components/index';
@@ -45,20 +45,53 @@ export default class MediaSyn extends Component {
             isEdit:false,
             connectText:'正在连接',
             fileChecked:[],//选中的文件
-            fileList:[]
+            fileList:[],
+            password:'',
+            account:'357730090535536',
+            content:[]
                
         };
+    }
+    /**
+     * 监听网络变化
+     */
+    handleConnectivityChange = (status)=> {
+        console.log(status,'是否触发');
+        if(status == 'WIFI'){
+            
+            Applet.getWifiState().then(res => {
+                console.log(res,'触发111111111');
+                this.onConfigSocket();
+                // if(res.data[0].ssid !== this.state.account){
+                //     return Toast.message('请连接设备WIFI');
+                // }
+                // this.onConfigSocket();
+            });
+        }
     }
     componentDidMount(){
         // FTPSyncFileManager.connectFTP('357730090466120').then(res => {
         //     console.log(res,'获取的数据');
         // });
-        Applet.createTheFolder('mediaFile').then(res => {
-            this.localUrl = res;
-        });
-        this.onDeviceMifi();
-        this.getSocketMessage();
+        NetInfo.addEventListener('change',this.handleConnectivityChange);
+        // Applet.createTheFolder('mediaFile').then(res => {
+        //     this.localUrl = res;
+        // });
+        console.log('开始调用');
         this.onConfigSocket();
+        this.getSocketMessage();
+        // Applet.getWifiState().then(res => {
+        //     console.log(res,this.state.account,'是否链接');
+        //     if(res.data[0].ssid == this.state.account){
+        //         this.onConfigSocket();
+        //     }else{
+               
+        //     }
+            
+        // });
+        // this.onDeviceMifi();
+        
+        // this.onConfigSocket();
         
         // const data = [
         //     {
@@ -129,11 +162,24 @@ export default class MediaSyn extends Component {
         // });
         // this.ftmList(data);
     }
-    
+    componentWillUnmount() {
+        NetInfo.addEventListener('change',this.handleConnectivityChange);
+    }
     render() {
         const fileLength = this.state.fileChecked.length;
         return (
             <View style={{flex:1,backgroundColor:'#303030'}}>
+                <View style={{flex:9}}>
+                    {
+                   
+                        this.state.content.map((item,index) => {
+                            return <View style={{backgroundColor:'#fff'}} key={index}>
+                                <Text>{item.path}</Text>
+                                <Text>{item.file}</Text>
+                            </View>;
+                        })
+                    }
+                </View>
                 {
                     this.state.isConnect
                         ?
@@ -183,20 +229,20 @@ export default class MediaSyn extends Component {
             <View style={{backgroundColor:'rgba(254, 116, 45, 0.2)',height:32}}>
                 <Text style={{color:'#FE742D',lineHeight:32,paddingLeft:10}}>同步前请先链接设备的wifi热点</Text>
             </View>
-            <View style={{flex:6,alignItems:'center',justifyContent: 'center'}}>
+            <TouchableOpacity activeOpacity={0.6} onPress={this.onDeviceMifi} style={{flex:6,alignItems:'center',justifyContent: 'center'}}>
                 <ImageBackground style={{width:268,height:280,alignItems:'center'}} source={require('../../assets/media/Connect_pic.png')}>
                     <Text style={{color:'#fff',marginTop:50}}>{this.state.connectText}</Text>
                     <Image style={{marginTop:30}} source={require('../../assets/media/Connect_WiFi.gif')} />
                 </ImageBackground>
-            </View>
+            </TouchableOpacity>
             <View style={{flex:3,alignItems:'center'}}>
-                <View style={{flexDirection:'row',paddingTop:60}}>
+                <View style={{flexDirection:'row',paddingTop:60,alignItems:'flex-start'}}>
                     <Text style={{fontSize:15,color:'#fff'}}>WIFI名称：</Text>
-                    <Text style={{fontSize:15,color:'#fff'}}>131654798798</Text>
+                    <Text style={{fontSize:15,color:'#fff'}}>{this.state.account}</Text>
                 </View>
-                <View style={{flexDirection:'row',paddingTop:30}}>
+                <View style={{flexDirection:'row',paddingTop:30,alignItems:'flex-start'}}>
                     <Text style={{fontSize:15,color:'#fff'}}>WIFI密码：</Text>
-                    <Text style={{fontSize:15,color:'#fff'}}>131654798798</Text>
+                    <Text style={{fontSize:15,color:'#fff'}}>{this.state.password}</Text>
                 </View>
             </View>
         </View>;
@@ -363,50 +409,78 @@ export default class MediaSyn extends Component {
              offLineFlag:0,
              instructSetting:{isOpen:'ON'}
          };
-         
-         //  let sectet = '695c1a459c1911e7bedb00219b9a2ef3';
-         //  let sign = `${sectet}method${data[method]}instruct${data[instruct]}imei${data[imei]}app_key${data[app_key]}accessToken${data[accessToken]}`;
-         //  console.log(data.sign,2312312);
-         Applet.jmAjax({
-             url:api.instruction,
-             method:'POST',
-             data:data,
-             encoding:'357730090466120',
-             encodingType:true
-         }).then(res => { 
-             console.log(res,'结果');
-             Applet.getWifiState().then(res => {
-                 if(!res.status){
-                     return; 
-                 }
-                 if(res.data[0].ssid != '357730090466120'){
-                     Applet.connectWifi('357730090466120','90466120').then(res => {
-                         console.log(res,'连接的结果');
-                     });
-                 }else{
-                     this.onConfigSocket();
-                 }
+         Applet.getEncoding().then(content => {
+             const imei = String(content.encoding);
+             const password = imei.substring(imei.length - 8,imei.length);
+             this.setState({
+                 account:imei,
+                 password:password
              });
-             
-
-             //  const wifiTime = setInterval = (res => {
-             //      Applet.getWifiState().then(res => {
-             //          if(res[0].ssid != '357730090466120'){
-             //              //
-             //          }
-             //      });
-             //  },1000);
-             
-             
+             Applet.jmAjax({
+                 url:api.instruction,
+                 method:'POST',
+                 data:data,
+                 encoding:imei,
+                 encodingType:true
+             }).then(res => { 
+                 console.log(res,'结果');
+                 Applet.getWifiState().then(res => {
+                     if(!res.status){
+                         Modal.dialog({
+                             contentText:'当前设备未连接WIFI无法进行媒体同步，是否前往链接设备WIFI？',
+                             onConfim:() => {
+                                 Applet.skipSetWifi();
+                             }
+                         });
+                         return; 
+                     }
+                     console.log(res.data,111);
+                     if(res.data[0].ssid != imei){
+                         if(Platform.OS === 'ios'){
+                             Modal.dialog({
+                                 contentText:'当前设备未连接WIFI无法进行媒体同步，是否前往链接设备WIFI？',
+                                 onConfirm:() => {
+                                     console.log('确定');
+                                     Applet.skipSetWifi();
+                                 }
+                             });
+                         }else{
+                             let connectIndex = 0;//连接次数
+                             //  android递归连接3次设备，每次等待2s
+                             let connectWifi = (imei,password) => {
+                                 Applet.connectWifi(imei,password).then(data => {
+                                     connectIndex++;
+                                     console.log(data,'触发');
+                                     if(data.status || connectIndex > 2){
+                                         this.onConfigSocket();
+                                         return;
+                                     }
+                                     let connectTime = setTimeout(() => {
+                                         connectWifi(imei,password);
+                                         clearTimeout(connectTime);
+                                     }, 2000);
+                                 });
+                             };
+                         }
+                     }else{
+                         this.onConfigSocket();
+                     }
+                 });
+             });
          });
      }
+     /**
+      * 
+      */
      /*
     * 配置socket参数
      */
      onConfigSocket = () => {
-         JMUDPScoketManager.configUDPSocket('ftp://255.255.255.255',1712,5000).then(res => {
+         console.log('链接socket开始');
+         JMUDPScoketManager.configUDPSocket('255.255.255.255',1712,5000).then(res => {
              console.log(res,'socket连接后的值');
              this.sendSocket();
+            
          })
              .catch(res => {
                  console.log(res,'配置socket参数失败');
@@ -419,8 +493,6 @@ export default class MediaSyn extends Component {
         console.log('发送数据');
         JMUDPScoketManager.send('jimi',1).then(res => {
             console.log(res,'发送socket指令的值');
-            
-            
         });
     }
     /*
@@ -428,12 +500,24 @@ export default class MediaSyn extends Component {
      */
      getSocketMessage = () => {
          console.log('接收数据');
-         JMUDPScoket.addListener(JMUDPScoketManager.kRNJMUDPScoketManager,(reminder) => {
-             const params = JSON.parse(reminder);
-             const data = JSON.parse(params.data);
-             console.log(data,'收到的回复');
-             if(data){
-                 this.onConnect(data);
+         JMUDPScoket.addListener('listeningUDPScoketCellBack',(reminder) => {
+             //  if(!reminder){
+             //      return;
+             //  }
+             console.log(params,'格式化之前的数据');
+             let params = null;
+             if(Platform.OS === 'ios'){
+                 params = JSON.parse(reminder);
+                 params = params.data;
+             }else{
+                 params = JSON.parse(reminder);
+                 params = JSON.parse(params.data);
+             }
+            
+             console.log(params,'格式化之后的数据');
+             if(params){
+                 this.onConnect(params);
+                 JMUDPScoketManager.closeSocket();
              }
          });
      }
@@ -441,8 +525,7 @@ export default class MediaSyn extends Component {
      * 连接设备
      */
     onConnect = (data) => {
-        
-        JMFTPSyncFileManager.configFtpSyncFile('192.168.43.1','passive',10011,'admin','admin')
+        JMFTPSyncFileManager.configFtpSyncFile('ftp://192.168.43.1','passive',10011,'admin','admin')
             .then(res => {
                 console.log(res,'配置的参数');
                 JMFTPSyncFileManager.connectFTP().then(res => {
@@ -487,25 +570,26 @@ export default class MediaSyn extends Component {
         let fileArr = [];
 
 
-        for (let i = 0; i < pathArr.length; i++) {
-            const item = pathArr[i];
-            if(item != ''){
-                //记录请求次数
-                pathIndex++;
-                this.onfilesOne(item).then((res) => {
-                    this.httpIndex++;
-                    fileArr.concat(res);
-                    if(pathIndex == httpIndex){
-                        this.ftmList(fileArr);
-                    }
-                })
-                    .catch(() => {
-                        Toast.message('下载失败');
-                    });
-            }
+        // for (let i = 0; i < pathArr.length; i++) {
+        //     const item = pathArr[i];
+        //     if(item != ''){
+        //         //记录请求次数
+
+        //         pathIndex++;
+        //         this.onfilesOne(item).then((res) => {
+        //             this.httpIndex++;
+        //             fileArr.concat(res);
+        //             if(pathIndex == httpIndex){
+        //                 this.ftmList(fileArr);
+        //             }
+        //         })
+        //             .catch(() => {
+        //                 Toast.message('下载失败');
+        //             });
+        //     }
             
-        }
-        console.log(photoPath,'文件夹路径');
+        // }
+        console.log(pathArr,'文件夹路径');
         // JMFTPSyncFileManager.findFTPFlies(photoPath[0]).then(res => {
         //     console.log(res,'获取的文件1');
         //     const data = res.body;
@@ -514,14 +598,122 @@ export default class MediaSyn extends Component {
         //     .catch(() => {
         //         Toast.message('下载失败');
         //     });
-        JMFTPSyncFileManager.findFTPFlies('/mnt/sdcard1/DVRMEDIA/CarRecorder/PHOTO/').then(res => {
-            console.log(res,'获取的文件2');
-            const data = res.body;
-            // this.downFTPfile(data,0);
-        })
-            .catch(() => {
-                Toast.message('下载失败');
+        // JMFTPSyncFileManager.findFTPFlies(pathArr[0]).then(res => {
+        //     this.state.content.push({
+        //         path:pathArr[0],
+        //         file:String(res)
+        //     });
+        //     this.setState({
+        //         content:this.state.content
+        //     });
+        //     // const data = res.body;
+            
+        // })
+        //     .catch((res) => {
+        //         console.log(res,pathArr[0],'失败信息');
+        //     });     
+        JMFTPSyncFileManager.findFTPFlies(pathArr[1]).then(res => {
+            this.state.content.push({
+                path:pathArr[1],
+                file:String(res)
             });
+            console.log(res,'结果1');
+            this.setState({
+                content:this.state.content
+            });
+            JMFTPSyncFileManager.findFTPFlies(pathArr[3]).then(res => {
+                this.state.content.push({
+                    path:pathArr[3],
+                    file:String(res)
+                });
+                console.log(res,'结果2');
+                this.setState({
+                    content:this.state.content
+                });
+                JMFTPSyncFileManager.findFTPFlies(pathArr[6]).then(res => {
+                    this.state.content.push({
+                        path:pathArr[6],
+                        file:String(res)
+                    });
+                    this.setState({
+                        content:this.state.content
+                    });
+                    console.log(res,'结果3');
+                    // const data = res.body;
+                        
+                })
+                    .catch((res) => {
+                        console.log(res,pathArr[6],'失败信息');
+                    });
+                
+            })
+                .catch((res) => {
+                    console.log(res,'失败信息');
+                });
+            // const data = res.body;
+            
+        })
+            .catch((res) => {
+                console.log(res,pathArr[1],'失败信息');
+            });
+        // JMFTPSyncFileManager.findFTPFlies(pathArr[2]).then(res => {
+        //     this.state.content.push({
+        //         path:pathArr[2],
+        //         file:String(res)
+        //     });
+        //     this.setState({
+        //         content:this.state.content
+        //     });
+        //     // const data = res.body;
+            
+        // })
+        //     .catch((res) => {
+        //         console.log(res,pathArr[2],'失败信息');
+        //     });
+       
+        // JMFTPSyncFileManager.findFTPFlies(pathArr[4]).then(res => {
+        //     this.state.content.push({
+        //         path:pathArr[4],
+        //         file:String(res)
+        //     });
+        //     this.setState({
+        //         content:this.state.content
+        //     });
+        //     // const data = res.body;
+            
+        // })
+        //     .catch((res) => {
+        //         console.log(res,pathArr[4],'失败信息');
+        //     });
+        // JMFTPSyncFileManager.findFTPFlies(pathArr[5]).then(res => {
+        //     this.state.content.push({
+        //         path:pathArr[5],
+        //         file:String(res)
+        //     });
+        //     this.setState({
+        //         content:this.state.content
+        //     });
+        //     // const data = res.body;
+            
+        // })
+        //     .catch((res) => {
+        //         console.log(res,pathArr[5],'失败信息');
+        //     });
+        
+        // JMFTPSyncFileManager.findFTPFlies(pathArr[7]).then(res => {
+        //     this.state.content.push({
+        //         path:pathArr[4],
+        //         file:String(res)
+        //     });
+        //     this.setState({
+        //         content:this.state.content
+        //     });
+        //     // const data = res.body;
+                
+        // })
+        // .catch((res) => {
+        //     console.log(res,pathArr[7],'失败信息');
+        // });
     }
 
     /**

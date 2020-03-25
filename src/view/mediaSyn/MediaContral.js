@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 15:30:00
+ * @LastEditTime: 2020-03-25 16:24:02
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,FlatList} from 'react-native';
@@ -92,6 +92,7 @@ export default class MediaContral extends Component {
     constructor(props){
         super(props);
         this.type = null;
+        this.drawer = null;
     }
     render(){
         return (
@@ -112,14 +113,14 @@ export default class MediaContral extends Component {
         const {timeConfig,lensConfig} = this.props;
         this.type = type;
         if(type == 'photo'){
-            Drawer.open(
+            this.drawer = Drawer.open(
                 <View>
                     <ContralPanel lensConfig={lensConfig} onIns={(data) => this.onIns(data)}/>
                 </View>
             );
         }
         if(type == 'video'){
-            Drawer.open(
+            this.drawer = Drawer.open(
                 <View>
                     <ContralPanel timeConfig={timeConfig} lensConfig={lensConfig} onIns={(data) => this.onIns(data)}/>
                 </View>
@@ -146,18 +147,15 @@ export default class MediaContral extends Component {
      */
      onIns = (data) => {
          const {photoIns,videoIns} = this.props;
-         console.log(data,222);
          let cmCode = null;
          if(this.type == 'photo'){
-             console.log(cmCode,111);
              cmCode = photoIns.replace('ins1',data.lens.value);
          }else{
              cmCode = videoIns.replace('ins1',data.lens.value);
              cmCode = cmCode.replace('ins2',data.time.value);
          }  
-         console.log(cmCode,111);
          let params = {
-             cmdCode:'WIFI,ON',
+             cmdCode:cmCode,
              cmdType:0,
              cmdId:12345,
              isSync:0,
@@ -171,7 +169,11 @@ export default class MediaContral extends Component {
              encoding:'357730090466120',
              encodingType:true
          }).then(res => { 
-             console.log(res,'结果');
+             if(res.code){
+                 return;
+             }
+             Drawer.close(this.drawer);
+             Toast.message('拍摄成功');
          });
      }
     
