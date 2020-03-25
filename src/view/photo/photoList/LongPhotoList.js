@@ -179,24 +179,27 @@ export default class LongPhotoList extends LocalPhotoList {
      * 上拉加载
      */
     onPullUp = (number) => {
-        
-        if(number.distanceFromEnd < -25){
+        if(number.distanceFromEnd < -100){
             return;
         }
 
         //没有更多数据
-        
-        if(this.state.pageNum > this.state.totalNum){
+        let pageNum = this.state.pageNum+1;
+        if(pageNum > this.state.totalNum){
             this.setState({
                 pullUpStatus:2,
             });
             return;
         }
 
+        if(this.state.isEdit){
+            return;
+        }
+
         //加载数据
         this.setState({
             pullUpStatus:1,
-            pageNum:this.state.pageNum+1,
+            pageNum
         },()=>{
             this.getLongPhotoList();
         });

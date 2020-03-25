@@ -23,6 +23,7 @@ export default class PullList  extends Component {
         onRefresh:PropTypes.func,//上拉刷新监听事件
         onPullUp:PropTypes.func,//下拉加载监听事件
         onFail:PropTypes.func,//加载失败点击事件
+        onEndReachedThreshold:PropTypes.number
         
     };
     
@@ -40,6 +41,7 @@ export default class PullList  extends Component {
         footerFailureText:'点击重新加载',
         footerNoMoreDataText:'没有更多数据了',
         footerEmptyDataText:'暂无内容', 
+        onEndReachedThreshold:0.2,
         onRefresh:()=>{
             //
         },
@@ -75,12 +77,13 @@ export default class PullList  extends Component {
                     onRefresh={this.props.onRefresh}
                 />
             }
-            onEndReachedThreshold={0.2}
+            onEndReachedThreshold={this.props.onEndReachedThreshold}
             onEndReached={this.props.onPullUp}
             extraData={this.props}
             renderItem={this.props.renderItem}
             keyExtractor={(item,index) => index.toString()+'pullList'}
             ListFooterComponent={this.renderFooter}
+            // scrollToEnd={this.props.onPullUp}
         />
     }
 
