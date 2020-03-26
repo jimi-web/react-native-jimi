@@ -16,9 +16,9 @@ import api from '../../../../api/index';
 import {jmAjax} from '../../../../http/business';
 import Slider from '../../../../components/slider/index';
 import AddFenceStyles from '../../style/addfence';
-import {SearchInput,Toast} from 'teaset';
+import {SearchInput} from 'teaset';
 import {devicePosition,geocoder,distance} from '../../comm';
-import {InputBox,Loading} from '../../../../components/index';
+import {InputBox,Toast} from '../../../../components/index';
 import gps from '../../../../libs/coversionPoint';
 
 
@@ -82,7 +82,7 @@ export default class AddFenceUtils extends Component {
     }
 
     componentWillUnmount() {
-        Loading.hide();
+        Toast.remove(this.loading);
     }
     
     /**
@@ -316,7 +316,7 @@ export default class AddFenceUtils extends Component {
   
 
     init = ()=>{
-        Loading.show();
+        this.loading = Toast.loading('加载中...');
         if(this.props.fenceId){
             this.getFence();
         }else {
@@ -370,8 +370,10 @@ export default class AddFenceUtils extends Component {
                 isValuation:true
             },()=>{
                 this.props.onDeviceChange && this.props.onDeviceChange(deviceInfo);
-                Loading.hide();
+                Toast.remove(this.loading);
             });
+        }).catch(()=>{
+            Toast.remove(this.loading);
         });
     }
 
@@ -391,7 +393,7 @@ export default class AddFenceUtils extends Component {
                 this.addNewFenceDefaultValue(deviceInfo);
             }else {
                 this.props.onDeviceChange && this.props.onDeviceChange(deviceInfo);
-                Loading.hide();
+                Toast.remove(this.loading);
             }
            
         }
@@ -414,7 +416,7 @@ export default class AddFenceUtils extends Component {
             isValuation:true
         },()=>{
             this.props.onDeviceChange && this.props.onDeviceChange(deviceInfo);
-            Loading.hide();
+            Toast.remove(this.loading);
         });
     }
 

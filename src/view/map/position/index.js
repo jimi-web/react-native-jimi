@@ -8,7 +8,7 @@
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,DeviceEventEmitter,AsyncStorage} from 'react-native';
-import { Icon,Loading } from '../../../components/index'
+import { Icon,Toast } from '../../../components/index'
 import Styles from '../style/base';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
@@ -131,7 +131,7 @@ export default class PositionUtils extends Component {
     }
 
     componentWillUnmount() {
-        Loading.hide();
+        Toast.remove(this.loading);
         clearInterval(this.timeInterval);
     }
 
@@ -140,7 +140,7 @@ export default class PositionUtils extends Component {
      * @param {String} type  坐标类型
      */
     onMapReady(type){
-        Loading.show();
+        this.loading = Toast.loading('加载中...');
         this.setState({
             userMapType:type
         },()=>{
@@ -298,7 +298,7 @@ export default class PositionUtils extends Component {
                 });
             }
 
-            Loading.hide();
+            Toast.remove(this.loading);
         });
     }
 
