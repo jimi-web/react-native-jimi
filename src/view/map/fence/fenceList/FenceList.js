@@ -15,7 +15,7 @@ import Empty from '../../../empty/Empty';
 import FenceListItem from './FenceListItem';
 import BottomToolbars from '../../../components/BottomToolbars';
 import FenceStyles from '../../style/fenceList';
-import {Modal,Loading,Icon} from '../../../../components/index';
+import {Modal,Toast,Icon} from '../../../../components/index';
 
 export default class FenceList extends Component { 
     static propTypes = {
@@ -45,7 +45,7 @@ export default class FenceList extends Component {
     }
     
     componentDidMount(){
-        Loading.show();
+        this.loading = Toast.loading('加载中...');
         this.getFenceList();
     }
 
@@ -57,7 +57,7 @@ export default class FenceList extends Component {
     }
 
     componentWillUnmount() {
-        Loading.hide();
+        Toast.remove(this.loading);
         DeviceEventEmitter.removeAllListeners('jmFenceList');
     }
 
@@ -174,7 +174,7 @@ export default class FenceList extends Component {
         this.setState({
             fenceList:result
         },()=>{
-            Loading.hide();
+            Toast.remove(this.loading);
         });
     }
 
@@ -268,7 +268,7 @@ export default class FenceList extends Component {
 
     
     del = ()=>{
-        Loading.show('删除中...');
+        this,loading = Toast.loading('删除中...');
         let delId = [];//给后台删除的数据
         let delList = this.state.delList;
         let fenceList = this.state.fenceList;
@@ -285,7 +285,7 @@ export default class FenceList extends Component {
             },
             header:0
         }).then((res)=>{
-            Loading.hide();
+            Toast.remove(this.loading);
             //更新数据
             delList.forEach((item,index)=>{
                 fenceList.splice(fenceList.findIndex(v => v.fenceId === item.fenceId),1);
@@ -296,6 +296,8 @@ export default class FenceList extends Component {
                 isSelect:false,
                 allSelectText:'全选'
             });
+        }).catch(()=>{
+            Toast.remove(this.loading);
         }); 
     }
 

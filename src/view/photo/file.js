@@ -18,7 +18,7 @@ import RNFS from 'react-native-fs';
 const succeedImg = <Image style={{width:38,height:38}} source={require('../../assets/photo/photo_save_success.png')}></Image>;
 const failImg = <Image style={{width:38,height:38}} source={require('../../assets/photo/photo_save_failure.png')}></Image>;
 let downloadFileIndex = 0;//存储下载的位置标签
-let save = Toast.loading('保存中...');
+let save = null;
 /**
  * 文件批量删除
  * @param {Array} urlList 
@@ -42,6 +42,7 @@ export const fileDeleteComm = async(loading,urlList,callBack)=>{
         callBack && callBack();
         return succeed;
     } catch (error) {
+        console.log('本地删除失败');
         Toast.loading('删除失败',1000,'center',failImg);
         return ;
     }
@@ -142,7 +143,9 @@ export const queryDeviceVideoPicFile = (params)=>{
         }).then((res)=>{
             let data = res.data;
             resolve(data);
-        }); 
+        }).catch((res)=>{
+            console.log(res.message);
+        });
     }); 
 }
 
@@ -154,6 +157,9 @@ export const queryDeviceVideoPicFile = (params)=>{
  */
 
 export const downloadFile = (longList,filePath,videoType,callBack)=> {
+    if(downloadFileIndex===0){
+        save = Toast.loading('保存中...');
+    }
     let longPhotoList = longList[downloadFileIndex];
     if(longPhotoList.isDown){
         singleSaveToAlbum(longPhotoList.url,longPhotoList.type,longList.length,videoType,downloadFile,callBack);
@@ -173,6 +179,7 @@ export const downloadFile = (longList,filePath,videoType,callBack)=> {
             },callBack);
         }) 
         .catch(err => {
+            console.log('网络保存失败');
             //下载失败
             Toast.remove(save);
             Toast.loading('保存失败',1000,'center',failImg);
@@ -228,6 +235,8 @@ export const deleteDeviceVideoPicFile = (params)=>{
                 params.callBack()
             }
             Toast.remove(del);
-        });     
-}
-
+        }).catch((res)=>{
+            console.log('网络删除失败');
+            console.log(res.message);
+        });
+    }

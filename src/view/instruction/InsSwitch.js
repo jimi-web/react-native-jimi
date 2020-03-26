@@ -56,7 +56,7 @@ export default class InsSwitch extends Component {
      */
     renderSwitch = () => {
         const {data} = this.props;
-        let element = <Switch value={data.value} onValueChange={(value) => this.onValueChange(value)} />;
+        let element = <Switch value={data.value} onValueChange={(value) => this.onValueChange(value)}  activeColor={'#13A887'} />;
         return element;
     }
     onValueChange = (value) => {

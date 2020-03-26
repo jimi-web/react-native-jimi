@@ -10,10 +10,9 @@ import React, {Component} from 'react';
 import {TouchableOpacity,Image} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../style/base';
-import { Icon,Loading } from '../../../components/index'
+import { Icon,Toast } from '../../../components/index'
 import MapStyles from '../style/track';
 import Controller from './TrackController';
-import {Toast} from 'teaset';
 import {jmAjax} from '../../../http/business';
 import api from '../../../api/index';
 import gps from '../../../libs/coversionPoint';
@@ -115,7 +114,7 @@ export default class TrackUtils extends Component {
     }
 
     componentWillUnmount() {
-        Loading.hide();
+        Toast.remove(this.loading);
     }
 
     /**
@@ -191,7 +190,7 @@ export default class TrackUtils extends Component {
      * 数据请求模式判断
      */
     requestMode = ()=>{
-        Loading.show();
+        this.loading = Toast.loading('加载中...');
         if(this.props.getData){
             this.getTrackPoints();
         }else{
@@ -238,6 +237,8 @@ export default class TrackUtils extends Component {
                 res.longitude = baidu.lng;
             });
             this.getTrackData(result);
+        }).catch(()=>{
+            Toast.remove(this.loading);
         });
     }
 
@@ -245,7 +246,7 @@ export default class TrackUtils extends Component {
      * 获取轨迹数据
      */
     getTrackData = (result)=>{
-        Loading.hide();
+        Toast.remove(this.loading);
         if(result.length>0){
             this.setState({
                 trackData:result
