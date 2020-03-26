@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-24 09:21:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-20 16:30:56
+ * @LastEditTime: 2020-03-25 10:27:42
  */
 
 import {httpWifi,httpApp} from './basic';
@@ -103,12 +103,12 @@ export const connectWifi = (accout,password)=>{
             resolve({status:0,message:'失败'});
         }
         httpWifi('scan',(res) => {
-            console.log(res,'扫描结果');
             let params = {};
             res.data.forEach(item => {
+                console.log(item.ssid == accout,'是否搜寻到wifi');
                 if(item.ssid == accout){
                     params = {
-                        bssid:item.accout,
+                        bssid:item.bssid,
                         ssid:item.ssid,
                         capabilities:item.capabilities,
                         password:password
@@ -125,6 +125,7 @@ export const connectWifi = (accout,password)=>{
                 // let time = setTimeout(() => {
                 //     clearInterval(time);
                 // },1500);
+                resolve({status:0,message:'失败'});
             }
         });
     });

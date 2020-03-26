@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-12 13:57:54
+ * @LastEditTime: 2020-03-24 10:41:38
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -109,6 +109,7 @@ export const jmAjax = (params)=> {
             });
         }else {
             request(params).then((res)=>{
+                console.log(res,'定位信息');
                 resolve(res);
             }).catch((res)=>{
                 reject(res);

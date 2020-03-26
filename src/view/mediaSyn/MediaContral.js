@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 15:30:00
+ * @LastEditTime: 2020-03-25 16:26:00
  */
 import React, {Component} from 'react';
 import {View,Image,TouchableOpacity} from 'react-native';
@@ -90,6 +90,7 @@ export default class MediaContral extends Component {
     constructor(props){
         super(props);
         this.type = null;
+        this.drawer = null;
     }
     render(){
         return (
@@ -110,14 +111,14 @@ export default class MediaContral extends Component {
         const {timeConfig,lensConfig} = this.props;
         this.type = type;
         if(type == 'photo'){
-          this.open = Drawer.open(
+            this.drawer = Drawer.open(
                 <View>
                     <ContralPanel lensConfig={lensConfig} onIns={(data) => this.onIns(data)}/>
                 </View>
             );
         }
         if(type == 'video'){
-            this.open =  Drawer.open(
+            this.drawer = Drawer.open(
                 <View>
                     <ContralPanel timeConfig={timeConfig} lensConfig={lensConfig} onIns={(data) => this.onIns(data)}/>
                 </View>
@@ -143,11 +144,9 @@ export default class MediaContral extends Component {
     * 发送指令
      */
      onIns = (data) => {
-        Drawer.close(this.open);
-        const {photoIns,videoIns} = this.props;
+         const {photoIns,videoIns} = this.props;
          let cmCode = null;
          if(this.type == 'photo'){
-             console.log(cmCode,111);
              cmCode = photoIns.replace('ins1',data.lens.value);
          }else{
              cmCode = videoIns.replace('ins1',data.lens.value);
@@ -168,7 +167,11 @@ export default class MediaContral extends Component {
              encoding:true,
              encodingType:true
          }).then(res => { 
-            Toast.message('指令发送成功！');
+             Drawer.close(this.drawer);
+             if(res.code){
+                 return;
+             }
+             Toast.message('拍摄成功');
          });
      }
     

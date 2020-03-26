@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-12-27 17:43:23
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-29 15:14:46
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-25 09:42:04
  */
 import React,{Component} from 'react';
 import {View,StyleSheet} from 'react-native';
@@ -18,9 +18,6 @@ export default class Dialog extends Component {
         super(props);
     }
 
-    componentDidMount(){
-        
-    }
 
     render(){
         return <View>
@@ -28,12 +25,12 @@ export default class Dialog extends Component {
             <Button title={'提示框'} onPress={this.alert} style={styles.btn}></Button>
             <Button title={'轻提示'} onPress={this.toast} style={styles.btn}></Button>
             <Button title={'加载'} onPress={this.loading} style={styles.btn}></Button>
-        </View>
+        </View>;
     }
 
 
     dialog = ()=> {
-        Modal.dialog({
+        M;odal.dialog({
             contentText:'对话框!',
             onConfirm:()=>{
                 console.log('确定');
