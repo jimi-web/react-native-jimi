@@ -13,7 +13,7 @@ const baseStyle = {
     mainFontSize:16,
     bottomBorderStyle:{
         borderStyle:'solid',
-        borderBottomColor:'#eee',
+        borderBottomColor:'#bebebe',
         borderBottomWidth:StyleSheet.hairlineWidth
     },
     leftOrRight:{

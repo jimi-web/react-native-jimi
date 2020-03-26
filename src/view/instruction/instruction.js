@@ -221,6 +221,8 @@ export default class Instruction extends Component {
                 instrution 
             };
             this.props.setInstruction && this.props.setInstruction(insProps);
-        });
+        }).catch((res)=>{
+            console.log(res.message);
+        }); 
     }
 }

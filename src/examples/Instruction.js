@@ -11,18 +11,17 @@ import {View,Text,ScrollView} from 'react-native';
 import { Jimi } from '../index';
 export default class Instruction extends Component {
     
-
     constructor(props){
         super(props);
-        this.data =[
+        this.data = [
             {
                 type:'arrowButton',
                 content:{
                     text:'SOS设置',
                     viceText:'',
                     value:'',
-                    id:'1',
-                    img:'https://facebook.github.io/react-native/img/tiny_logo.png'
+                    id:'0',
+                    img:'http://apps.jimimax.com/setting/instuct/SOS_number@3x.png'
                 },
                 border:true,
                 data:{
@@ -33,12 +32,15 @@ export default class Instruction extends Component {
                         {
                             type:'switch',
                             content:{
-                                text:'SOS设置或删除'
+                                text:'SOS设置'
                             },
                             value:true,
                             insID:'ins1',
                             insSymmetry:{true:'A',false:'D'},
-                            insValue:'A'
+                            insValue:'A',
+                            style:{
+                                color:'#13A887'
+                            }
                         },
                         {
                             type:'title',
@@ -99,8 +101,8 @@ export default class Instruction extends Component {
                     text:'SOS报警',
                     viceText:'',
                     value:'',
-                    id:'3',
-                    img:'https://facebook.github.io/react-native/img/tiny_logo.png'
+                    id:'1',
+                    img:'http://apps.jimimax.com/setting/instuct/SOS_alarm%20@3x.png'
                 },
                 border:true,
                 data:{
@@ -118,21 +120,38 @@ export default class Instruction extends Component {
                             insSymmetry:{true:'ON,',false:'OFF'},
                             insValue:'ON,',
                         },
+                        { 
+                            contral:0,
+                            type:'title',
+                            content:'上报方式',
+                        },
                         {
                             contral:0,
-                            type:'input',
-                            content:{
-                                placeholder:'请输入SOS号码',
-                                type:'',
-                                text:'号码',
-                                rule:/^[0-9]*[1-9][0-9]*$/
-                            },
-                            value:'',
+                            type:'select',
+                            content:[
+                                {
+                                    text:'平台',
+                                    value:0,
+                                    
+                                },
+                                {
+                                    text:'平台+短信',
+                                    value:1,
+                                },
+                                {
+                                    text:'平台+电话',
+                                    value:2,
+                                },
+                                {
+                                    text:'平台+短信+电话',
+                                    value:3,
+                                },
+                            ],
+                            value:3,
                             border:true,
                             insID:'ins2',
-                            insValue:'',
-            
-                        }
+                            insValue:3,
+                        },
                     ]
                 }
             },
@@ -142,8 +161,8 @@ export default class Instruction extends Component {
                     text:'位移报警',
                     viceText:'',
                     value:'',
-                    id:'5',
-                    img:'https://facebook.github.io/react-native/img/tiny_logo.png'
+                    id:'2',
+                    img:'http://apps.jimimax.com/setting/instuct/Displacement@3x.png'
                 },
                 border:true,
                 data:{
@@ -154,12 +173,20 @@ export default class Instruction extends Component {
                         {
                             type:'switch',
                             content:{
-                                text:'移动报警'
+                                text:'位移报警'
                             },
-                            value:true,
+                            value:false,
                             insID:'ins1,',
                             insSymmetry:{true:'ON,',false:'OFF'},
-                            insValue:'ON,',
+                            insValue:'OFF',
+                        },
+                        {
+                            type:'title',
+                            content:'',
+                            style:{
+                                paddingTop:0,
+                                paddingBottom:0
+                            }
                         },
                         {
                             contral:0,
@@ -170,10 +197,10 @@ export default class Instruction extends Component {
                                 text:'半径',
                                 rule:/^[0-9]*[1-9][0-9]*$/
                             },
-                            value:'',
+                            value:'300',
                             border:true,
                             insID:'ins2',
-                            insValue:'',
+                            insValue:'300',
             
                         }
                     ]
@@ -182,31 +209,46 @@ export default class Instruction extends Component {
             {
                 type:'arrowButton',
                 content:{
-                    text:'呼叫次数设置',
+                    text:'呼叫设置',
                     viceText:'',
                     value:'',
-                    id:'6',
-                    img:'https://facebook.github.io/react-native/img/tiny_logo.png'
+                    id:'3',
+                    img:'http://apps.jimimax.com/setting/instuct/Call_times%20@3x.png'
                 },
                 border:true,
+                style:{
+                    marginBottom:20
+                },
                 data:{
                     isButton:true,
                     instruction:'CALL,ins1#',
                     instructionArr:[
+                        { 
+                            type:'title',
+                            content:'呼叫次数',
+                        },
                         {
-                            type:'input',
-                            content:{
-                                placeholder:'请输入呼叫次数',
-                                type:'',
-                                text:'半径',
-                                rule:/^[0-9]*[1-9][0-9]*$/
-                            },
-                            value:'',
+                            type:'select',
+                            content:[
+                                {
+                                    text:'1次',
+                                    value:1,
+                                    
+                                },
+                                {
+                                    text:'2次',
+                                    value:2,
+                                },
+                                {
+                                    text:'3次',
+                                    value:3,
+                                }
+                            ],
+                            value:3,
                             border:true,
                             insID:'ins1',
-                            insValue:'',
-        
-                        }
+                            insValue:3,
+                        },
                     ]
                 }
             },
@@ -216,8 +258,8 @@ export default class Instruction extends Component {
                     text:'电子狗设置',
                     viceText:'',
                     value:'',
-                    id:'6',
-                    img:'https://facebook.github.io/react-native/img/tiny_logo.png'
+                    id:'4',
+                    img:'http://apps.jimimax.com/setting/instuct/Electronic_dog@3x.png'
                 },
                 border:true,
                 data:{
@@ -225,12 +267,20 @@ export default class Instruction extends Component {
                     instruction:'DOG,ins1#',
                     instructionArr:[
                         {
+                            type:'title',
+                            content:'',
+                            style:{
+                                paddingTop:0,
+                                paddingBottom:0
+                            }
+                        },
+                        {
                             type:'switch',
                             content:{
                                 text:'电子狗设置'
                             },
                             value:true,
-                            insID:'ins1,',
+                            insID:'ins1',
                             insSymmetry:{true:'ON',false:'OFF'},
                             insValue:'ON',
                         }
@@ -243,8 +293,8 @@ export default class Instruction extends Component {
                     text:'远程控制',
                     viceText:'',
                     value:'',
-                    id:'7',
-                    img:'https://facebook.github.io/react-native/img/tiny_logo.png'
+                    id:'5',
+                    img:'http://apps.jimimax.com/setting/instuct/Remote_control@3x.png'
                 },
                 border:true,
                 data:{
@@ -252,12 +302,20 @@ export default class Instruction extends Component {
                     instruction:'RELAY,ins1#',
                     instructionArr:[
                         {
+                            type:'title',
+                            content:'',
+                            style:{
+                                paddingTop:0,
+                                paddingBottom:0
+                            }
+                        },
+                        {
                             type:'switch',
                             content:{
-                                text:'远程控制'
+                                text:'是否断油电'
                             },
                             value:true,
-                            insID:'ins1,',
+                            insID:'ins1',
                             insSymmetry:{true:'1',false:'0'},
                             insValue:'1',
                         }
@@ -270,8 +328,8 @@ export default class Instruction extends Component {
                     text:'震动报警',
                     viceText:'',
                     value:'',
-                    id:'8',
-                    img:'https://facebook.github.io/react-native/img/tiny_logo.png'
+                    id:'6',
+                    img:'http://apps.jimimax.com/setting/instuct/Shock@3x.png'
                 },
                 border:true,
                 data:{
@@ -279,15 +337,54 @@ export default class Instruction extends Component {
                     instruction:'SENALM,ins1,ins2#',
                     instructionArr:[
                         {
+                            type:'title',
+                            content:'',
+                            style:{
+                                paddingTop:0,
+                                paddingBottom:0
+                            }
+                        },
+                        {
                             type:'switch',
                             content:{
-                                text:'关闭震动报警'
+                                text:'是否开启震动报警'
                             },
                             value:true,
                             insID:'ins1,',
                             insSymmetry:{true:'ON,',false:'OFF'},
-                            insValue:'ON<',
-                        }
+                            insValue:'ON,',
+                        },
+                        {
+                            type:'title',
+                            content:'',
+                            style:{
+                                paddingTop:0,
+                                paddingBottom:0
+                            }
+                        },
+                        {
+                            contral:1,
+                            type:'select',
+                            content:[
+                                {
+                                    text:'低',
+                                    value:0,
+                                    
+                                },
+                                {
+                                    text:'中',
+                                    value:1,
+                                },
+                                {
+                                    text:'高',
+                                    value:2,
+                                },
+                            ],
+                            value:1,
+                            border:true,
+                            insID:'ins2',
+                            insValue:1,
+                        },
                     ]
                 }
             },
@@ -297,13 +394,13 @@ export default class Instruction extends Component {
                     text:'超速告警',
                     viceText:'',
                     value:'',
-                    id:'8',
-                    img:'https://facebook.github.io/react-native/img/tiny_logo.png'
+                    id:'7',
+                    img:'http://apps.jimimax.com/setting/instuct/Speeding@3x.png'
                 },
                 border:true,
                 data:{
                     isButton:true,
-                    instruction:'SPEED,ins1,ins2,ins3,ins4#',
+                    instruction:'SPEED,ins1,ins2,ins3#',
                     hint:'速度超出阀值后设备发出报警',
                     instructionArr:[
                         {
@@ -314,61 +411,84 @@ export default class Instruction extends Component {
                             value:true,
                             insID:'ins1,',
                             insSymmetry:{true:'ON',false:'OFF'},
-                            insValue:'ON',
+                            insValue:'ON,',
+                        },
+                        {
+                            type:'title',
+                            content:'',
+                            style:{
+                                paddingTop:0,
+                                paddingBottom:0
+                            }
                         },
                         {
                             contral:0,
                             type:'input',
                             content:{
-                                placeholder:'持续时间',
+                                placeholder:'请输入持续时间',
                                 type:'',
-                                text:'半径',
+                                text:'持续时间',
                                 rule:/^[0-9]*[1-9][0-9]*$/
                             },
-                            value:'',
+                            value:'20',
                             border:true,
-                            insID:'ins2',
-                            insValue:'',
+                            insID:'ins2,',
+                            insValue:'20,',
         
                         },
                         {
                             contral:0,
                             type:'input',
                             content:{
-                                placeholder:'超速范围',
+                                placeholder:'请输入超速范围',
                                 type:'',
-                                text:'半径',
+                                text:'超速范围',
                                 rule:/^[0-9]*[1-9][0-9]*$/
                             },
-                            value:'',
+                            value:'100',
                             border:true,
                             insID:'ins3',
-                            insValue:'',
+                            insValue:'100',
         
                         },
-                        { 
+                    ]
+                }
+            },
+            {
+                type:'arrowButton',
+                content:{
+                    text:'自定义',
+                    viceText:'',
+                    value:'',
+                    id:'8',
+                    img:'http://apps.jimimax.com/setting/instuct/Customize@3x.png'
+                },
+                border:true,
+                data:{
+                    isButton:true,
+                    instruction:'ins1',
+                    instructionArr:[
+                        {
                             type:'title',
-                            content:'上报方式',
+                            content:'',
+                            style:{
+                                paddingTop:0,
+                                paddingBottom:0
+                            }
                         },
                         {
-                            contral:0,
-                            type:'select',
-                            content:[
-                                {
-                                    text:'平台',
-                                    value:'0',
-                                    
-                                },
-                                {
-                                    text:'平台加短信',
-                                    value:'1',
-                                },
-                            ],
-                            value:'0',
+                            type:'input',
+                            content:{
+                                placeholder:'请输入自定义指令',
+                                type:'',
+                                text:'自定义指令',
+                                rule:/^[\d\D]*/
+                            },
+                            value:'',
                             border:true,
-                            insID:'ins4',
-                            insValue:'0',
-                        },
+                            insID:'ins1',
+                            insValue:'',
+                        }
                     ]
                 }
             },

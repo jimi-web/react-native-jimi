@@ -49,10 +49,8 @@ export default class PhotoDeatil extends Component {
 
     render(){
         const {data,videoType} = this.props;
-        console.log(data,'图片');
-        
         const fileUrl = data.hasOwnProperty('isDown')?data.isDown?data.url:data.fileUrl:data.url;//区分远程相册和本地相册，区分是否下载过的远程相册
-        const videoCover = data.videoFirstImagePath?data.videoFirstImagePath:fileUrl;
+        const videoCover = data.videoFirstImage?data.videoFirstImage:data.thumbnailUrl;
         return <View style={[Styles.content,{...this.props.style}]}>
             {
                 videoType.includes(data.type)?<Video 
