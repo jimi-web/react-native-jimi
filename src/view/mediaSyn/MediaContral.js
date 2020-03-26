@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-25 16:26:00
+ * @LastEditTime: 2020-03-26 16:41:34
  */
 import React, {Component} from 'react';
 import {View,Image,TouchableOpacity} from 'react-native';
@@ -74,14 +74,14 @@ export default class MediaContral extends Component {
         lensConfig:[
             {
                 name:'外部摄像头',
-                value:'out',
+                value:'in',
                 status:0,
                 icon:[require('../../assets/media/Camera_out.png'),require('../../assets/media/Camera_out_pre.png')]
 
             },
             {
                 name:'内部摄像头',
-                value:'in',
+                value:'out',
                 status:1,
                 icon:[require('../../assets/media/Camera_inside.png'),require('../../assets/media/Camera_inside_pre.png')]
             }

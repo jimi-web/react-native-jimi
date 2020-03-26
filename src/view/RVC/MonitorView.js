@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-23 15:39:35
+ * @LastEditTime: 2020-03-26 17:21:22
  */
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
+import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
 
 
 import { changeSreenDirection,createTheFolder,getMicrophone } from '../../http';
@@ -114,8 +114,7 @@ export default class MonitorView extends Component {
 
     constructor(props){
         super(props);
-        this.screenWidth = Dimensions.get('window').width;
-        this.screenHeight = Dimensions.get('window').height;
+       
         this.photoPath = null;//当前文件夹的位置
         this.videoPath = null;
         this.backHandler = null;
@@ -123,6 +122,8 @@ export default class MonitorView extends Component {
         this.errorNumber = 0;//记录当前播放过程中出错误的次数，达到三次以下进行静默重连。
         this.state = {
             rtmpManagerListener:new NativeEventEmitter(JMRTMPPlayerManager),
+            screenWidth:Dimensions.get('window').width,
+            screenHeight:Dimensions.get('window').height,
             isScreen:false,//是否全屏，初始化该组件为false
             isRecord:false,//是否开启录制,
             isCamera:false,//是否转换摄像头
@@ -290,6 +291,7 @@ export default class MonitorView extends Component {
                 });
             }
         });
+        
         frameInfoSubscription = this.state.rtmpManagerListener.addListener(JMRTMPPlayerManager.kOnStreamPlayerReceiveFrameInfo, (reminder) => {
             this.props.getRVCInfo && this.props.getRVCInfo(reminder);//视频的消息
             this.setState({
@@ -321,8 +323,9 @@ export default class MonitorView extends Component {
         DeviceEventEmitter.removeAllListeners('jmInitialize');
     }
     render(){
+        const backgroundColor = this.state.isScreen ? '#000':'#fff';
         return (
-            <View style={{backgroundColor:'#fff',flex:1,alignItems:'center'}}>
+            <View style={{backgroundColor,flex:1,alignItems:'center'}}>
                 {/* 页头 */}
                 
                 {
@@ -370,8 +373,11 @@ export default class MonitorView extends Component {
      * 初始化视频样式
      */
     renderRVCStyle = () => {
-        const width = this.state.isScreen ? this.screenWidth * 16 / 9 : this.screenWidth;
-        const height = this.state.isScreen ? this.screenWidth : this.screenWidth * 9 / 16;
+        const {RVCRatio} = this.props;
+        const proportion = RVCRatio.split(':');
+        console.log(this.state.screenWidth,this.state.screenHeight,21345);
+        const width = this.state.isScreen ?this.state.screenHeight * proportion[0] / proportion[1] : this.state.screenWidth;
+        const height = this.state.isScreen ?this.state.screenHeight : this.state.screenWidth * proportion[1] / proportion[0];
         const styles = {
             width: width,
             height:height,
@@ -384,7 +390,7 @@ export default class MonitorView extends Component {
      * 初始化页头
      */
     renderHeader(){
-        const {topStatusIcon} = this.props;
+        const {topStatusIcon,RVCRatio} = this.props;
         const {isScreen,screenClickNum,totalFrameCount} = this.state;
         let styles = null;
         if(isScreen){
@@ -393,21 +399,20 @@ export default class MonitorView extends Component {
             if(screenClickNum % 2 !== 0){
                 return null;
             }
-            const left = (this.screenHeight - this.screenWidth * 16 / 9) / 2;
+            const proportion = RVCRatio.split(':');
             styles = {
-                left,
-                width:this.screenWidth * 16 / 9,
+                width:this.state.screenHeight * proportion[0] / proportion[1],
                 height:40,
                 backgroundColor:'rgba(0,0,0,0.6)',
                 position:'absolute',
                 top:0,
-                zIndex:455,
+                zIndex:456,
                 justifyContent:'center',
                 alignItems:'center'
             };
         }else{
             styles = {
-                width:this.screenWidth,
+                width:this.state.screenWidth,
                 height:40,
                 backgroundColor:'#343837',
                 justifyContent:'center',
@@ -429,7 +434,7 @@ export default class MonitorView extends Component {
      * 初始化页脚
      */
     renderFooter(){
-        const {bottomStautsIcon,isSoundIcon,isScreenIcon} = this.props;
+        const {bottomStautsIcon,isSoundIcon,isScreenIcon,RVCRatio} = this.props;
         const {isScreen,isSound,screenClickNum} = this.state;
         let styles = null;
         if(isScreen){
@@ -437,21 +442,19 @@ export default class MonitorView extends Component {
             if(screenClickNum % 2 !== 0){
                 return null;
             }
-            const left = (this.screenHeight - this.screenWidth * 16 / 9) / 2;
+            const proportion = RVCRatio.split(':');
             styles = {
-                left,
-                width:this.screenWidth * 16 / 9,
+                width:this.state.screenHeight * proportion[0] / proportion[1],
                 height:40,
-                backgroundColor:'rgba(0,0,0,0.6)',
                 position:'absolute',
                 bottom:0,
-                zIndex:455,
+                zIndex:456,
                 justifyContent:'center',
                 alignItems:'center'
             };
         }else{
             styles = {
-                width:this.screenWidth,
+                width:this.state.screenWidth,
                 height:40,
                 backgroundColor:'#343837',
                 position:'relative',
@@ -464,7 +467,7 @@ export default class MonitorView extends Component {
         const iconStyle = {
             position:'absolute',
         };
-        let screenElement = isScreenIcon?
+        let screenElement = isScreenIcon ?
             <TouchableOpacity key={'screen'} activeOpacity={0.3} onPress={this.onReversal} style={[iconStyle,{right:10}]}>
                 <Icon name={screenIcon} size={28} color={'#fff'} />
             </TouchableOpacity>
@@ -489,28 +492,29 @@ export default class MonitorView extends Component {
      * 初始化工具
      */
     renderTool(){
-        const {toolArr} = this.props;
+        const {toolArr,RVCRatio} = this.props;
         const {isScreen,screenClickNum} = this.state;
         let styles = null;
         let status = 0;
-        let width = this.screenWidth / 3;
+        let width = this.state.screenWidth / 3;
         let height = 90;
         if(isScreen){
             // 全屏状态下点击视频隐藏操作框
             if(screenClickNum % 2 !== 0){
                 return null;
             }
-            const right = (this.screenHeight - this.screenWidth * 16 / 9) / 2 + 20;
+            const proportion = RVCRatio.split(':');
+            const right = (this.state.screenWidth - this.state.screenHeight * proportion[0] / proportion[1]) / 2 + 20;
             styles = {
-                right,
-                height:this.screenWidth - 80, 
-                justifyContent:'center',
-                alignItems:'center',
+                right:right,
+                height:this.state.screenHeight - 80, 
                 position:'absolute',
-                backgroundColor:'transparent',
                 zIndex:455,
                 top:40,
-                flexWrap:'wrap'
+                flexWrap:'wrap',
+                width:50,
+                justifyContent:'center',
+                alignItems:'center',
                 
             };
             status = 1;
@@ -518,7 +522,7 @@ export default class MonitorView extends Component {
             height = 50;
         }else{
             styles = {
-                width:this.screenWidth,
+                width:this.state.screenWidth,
                 justifyContent:'center',
                 alignItems:'center',
                 flexDirection:'row',
@@ -526,11 +530,10 @@ export default class MonitorView extends Component {
                 backgroundColor:'#fff',
                 flexWrap:'wrap',
             };
-            let width = this.screenWidth / 3;
-            let height = 90;
+            width = this.state.screenWidth / 3;
+            height = 90;
             status = 0;
         }
-        console.log(this.screenWidth,111);
         const element = 
             <View style={styles}>
                 {
@@ -739,12 +742,19 @@ export default class MonitorView extends Component {
      * 旋转视频
      */
     onReversal = () => {
+        
         const type = this.state.isScreen?'portrait':'landscapeRight';
         changeSreenDirection(type).then(res => {
             this.props.onReversal && this.props.onReversal(!this.state.isScreen);
-            this.setState({
-                isScreen:!this.state.isScreen
-            });
+            setTimeout(() => {
+                const {width,height} = Dimensions.get('window');
+                this.setState({
+                    screenWidth:width,
+                    screenHeight:Platform.OS !== 'ios' && this.state.isScreen? height - 35 : height,
+                    isScreen:!this.state.isScreen
+                });
+            },50);
+            
         });
     }
     /**
@@ -848,11 +858,9 @@ export default class MonitorView extends Component {
      */
     onCamera = () => {
         JMRTMPPlayerManager.switchCamera(false,true).then(res => {
-            console.log(res,'摄像头是否切换成功');
             this.setState({
                 isCamera:!this.state.isCamera
             });
-            this.onStartPlay();
         });
     }
 }
