@@ -32,10 +32,8 @@ export default class PhotoList extends Component {
                     <Jimi.LongPhotoList 
                     ref={(e)=>this.longPhotoList =e}
                     onSelect={(list,index)=>{
-                        this.props.navigation.push('PhotoDeatil',{item:list[index],title:list[index].fullTimeFormat,callBack:(data)=>{
-                            let longPhotoList = this.state.longPhotoList;
-                            let newList = longPhotoList.filter(item => item.fileId != data.fileId);
-                            this.longPhotoList.upDate(newList);
+                        this.props.navigation.push('PhotoAlbum',{item:list,title:list[index].fullTimeFormat,index:index,callBack:(data)=>{
+                            this.longPhotoList.upDate(data);
                         }});
                     }}
                     onLongPhotoListChange = {(list)=>{
@@ -48,9 +46,7 @@ export default class PhotoList extends Component {
             <Jimi.LocalPhotoList 
                 items={this.state.mediaList}
                 onSelect={(list,index)=>{
-                    this.props.navigation.push('PhotoDeatil',{item:list[index],title:list[index].fullTimeFormat,callBack:(data)=>{
-                        let mediaList = this.state.mediaList;
-                        let newList = mediaList.filter(item => item.url != data.url );
+                    this.props.navigation.push('PhotoAlbum',{item:list,index:index,callBack:(data)=>{
                         this.setState({
                             mediaList:newList
                         });

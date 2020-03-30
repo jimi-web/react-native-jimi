@@ -40,6 +40,8 @@ import MediaContral from '../examples/MediaContral';
 import Instructions from '../examples/Instructions';
 import Details from '../examples/Detail';
 import IconLibrary from '../examples/IconLibrary';
+import PhotoAlbum from '../examples/PhotoAlbum';
+
 const getOptions = (title) => {
     let headerTitle = {};
     if(title){
@@ -123,6 +125,10 @@ const AppNavigator = createStackNavigator(
         Details:{
             screen:Details,
             navigationOptions:getOptions('详情')            
+        },
+        PhotoAlbum:{
+            screen:PhotoAlbum,
+            navigationOptions:getOptions()            
         },
         AddFence:{
             screen:AddFence,

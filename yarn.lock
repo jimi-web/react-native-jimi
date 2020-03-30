@@ -3031,10 +3031,10 @@ node-fetch@^2.2.0:
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
-node-forge@^0.9.1:
+node-forge@0.9.1:
   version "0.9.1"
-  resolved "https://registry.npmjs.org/node-forge/-/node-forge-0.9.1.tgz#775368e6846558ab6676858a4d8c6e8d16c677b5"
-  integrity sha512-G6RlQt5Sb4GMBzXvhfkeFmbqR6MzhtnT7VTHuLadjkii3rdYHNdw0m8zA4BTxVIh68FicCQ2NSUANpsqkr9jvQ==
+  resolved "https://registry.npm.taobao.org/node-forge/download/node-forge-0.9.1.tgz#775368e6846558ab6676858a4d8c6e8d16c677b5"
+  integrity sha1-d1No5oRlWKtmdoWKTYxujRbGd7U=
 
 node-int64@^0.4.0:
   version "0.4.0"
@@ -3629,6 +3629,18 @@ react-native-iconfont-cli@^1.6.3:
     tslib "^1.10.0"
     xml2js "^0.4.19"
 
+react-native-image-pan-zoom@^2.1.9:
+  version "2.1.11"
+  resolved "https://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.1.11.tgz#61bcb69219d95e76a9797d23e4a2e8e0bd654ae9"
+  integrity sha1-Yby2khnZXnapeX0j5KLo4L1lSuk=
+
+react-native-image-zoom-viewer@^2.2.27:
+  version "2.2.27"
+  resolved "https://registry.npm.taobao.org/react-native-image-zoom-viewer/download/react-native-image-zoom-viewer-2.2.27.tgz#fb3314c5dc86ac33da48cb31bf4920d97eecb6eb"
+  integrity sha1-+zMUxdyGrDPaSMsxv0kg2X7stus=
+  dependencies:
+    react-native-image-pan-zoom "^2.1.9"
+
 react-native-maps@0.24.0:
   version "0.24.0"
   resolved "https://registry.npm.taobao.org/react-native-maps/download/react-native-maps-0.24.0.tgz?cache=0&sync_timestamp=1562867134168&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-maps%2Fdownload%2Freact-native-maps-0.24.0.tgz#6627942e9357768c96ddd22bf66d7e88084d19b0"
@@ -3639,15 +3651,15 @@ react-native-orientation@3.1.3:
   resolved "https://registry.npmjs.org/react-native-orientation/-/react-native-orientation-3.1.3.tgz#d45803841fe94b6cce9acbe904fd5ca191a3711e"
   integrity sha512-A0h0E+2f95X4avmhaBG1ZT8WDxBACA/q//JN2eF1E7kq8AJVxt5XDiavv+aSBkBlqFsfF3bIS+T/DB5mXmnxuA==
 
-react-native-photoview-jm@1.0.22:
-  version "1.0.22"
-  resolved "https://registry.npmjs.org/react-native-photoview-jm/-/react-native-photoview-jm-1.0.22.tgz#7dbe7a7914cad6fbd6e847a3509e7acaa8150e5b"
-  integrity sha512-ltfV59H9DiJNUK7vRSKNIkTRLhP+j7rSKFfGcyI2mkSCWS1IpSZAR8wrujhj5GEvC601XiuwCC+foFBMjpyaJg==
+react-native-photoview-jm@1.0.24:
+  version "1.0.24"
+  resolved "https://registry.npm.taobao.org/react-native-photoview-jm/download/react-native-photoview-jm-1.0.24.tgz#863a6def937801d5f55c9268acfc2c70fd3ca99e"
+  integrity sha1-hjpt75N4AdX1XJJorPwscP08qZ4=
 
-react-native-rtmp-player-jm@^1.1.4:
+react-native-rtmp-player-jm@1.1.4:
   version "1.1.4"
-  resolved "https://registry.npmjs.org/react-native-rtmp-player-jm/-/react-native-rtmp-player-jm-1.1.4.tgz#3f91a0067d8b88416e7e5593b4405e243042caf7"
-  integrity sha512-BOFDtHErXAQXNyUp/xJyfKxHSXp5f4T0+JstZEwzTypNVh/uHRv5as6cyUBACPbH5LY49kRnBbe0MQJeliXg4Q==
+  resolved "https://registry.npm.taobao.org/react-native-rtmp-player-jm/download/react-native-rtmp-player-jm-1.1.4.tgz#3f91a0067d8b88416e7e5593b4405e243042caf7"
+  integrity sha1-P5GgBn2LiEFuflWTtEBeJDBCyvc=
   dependencies:
     react "16.6.3"
     react-native "0.58.6"
@@ -3675,6 +3687,13 @@ react-native-svg@9.3.7:
   version "9.3.7"
   resolved "https://registry.npm.taobao.org/react-native-svg/download/react-native-svg-9.3.7.tgz#00f72f6105177e93bf0cb56bd0d1339db9b6649f"
   integrity sha1-APcvYQUXfpO/DLVr0NEznbm2ZJ8=
+
+react-native-swiper@1.5.14:
+  version "1.5.14"
+  resolved "https://registry.npm.taobao.org/react-native-swiper/download/react-native-swiper-1.5.14.tgz#1c6f949ca377186300f972bb0f30d24062c899aa"
+  integrity sha1-HG+UnKN3GGMA+XK7DzDSQGLImao=
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   version "1.4.1"

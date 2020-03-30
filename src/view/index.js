@@ -34,6 +34,7 @@ import Instruction from './instruction/instruction';
 import MediaContral from './mediaSyn/MediaContral';
 import Details from './details/index';
 import IconLibrary from './details/IconLibrary';
+import PhotoAlbum from './photo/photoDeatil/PhotoAlbum';
 
 const Jimi = {
     BaiduPosition,
@@ -53,6 +54,7 @@ const Jimi = {
     PhotoDeatil,
     Photograph,
     Video,
+    PhotoAlbum,
     Empty,
     RVC,
     FlowCard,

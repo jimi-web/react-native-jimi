@@ -150,8 +150,6 @@ export default class LocalPhotoList extends Component {
             mediaList:sectionListFormat,
             checkedList:[],
             defaultCheckedList:[]
-        },()=>{
-            console.log(this.state.mediaList);
         });
     }
 
