@@ -42,8 +42,9 @@ const serverUrl = {
  * @param {String} url 服务器地址
  */
 const api  = {
+    // flowUrl:'http://appsat.jimisim.com/sim-web-app/app/tqIndex?userinfo=',//测试环境
+    flowUrl:'http://app.jimisim.com/app/tqIndex?userinfo=',//正式环境
     server:'http://apis.jimimax.com',//xieruizhi测试环境
-    // server:'http://10.0.17.227:3000',//liujinyuan测试环境
     /**
      * 
      * @param {Object} api 添加一个地址

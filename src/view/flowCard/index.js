@@ -7,7 +7,7 @@ export default class FlowCard extends Component {
     constructor(props){
         super(props);
         this.state = {
-            url:'http://appsat.jimisim.com/sim-web-app/app/tqIndex?userinfo='
+            url:api.flowUrl
         }
     }
 
