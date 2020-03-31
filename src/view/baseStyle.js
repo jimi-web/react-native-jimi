@@ -17,8 +17,8 @@ const baseStyle = {
         borderBottomWidth:StyleSheet.hairlineWidth
     },
     leftOrRight:{
-        paddingLeft:15,
-        paddingRight:15
+        marginLeft:15,
+        marginRight:15,       
     }
 };
 

@@ -14,12 +14,14 @@ export default class Empty extends Component {
 
     static propTypes = {
         onPress:PropTypes.func,
-        imgStyle:PropTypes.object
+        imgStyle:PropTypes.object,
+        text: PropTypes.oneOfType([PropTypes.element,PropTypes.string])
     }
 
     static defaultProps = {
         source:require('../../assets/fence/list_empty.png'),
         text:'暂无内容',
+        imgStyle:{}
     }
 
     constructor(props){
@@ -28,14 +30,24 @@ export default class Empty extends Component {
 
     render() {
         return <View style={{flex:1}}>
-            <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={this.props.onPress}>
                 <View style={[Styles.imgStyle,this.props.imgStyle]}>
                     <Image source={this.props.source} />
-                    <Text style={Styles.emptyText}>{this.props.text}</Text>
+                   {this.renderDetail()}
                 </View>
-            </TouchableOpacity>
             {this.props.children}
         </View>;
+    }
+
+    renderDetail = ()=>{
+        let detail = this.props.text;
+        if(typeof this.props.text === 'string'){
+            if(this.props.text === 'upDate'){
+                detail =  <TouchableOpacity style={Styles.btn} onPress={this.props.onPress}><Text style={{color:'#6f6e6e',fontSize:12}}>重新加载</Text></TouchableOpacity>;
+            }else{
+                detail =  <Text style={Styles.emptyText}>{this.props.text}</Text>
+            }
+        }
+        return detail;
     }
 }
 
@@ -53,6 +65,16 @@ const Styles = StyleSheet.create({
         width:280,
         height:218,
         marginLeft:-140,
-        marginTop:-163,        
+        marginTop:-163,  
+        alignItems:'center'      
+    },
+    btn:{
+        marginTop:20,
+        padding:10,
+        borderRadius:5,
+        width:100,
+        borderWidth:1,
+        borderColor:'#bebebe',
+        alignItems:'center'
     }
 });
