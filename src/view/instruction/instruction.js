@@ -26,7 +26,6 @@ export default class Instruction extends Component {
         instructionArr:PropTypes.array,
         instruction:PropTypes.string,
         isButton:PropTypes.bool,//是否需要按钮，当开启该按钮时，除确定外，所有事件都不会触发指令
-        id:PropTypes.string
     }
 
     static defaultProps = {

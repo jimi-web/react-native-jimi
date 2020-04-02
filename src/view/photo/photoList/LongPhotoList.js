@@ -65,6 +65,9 @@ export default class LongPhotoList extends LocalPhotoList {
             pageNum:this.state.pageNum,
             pageSize:this.state.pageSize,
         }).then((list)=>{
+            console.log(list,'huoq');
+            console.log(localPhotoData,'本地');
+            
             let longList  = list.result;
             let localPhotoData = this.state.localPhotoData;
             let localList = localPhotoData.fileList.files;
@@ -73,7 +76,7 @@ export default class LongPhotoList extends LocalPhotoList {
             //与本地资源做判断
             if(localList.length>0){
                 localList.forEach(localItem => {
-                    let fileName = localItem.split(localPhotoData.filePath)[1].split('.')[0];
+                    let fileKey = localItem.split(localPhotoData.filePath)[1].split('.')[0];
                     longList.forEach((longItem,index) => {
                         //将格式改为和本地数据字段一致
                         longItem.time  = longItem.createTime;
@@ -85,7 +88,7 @@ export default class LongPhotoList extends LocalPhotoList {
                             longItem.videoFirstImage = longItem.thumbnailUrl+'?imageView2/0/w/200/h/200';
                         }
     
-                        if(fileName===longItem.fileName){
+                        if(fileKey===longItem.fileKey){
                             longItem.url = 'file:///'+localItem;
                             longItem.isDown = true; //判断是否下载，true已下载
                             storage.push(index);//记录下已经复制的url
@@ -122,6 +125,8 @@ export default class LongPhotoList extends LocalPhotoList {
                 defaultList:data,
                 totalNum:list.totalPage,
             },()=>{
+                console.log(this.state.defaultList);
+                
                 this.props.onLongPhotoListChange(this.state.defaultList);
                 this.setData();
             });

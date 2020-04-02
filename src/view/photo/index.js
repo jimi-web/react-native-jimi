@@ -140,7 +140,6 @@ export default class Photo extends Component {
     upDate =()=>{
         getLocalList(this.props.filePath,(fileData)=>{
             console.log(fileData,'更新数据');
-            
             this.dataSort(fileData)
         });
         this.getFirstLongImg();
@@ -213,6 +212,7 @@ export default class Photo extends Component {
      */
     getFirstLongImg = async()=>{
         let img = await queryDeviceVideoPicFile({pageNum:1,pageSize:1});
+        console.log(img,'img');
         
         if(img.result.length === 0){
             return;

@@ -39,6 +39,8 @@ export default class MonitorView extends Component {
         LeftBootomRN:PropTypes.element,//视频左侧组件默认为null
         CenterRn:PropTypes.element,//视频中间组件,设置该组件默认加载和错误提示失效
         toolArr:PropTypes.array,//底部工具列表
+        filePath:PropTypes.string
+        
     }
     static defaultProps = {
         isSoundIcon:true,
@@ -52,6 +54,7 @@ export default class MonitorView extends Component {
         topStatusIcon:[],
         isStopWork:false,
         toolArr:['screenshots','camera','record','tolk'],
+        filePath:'jmLocalPhotoList'
     }
 
     /**
@@ -814,7 +817,7 @@ export default class MonitorView extends Component {
                 });
             });
         }else{
-            createTheFolder('photo').then(res =>{
+            createTheFolder(this.props.filePath).then(res =>{
                 this.photoPath = res;
                 JMRTMPPlayerManager.snapshot(this.photoPath + time + '.png').then(res => {
                     Toast.message('图片已保存');
@@ -846,7 +849,7 @@ export default class MonitorView extends Component {
             if(this.videoPath){
                 JMRTMPPlayerManager.startRecording(this.videoPath + time + '.mp4');
             }else{
-                createTheFolder('video').then(res =>{
+                createTheFolder(this.props.filePath).then(res =>{
                     this.videoPath = res;
                     JMRTMPPlayerManager.startRecording(this.videoPath + time + '.mp4');
                 });

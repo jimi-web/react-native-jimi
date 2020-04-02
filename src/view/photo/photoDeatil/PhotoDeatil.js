@@ -63,6 +63,7 @@ export default class PhotoDeatil extends Component {
                     ref={(ref)=>this.Video=ref}
                     url={fileUrl} 
                     videoCover={videoCover} 
+                    videoTime={data.videoTime}
                     onChangeSreen={(value)=>{
                         this.setState({
                             isFullScreen:value

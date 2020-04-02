@@ -48,7 +48,7 @@ export default class PhotoList extends Component {
                 onSelect={(list,index)=>{
                     this.props.navigation.push('PhotoAlbum',{item:list,index:index,callBack:(data)=>{
                         this.setState({
-                            mediaList:newList
+                            mediaList:data
                         });
                     }});
             }}
