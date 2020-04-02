@@ -23,7 +23,7 @@
     "react-native-rtmp-player-jm": "^1.1.4",
     "react-native-shadow": "1.2.2",
     "react-native-svg": "9.3.7",
-    "react-native-video": "5.0.2",
+    "react-native-video": "^4.4.5",
     "react-navigation": "3.6.1",
     "react-redux": "6.0.1",
     "redux": "4.0.1",

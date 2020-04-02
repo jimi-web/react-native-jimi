@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-26 16:41:34
+ * @LastEditTime: 2020-03-27 18:26:42
  */
 import React, {Component} from 'react';
 import {View,Image,TouchableOpacity} from 'react-native';
@@ -23,7 +23,7 @@ export default class MediaContral extends Component {
         
     }
     static defaultProps = {
-        //in和out为内外摄像头
+        //in和out为内外摄像头(in和out谁代表内，谁代表外根据设备来定)
         //5s为用户选择的时间
         //拍照指令内容:Picture,in/out
         //录制指令内容Video,in/out,5s

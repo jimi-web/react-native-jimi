@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-17 18:56:58
+ * @LastEditTime: 2020-03-31 16:31:03
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -37,9 +37,11 @@ import Instruction from '../examples/Instruction';
 import FlowCard from '../examples/FlowCard';
 import MediaSyn from '../examples/MediaSyn';
 import MediaContral from '../examples/MediaContral';
+import MediaDetails from '../examples/MediaDetails';
 import Instructions from '../examples/Instructions';
 import Details from '../examples/Detail';
 import IconLibrary from '../examples/IconLibrary';
+
 const getOptions = (title) => {
     let headerTitle = {};
     if(title){
@@ -202,6 +204,10 @@ const AppNavigator = createStackNavigator(
         MediaContral:{
             screen:MediaContral,
             navigationOptions:getOptions('远程拍摄')     
+        },
+        MediaDetails:{
+            screen:MediaDetails,
+            navigationOptions:getOptions('媒体同步')     
         },
         Instructions:{
             screen:Instructions,

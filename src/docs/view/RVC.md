@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-10 17:57:42
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-27 11:58:42
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-02 10:32:48
  -->
 
 ## RVC
@@ -20,11 +20,9 @@
 | LoadingElement | RN | false | null | 自定义视频加载状态 |
 | CenterRn | RN | false | false | 视频中间展示的信息用于展示加载状态等，接受一个RN组件，设置该组件视频本身的加载状态和错误信息会消失 |
 | isSoundIcon | boolean | false | true | 是否开启声音切换功能 |
-| isRecordIcon | boolean | false | true | 是否开启录制功能 |
-| isTolkIcon | boolean | false | true | 是否开启对讲功能 |
-| isSnapshotIcon | boolean | false | true | 是否开启截图功能 |
 | isSuspendedIcon | boolean | false | true | 是否开启暂停播放功能 |
 | isScreenIcon | boolean | false | true | 是否开启全屏功能 |
+| toolArr | Array | [] | true | 功能按钮，按顺序排列<br/>screenshots:'截屏'<br/>camera:'切换摄像头'<br/>record:'录制'<br/>tolk:'对讲' |
 
 ## Event
 | Event Name | Returns | Params | Notes |

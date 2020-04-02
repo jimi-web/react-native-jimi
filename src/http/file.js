@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-19 18:18:47
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-28 17:43:11
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-30 14:06:44
  *
  */
 /**
@@ -97,8 +97,8 @@ export const createTheFolder = (url) => {
                     resolve(createUrl);
                 }).catch((res)=>{
                     //失败回调
-                    reject(res)
-                });;   
+                    reject(res);
+                });   
             });
         });
     });

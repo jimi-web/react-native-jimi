@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-25 10:37:21
+ * @LastEditTime: 2020-04-01 18:23:23
  */
 
 import {
@@ -166,6 +166,7 @@ const otherInterface = (url, params,callback) => {
     console.log(bodyJson,'连接时的参数');
     JMRNEngineManager.requestMethod(url, bodyJson);
     this[params.name] = (res) => {
+        console.log(res,23468749);
         let obj = getObject(res);
         callback(obj);
     };
@@ -198,6 +199,7 @@ export const httpWifi = (url, callback,params) => {
         data:params
     };
     otherInterface('jm_dev_wifi.command', data,(res) =>{
+        console.log(res,234687491111);
         callback(res);
     });
 };

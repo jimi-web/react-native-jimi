@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-12-27 17:43:23
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-28 10:30:35
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-31 13:57:16
  */
 import React,{Component} from 'react';
 import {View} from 'react-native';
@@ -17,7 +17,7 @@ export default class EmptyExample extends Component {
     }
 
     componentDidMount(){
-        
+        //
     }
 
     render(){
