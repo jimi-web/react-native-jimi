@@ -3629,18 +3629,6 @@ react-native-iconfont-cli@^1.6.3:
     tslib "^1.10.0"
     xml2js "^0.4.19"
 
-react-native-image-pan-zoom@^2.1.9:
-  version "2.1.11"
-  resolved "https://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.1.11.tgz#61bcb69219d95e76a9797d23e4a2e8e0bd654ae9"
-  integrity sha1-Yby2khnZXnapeX0j5KLo4L1lSuk=
-
-react-native-image-zoom-viewer@^2.2.27:
-  version "2.2.27"
-  resolved "https://registry.npm.taobao.org/react-native-image-zoom-viewer/download/react-native-image-zoom-viewer-2.2.27.tgz#fb3314c5dc86ac33da48cb31bf4920d97eecb6eb"
-  integrity sha1-+zMUxdyGrDPaSMsxv0kg2X7stus=
-  dependencies:
-    react-native-image-pan-zoom "^2.1.9"
-
 react-native-maps@0.24.0:
   version "0.24.0"
   resolved "https://registry.npm.taobao.org/react-native-maps/download/react-native-maps-0.24.0.tgz?cache=0&sync_timestamp=1562867134168&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-maps%2Fdownload%2Freact-native-maps-0.24.0.tgz#6627942e9357768c96ddd22bf66d7e88084d19b0"

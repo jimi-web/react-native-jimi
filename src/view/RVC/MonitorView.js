@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-26 17:21:22
+ * @LastEditTime: 2020-04-02 10:28:05
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -27,9 +27,6 @@ export default class MonitorView extends Component {
         bottomStautsIcon:PropTypes.array,//底部内容添加图标
         isSoundIcon:PropTypes.bool,//是否开启声音控制按钮
         isScreenIcon:PropTypes.bool,//是否开启全屏控制阿牛
-        isTolkIcon:PropTypes.bool,//是否开启对讲控制按钮
-        isRecordIcon:PropTypes.bool,//是否开启录制按钮
-        isSnapshotIcon:PropTypes.bool,//是否开启截图按钮
         isBackVideo:PropTypes.bool,
         RVCRatio:PropTypes.string,
         isStopWork:PropTypes.bool,//外部控制内部不能进行录像，对讲，静音,
@@ -44,11 +41,8 @@ export default class MonitorView extends Component {
     }
     static defaultProps = {
         isSoundIcon:true,
-        isTolkIcon:true,
-        isSnapshotIcon:true,
         isScreenIcon:true,
         isBackVideo:true,
-        isRecordIcon:true,
         RVCRatio:'16:9',
         bottomStautsIcon:[],
         topStatusIcon:[],
@@ -193,11 +187,12 @@ export default class MonitorView extends Component {
                     RVCStatus:2
                 });
             } else if (reminder.status == JMRTMPPlayerManager.videoStatusStop) {
+                console.log('视频已停止播放');
                 this.setState({
                     isPlay:false,
                     RVCStatus:3,
                 });
-                console.log('视频已停止播放');
+                
             } else {
                 console.log('视频播放失败，Code:' + reminder.errCode + ',ErrMag:' + reminder.errMsg);
                 this.errorNumber++;
@@ -248,11 +243,9 @@ export default class MonitorView extends Component {
                 });
             }
             if(status == 14){
-                console.log('权限');
                 const ask = Platform.OS == 'ios'? 2 : 1;
                 getMicrophone(ask).then(res => {
                     // 有权限则再次调用对讲
-                    console.log(res,'结果');
                     if(res.code == 0){
                         JMRTMPPlayerManager.startTalk();
                     }
@@ -269,7 +262,6 @@ export default class MonitorView extends Component {
             
         });
         recordStatusSubscription = this.state.rtmpManagerListener.addListener(JMRTMPPlayerManager.kOnStreamPlayerRecordStatus, (reminder) => {
-            console.log(reminder,'录制信息'); 
             this.props.onRecord && this.props.onRecord(reminder);//录制时的信息
             const status = reminder.status;
             if(status == 1){
@@ -378,7 +370,6 @@ export default class MonitorView extends Component {
     renderRVCStyle = () => {
         const {RVCRatio} = this.props;
         const proportion = RVCRatio.split(':');
-        console.log(this.state.screenWidth,this.state.screenHeight,21345);
         const width = this.state.isScreen ?this.state.screenHeight * proportion[0] / proportion[1] : this.state.screenWidth;
         const height = this.state.isScreen ?this.state.screenHeight : this.state.screenWidth * proportion[1] / proportion[0];
         const styles = {

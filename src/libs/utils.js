@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:17:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 14:55:39
+ * @LastEditTime: 2020-04-01 10:35:36
  */
 import {Dimensions,Platform} from 'react-native';
 import Theme from '../components/themes/index';
@@ -32,7 +32,7 @@ export const iphoneXHeight = (initHeight = 0)=>{
 
 export const iphoneXStyle = (initHeight = 0)=>{
     return isIphoneX()?iphoneXHeight(initHeight):initHeight;
-}
+};
 
 /**
  * 
@@ -97,7 +97,7 @@ export const sginMd5 = (secret,MIFIParams) => {
  * 日期转换
  */
 export const dateConversion = (day)=>{
-    let param = new Date(day.replace(/-/g,'/'));
+    let param =  String(day).indexOf('-') != -1 ? new Date(day) : new Date(day.replace(/-/g,'/'));
     let date = new Date();
     var today = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
     var yestday = new Date(today - 24*3600*1000).getTime();
@@ -116,26 +116,79 @@ export const dateConversion = (day)=>{
 };
 
 
-// /**
-//  * 
-//  * @param {object} MIFIParams 需要进行加密的参数
-//  */
-// export const sginMd5 = (secret,MIFIParams) => {
-//     let key = [];
-//     for(let item in MIFIParams){
-//         key.push(item);
-//     }
-//     key.sort((a,b) => {
-//         return  a.charCodeAt() - b.charCodeAt();
-//     });
-//     console.log(key,111);
-//     //拼接字符串 result = imei123456sign123456；
-//     let result = '';
-//     key.forEach(function (value) {
-//         result += value + MIFIParams[value];
-//     });
-//     //md5加密
-//     let data = secret + result;
-//     //转16进制并且转大写
-//     return data;
-// };
+/**
+ * 判断文件类型 返回已知文件类型，图片：IMAGE 视频：VIDEO 录音：RECORD 若没有该类型返回 ''
+ * @param {String} name 文件名或者文件后缀
+ */
+export const getFileType = (name) => {
+    const typeArray = [
+        {
+            suffix:'jpg',
+            type:'IMAGE'
+        },
+        {
+            suffix:'jpeg',
+            type:'IMAGE'
+        },
+        {
+            suffix:'png',
+            type:'IMAGE'
+        },
+        {
+            suffix:'gif',
+            type:'IMAGE'
+        },
+        {
+            suffix:'mp4',
+            type:'VIDEO'
+        },
+        {
+            suffix:'avi',
+            type:'VIDEO'
+        },
+        {
+            suffix:'mov',
+            type:'VIDEO'
+        },
+        {
+            suffix:'mp3',
+            type:'RECORD'
+        },
+        {
+            suffix:'amr',
+            type:'RECORD'
+        },
+        {
+            suffix:'wma',
+            type:'RECORD'
+        },
+    ];
+    const suffix = String(name).indexOf('.') != -1 ? name.split('.')[1] : name;
+    for (let i = 0; i < typeArray.length; i++) {
+        const item = typeArray[i];
+        console.log(item,1111111);
+        if(item.suffix == suffix){
+            console.log(item,89);
+            return item.type;
+        }
+        
+    }
+    return '';
+};
+
+/**
+ * 将时间转成显示格式
+ * @param {String/Nmber} second shijian
+ */
+export const formatTime = (second) => {
+    let h = 0, i = 0, s = parseInt(second);
+    if (s > 60) {
+        i = parseInt(s / 60);
+        s = parseInt(s % 60);
+    }
+    // 补零
+    let zero = function (v) {
+        return v >> 0 < 10 ? '0' + v : v;
+    };
+    return [zero(h), zero(i), zero(s)].join(':');
+};

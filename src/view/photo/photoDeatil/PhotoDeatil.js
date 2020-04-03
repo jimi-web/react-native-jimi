@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:52:42
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2020-01-04 11:15:13
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-03-31 17:39:12
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
@@ -48,7 +48,7 @@ export default class PhotoDeatil extends Component {
         super(props);
         this.state = {
             isFullScreen:this.props.isFullScreen
-        }
+        };
     }
 
     
@@ -118,7 +118,7 @@ export default class PhotoDeatil extends Component {
                 callBack:()=>{
                     this.props.onDelete && this.props.onDelete();
                 }
-            })
+            });
         }else{
             //本地相册删除
             batchFileDelete([data.url],()=>{

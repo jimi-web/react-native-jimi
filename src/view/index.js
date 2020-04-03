@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 09:13:00
+ * @LastEditTime: 2020-03-31 16:09:31
  */
 
 // import Photo from './photo/index';
@@ -32,6 +32,7 @@ import FlowCard from './flowCard/index';
 import MediaSyc from './mediaSyn/MediaSyn';
 import Instruction from './instruction/instruction';
 import MediaContral from './mediaSyn/MediaContral';
+import MediaDetails from './mediaSyn/MediaDetails';
 import Details from './details/index';
 import IconLibrary from './details/IconLibrary';
 import PhotoAlbum from './photo/photoDeatil/PhotoAlbum';
@@ -63,6 +64,7 @@ const Jimi = {
     MediaContral,
     Details,
     IconLibrary,
+    MediaDetails
 };
 
 module.exports = Jimi;
