@@ -216,9 +216,6 @@ export default class Instruction extends Component {
                     img:'http://apps.jimimax.com/setting/instuct/Call_times%20@3x.png'
                 },
                 border:true,
-                style:{
-                    marginBottom:20
-                },
                 data:{
                     isButton:true,
                     instruction:'CALL,ins1#',

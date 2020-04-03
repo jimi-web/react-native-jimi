@@ -84,8 +84,8 @@ export default class Instruction extends Component {
                 justifyContent:'center',
                 width:'100%',
                 backgroundColor:'#fff',
-                paddingLeft:20,
-                paddingRight:20
+                // paddingLeft:20,
+                // paddingRight:20
             }
         ].concat(itemStyle);
         return styles;
@@ -105,28 +105,28 @@ export default class Instruction extends Component {
         let style = item.style || [];
         switch (item.type) {
         case 'switch':
-            element = <InsSwitch style={[style]} index={index} data={item} onValueChange={(data,index) => this.onIns(data,index)} />;
+            element = <InsSwitch style={[baseStyle.leftOrRight,style]} index={index} data={item} onValueChange={(data,index) => this.onIns(data,index)} />;
             break;
         case 'select':
-            element = <InsSelect style={[style]} isShow={isShow} index={index} data={item} onSelect={(data,index) => this.onIns(data,index)}  />;
+            element = <InsSelect style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onSelect={(data,index) => this.onIns(data,index)}  />;
             break;
         case 'multiSelect':
-            element = <InsMultiSelect style={[style]} isShow={isShow} index={index} data={item} onMultiSelect={(data,index) => this.onIns(data,index)} />;
+            element = <InsMultiSelect style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onMultiSelect={(data,index) => this.onIns(data,index)} />;
             break;
         case 'input':
-            element = <InsInput style={[style]} isShow={isShow} index={index} data={item} onInput={(data,index) => this.onIns(data,index)} />;
+            element = <InsInput style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onInput={(data,index) => this.onIns(data,index)} />;
             break;
         case 'title':
-            element = <View index={index} style={[{flex:1,justifyContent:'center',paddingTop:12,paddingBottom:12,backgroundColor:'#f7f7f7'},style]}><Text>{item.content}</Text></View>;  
+            element = <View index={index} style={[{flex:1,justifyContent:'center',paddingTop:12,paddingBottom:12,paddingLeft:15,paddingRight:15,backgroundColor:'#f7f7f7'},style]}><Text>{item.content}</Text></View>;  
             break;
         case 'arrowButton':
-            element = <InsArrowButton style={[style]} index={index} data={item} onPress={(item) => this.onArrowButton(item,index)} />;  
+            element = <InsArrowButton style={[baseStyle.leftOrRight,style]} index={index} data={item} onPress={(item) => this.onArrowButton(item,index)} />;  
             break;
         case 'modelSelect':
-            element = <InsModelSelect style={[style]} isShow={isShow} index={index} data={item} onPress={(data,index) => this.onIns(data,index)} />;  
+            element = <InsModelSelect style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onPress={(data,index) => this.onIns(data,index)} />;  
             break;
         case 'step':
-            element = <InsStep style={[style]} isShow={isShow} index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
+            element = <InsStep style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
             break;
         case 'element':
             element = item.data;

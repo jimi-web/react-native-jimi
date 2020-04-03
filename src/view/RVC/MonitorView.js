@@ -544,7 +544,7 @@ export default class MonitorView extends Component {
         const recordIcon = isRecord?'video_recording_press' : 'video_recording_normal';
         const tolkIcon = isTolk?'video_voice_press' : 'video_voice_normal';
         const snapshotIcon = isSnapshot? 'video_photo_normal': 'video_photo_normal';
-        const cameraIcon = isCamera? 'trajectory_play_replay': 'trajectory_play_replay';
+        const cameraIcon = isCamera? 'video_cutover_normal': 'video_cutover_normal';
         //截图
         const screenshots =  <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity onPress={this.onSnapshot}>

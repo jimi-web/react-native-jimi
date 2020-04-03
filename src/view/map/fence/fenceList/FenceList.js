@@ -62,7 +62,7 @@ export default class FenceList extends Component {
     }
 
     render() {
-        return <View style={{flex:1,position:'relative',backgroundColor:'#F7F7F7'}}>
+        return <View style={{flex:1,backgroundColor:'#F7F7F7'}}>
             {
                 this.state.fenceList.length>0 ?
                     <ScrollView>

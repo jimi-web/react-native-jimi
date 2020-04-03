@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-31 16:31:03
+ * @LastEditTime: 2020-04-02 11:42:36
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -41,6 +41,7 @@ import MediaDetails from '../examples/MediaDetails';
 import Instructions from '../examples/Instructions';
 import Details from '../examples/Detail';
 import IconLibrary from '../examples/IconLibrary';
+import PhotoAlbum from '../examples/PhotoAlbum';
 
 const getOptions = (title) => {
     let headerTitle = {};
@@ -125,6 +126,10 @@ const AppNavigator = createStackNavigator(
         Details:{
             screen:Details,
             navigationOptions:getOptions('详情')            
+        },
+        PhotoAlbum:{
+            screen:PhotoAlbum,
+            navigationOptions:getOptions()            
         },
         AddFence:{
             screen:AddFence,

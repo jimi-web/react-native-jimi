@@ -26,7 +26,8 @@ export default class PhotoDeatil extends Component {
         isGoBackShow:PropTypes.bool,//是否返回箭头
         onPlayChange:PropTypes.func,//播放状态回调
         style:PropTypes.object,
-        isFullScreen:PropTypes.bool
+        isFullScreen:PropTypes.bool,
+        isBottomBar:PropTypes.bool,//是否需要底部栏
     }
     
 
@@ -34,9 +35,12 @@ export default class PhotoDeatil extends Component {
         videoType:['mp4','3gp','avi','mov'],
         isFullScreen:false,
         onChangeSreen:()=>{},
+        onDelete:()=>{},
+        onSave:()=>{},
         isGoBackShow:false,
         onPlayChange:()=>{},
-        styles:{}
+        styles:{},
+        isBottomBar:true
     }
 
 
@@ -47,6 +51,8 @@ export default class PhotoDeatil extends Component {
         };
     }
 
+    
+
     render(){
         const {data,videoType} = this.props;
         const fileUrl = data.hasOwnProperty('isDown')?data.isDown?data.url:data.fileUrl:data.url;//区分远程相册和本地相册，区分是否下载过的远程相册
@@ -54,6 +60,7 @@ export default class PhotoDeatil extends Component {
         return <View style={[Styles.content,{...this.props.style}]}>
             {
                 videoType.includes(data.type)?<Video 
+                    ref={(ref)=>this.Video=ref}
                     url={fileUrl} 
                     videoCover={videoCover} 
                     onChangeSreen={(value)=>{
@@ -69,6 +76,7 @@ export default class PhotoDeatil extends Component {
                 />:<Photograph url={fileUrl} />
             }
             {
+                this.props.isBottomBar ?
                 !this.state.isFullScreen ?
                     <BottomToolbars>
                         <View style={Styles.bottomToolbars}>
@@ -81,9 +89,17 @@ export default class PhotoDeatil extends Component {
                                 <Text style={[Styles.bottomToolbarsText]}>保存至本地</Text>
                             </TouchableOpacity>
                         </View>
-                    </BottomToolbars>:null}
+                    </BottomToolbars>:null
+                    :null}
             {this.props.children}
         </View>;
+    }
+
+    /**
+     * 暂停
+     */
+    pauseVideo = ()=>{
+        this.Video.pauseVideo();
     }
 
     /**

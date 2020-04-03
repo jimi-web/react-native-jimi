@@ -127,9 +127,16 @@ export default class LongPhotoList extends LocalPhotoList {
             });
         }).catch(()=>{
             //数据请求失败
-            this.setState({
-                pullUpStatus:3
-            });
+            if(this.state.defaultList.length>0){
+                this.setState({
+                    pullUpStatus:3
+                });
+            }else{
+                this.setState({
+                    pullUpStatus:0,
+                    refresStatus:false
+                });  
+            }
         });
     }
 

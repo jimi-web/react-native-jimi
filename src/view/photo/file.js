@@ -133,7 +133,7 @@ export const getLocalList = async(name,fn)=> {
  * @param {Object} params 参数
  */
 export const queryDeviceVideoPicFile = (params)=>{
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         jmAjax({
             url:api.queryDeviceVideoPicFile,
             method:'GET',
@@ -144,7 +144,7 @@ export const queryDeviceVideoPicFile = (params)=>{
             let data = res.data;
             resolve(data);
         }).catch((res)=>{
-            console.log(res.message);
+            reject(res);
         });
     }); 
 }
