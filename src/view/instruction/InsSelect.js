@@ -39,7 +39,7 @@ export default class InsSelect extends Component {
                 <Text style={{fontSize:14}}>{item.text}</Text>
             </View>
             <View>
-                {value == item.value?<Icon name={'gou'} color={`${baseStyle.mainColor}`}/> : null}
+                {value == item.value?<Icon name={'icon-gou'} color={`${baseStyle.mainColor}`}/> : null}
             </View>
         </View >;
         return element;

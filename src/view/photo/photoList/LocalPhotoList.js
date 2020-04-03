@@ -404,7 +404,7 @@ export default class LocalPhotoList extends Component {
     videoTimeConvert = (second)=>{
         let minute = 0;
         let hour = 0;
-
+        second = parseInt(second);
         if (second >= 60) {
             minute = parseInt(second/60)　　
             second = Math.ceil(second%60);

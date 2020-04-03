@@ -120,7 +120,6 @@ export const httpApp = (url, params) => {
         }
     }
 
-    
     const bodyJson = JSON.stringify(obj);
     JMRNEngineManager.requestMethod(url, bodyJson);
     // 定义回调

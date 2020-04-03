@@ -144,6 +144,7 @@ export default class MediaContral extends Component {
     * 发送指令
      */
      onIns = (data) => {
+        Drawer.close(this.drawer);
          const {photoIns,videoIns} = this.props;
          let cmCode = null;
          if(this.type == 'photo'){
@@ -152,6 +153,8 @@ export default class MediaContral extends Component {
              cmCode = videoIns.replace('ins1',data.lens.value);
              cmCode = cmCode.replace('ins2',data.time.value);
          }  
+         console.log(cmCode,'codecodecodecode');
+         
          let params = {
              cmdCode:cmCode,
              cmdType:0,
@@ -167,7 +170,6 @@ export default class MediaContral extends Component {
              encoding:true,
              encodingType:true
          }).then(res => { 
-             Drawer.close(this.drawer);
              if(res.code){
                  return;
              }

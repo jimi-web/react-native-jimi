@@ -42,7 +42,7 @@ export const fileDeleteComm = async(loading,urlList,callBack)=>{
         callBack && callBack();
         return succeed;
     } catch (error) {
-        console.log('本地删除失败');
+        console.log(error,'本地删除失败');
         Toast.loading('删除失败',1000,'center',failImg);
         return ;
     }
@@ -91,13 +91,16 @@ export const singleSaveToAlbum = (url,type,index,videoType,itself,callBack)=>{
     if(videoType.includes(type)){
         saveVideoToAlbum(url).then(()=>{
             saveSucceedCallBack(index,itself,callBack);
-        }).catch(()=> {
+        }).catch((error)=> {
+            console.log(error,'视频下载失败');
+            
             saveFailedCallBack();
         }); 
     }else{
         saveToAlbum(url).then(()=>{
             saveSucceedCallBack(index,itself,callBack);
-        }).catch(()=> {
+        }).catch((error)=> {
+            console.log(error,'相册下载失败');
             saveFailedCallBack();
         }); 
     }
@@ -166,15 +169,15 @@ export const downloadFile = (longList,filePath,videoType,callBack)=> {
     }else{
         const options = {
             fromUrl:longPhotoList.fileUrl ,
-            toFile: filePath+'/'+longPhotoList.fileKey+'.'+longPhotoList.type,
+            toFile: filePath+longPhotoList.fileKey+'.'+longPhotoList.type,
             background: true,
             progressDivider: 5,
         };
         const ret = RNFS.downloadFile(options);
         ret.promise.then(res => {
-            longPhotoList.url = 'file:///' +filePath+'/'+longPhotoList.fileKey+'.'+longPhotoList.type;
+            longPhotoList.url = 'file:///' +filePath+longPhotoList.fileKey+'.'+longPhotoList.type;
             longPhotoList.isDown = true;
-            singleSaveToAlbum('file:///' +filePath+'/'+longPhotoList.fileKey+'.'+longPhotoList.type,longPhotoList.type,longList.length,videoType,()=>{
+            singleSaveToAlbum('file:///' +filePath+longPhotoList.fileKey+'.'+longPhotoList.type,longPhotoList.type,longList.length,videoType,()=>{
                 downloadFile(longList,filePath,videoType,callBack);
             },callBack);
         }) 

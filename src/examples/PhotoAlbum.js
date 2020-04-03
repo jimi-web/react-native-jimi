@@ -24,7 +24,7 @@ export default class PhotoAlbum extends Component {
     }
 
     render(){
-        const {callBack,index} = this.props.navigation.state.params;
+        const {index} = this.props.navigation.state.params;
         return <Jimi.PhotoAlbum
                 data={this.state.data}
                 index={index}
@@ -32,21 +32,7 @@ export default class PhotoAlbum extends Component {
                    let list = this.state.data[index];
                    this.upDateTitle(list.fullTimeFormat);
                 }}
-                onDelete={(data)=>{
-                    //更新数据
-                    let list = this.state.data;
-                    let newList = list.filter(item => {
-                      return item.fileId?item.fileId != data.fileId:item.url != data.url //有fileId的是远程相册，url是本地相册
-                    });
-                    this.setState({
-                        data:newList
-                    },()=>{
-                        this.upDateTitle(data.fullTimeFormat);
-                    });
-                    //回调到媒体列表更新数据
-                    callBack(newList);
-                }}
-
+                onDelete={this._onDelete}
                 onChangeSreen={(value)=>{
                     this.props.navigation.setParams({
                         isShow:value ? null : undefined
@@ -62,6 +48,26 @@ export default class PhotoAlbum extends Component {
     upDateTitle = (fullTimeFormat)=> {
         this.props.navigation.setParams({
             title:fullTimeFormat
+        });
+    }
+
+
+    _onDelete = (data)=>{
+        const {callBack} = this.props.navigation.state.params;
+        let list = this.state.data;
+        let newList = list.filter(item => {
+          return item.fileId?item.fileId != data.fileId:item.url != data.url //有fileId的是远程相册，url是本地相册
+        });
+        this.setState({
+            data:newList
+        },()=>{
+            //回调到媒体列表更新数据
+            callBack(this.state.data);
+            if(this.state.data.length>0){
+                this.upDateTitle(data.fullTimeFormat);
+            }else{
+                this.props.navigation.goBack();
+            }
         });
     }
 }

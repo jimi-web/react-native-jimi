@@ -141,10 +141,10 @@ export default class VideoScreen extends Component {
                                         thumbImage={require('../../../assets/photo/circle_bule_icon.png')}
                                         value={this.state.currentTime}
                                         minimumValue={0}
-                                        maximumValue={this.state.duration}
+                                        maximumValue={this.props.videoTime?this.props.videoTime:this.state.duration}
                                         onValueChange={(currentTime) => { this.onSliderValueChanged(currentTime); }}
                                     />
-                                    <Text style={styles.time}>{formatTime(this.state.duration)}</Text>
+                                    <Text style={styles.time}>{formatTime(this.props.videoTime?this.props.videoTime:this.state.duration)}</Text>
                                     <TouchableOpacity activeOpacity={0.3} onPress={() => { this.onControlShrinkPress(); }}>
                                         {/* <Image
                                             style={[styles.shrinkControl,{marginRight:this.state.isFullScreen?isIphoneX()?iphoneXHeight(15):15:15}]}

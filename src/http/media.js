@@ -79,6 +79,8 @@ export const saveVideoToAlbum = (url) => {
                 resolve(res);
             },
             onFail: (res) => {
+                console.log(res,'视频下载失败底层');
+                
                 reject(res);
             },
             onComplete: () => {
