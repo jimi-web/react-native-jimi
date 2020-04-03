@@ -37,7 +37,8 @@ export default class Instruction extends Component {
         super(props);
         // this.insArr = JSON.parse(JSON.stringify(this.props.instructionArr));
         this.state = {
-            insArr:JSON.parse(JSON.stringify(this.props.instructionArr))
+            insArr:JSON.parse(JSON.stringify(this.props.instructionArr)),
+            setBtnFlag:false
         };
     }
     render(){
@@ -61,7 +62,10 @@ export default class Instruction extends Component {
                     this.props.isButton
                         ?
                         <View style={{marginTop:40,marginBottom:40,alignItems:'center'}}>
-                            <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={'发送指令'} />
+                            {
+                                this.state.setBtnFlag ?<Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}}  activeOpacity={1}  title={'发送中'} />:
+                                <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={'发送指令'} />
+                            }
                         </View>
                         :
                         null
@@ -93,13 +97,15 @@ export default class Instruction extends Component {
     *渲染指令
     */
     renderInstruction = (item,index) => {
+        this.state.insArr = this.props.instructionArr;
         let isShow = true; 
         if(item.contral !== undefined){
-            isShow = this.state.insArr[item.contral].value;
+            isShow = this.state.insArr[item.contral].value;   
         }
-        if(!isShow &&(item.type != 'switch' || item.type != arrowButton)){
+        if(!isShow &&(item.type != 'switch' || item.type != 'arrowButton')){
             return null;
         }
+
         let element = null;
         let style = item.style || [];
         switch (item.type) {
@@ -146,7 +152,12 @@ export default class Instruction extends Component {
       */
      onButton = () => {
          const ins = this.getIns(this.state.insArr);
-         this.setInstruction(this.state.insArr,ins);
+         this.setState({
+            setBtnFlag:true
+         },()=>{
+            this.setInstruction(this.state.insArr,ins);
+         });
+         
      }
 
     /*
@@ -222,7 +233,13 @@ export default class Instruction extends Component {
                 instrution 
             };
             this.props.setInstruction && this.props.setInstruction(insProps);
+            this.setState({
+                setBtnFlag:false
+            });
         }).catch((res)=>{
+            this.setState({
+                setBtnFlag:false
+            });
             console.log(res.message);
         }); 
     }

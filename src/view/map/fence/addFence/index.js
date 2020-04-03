@@ -76,9 +76,9 @@ export default class AddFenceUtils extends Component {
         };
     }
     componentWillMount() {
-        if(this.mapViewFunc){
-            this.mapViewFunc.reloadView();
-        }
+        // if(this.mapViewFunc){
+        //     this.mapViewFunc.reloadView();
+        // }
     }
 
     componentWillUnmount() {
@@ -305,6 +305,9 @@ export default class AddFenceUtils extends Component {
      * 地图加载结束
      */
     onMapReady = (userMapType)=>{
+        if(this.mapViewFunc){
+            this.mapViewFunc.reloadView();
+        }
         this.setState({
             userMapType:userMapType
         },()=>{

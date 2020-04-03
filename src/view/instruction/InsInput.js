@@ -64,11 +64,11 @@ export default class InsArrowButton extends Component {
         const {data,index} = this.props;
         const {rule} = data.content;
         data.value = this.state.inputValue;
-        if(rule){
-            if(!rule.test(data.value)){
-                return Toast.message('您当前输入的格式有误！');
-            }
-        }
+        // if(rule){
+        //     if(!rule.test(data.value)){
+        //         return Toast.message('您当前输入的格式有误！');
+        //     }
+        // }
         data.insValue = data.value;
         this.props.onInput && this.props.onInput(data,index);
     }
