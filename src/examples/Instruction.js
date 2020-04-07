@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-07 17:36:52
+ * @LastEditTime: 2020-04-07 18:18:19
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';
@@ -440,7 +440,8 @@ export default class Instruction extends Component {
                                 placeholder:'请输入超速范围',
                                 type:'',
                                 text:'超速范围',
-                                rule:'^[0-9]*[1-9][0-9]*$'
+                                rule:'^[0-9]*[1-9][0-9]*$',
+                                keyboardType:'number-pad'
                             },
                             value:'100',
                             border:true,

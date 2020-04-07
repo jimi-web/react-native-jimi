@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-03 09:33:13
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-10 15:51:02
+ * @LastEditTime: 2020-04-07 18:25:55
  -->
 # 指令
 
@@ -25,6 +25,9 @@
 | insID | String | false | 对应的指令内容，会用insValue值对该指令替换进行发送 |
 | insValue | String | false | 该参数为当前指令中存在动态数据的默认值，改值会通过insID替换指令中对应的参数 |
 | insSymmetry | boolean | false | 该参数用于对开关等需要固定值形态的值进行替换的规则 |
+| style | object | false | 该值用于自定义组件样式 |
+| hint | string | false | 改值用于在验证组件值不合格的情况下抛给用户的提示，默认为：'您当前输入的格式有误！' |
+| contral | Number | false | 该参数用于此组件被哪个组件所控制，控制该组件的value必须为boolean |
 
 ## Events
 | Event Name | Returns | Notes |
@@ -85,6 +88,7 @@ content => Object 该content接收一个object
 | type | String | Input的类型，默认为text |
 | text | String | 该Input的标题 |
 | rule | String | 该input的验证规则，如规则不对将会在内部进行提示格式错误而不进行数据变动 |
+| keyboardType | String | 该值用于生命input弹出键盘类型，详情查看RN文档 |
 
 
 #### `modelSelect`
