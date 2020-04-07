@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-23 10:44:43
+ * @LastEditTime: 2020-04-07 17:36:52
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';
@@ -397,7 +397,7 @@ export default class Instruction extends Component {
                 border:true,
                 data:{
                     isButton:true,
-                    instruction:'SPEED,ins1,ins2,ins3#',
+                    instruction:'SPEED,ins1,ins2,ins3,ins4#',
                     hint:'速度超出阀值后设备发出报警',
                     instructionArr:[
                         {
@@ -425,7 +425,7 @@ export default class Instruction extends Component {
                                 placeholder:'请输入持续时间',
                                 type:'',
                                 text:'持续时间',
-                                rule:/^[0-9]*[1-9][0-9]*$/
+                                rule:'^[0-9]*[1-9][0-9]*$'
                             },
                             value:'20',
                             border:true,
@@ -440,14 +440,22 @@ export default class Instruction extends Component {
                                 placeholder:'请输入超速范围',
                                 type:'',
                                 text:'超速范围',
-                                rule:/^[0-9]*[1-9][0-9]*$/
+                                rule:'^[0-9]*[1-9][0-9]*$'
                             },
                             value:'100',
                             border:true,
                             insID:'ins3',
                             insValue:'100',
+                            stop:true
         
                         },
+                        {
+                            contral:0,
+                            type:'perch',
+                            border:true,
+                            insID:'ins4',
+                            insSymmetry:{true:'0',false:''},
+                        }
                     ]
                 }
             },

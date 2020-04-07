@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-23 16:11:06
+ * @LastEditTime: 2020-04-07 17:58:00
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image} from 'react-native';
@@ -64,7 +64,7 @@ export default class Instruction extends Component {
                         <View style={{marginTop:40,marginBottom:40,alignItems:'center'}}>
                             {
                                 this.state.setBtnFlag ?<Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}}  activeOpacity={1}  title={'发送中'} />:
-                                <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={'发送指令'} />
+                                    <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={'发送指令'} />
                             }
                         </View>
                         :
@@ -133,6 +133,9 @@ export default class Instruction extends Component {
         case 'step':
             element = <InsStep style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
             break;
+        case 'perch':
+            element = null;  
+            break;
         case 'element':
             element = item.data;
             break;
@@ -152,14 +155,30 @@ export default class Instruction extends Component {
       */
      onButton = () => {
          const ins = this.getIns(this.state.insArr);
+         for (let i = 0; i < this.state.insArr.length; i++) {
+             const item = this.state.insArr[i];
+             if(item.stop){
+                 return Toast.message(item.hint || '您当前输入的格式有误！');
+             }
+             
+         }
          this.setState({
-            setBtnFlag:true
+             setBtnFlag:true
          },()=>{
-            this.setInstruction(this.state.insArr,ins);
+             this.setInstruction(this.state.insArr,ins);
          });
          
      }
 
+     /**
+      * 渲染占位指令内容
+      */
+     renderPerchIns = (data,item,ins) => {
+         const value = data[item.contral].value;
+         const insVlue = item.insSymmetry[value];
+         const perchIns = ins.replace(item.insID,insVlue);
+         return perchIns;
+     }
     /*
     *匹配指令统一方法
      */
@@ -170,12 +189,16 @@ export default class Instruction extends Component {
             const item = data[i];
             if(item.insID){
                 if(item.contral !== undefined){
-                    if(this.state.insArr[item.contral].value){
-                      
-                        ins = ins.replace(item.insID,item.insValue);
+                    if(item.type == 'perch'){
+                        ins = this.renderPerchIns(data,item,ins);
                     }else{
-                        ins = ins.replace(item.insID,'');
+                        if(data[item.contral].value){
+                            ins = ins.replace(item.insID,item.insValue);
+                        }else{
+                            ins = ins.replace(item.insID,'');
+                        }
                     }
+                    
                 }else{
                     ins = ins.replace(item.insID,item.insValue);
                 }
@@ -194,11 +217,14 @@ export default class Instruction extends Component {
            insArr
        });
        const ins = this.getIns(this.state.insArr);
-       const inProps = {
+       const insProps = {
            ins,
            insArr:this.state.insArr
        };
-       this.props.onIns && this.props.onIns(inProps);
+       this.props.onIns && this.props.onIns(insProps);
+       if(data.stop){
+           return Toast.message(data.hint || '您当前输入的格式有误！');
+       }
        if(this.props.isButton){
            return;
        }

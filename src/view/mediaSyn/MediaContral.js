@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-27 18:26:42
+ * @LastEditTime: 2020-04-07 11:23:39
  */
 import React, {Component} from 'react';
 import {View,Image,TouchableOpacity} from 'react-native';
@@ -144,7 +144,7 @@ export default class MediaContral extends Component {
     * 发送指令
      */
      onIns = (data) => {
-        Drawer.close(this.drawer);
+         Drawer.close(this.drawer);
          const {photoIns,videoIns} = this.props;
          let cmCode = null;
          if(this.type == 'photo'){
@@ -158,7 +158,7 @@ export default class MediaContral extends Component {
          let params = {
              cmdCode:cmCode,
              cmdType:0,
-             cmdId:12345,
+             cmdId:1003,
              isSync:0,
              offLineFlag:0,
              instructSetting:{isOpen:'ON'}
