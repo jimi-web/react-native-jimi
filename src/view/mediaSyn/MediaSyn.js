@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-03 17:13:10
+ * @LastEditTime: 2020-04-07 15:29:05
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl} from 'react-native';
@@ -30,7 +30,7 @@ export default class MediaSyn extends Component {
         subPath:PropTypes.string
     }
     static defaultProps = {
-        config:{
+        UNPConfig:{
             baseUrl:'192.17.1.227',
             mode:'passive',
             port:1245679,
@@ -57,6 +57,7 @@ export default class MediaSyn extends Component {
     constructor(props){
         super(props);
         this.localFilePath = [];
+        this.isNerworkConnect = false,//网络是否连接中
         this.status = 0;//连接状态 0:未连接 1:连接中
         this.localUrl = '';//当前路径
         this.loading = 0;//弹框
@@ -93,10 +94,16 @@ export default class MediaSyn extends Component {
      */
     handleConnectivityChange = (status)=> {
         console.log(status,'网路变化',this.status);
+        if(Platform.OS === 'ios'){
+            return;
+        }
         if(this.status){
             return;
         }
         if(this.state.fileList.length > 0){
+            return;
+        }
+        if(this.isNerworkConnect){
             return;
         }
         if(status.type == 'wifi'){
@@ -127,7 +134,6 @@ export default class MediaSyn extends Component {
         if(this.state.fileList.length > 0){
             return;
         }
-        console.log(status,'houtai');
         Applet.getWifiState().then(res => {
             let data = res.data;
             if(typeof data === 'string'){
@@ -149,37 +155,46 @@ export default class MediaSyn extends Component {
         Applet.createTheFolder('mediaFile').then(res => {
             this.localUrl = res;
             Applet.getFileList('mediaFile').then(res => {
-                console.log(res,123465);
-                
-                let paths = res.fileList.files.join(',');
-                console.log(paths,'lujing');
-                if(paths === ''){
+                let paths = res.fileList.files;
+                console.log(paths.length,'path');
+                if(paths.length <= 0){
                     return;
                 }
-                Applet.getVideoTime(paths).then(res => {
-                    console.log(res,'shiping');
-                    this.state.localFileList = res;
-                    if(Platform.OS === 'ios'){
-                        Applet.getVideoFirstImage(paths).then(images => {
-                            console.log(images,'diyi');
-                            this.state.localFileList.forEach((item,index) => {
-                                item.firstImage = images[index].videoFirstImagePath;
-                            });
-                            
+                console.log(paths,123456789111);
+                for (let i = 0; i < paths.length; i++) {
+                    const item = paths[i];
+                    this.state.localFileList[i] = {};
+                    this.state.localFileList[i].videoPath = item;
+                    let fileName = item.split('/');
+                    fileName = fileName[fileName.length - 1];
+                    this.state.localFileList[i].fileName = fileName;
+                    console.log(this.state.localFileList,23456789);
+                    let fileType = getFileType(fileName);
+                    console.log(fileName,fileType,222222);
+                    if(fileType === 'VIDEO'){
+                        Applet.getVideoTime(item).then(data => {
+                            console.log(data,'shiping');
+                            this.state.localFileList[i].videoTime = data[0].videoTime;
+                            if(Platform.OS === 'ios'){
+                                Applet.getVideoFirstImage(item).then(images => {
+                                    this.state.localFileList[i] = images[0].videoFirstImagePath;
+                                    
+                                });
+                            }
+                           
                         });
                     }
-                   
-                });
+                }
+                
             });
 
         });
 
         // 事件触发
         Applet.getWifiState().then(res => {
-            console.log(res,'jie798');
             this.getAccount().then(data => {
-                console.log(res,data,79878);
                 let wifiMessage = res.data;
+                console.log(data,111);
                 if(typeof wifiMessage === 'string'){
                     wifiMessage = JSON.parse(wifiMessage);
                 }
@@ -200,7 +215,7 @@ export default class MediaSyn extends Component {
     componentWillUnmount() {
         NetInfo.removeEventListener('connectionChange',this.handleConnectivityChange);
         AppState.removeEventListener('change',this.handleAppstatus);
-        this.onClose();
+        // this.onClose();
     }
     render() {
         const fileLength = this.state.fileChecked.length;
@@ -373,76 +388,108 @@ export default class MediaSyn extends Component {
         </View>;
         return element;
     }
+    /**
+     * 跳转WIFI弹框
+     */
+    onWifiModal = () => {
+        Modal.dialog({
+            contentText:'当前设备未连接WIFI无法进行媒体同步，是否前往连接设备WIFI？',
+            onConfirm:() => {
+                Applet.skipSetWifi();
+            }
+        });
+    }
+    connectModal = () => {
+        if(!this.status){
+            return;
+        }
+        Modal.dialog({
+            contentText:'连接设备失败，是否重试？',
+            onConfirm:() => {
+                this.status = 0;
+                this.isReply = false;
+                this.onConfigSocket();
+            }
+        });
+    }
+
+    /**
+     * 跳转逻辑
+     */
+    onSkip = (item,index) => {
+        if(item.localPath){
+            this.props.onSelect && this.props.onSelect(item);
+        }else{
+            //  let loading = Toast.loading('下载中...',30000);
+            //  前往详情需要先下载该图片/视频
+            this.state.progressMessage.index = 1;
+            this.state.progressMessage.total = 1;
+            this.setState({
+                isDownload:true,
+                progressMessage:this.state.progressMessage
+            });
+            //  设置超时时间
+            this.progressTime = setTimeout(() => {
+                Toast.message('文件下载失败');
+                clearTimeout(this.progressTime);
+            },15000);
+            JMFTPSyncFileManager.downFTPFile(item.filePath,this.localUrl,item.fileName,String(index)).then(res => {
+                
+                item.localPath = `file://${this.localUrl}${item.fileName}`;
+                item.checked = false;
+                console.log(item.localPath,'1321');
+                if(item.type === 'VIDEO'){
+                    Applet.getVideoTime(item.localPath).then(file => {
+                        item.timeLength = formatTime(file[0].videoTime);
+                        this.state.fileList[item.index] = item;
+                        const fileList = JSON.parse(JSON.stringify(this.state.fileList));
+                        if(Platform.OS === 'ios'){
+                            Applet.getVideoFirstImage(item.localPath).then(images => {
+                                item.firstImage = images[0].videoFirstImagePath;
+                                this.setState({
+                                    fileList,
+                                    isDownload:false
+                                });
+                                this.props.onSelect && this.props.onSelect(item);
+                            });
+                        }else{
+                            this.setState({
+                                fileList,
+                                isDownload:false
+                            });
+                            this.props.onSelect && this.props.onSelect(item);
+                        }
+                    });
+                }else{
+                    this.state.fileList[item.index] = item;
+                    const fileList = JSON.parse(JSON.stringify(this.state.fileList));
+                    this.setState({
+                        fileList,
+                        isDownload:false
+                    });
+                    this.props.onSelect && this.props.onSelect(item);
+                }
+                //  Toast.remove(loading);
+            })
+                .catch(res => {
+                    //  Toast.remove(loading);
+                    this.setState({
+                        isDownload:false
+                    });
+                    return Toast.message('下载失败');
+                });
+        }
+    }
     /*
     * 选择图片或视频
      */
      onSelect = (item,index) => {
          //未开启选项进行方法暴露，（跳转到详情）
          if(!this.state.isEdit){
-             if(item.localPath){
-                 this.props.onSelect && this.props.onSelect(item);
-             }else{
-                 //  let loading = Toast.loading('下载中...',30000);
-                 //  前往详情需要先下载该图片/视频
-                 this.state.progressMessage.index = 1;
-                 this.state.progressMessage.total = 1;
-                 this.setState({
-                     isDownload:true,
-                     progressMessage:this.state.progressMessage
-                 });
-                 //  设置超时时间
-                 this.progressTime = setTimeout(() => {
-                     Toast.message('文件下载失败');
-                     clearTimeout(this.progressTime);
-                 },15000);
-                 JMFTPSyncFileManager.downFTPFile(item.filePath,this.localUrl,item.fileName,String(index)).then(res => {
-                     
-                     item.localPath = `file://${this.localUrl}${item.fileName}`;
-                     item.checked = false;
-                     console.log(item.localPath,'1321');
-                     if(item.type === 'VIDEO'){
-                         Applet.getVideoTime(item.localPath).then(file => {
-                             item.timeLength = formatTime(file[0].videoTime);
-                             this.state.fileList[item.index] = item;
-                             const fileList = JSON.parse(JSON.stringify(this.state.fileList));
-                             if(Platform.OS === 'ios'){
-                                 Applet.getVideoFirstImage(item.localPath).then(images => {
-                                     item.firstImage = images[0].videoFirstImagePath;
-                                     this.setState({
-                                         fileList,
-                                         isDownload:false
-                                     });
-                                     this.props.onSelect && this.props.onSelect(item);
-                                 });
-                             }else{
-                                 this.setState({
-                                     fileList,
-                                     isDownload:false
-                                 });
-                                 this.props.onSelect && this.props.onSelect(item);
-                             }
-                         });
-                     }else{
-                         this.state.fileList[item.index] = item;
-                         const fileList = JSON.parse(JSON.stringify(this.state.fileList));
-                         this.setState({
-                             fileList,
-                             isDownload:false
-                         });
-                         this.props.onSelect && this.props.onSelect(item);
-                     }
-                     //  Toast.remove(loading);
-                 })
-                     .catch(res => {
-                         //  Toast.remove(loading);
-                         this.setState({
-                             isDownload:false
-                         });
-                         return Toast.message('下载失败');
-                     });
-             }
+             this.onSkip(item,index);
              return;
          }
+         console.log(item,123456);
          //  处理选中逻辑
          item.checked = !item.checked;
          this.state.fileList[index] = item;
@@ -494,13 +541,14 @@ export default class MediaSyn extends Component {
          fileChecked.forEach(item => {
              fileSize += Number(item.fileSize);
          });
-        
+         console.log(fileSize,'文件大小');
          if(fileSize > 10 * 1024 * 1024){
              Modal.dialog({
                  contentText:'选择的文件比较大，可能会耗费较长的时间，是否继续？',
                  onConfirm:() => {
                      //  this.loading = Toast.loading('下载中...',30);
                      this.state.progressMessage.total = fileChecked.length;
+                     this.state.progressMessage.progress = 0;
                      this.state.progressMessage.index = 1;
                      this.setState({
                          progressMessage:this.state.progressMessage,
@@ -534,7 +582,6 @@ export default class MediaSyn extends Component {
       */
      onDelete = () => {
          const {fileChecked} = this.state;
-         console.log(fileChecked,'需要删除的文件');
          if(fileChecked.length <= 0){
              return Toast.message('请选择文件');
          }
@@ -566,10 +613,7 @@ export default class MediaSyn extends Component {
             item.day = dateConversion(item.fileDate);
             for (let i = 0; i < this.state.localFileList.length; i++) {
                 const v = this.state.localFileList[i];
-                let vName = v.videoPath.split('/');
-                vName = vName[vName.length - 1];
-                console.log(vName,'名字',item.videoPath);
-                if(item.fileName == vName){
+                if(item.fileName == v.fileName){
                     item.localPath = 'file://' + v.videoPath;
                     if(item.type == 'VIDEO'){
                         console.log(formatTime(v.videoTime),898989);
@@ -628,6 +672,7 @@ export default class MediaSyn extends Component {
     getAccount = () => {
         return new Promise((reslove,reject) => {
             Applet.getEncoding().then(content => {
+                console.log(content,23456);
                 const account = String(content.encoding);
                 const password = account.substring(account.length - 8,account.length);
                 
@@ -642,27 +687,6 @@ export default class MediaSyn extends Component {
             });
         });
     }
-    /**
-     * 跳转WIFI弹框
-     */
-    onWifiModal = () => {
-        Modal.dialog({
-            contentText:'当前设备未连接WIFI无法进行媒体同步，是否前往连接设备WIFI？',
-            onConfirm:() => {
-                Applet.skipSetWifi();
-            }
-        });
-    }
-    connectModal = () => {
-        Modal.dialog({
-            contentText:'连接设备失败，是否重试？',
-            onConfirm:() => {
-                this.status = 0;
-                this.isReply = false;
-                this.onConfigSocket();
-            }
-        });
-    }
      /*
     * 开启设备wifi热点
      */
@@ -671,7 +695,7 @@ export default class MediaSyn extends Component {
          let data = {
              cmdCode:'WIFI,ON',
              cmdType:0,
-             cmdId:12345,
+             cmdId:1001,
              isSync:0,
              offLineFlag:0,
              instructSetting:{isOpen:'ON'}
@@ -684,6 +708,7 @@ export default class MediaSyn extends Component {
              encodingType:true
          }).then(res => { 
              console.log(res,'结果');
+             this.isNerworkConnect = true;
              Applet.getWifiState().then(res => {
                  if(!res.status){
                      this.onWifiModal();
@@ -712,6 +737,7 @@ export default class MediaSyn extends Component {
                                          this.setState({
                                              isFail:true
                                          });
+                                         this.isNerworkConnect = false;
                                          return Toast.message('自动连接WIFI 失败');
                                      }
                                      let connectTime = setTimeout(() => {
@@ -720,7 +746,11 @@ export default class MediaSyn extends Component {
                                      }, 2000);
                                  });
                              };
-                             connectWifi(wifi.account,wifi.password);
+                             let timer = setTimeout(() => {
+                                 connectWifi(wifi.account,wifi.password);
+                                 clearTimeout(timer);
+                             }, 1000);
+                            
                          });
                      }
                  }else{
@@ -733,6 +763,7 @@ export default class MediaSyn extends Component {
     * 配置socket参数
      */
      onConfigSocket = () => {
+         this.isNerworkConnect = false;
          this.setState({
              refreshing:true
          });
@@ -742,7 +773,7 @@ export default class MediaSyn extends Component {
          this.status = 1;
          
          JMUDPScoketManager.configUDPSocket('255.255.255.255',1712,5000).then(res => {
-             console.log(res,'socket连接后的值');
+             //  console.log(res,'socket连接后的值');
              this.sendSocket();
          })
              .catch(res => {
@@ -753,16 +784,13 @@ export default class MediaSyn extends Component {
      *发送socket指令
       */
     sendSocket = () => {
-        console.log('发送数据');
         this.setState({
             refreshing:false
         });
         JMUDPScoketManager.send('jimi',1).then(res => {
-            console.log(res,'发送消息回调');
             Toast.message('已发送消息给设备');
         })
             .catch(res => {
-                console.log(res,'发送数据失败');
                 this.connectModal();
             });
     }
@@ -770,26 +798,17 @@ export default class MediaSyn extends Component {
     *   接受scoket
      */
      getSocketMessage = () => {
-         console.log('接收数据',JMUDPScoketManager.kRNJMUDPSocketManager);
          JMUDPScoket.addListener(JMUDPScoketManager.kRNJMUDPSocketManager,(reminder) => {
-             //  if(!reminder){
-             //      return;
-             //  }
-             console.log(params,'格式化之前的数据');
+             if(!reminder){
+                 return;
+             }
              if(this.isReply){
                  return;
              }
              
              let params = null;
-             if(Platform.OS === 'ios'){
-                 params = JSON.parse(reminder);
-                 params = params.data;
-             }else{
-                 params = JSON.parse(reminder);
-                 params = JSON.parse(params.data);
-             }
-            
-             console.log(params,'格式化之后的数据');
+             params = JSON.parse(reminder);
+             params = JSON.parse(params.data);
              if(params){
                  this.isReply = true;
                  this.onConnect(params);
@@ -803,22 +822,20 @@ export default class MediaSyn extends Component {
     onConnect = (data) => {
         JMFTPSyncFileManager.configFtpSyncFile('ftp://192.168.43.1','passive',10011,'admin','admin')
             .then(res => {
-                console.log(res,'配置的参数');
+                console.log(res,'配置FTP的参数');
                 JMFTPSyncFileManager.connectFTP().then(res => {
-                    console.log(res,'是否链接成功');
+                    console.log(res,'建立FTP链接成功');
                     // this.setState({
                     //     isConnect:true
                     // });
                     this.onFindFiles(data);
                 })
                     .catch(res => {
-                        console.log(res,'连接结果');
                         this.connectModal();
                     });
 
             })
             .catch(() => {
-                console.log('配置失败');
                 this.connectModal();
             });
     }
@@ -852,7 +869,6 @@ export default class MediaSyn extends Component {
                         folderListArr.push(item.filePath);
                     }else{
                         // 进行数据转换
-                        console.log(item,'文件');
                         let day = String(item.fileName).split('.')[0];
                         day = day.split('-');
                         day = `${day[0]}/${day[1]}/${day[2]} ${day[3]}:${day[4]}:${day[5]}`;
@@ -865,7 +881,7 @@ export default class MediaSyn extends Component {
                 //若循环完毕，进入第二层循环或结束循环
                 console.log(httpIndex,pathIndex,folderListArr);
                 if(httpIndex >= pathIndex){
-                    console.log(folderListArr,'本次结束时',fileListArr);
+                    console.log(folderListArr,'本次循环结束时',fileListArr);
                     // 若当前层查询结束时查询不到文件夹，则查询结束，否则继续循环
                     if(!folderListArr.length){
                         callback(fileListArr);
@@ -879,7 +895,6 @@ export default class MediaSyn extends Component {
                 }
             })
                 .catch(res => {
-                    console.log(res,'错误信息');
                     Toast.message('获取文件中断');
                     callback(fileListArr);
                     // httpIndex++;
@@ -904,26 +919,28 @@ export default class MediaSyn extends Component {
         if(data.video_dirs){
             videoPath = data.video_dirs.split(',');
         }
-       
-       
         let folderListArr = [...photoPath,...videoPath];
         this.queryFile(folderListArr,(res) => {
-            console.log(res,'获取到的结果');
-            this.ftmList(res);
+            console.log(res,'获取到的文件结果');
+            if(res && res.length != 0){
+                this.ftmList(res);
+            }
         });
     }
     /**
      * 获取进度
      */
     getFTPProgress = () => {
-        console.log('kRNJMFTPSyncFileManager','监听下载进度');
         JMFTPProgress.addListener('kRNJMFTPSyncFileManager',reminder => {
             clearTimeout(this.progressTime);
+            
             const data = JSON.parse(reminder);
-            console.log(data,'结果');
             let progress = 0;
             progress = Math.floor(JSON.parse(data.data).progress * 100);
+
+
             console.log(this.state.progressMessage,'数据');
+            this.state.progressMessage.progress = 0;
             const progressMessage = {
                 ...this.state.progressMessage,
                 progress:progress
@@ -938,7 +955,6 @@ export default class MediaSyn extends Component {
      * 回调逻辑
      */
     downFTPCallback = (array,index) => {
-        console.log(index,array.length,'回调成功的对比');
         if(index == array.length - 1){
             const fileList = JSON.parse(JSON.stringify(this.state.fileList));
             console.log(fileList,'数据');
@@ -962,8 +978,6 @@ export default class MediaSyn extends Component {
      */
     downFTPfile = (array,index) => {
         let i = String(index);
-        console.log(array[index].filePath,this.localUrl,array[index].fileName,i,123456789);
-        console.log(array[index],1111111111);
         JMFTPSyncFileManager.downFTPFile(array[index].filePath,this.localUrl,array[index].fileName,i).then(res => {
             let data = array[index];
             data.localPath = `file://${this.localUrl}${data.fileName}`;
@@ -990,7 +1004,7 @@ export default class MediaSyn extends Component {
                    
                 });
             }else{
-                console.log(this.state.fileList,this.state.fileList[dataIndex],'当前项',dataIndex);
+               
                 this.state.fileList[dataIndex] = data;
                 this.downFTPCallback(array,index);
             }
@@ -1011,7 +1025,6 @@ export default class MediaSyn extends Component {
     deleteFtpfile = (array,index) => {
         JMFTPSyncFileManager.deleteFTPFile(array[index].filePath).then(res => {
             console.log(res,index,array.length,'删除结果');
-            
             if(index === array.length - 1){
                 let fileArray  = [];
                 this.state.fileList.forEach(item => {
@@ -1025,7 +1038,7 @@ export default class MediaSyn extends Component {
                     isEdit:false
                 });
                 Toast.remove(this.loading);
-                return Toast.message('删除成功');
+                return Toast.message('文件删除成功');
             }
             this.deleteFtpfile(array,index + 1);
         });

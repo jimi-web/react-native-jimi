@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 17:30:30
+ * @LastEditTime: 2020-04-07 17:54:22
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,TextInput } from 'react-native';
@@ -45,7 +45,7 @@ export default class InsArrowButton extends Component {
         );  
     }
     renderStyle = () => {
-        const {border} = this.props.data;
+        const { border } = this.props.data;
         let style = this.props.style;
         let borderStyle = border?baseStyle.bottomBorderStyle:null;
         const styles = [
@@ -65,8 +65,10 @@ export default class InsArrowButton extends Component {
         const {rule} = data.content;
         data.value = this.state.inputValue;
         if(rule){
-            if(!rule.test(data.value)){
-                return Toast.message('您当前输入的格式有误！');
+            let regExp = new RegExp(rule);//根据字符串生成正则
+            if(!regExp.test(data.value)){
+                Toast.message(data.hint || '您当前输入的格式有误！');
+                data.stop = true;
             }
         }
         data.insValue = data.value;

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-12-10 17:28:43
+ * @LastEditTime: 2020-04-07 11:22:57
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -305,7 +305,7 @@ export default class Record extends Component {
             encodingType:'IMEI',
             cmdCode:instrution,
             cmdType:0,
-            cmdId:0,
+            cmdId:1002,
             isSync:0,
             offLineFlag:0,
             platform:'app',
