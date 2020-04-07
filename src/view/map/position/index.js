@@ -122,9 +122,7 @@ export default class PositionUtils extends Component {
 
     
     componentWillMount(){
-        if(this.mapViewFunc){
-            this.mapViewFunc.reloadView();
-        }
+
         // DeviceEventEmitter.addListener('jmPosition', ()=>{
         //     this.getMarker();
         // });
@@ -140,6 +138,10 @@ export default class PositionUtils extends Component {
      * @param {String} type  坐标类型
      */
     onMapReady(type){
+        if(this.mapViewFunc){
+            console.log('调用刷新');
+            this.mapViewFunc.reloadView();
+        }  
         this.loading = Toast.loading('加载中...');
         this.setState({
             userMapType:type

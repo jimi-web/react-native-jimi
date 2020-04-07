@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-07 17:54:22
+ * @LastEditTime: 2020-04-07 17:57:20
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,TextInput } from 'react-native';

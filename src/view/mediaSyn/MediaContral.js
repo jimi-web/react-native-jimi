@@ -76,14 +76,14 @@ export default class MediaContral extends Component {
                 name:'外部摄像头',
                 value:'in',
                 status:0,
-                icon:[require('../../assets/media/Camera_out.png'),require('../../assets/media/Camera_out_pre.png')]
+                icon:[require('../../assets/photo/Camera_out.png'),require('../../assets/photo/Camera_out_pre.png')]
 
             },
             {
                 name:'内部摄像头',
                 value:'out',
                 status:1,
-                icon:[require('../../assets/media/Camera_inside.png'),require('../../assets/media/Camera_inside_pre.png')]
+                icon:[require('../../assets/photo/Camera_inside.png'),require('../../assets/photo/Camera_inside_pre.png')]
             }
         ]
     }
@@ -96,10 +96,10 @@ export default class MediaContral extends Component {
         return (
             <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
                 <TouchableOpacity onPress={this.onContral.bind(this,'photo')} activeOpacity={0.6} style={{flex:1,justifyContent:'flex-end'}}>
-                    <Image style={{marginBottom:75}} source={require('../../assets/media/Photo.png')}></Image>
+                    <Image style={{marginBottom:75}} source={require('../../assets/photo/Photo.png')}></Image>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.onContral.bind(this,'video')} activeOpacity={0.6} style={{flex:1}}>
-                    <Image source={require('../../assets/media/Video.png')}></Image>
+                    <Image source={require('../../assets/photo/Video.png')}></Image>
                 </TouchableOpacity>
             </View>
         );

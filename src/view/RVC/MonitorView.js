@@ -855,6 +855,8 @@ export default class MonitorView extends Component {
             this.setState({
                 isCamera:!this.state.isCamera
             });
+        }).catch((res)=>{
+            Toast.message('切换失败');
         });
     }
 }

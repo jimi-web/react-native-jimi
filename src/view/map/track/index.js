@@ -103,11 +103,11 @@ export default class TrackUtils extends Component {
         };
     }
 
-    componentWillMount() {
-        if(this.mapViewFunc){
-            this.mapViewFunc.reloadView();
-        }
-    }
+    // componentWillMount() {
+    //     if(this.mapViewFunc){
+    //         this.mapViewFunc.reloadView();
+    //     }
+    // }
 
     componentDidMount() {
         this.onPullTime();
@@ -179,6 +179,9 @@ export default class TrackUtils extends Component {
 
 
     onMapReady(userMapType) {
+        if(this.mapViewFunc){
+            this.mapViewFunc.reloadView();
+        }
         this.setState({
             userMapType:userMapType
         },()=>{
