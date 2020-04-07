@@ -273,7 +273,7 @@ export default class PositionUtils extends Component {
        
         
         data.gpsTime = new Date(data.gpsTime).Format('YYYY-MM-DD hh:mm:ss');
-        data.time = new Date(data.time).Format('YYYY-MM-DD hh:mm:ss');
+        data.time = data.time ? new Date(data.time).Format('YYYY-MM-DD hh:mm:ss'):'';
         data.otherPosTime = new Date(data.otherPosTime).Format('YYYY-MM-DD hh:mm:ss');
        
         this.setState({
@@ -341,7 +341,7 @@ export default class PositionUtils extends Component {
                 <Text style={MapStyles.infoWindowTitle}>定位时间：{this.posType().time}</Text>
             </View>     
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>通讯时间：{ locationData.time}</Text>
+                <Text style={MapStyles.infoWindowTitle}>通讯时间：{locationData.time}</Text>
             </View>    
             <View style={[MapStyles.infoWindowItem,{paddingBottom:0}]}>
                 <Text style={MapStyles.infoWindowTitle}>地址：{locationData.address}{'\n'}                                                        
