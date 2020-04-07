@@ -56,19 +56,19 @@ export default class Switch  extends Component {
         Animated.parallel([
             Animated.spring(this.state.width, {
                 toValue: value ? 75 : -75,
-                duration: 500
+                speed: 100
             }),
             Animated.spring(this.state.height, {
                 toValue: value ? 75 : -75,
-                duration: 500
+                speed: 100
             }),
             Animated.spring(this.state.left, {
                 toValue: value ? 75 : -75,
-                duration: 500
+                speed: 100
             }),
             Animated.spring(this.state.borderWidth, {
                 toValue: value ? 75 : -75,
-                duration: 500
+                speed: 100
             })
         ]).start(cb);
     }
@@ -120,13 +120,13 @@ export default class Switch  extends Component {
 
     onSwitch = ()=>{
         if(!this.props.disabled){
-            this.animateSwitch(!this.state.value,()=>[
+            this.animateSwitch(!this.state.value,()=>{
                 this.setState({
                     value:!this.state.value
                 },()=>{
                     this.props.onValueChange(this.state.value);
                 })
-            ]);
+            });
         }
     }
 
