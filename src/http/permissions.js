@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-24 09:21:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-25 09:37:02
+ * @LastEditTime: 2020-04-08 19:13:51
  */
 
 import {httpApp} from './basic';
@@ -36,7 +36,7 @@ export const getMicrophone = (ask) => {
 export const skipSetWifi = () => {
     return new Promise((resolve,reject) => {
         console.log(123123);
-        httpApp('jm_device_permissions.openSettings',{
+        httpApp('jm_device_setting.openWifiPage',{
             onSuccess:(res) => {
                 resolve(res);
             },
