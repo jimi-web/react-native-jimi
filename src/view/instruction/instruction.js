@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-07 17:58:00
+ * @LastEditTime: 2020-04-08 14:53:40
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image} from 'react-native';
@@ -157,10 +157,13 @@ export default class Instruction extends Component {
          const ins = this.getIns(this.state.insArr);
          for (let i = 0; i < this.state.insArr.length; i++) {
              const item = this.state.insArr[i];
-             if(item.stop){
-                 return Toast.message(item.hint || '您当前输入的格式有误！');
+             const content = item.content;
+             if(item.stop && content.rule){
+                 let regExp = new RegExp(content.rule);//根据字符串生成正则
+                 if(!regExp.test(item.value)){
+                     return Toast.message(item.hint || '您当前输入的格式有误！');
+                 }
              }
-             
          }
          this.setState({
              setBtnFlag:true
@@ -188,19 +191,23 @@ export default class Instruction extends Component {
         for (let i = 0; i < data.length; i++) {
             const item = data[i];
             if(item.insID){
+                console.log(item,'内容');
+                let insValue = item.insValue;
+                if(item.content && item.content.symbol){
+                    insValue += item.content.symbol;
+                }
                 if(item.contral !== undefined){
                     if(item.type == 'perch'){
                         ins = this.renderPerchIns(data,item,ins);
                     }else{
                         if(data[item.contral].value){
-                            ins = ins.replace(item.insID,item.insValue);
+                            ins = ins.replace(item.insID,insValue);
                         }else{
                             ins = ins.replace(item.insID,'');
                         }
                     }
-                    
                 }else{
-                    ins = ins.replace(item.insID,item.insValue);
+                    ins = ins.replace(item.insID,insValue);
                 }
             }
         }

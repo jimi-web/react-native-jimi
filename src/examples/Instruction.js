@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-07 18:18:19
+ * @LastEditTime: 2020-04-08 15:04:00
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';
@@ -170,7 +170,7 @@ export default class Instruction extends Component {
                 border:true,
                 data:{
                     isButton:true,
-                    instruction:'MOVING,ins1,ins2,ins3#',
+                    instruction:'MOVING,ins1ins2ins3#',
                     hint:'移动半径范围：100~1000 单位：米',
                     instructionArr:[
                         {
@@ -179,7 +179,7 @@ export default class Instruction extends Component {
                                 text:'位移报警'
                             },
                             value:false,
-                            insID:'ins1,',
+                            insID:'ins1',
                             insSymmetry:{true:'ON,',false:'OFF'},
                             insValue:'OFF',
                         },
@@ -199,7 +199,8 @@ export default class Instruction extends Component {
                                 type:'',
                                 text:'半径',
                                 rule:'^[1-9][0-9]{2,2}$|1000',
-                                keyboardType:'number-pad'
+                                keyboardType:'number-pad',
+                                symbol:','
                             },
                             hint:'请输入移动半径范围在100~1000米',
                             value:'300',
@@ -409,7 +410,7 @@ export default class Instruction extends Component {
                 border:true,
                 data:{
                     isButton:true,
-                    instruction:'SPEED,ins1,ins2,ins3,ins4#',
+                    instruction:'SPEED,ins1ins2ins3ins4#',
                     hint:'速度超出阀值后设备发出报警',
                     instructionArr:[
                         {
@@ -418,7 +419,7 @@ export default class Instruction extends Component {
                                 text:'允许报警'
                             },
                             value:true,
-                            insID:'ins1,',
+                            insID:'ins1',
                             insSymmetry:{true:'ON,',false:'OFF'},
                             insValue:'ON,',
                         },
@@ -437,12 +438,13 @@ export default class Instruction extends Component {
                                 placeholder:'请输入持续时间',
                                 type:'',
                                 text:'持续时间',
-                                keyboardType:'number-pad'
+                                keyboardType:'number-pad',
+                                symbol:','
                             },
                             value:'20',
                             border:true,
-                            insID:'ins2,',
-                            insValue:'20,',
+                            insID:'ins2',
+                            insValue:'20',
                             stop:true
                         },
                         {
@@ -452,13 +454,15 @@ export default class Instruction extends Component {
                                 placeholder:'请输入超速范围',
                                 type:'',
                                 text:'超速范围',
-                                keyboardType:'number-pad'
+                                keyboardType:'number-pad',
+                                symbol:','
                             },
                             value:'100',
                             border:true,
                             insID:'ins3',
                             insValue:'100',
-                            stop:true
+                            stop:true,
+                            
                         },
                         {
                             contral:0,

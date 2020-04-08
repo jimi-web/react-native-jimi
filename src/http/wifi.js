@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-24 09:21:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 10:41:42
+ * @LastEditTime: 2020-04-08 15:30:22
  */
 
 import {httpWifi,httpApp} from './basic';
@@ -128,13 +128,15 @@ export const scanWifi = (accout,password)=>{
  * @param {String} accout 账号
  * @param {String} password 密码
  */
-let index = 0;
 export const connectWifi = (accout,password)=>{
-    index++;
     return new Promise((resolve,reject) => {
         httpWifi('scan',(res) => {
             let params = {};
             console.log(res,'扫描结果');
+            if(res.code != 1100){
+                resolve({status:0,message:'失败'});
+                return;
+            }
             if(!res.data || !res.data.length){
                 resolve({status:0,message:'失败'});
                 return;

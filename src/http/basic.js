@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 11:12:07
+ * @LastEditTime: 2020-04-08 15:31:49
  */
 
 import {
@@ -21,7 +21,6 @@ const jmRNEngineManagerListener = new NativeEventEmitter(JMRNEngineManager);
 //基础事件回调
 jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSEventMethod, (reminder) => {
     let obj = JSON.parse(reminder);
-    console.log(obj,'wifi回调');
     if(obj.callback === 'jmDeviceWifiCallback'){
         
         this[obj.callback](obj.data);
@@ -204,7 +203,6 @@ export const httpWifi = (url, callback,params) => {
     JMRNEngineManager.requestMethod('jm_dev_wifi.command', bodyJson);
     this[body['jmDeviceWifiCallback']] = (res) => {
         let obj = getObject(res);
-        console.log(obj,'最终获取的wifi信息');
         callback(obj);
     };
 };
