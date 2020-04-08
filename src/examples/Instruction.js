@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 15:04:00
+ * @LastEditTime: 2020-04-08 18:10:48
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 11:40:09
+ * @LastEditTime: 2020-04-08 15:36:26
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl} from 'react-native';
@@ -733,7 +733,7 @@ export default class MediaSyn extends Component {
                                          }, 1500);
                                          return;
                                      }
-                                     console.log(connectIndex,'是否结束');
+                                     //  console.log(connectIndex,'是否结束');
                                      if(connectIndex > 3){
                                          this.setState({
                                              isFail:true

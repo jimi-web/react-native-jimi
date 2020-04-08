@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 14:53:40
+ * @LastEditTime: 2020-04-08 18:01:23
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image} from 'react-native';
@@ -229,8 +229,11 @@ export default class Instruction extends Component {
            insArr:this.state.insArr
        };
        this.props.onIns && this.props.onIns(insProps);
-       if(data.stop){
-           return Toast.message(data.hint || '您当前输入的格式有误！');
+       if(data.stop && data.content.rule){
+           let regExp = new RegExp(data.content.rule);//根据字符串生成正则
+           if(!regExp.test(data.value)){
+               return;
+           }
        }
        if(this.props.isButton){
            return;
