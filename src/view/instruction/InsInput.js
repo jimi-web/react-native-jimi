@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-07 17:57:20
+ * @LastEditTime: 2020-04-07 18:16:56
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,TextInput } from 'react-native';
@@ -35,7 +35,7 @@ export default class InsArrowButton extends Component {
                                 }
                             </View>
                             <View>
-                                <TextInput onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={50} placeholder={content.placeholder} defaultValue={value}></TextInput>
+                                <TextInput keyboardType={content.keyboardType || 'default'} onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={50} placeholder={content.placeholder} defaultValue={value}></TextInput>
                             </View>
                         </View >
                         :
@@ -64,6 +64,7 @@ export default class InsArrowButton extends Component {
         const {data,index} = this.props;
         const {rule} = data.content;
         data.value = this.state.inputValue;
+        data.stop = false;
         if(rule){
             let regExp = new RegExp(rule);//根据字符串生成正则
             if(!regExp.test(data.value)){
