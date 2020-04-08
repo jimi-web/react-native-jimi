@@ -285,19 +285,19 @@ export default class MediaSyn extends Component {
     *渲染加载时的页面
      */
     renderLoading(){
-        let connectImage = require('../../assets/media/Connect_WiFi.gif');
+        let connectImage = require('../../assets/medias/Connect_WiFi.gif');
         const element = 
         <View style={{flex:1}}>
             <View style={{backgroundColor:'rgba(254, 116, 45, 0.2)',height:32}}>
                 <Text style={{color:'#FE742D',lineHeight:32,paddingLeft:10}}>同步前请先链接设备的wifi热点</Text>
             </View>
             <TouchableOpacity activeOpacity={0.6} onPress={this.onDeviceMifi.bind(this,this.state.wifiMessage)} style={{flex:6,alignItems:'center',justifyContent: 'center'}}>
-                <ImageBackground style={{width:268,height:280,alignItems:'center',position:'relative'}} source={require('../../assets/media/Connect_pic.png')}>
+                <ImageBackground style={{width:268,height:280,alignItems:'center',position:'relative'}} source={require('../../assets/medias/Connect_pic.png')}>
                     <Text style={{color:'#fff',marginTop:50}}>{this.state.connectText}</Text>
                     <Image style={{marginTop:30}} source={connectImage} />
                     {
                         this.state.isFail ?
-                            <Image style={{position:'absolute',bottom:80,left:140}} source={require('../../assets/media/Fail.png')} />
+                            <Image style={{position:'absolute',bottom:80,left:140}} source={require('../../assets/medias/Fail.png')} />
                             :
                             null
                            
@@ -323,7 +323,7 @@ export default class MediaSyn extends Component {
     renderItem = (item,index) => {
         const {isEdit} = this.state;
         let element = null;
-        let noImage = require('../../assets/media/img_no.png');
+        let noImage = require('../../assets/medias/img_no.png');
         let img = item.firstImage ? item.firstImage : item.localPath;
         if(item.type == 'title'){
             element = <View style={{width:imgWith,padding:10,justifyContent:'space-around'}}>
@@ -751,7 +751,6 @@ export default class MediaSyn extends Component {
                                  connectWifi(wifi.account,wifi.password);
                                  clearTimeout(timer);
                              }, 1000);
-                            
                          });
                      }
                  }else{
