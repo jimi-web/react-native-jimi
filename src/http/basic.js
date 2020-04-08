@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:08:05
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-01 18:23:23
+ * @LastEditTime: 2020-04-08 11:12:07
  */
 
 import {
@@ -21,6 +21,7 @@ const jmRNEngineManagerListener = new NativeEventEmitter(JMRNEngineManager);
 //基础事件回调
 jmRNEngineManagerListener.addListener(JMRNEngineManager.kRNSendJSEventMethod, (reminder) => {
     let obj = JSON.parse(reminder);
+    console.log(obj,'wifi回调');
     if(obj.callback === 'jmDeviceWifiCallback'){
         
         this[obj.callback](obj.data);
@@ -192,15 +193,20 @@ export const httpBlue = (url, params) => {
  * @param {Object} params 传参
  */
 export const httpWifi = (url, callback,params) => {
-    const data = {
-        name:'jmDeviceWifiCallback',
-        command:url,
-        data:params
+    const body  = {
+        ... params
     };
-    otherInterface('jm_dev_wifi.command', data,(res) =>{
-        console.log(res,234687491111);
-        callback(res);
-    });
+    body['jmDeviceWifiCallback'] = 'jmDeviceWifiCallback';
+    body['command'] = url;
+    
+    const bodyJson = JSON.stringify(body);
+    console.log(bodyJson,'连接时的参数',url);
+    JMRNEngineManager.requestMethod('jm_dev_wifi.command', bodyJson);
+    this[body['jmDeviceWifiCallback']] = (res) => {
+        let obj = getObject(res);
+        console.log(obj,'最终获取的wifi信息');
+        callback(obj);
+    };
 };
 
 /**

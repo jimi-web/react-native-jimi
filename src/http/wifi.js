@@ -4,11 +4,21 @@
  * @Author: liujinyuan
  * @Date: 2019-09-24 09:21:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-01 16:16:40
+ * @LastEditTime: 2020-04-08 10:41:42
  */
 
 import {httpWifi,httpApp} from './basic';
 import {Platform} from 'react-native';
+
+
+/**
+ * 获取wiif信息接口
+ * @param {String} methods 发送的方法
+ * @param {*} data 发送的数据
+ */
+export const getWifiMessage = (methods,data) => {
+    //
+};
 
 
 /**
@@ -61,7 +71,6 @@ export const getWifiState = ()=>{
             }
             if(res.code == 1001){
                 httpWifi('getWiFiInfo',(res) => {
-                    console.log(res,78946546313);
                     if(res.code == 1300){
                         data.status = 1;
                         data.message = 'WIFI已打开';
@@ -80,9 +89,7 @@ export const getWifiState = ()=>{
 export const openWifi = () => {
     return new Promise((resolve,reject) => {
         httpWifi('openWifi',(res) => {
-            console.log(res,'打开wifi结果');
-            resolve(res);
-                            
+            resolve(res);  
         });
     });
 };
@@ -94,7 +101,6 @@ export const openWifi = () => {
  */
 export const scanWifi = (accout,password)=>{
     httpWifi('scan',(res) => {
-        console.log(res,'扫描结果');
         let params = {};
         res.data.forEach(item => {
             if(item.ssid == accout){
@@ -108,13 +114,10 @@ export const scanWifi = (accout,password)=>{
         });
        
         if(accout == params.ssid){
-            console.log(params,'开始连接');
             httpWifi('connect',(res) => {
-                console.log(res,'连接结果1111');
                 resolve({status:1,message:'成功'});
             },params);
         }else{
-            console.log('为搜索到WIFI');
             resolve({status:0,message:'失败'});
         }
     });
@@ -129,7 +132,6 @@ let index = 0;
 export const connectWifi = (accout,password)=>{
     index++;
     return new Promise((resolve,reject) => {
-        console.log(index,111);
         httpWifi('scan',(res) => {
             let params = {};
             console.log(res,'扫描结果');
@@ -148,10 +150,8 @@ export const connectWifi = (accout,password)=>{
                     };
                 }
             });
-            console.log(params,21312);
             if(accout == params.ssid){
                 httpWifi('connect',(res) => {
-                    console.log(res,'连接结果');
                     resolve({status:1,message:'成功'});
                 },params);
             }else{

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-07 15:29:05
+ * @LastEditTime: 2020-04-08 11:40:09
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl} from 'react-native';
@@ -698,7 +698,7 @@ export default class MediaSyn extends Component {
              cmdId:1001,
              isSync:0,
              offLineFlag:0,
-             instructSetting:{isOpen:'ON'}
+             instructSetting:{isOpen:'O N'}
          };
          Applet.jmAjax({
              url:api.instruction,
@@ -707,7 +707,7 @@ export default class MediaSyn extends Component {
              encoding:wifi.account,
              encodingType:true
          }).then(res => { 
-             console.log(res,'结果');
+             console.log(res,'发送指令结果');
              this.isNerworkConnect = true;
              Applet.getWifiState().then(res => {
                  if(!res.status){
@@ -721,6 +721,7 @@ export default class MediaSyn extends Component {
                          let connectIndex = 0;//连接次数
                          //  android递归连接3次设备，每次等待2s
                          Applet.openWifi().then(res => {
+                             console.log('打开wifi');
                              let connectWifi = (account,password) => {
                                  Applet.connectWifi(account,password).then(data => {
                                      connectIndex++;
@@ -759,13 +760,15 @@ export default class MediaSyn extends Component {
              });
          });
      }
+
      /*
     * 配置socket参数
      */
      onConfigSocket = () => {
          this.isNerworkConnect = false;
          this.setState({
-             refreshing:true
+             refreshing:true,
+             isFail:false
          });
          if(this.status){
              return;
