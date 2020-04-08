@@ -56,7 +56,7 @@ export default class Instruction extends Component {
                                 placeholder:'请输入SOS号码',
                                 type:'',
                                 text:'号码1',
-                                rule:/^[0-9]*[1-9][0-9]*$/
+                                rule:'^[0-9]*[1-9][0-9]*$'
                             },
                             value:'',
                             border:true,
@@ -447,7 +447,6 @@ export default class Instruction extends Component {
                             insID:'ins3',
                             insValue:'100',
                             stop:true
-        
                         },
                         {
                             contral:0,
