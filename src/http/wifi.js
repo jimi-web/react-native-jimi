@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-09-24 09:21:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 15:30:22
+ * @LastEditTime: 2020-04-08 19:15:37
  */
 
-import {httpWifi,httpApp} from './basic';
+import {httpWifi} from './basic';
 import {Platform} from 'react-native';
 
 
@@ -28,7 +28,6 @@ export const getWifiInfo = () => {
     let data = {
         status:0
     };
-    console.log('请求');
     return new Promise((resolve) => {
         httpWifi('getWiFiInfo',(res) => {
             if(res.code == 1300){
@@ -53,7 +52,6 @@ export const getWifiState = ()=>{
     };
     return new Promise((resolve) => {
         httpWifi('getWiFiState',(res) => {
-            console.log(res,'状态11');
             if(res.code == 1003){
                 if(Platform.OS === 'ios'){
                     resolve(data);
@@ -131,8 +129,8 @@ export const scanWifi = (accout,password)=>{
 export const connectWifi = (accout,password)=>{
     return new Promise((resolve,reject) => {
         httpWifi('scan',(res) => {
-            let params = {};
             console.log(res,'扫描结果');
+            let params = {};
             if(res.code != 1100){
                 resolve({status:0,message:'失败'});
                 return;
@@ -142,7 +140,6 @@ export const connectWifi = (accout,password)=>{
                 return;
             }
             res.data.forEach(item => {
-                console.log(item.ssid == accout,'是否搜寻到wifi');
                 if(item.ssid == accout){
                     params = {
                         bssid:item.bssid,

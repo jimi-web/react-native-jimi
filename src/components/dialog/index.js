@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-10-12 14:01:19
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 10:08:48
+ * @LastEditTime: 2020-04-08 19:34:12
  */
 import React, {Component} from 'react';
 import {Text, View,StyleSheet,TouchableOpacity} from 'react-native';
@@ -27,7 +27,7 @@ export default class Dialog extends Component{
         return (
             <View style={styles.dialogMain}>
                 <View style={styles.dialogContent}>
-                    <Text style={{color:'#030303',fontSize:16}}>{contentText}</Text>
+                    <Text style={{color:'#030303',fontSize:16,lineHeight:18}}>{contentText}</Text>
                 </View>
                 <View style={styles.dialogButton}>
                     <TouchableOpacity activeOpacity={1} style={[styles.dialogText,styles.dialogTextBorder]} onPress={() => {this.props.onCancel && this.props.onCancel();}}>

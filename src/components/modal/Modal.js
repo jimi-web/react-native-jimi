@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-12-03 14:40:22
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-28 11:45:53
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-08 19:29:54
  */
 import React from 'react';
 import Overlay from '../overlay/overlay';
@@ -25,6 +25,7 @@ export default class Modal extends Overlay {
                 parameter && parameter.onConfirm  && parameter.onConfirm();
             }}
             onCancel={()=>{
+                console.log('取消');
                 Overlay.remove(dialog);
                 parameter && parameter.onCancel  && parameter.onCancel();
             }}

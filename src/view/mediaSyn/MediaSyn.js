@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 15:36:26
+ * @LastEditTime: 2020-04-08 19:45:54
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl} from 'react-native';
@@ -57,7 +57,7 @@ export default class MediaSyn extends Component {
     constructor(props){
         super(props);
         this.localFilePath = [];
-        this.isNerworkConnect = false,//网络是否连接中
+        this.isNerworkConnect = true,//网络是否连接中
         this.status = 0;//连接状态 0:未连接 1:连接中
         this.localUrl = '';//当前路径
         this.loading = 0;//弹框
@@ -168,16 +168,13 @@ export default class MediaSyn extends Component {
                     let fileName = item.split('/');
                     fileName = fileName[fileName.length - 1];
                     this.state.localFileList[i].fileName = fileName;
-                    console.log(this.state.localFileList,23456789);
                     let fileType = getFileType(fileName);
-                    console.log(fileName,fileType,222222);
                     if(fileType === 'VIDEO'){
                         Applet.getVideoTime(item).then(data => {
-                            console.log(data,'shiping');
                             this.state.localFileList[i].videoTime = data[0].videoTime;
                             if(Platform.OS === 'ios'){
                                 Applet.getVideoFirstImage(item).then(images => {
-                                    this.state.localFileList[i] = images[0].videoFirstImagePath;
+                                    this.state.localFileList[i].videoFirstImagePath = images[0].videoFirstImagePath;
                                     
                                 });
                             }
@@ -194,7 +191,6 @@ export default class MediaSyn extends Component {
         Applet.getWifiState().then(res => {
             this.getAccount().then(data => {
                 let wifiMessage = res.data;
-                console.log(data,111);
                 if(typeof wifiMessage === 'string'){
                     wifiMessage = JSON.parse(wifiMessage);
                 }
@@ -215,7 +211,7 @@ export default class MediaSyn extends Component {
     componentWillUnmount() {
         NetInfo.removeEventListener('connectionChange',this.handleConnectivityChange);
         AppState.removeEventListener('change',this.handleAppstatus);
-        // this.onClose();
+        this.onClose();
     }
     render() {
         const fileLength = this.state.fileChecked.length;
@@ -437,7 +433,6 @@ export default class MediaSyn extends Component {
                 
                 item.localPath = `file://${this.localUrl}${item.fileName}`;
                 item.checked = false;
-                console.log(item.localPath,'1321');
                 if(item.type === 'VIDEO'){
                     Applet.getVideoTime(item.localPath).then(file => {
                         item.timeLength = formatTime(file[0].videoTime);
@@ -489,7 +484,6 @@ export default class MediaSyn extends Component {
              this.onSkip(item,index);
              return;
          }
-         console.log(item,123456);
          //  处理选中逻辑
          item.checked = !item.checked;
          this.state.fileList[index] = item;
@@ -518,8 +512,6 @@ export default class MediaSyn extends Component {
          }
          
          const fileList = JSON.parse(JSON.stringify(this.state.fileList));
-         
-         console.log(fileChecked,'获取的数据');
          this.setState({
              fileList,
              fileChecked,
@@ -530,7 +522,6 @@ export default class MediaSyn extends Component {
       */
      onDownload = () => {
          const {fileChecked} = this.state;
-         console.log(fileChecked,'需要下载的文件');
          if(fileChecked.length <= 0){
              return Toast.message('请选择文件');
          }
@@ -541,7 +532,6 @@ export default class MediaSyn extends Component {
          fileChecked.forEach(item => {
              fileSize += Number(item.fileSize);
          });
-         console.log(fileSize,'文件大小');
          if(fileSize > 10 * 1024 * 1024){
              Modal.dialog({
                  contentText:'选择的文件比较大，可能会耗费较长的时间，是否继续？',
@@ -603,7 +593,6 @@ export default class MediaSyn extends Component {
         let i = 0;
         list.forEach((item,index)=>{
             item.type = getFileType(item.filePath);
-            console.log(item,'类型');
             item.checked = false;
             item.localPath = null;
             
@@ -616,7 +605,6 @@ export default class MediaSyn extends Component {
                 if(item.fileName == v.fileName){
                     item.localPath = 'file://' + v.videoPath;
                     if(item.type == 'VIDEO'){
-                        console.log(formatTime(v.videoTime),898989);
                         item.timeLength = formatTime(v.videoTime);
                         item.firstImage = v.firstImage;
                     }
@@ -672,7 +660,6 @@ export default class MediaSyn extends Component {
     getAccount = () => {
         return new Promise((reslove,reject) => {
             Applet.getEncoding().then(content => {
-                console.log(content,23456);
                 const account = String(content.encoding);
                 const password = account.substring(account.length - 8,account.length);
                 
@@ -691,14 +678,13 @@ export default class MediaSyn extends Component {
     * 开启设备wifi热点
      */
      onDeviceMifi = (wifi) => {
-         console.log(wifi,'开始请求');
          let data = {
              cmdCode:'WIFI,ON',
              cmdType:0,
              cmdId:1001,
              isSync:0,
              offLineFlag:0,
-             instructSetting:{isOpen:'O N'}
+             instructSetting:{isOpen:'ON'}
          };
          Applet.jmAjax({
              url:api.instruction,
@@ -725,23 +711,28 @@ export default class MediaSyn extends Component {
                              let connectWifi = (account,password) => {
                                  Applet.connectWifi(account,password).then(data => {
                                      connectIndex++;
-                                     console.log(data,'连接WIFI中');
+                                     let connectTime = null;
                                      if(data.status == 1){
-                                         let connectTime = setTimeout(() => {
+                                         connectTime = setTimeout(() => {
                                              this.onConfigSocket();
                                              clearTimeout(connectTime);
                                          }, 1500);
                                          return;
                                      }
-                                     //  console.log(connectIndex,'是否结束');
                                      if(connectIndex > 3){
+                                         if(connectTime){
+                                             clearTimeout(connectTime);
+                                         }
                                          this.setState({
                                              isFail:true
+                                         },() => {
+                                             this.onWifiModal();
                                          });
                                          this.isNerworkConnect = false;
-                                         return Toast.message('自动连接WIFI 失败');
+                                         return;
+                                        
                                      }
-                                     let connectTime = setTimeout(() => {
+                                     connectTime = setTimeout(() => {
                                          connectWifi(account,password);
                                          clearTimeout(connectTime);
                                      }, 2000);
