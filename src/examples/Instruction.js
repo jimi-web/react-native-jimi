@@ -13,7 +13,7 @@ export default class Instruction extends Component {
     
     constructor(props){
         super(props);
-        this.data = [
+        this.data =[
             {
                 type:'arrowButton',
                 content:{
@@ -37,10 +37,7 @@ export default class Instruction extends Component {
                             value:true,
                             insID:'ins1',
                             insSymmetry:{true:'A',false:'D'},
-                            insValue:'A',
-                            style:{
-                                color:'#13A887'
-                            }
+                            insValue:'A'
                         },
                         {
                             type:'title',
@@ -56,13 +53,15 @@ export default class Instruction extends Component {
                                 placeholder:'请输入SOS号码',
                                 type:'',
                                 text:'号码1',
-                                rule:'^[0-9]*[1-9][0-9]*$'
+                                rule:'^[0-9]{3,20}$',
+                                keyboardType:'number-pad',
+                               
                             },
+                            hint:'仅支持3-20位数字SOS号码设置',
                             value:'',
                             border:true,
                             insID:'ins2',
                             insValue:'',
-            
                         },
                         {
                             type:'input',
@@ -70,13 +69,15 @@ export default class Instruction extends Component {
                                 placeholder:'请输入SOS号码',
                                 type:'',
                                 text:'号码2',
-                                rule:/^[0-9]*[1-9][0-9]*$/
+                                rule:'^[0-9]{3,20}$',
+                                keyboardType:'number-pad',
+                               
                             },
+                            hint:'仅支持3-20位数字SOS号码设置',
                             value:'',
                             border:true,
                             insID:'ins3',
                             insValue:'',
-            
                         },
                         {
                             type:'input',
@@ -84,13 +85,15 @@ export default class Instruction extends Component {
                                 placeholder:'请输入SOS号码',
                                 type:'',
                                 text:'号码3',
-                                rule:/^[0-9]*[1-9][0-9]*$/
+                                rule:'^[0-9]{3,20}$',
+                                keyboardType:'number-pad',
+                               
                             },
+                            hint:'仅支持3-20位数字SOS号码设置',
                             value:'',
                             border:true,
                             insID:'ins4',
                             insValue:'',
-            
                         }
                     ]
                 }
@@ -167,7 +170,7 @@ export default class Instruction extends Component {
                 border:true,
                 data:{
                     isButton:true,
-                    instruction:'MOVING,ins1,ins2#',
+                    instruction:'MOVING,ins1,ins2,ins3#',
                     hint:'移动半径范围：100~1000 单位：米',
                     instructionArr:[
                         {
@@ -195,13 +198,22 @@ export default class Instruction extends Component {
                                 placeholder:'请填写半径范围单位：米',
                                 type:'',
                                 text:'半径',
-                                rule:/^[0-9]*[1-9][0-9]*$/
+                                rule:'^[1-9][0-9]{2,2}$|1000',
+                                keyboardType:'number-pad'
                             },
+                            hint:'请输入移动半径范围在100~1000米',
                             value:'300',
                             border:true,
                             insID:'ins2',
                             insValue:'300',
-            
+                            stop:true,
+                        },
+                        {
+                            contral:0,
+                            type:'perch',
+                            border:true,
+                            insID:'ins3',
+                            insSymmetry:{true:'0',false:''},
                         }
                     ]
                 }
@@ -261,7 +273,7 @@ export default class Instruction extends Component {
                 border:true,
                 data:{
                     isButton:true,
-                    instruction:'DOG,ins1#',
+                    instruction:'DOG,ins1',
                     instructionArr:[
                         {
                             type:'title',
@@ -407,7 +419,7 @@ export default class Instruction extends Component {
                             },
                             value:true,
                             insID:'ins1,',
-                            insSymmetry:{true:'ON',false:'OFF'},
+                            insSymmetry:{true:'ON,',false:'OFF'},
                             insValue:'ON,',
                         },
                         {
@@ -425,13 +437,13 @@ export default class Instruction extends Component {
                                 placeholder:'请输入持续时间',
                                 type:'',
                                 text:'持续时间',
-                                rule:'^[0-9]*[1-9][0-9]*$'
+                                keyboardType:'number-pad'
                             },
                             value:'20',
                             border:true,
                             insID:'ins2,',
                             insValue:'20,',
-        
+                            stop:true
                         },
                         {
                             contral:0,
@@ -440,7 +452,6 @@ export default class Instruction extends Component {
                                 placeholder:'请输入超速范围',
                                 type:'',
                                 text:'超速范围',
-                                rule:'^[0-9]*[1-9][0-9]*$',
                                 keyboardType:'number-pad'
                             },
                             value:'100',
@@ -487,7 +498,7 @@ export default class Instruction extends Component {
                                 placeholder:'请输入自定义指令',
                                 type:'',
                                 text:'自定义指令',
-                                rule:/^[\d\D]*/
+                                rule:'^[\d\D]*'
                             },
                             value:'',
                             border:true,
