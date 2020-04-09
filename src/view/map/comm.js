@@ -13,13 +13,14 @@ import api from '../../api/index';
 /**
  * 获取设备定位信息
  */
-export const getDevicePosition = ()=> {
+export const getDevicePosition = (error)=> {
     return new Promise((resolve) => {
         jmAjax({
             url:api.position,
             method:'GET',
             encoding:true,
-            encodingType:true
+            encodingType:true,
+            error:error
         }).then((res)=>{
             let data = res.data;
             resolve(data);
@@ -53,8 +54,8 @@ export const geocoder = (data)=> {
 /**
  * 设备完整信息已经解析完地址的
  */
-export const devicePosition = async(lastPoint={},lastAddress)=> {
-    let deviceInfo = await getDevicePosition();
+export const devicePosition = async(lastPoint={},lastAddress,error)=> {
+    let deviceInfo = await getDevicePosition(error);
     deviceInfo.gpsLatitude = deviceInfo.latitude;
     deviceInfo.gpsLongitude = deviceInfo.longitude;
     let info = '';

@@ -58,7 +58,9 @@ const request = (params) => {
             onFail: (res) => {
                 reject(res);
                 Loading.hide();
-                Toast.message('网络异常,请稍后再试');
+                if(!params.error){
+                    Toast.message('网络异常,请稍后再试'); 
+                }
             },
             onComplete: (res) => {
                 Loading.hide();

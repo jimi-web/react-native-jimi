@@ -65,7 +65,7 @@ export default class LongPhotoList extends LocalPhotoList {
             pageNum:this.state.pageNum,
             pageSize:this.state.pageSize,
         }).then((list)=>{
-            console.log(list,'huoq');
+            console.log(list,'远程');
             console.log(localPhotoData,'本地');
             
             let longList  = list.result;
@@ -85,7 +85,7 @@ export default class LongPhotoList extends LocalPhotoList {
     
                         //判断是否视频，设置第一帧
                         if( this.props.videoType.includes(longItem.type)){
-                            longItem.videoFirstImage = longItem.thumbnailUrl+'?imageView2/0/w/200/h/200';
+                            longItem.videoFirstImage =  longItem.thumbnailUrl+'?imageView2/0/w/200/h/200';
                         }
     
                         if(fileKey===longItem.fileKey){
@@ -94,7 +94,11 @@ export default class LongPhotoList extends LocalPhotoList {
                             storage.push(index);//记录下已经复制的url
                         }else{
                             if(!storage.includes(index)){
-                                longItem.url  = longItem.fileUrl+'?imageView2/0/w/200/h/200';
+                                if(this.props.videoType.includes(longItem.type)){
+                                    longItem.url  = longItem.fileUrl;
+                                }else{
+                                    longItem.url  = longItem.fileUrl+'?imageView2/0/w/200/h/200';
+                                }
                                 longItem.isDown = false;//未下载
                             }
                         }
@@ -113,7 +117,11 @@ export default class LongPhotoList extends LocalPhotoList {
                         longItem.videoFirstImage = longItem.thumbnailUrl+'?imageView2/0/w/200/h/200';
                     }
 
-                    longItem.url  = longItem.fileUrl+'?imageView2/0/w/200/h/200';
+                    if(this.props.videoType.includes(longItem.type)){
+                        longItem.url  = longItem.fileUrl;
+                    }else{
+                        longItem.url  = longItem.fileUrl+'?imageView2/0/w/200/h/200';
+                    }
                     longItem.isDown = false;//未下载
                 });
             }

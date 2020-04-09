@@ -242,7 +242,7 @@ export default class PositionUtils extends Component {
      * 请求数据默认
      */
     request = async()=>{
-        let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress);
+        let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress,this.props.error);
         this.setState({
             lastAddress:deviceInfo.address
         },()=>{
