@@ -499,9 +499,11 @@ export default class TrackUtils extends Component {
         }
         
         let trackPolylinePoint = this.state.trackPolylinePoint;
+
         if(this.state.isPlay){
             this.pause();
         }
+
         if(progress > this.state.totalProgress-1 || progress < 1){
             if(progress<1){
                 this.setState({
@@ -518,7 +520,6 @@ export default class TrackUtils extends Component {
                     this.play();
                 }
             }
-
             return;
         }
         
@@ -532,7 +533,7 @@ export default class TrackUtils extends Component {
         this.setState({
             progress,
             pointArr,
-            deviceMarker:this.state.trackData[progress-1]
+            deviceMarker:this.state.trackData[progress]
         },()=>{
             //如果在播放在继续播放
             if(this.state.isPlay){

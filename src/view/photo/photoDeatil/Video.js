@@ -116,7 +116,7 @@ export default class VideoScreen extends Component {
                             {
                                 this.state.isPlaying ? null :
                                     <TouchableWithoutFeedback onPress={() => { this.onPressPlayButton(); }}>
-                                        <Icon name={'trajectory_play_on'} color={'#fff'} size={50} />
+                                        <Icon name={'trajectory_play_on'} color={'#fff'} size={60} />
                                     </TouchableWithoutFeedback>
                             }
                         </View>
