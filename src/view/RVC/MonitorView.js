@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-02 10:28:05
+ * @LastEditTime: 2020-04-09 19:10:50
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -151,10 +151,9 @@ export default class MonitorView extends Component {
     onAppState = () => {
         this.appState = AppState.addEventListener('change', (status) => {
             if(status == 'active'){
-                this.onStartPlay(); 
+                this.initialize();
             }else{
-                this.onStopPlay();
-
+                JMRTMPPlayerManager.deInitialize();
             }
         });
     }

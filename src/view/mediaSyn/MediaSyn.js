@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-09 17:27:17
+ * @LastEditTime: 2020-04-09 18:31:52
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl,BackHandler} from 'react-native';
@@ -95,15 +95,14 @@ export default class MediaSyn extends Component {
      * 监听网络变化
      */
     handleConnectivityChange = (status)=> {
-        
+        if(this.isNerworkConnect){
+            return;
+        }
         if(status.type == 'wifi'){
             Applet.getWifiInfo().then(res => {
                 console.log(res,'结果');
-                if(!res.status){
-                    return Toast.message('当前WIFI已断开！');
-                }
-                if(res.data[0].ssid !== this.state.account){
-                    return Toast.message('请连接设备WIFI及打开GPS定位权限');
+                if(res.data[0].ssid != this.state.account){
+                    return Toast.message('请连接设备WIFI');
                 }else{
                     if(Platform.OS === 'ios'){
                         return;
@@ -111,14 +110,11 @@ export default class MediaSyn extends Component {
                     if(this.state.fileList.length > 0){
                         return;
                     }
-                    if(this.isNerworkConnect){
-                        return;
-                    }
                     this.onConfigSocket();
                 }
             });
         }else{
-            return Toast.message('请连接设备WIFI及打开GPS定位权限');
+            return Toast.message('请连接设备WIFI');
         }
     }
     /**
@@ -128,10 +124,7 @@ export default class MediaSyn extends Component {
         Applet.getWifiState().then(res => {
             let data = res.data;
             if(data[0].ssid != this.state.wifiMessage.account){
-                return Toast.message('请连接设备WIFI及打开GPS定位权限');
-            }
-            if(this.status){
-                return;
+                return Toast.message('请连接设备WIFI');
             }
             if(status != 'active'){
                 return;
@@ -160,14 +153,8 @@ export default class MediaSyn extends Component {
             }
         });
     }
-    componentDidMount(){
-        // 监听事件
-        NetInfo.addEventListener('connectionChange',this.handleConnectivityChange);
-        AppState.addEventListener('change',this.handleAppstatus);
-        // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        this.getSocketMessage();
-        this.getFTPProgress();
-        // 创建文件夹并且获取文件
+
+    getLocalFile = () => {
         Applet.createTheFolder('mediaFile').then(res => {
             this.localUrl = res;
             Applet.getFileList('mediaFile').then(res => {
@@ -200,6 +187,16 @@ export default class MediaSyn extends Component {
             });
 
         });
+    }
+    componentDidMount(){
+        // 监听事件
+        NetInfo.addEventListener('connectionChange',this.handleConnectivityChange);
+        AppState.addEventListener('change',this.handleAppstatus);
+        // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+        this.getSocketMessage();
+        this.getFTPProgress();
+        // 创建文件夹并且获取文件
+        this.getLocalFile();
 
         // 事件触发
         Applet.getWifiState().then(res => {
@@ -211,7 +208,7 @@ export default class MediaSyn extends Component {
                 if(!wifiMessage.length){
                     return;
                 }
-                if(wifiMessage[0].ssid !== data.account){
+                if(wifiMessage[0].ssid != data.account){
                     this.onDeviceMifi(data);
                 }else{
                     this.onConfigSocket();
@@ -247,12 +244,12 @@ export default class MediaSyn extends Component {
                         this.state.fileList.length != 0
                             ?
                             <ScrollView style={{flex:1,backgroundColor:'#fff',paddingBottom:54}}
-                                refreshControl = {
-                                    <RefreshControl
-                                        refreshing={this.state.refreshing}
-                                        onRefresh={this.onConfigSocket}
-                                    />
-                                }
+                                // refreshControl = {
+                                //     <RefreshControl
+                                //         refreshing={this.state.refreshing}
+                                //         onRefresh={this.onConfigSocket}
+                                //     />
+                                // }
                             >
                                 
                                 <View style={{flexDirection:'row',flexWrap: 'wrap'}}>
@@ -747,16 +744,16 @@ export default class MediaSyn extends Component {
                                      if(data.status == 1){
                                          connectTime = setTimeout(() => {
                                              Applet.getWifiInfo().then(res => {
+                                                 console.log(res,'获取的wifi结果');
                                                  if(res.status){
-                                                     if(res.data[0].ssid === wifi.account){
+                                                     if(res.data[0].ssid == wifi.account){
                                                          this.onConfigSocket();
-                                                         clearTimeout(connectTime);
                                                      }else{
                                                          this.onWifiModal();
                                                      }
-                                                    
                                                  }
                                              });
+                                             clearTimeout(connectTime);
                                             
                                          }, 1000);
                                          return;
