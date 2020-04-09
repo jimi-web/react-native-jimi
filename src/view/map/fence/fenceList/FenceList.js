@@ -268,7 +268,7 @@ export default class FenceList extends Component {
 
     
     del = ()=>{
-        this,loading = Toast.loading('删除中...');
+        this.loading = Toast.loading('删除中...');
         let delId = [];//给后台删除的数据
         let delList = this.state.delList;
         let fenceList = this.state.fenceList;
