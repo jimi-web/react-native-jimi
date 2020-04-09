@@ -20,7 +20,7 @@ export default class FenceListItem extends Component {
     }
 
     shouldComponentUpdate(nextProps,nextState){
-        return this.props.isSelect!=nextProps.isSelect || this.props.checked!=nextProps.checked || this.props.source!=nextProps.source || this.props.fenceTitle!=nextProps.fenceTitle || this.props.radius!=nextProps.radius; 
+        return this.props.isSelect!=nextProps.isSelect || this.props.checked!=nextProps.checked || this.props.source!=nextProps.source || this.props.fenceTitle!=nextProps.fenceTitle || this.props.radius!=nextProps.radius || this.props.fenceAddress!=nextProps.fenceAddress; 
     }   
 
     render() {
