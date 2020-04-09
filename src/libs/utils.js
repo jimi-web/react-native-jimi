@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:17:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-01 10:35:36
+ * @LastEditTime: 2020-04-09 16:44:23
  */
 import {Dimensions,Platform} from 'react-native';
 import Theme from '../components/themes/index';
@@ -166,9 +166,7 @@ export const getFileType = (name) => {
     const suffix = String(name).indexOf('.') != -1 ? name.split('.')[1] : name;
     for (let i = 0; i < typeArray.length; i++) {
         const item = typeArray[i];
-        console.log(item,1111111);
         if(item.suffix == suffix){
-            console.log(item,89);
             return item.type;
         }
         

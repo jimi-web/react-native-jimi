@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-09 09:09:44
+ * @LastEditTime: 2020-04-09 17:27:17
  */
 import React, {Component} from 'react';
-import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl} from 'react-native';
+import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl,BackHandler} from 'react-native';
 import PropTypes from 'prop-types';
 import Applet from '../../http/index';
 import {Toast,Modal,Loading} from '../../components/index';
@@ -57,6 +57,8 @@ export default class MediaSyn extends Component {
     constructor(props){
         super(props);
         this.localFilePath = [];
+        this.JMFTPProgress = null;
+        this.JMUDOScoket = null;
         this.isNerworkConnect = true,//网络是否连接中
         this.status = 0;//连接状态 0:未连接 1:连接中
         this.localUrl = '';//当前路径
@@ -93,62 +95,76 @@ export default class MediaSyn extends Component {
      * 监听网络变化
      */
     handleConnectivityChange = (status)=> {
-        console.log(status,'网路变化',this.status);
-        if(Platform.OS === 'ios'){
-            return;
-        }
-        if(this.status){
-            return;
-        }
-        if(this.state.fileList.length > 0){
-            return;
-        }
-        if(this.isNerworkConnect){
-            return;
-        }
+        
         if(status.type == 'wifi'){
             Applet.getWifiInfo().then(res => {
-                console.log(res,'信息');
+                console.log(res,'结果');
                 if(!res.status){
-                    return;
+                    return Toast.message('当前WIFI已断开！');
                 }
                 if(res.data[0].ssid !== this.state.account){
-                    return;
+                    return Toast.message('请连接设备WIFI及打开GPS定位权限');
                 }else{
+                    if(Platform.OS === 'ios'){
+                        return;
+                    }
+                    if(this.state.fileList.length > 0){
+                        return;
+                    }
+                    if(this.isNerworkConnect){
+                        return;
+                    }
                     this.onConfigSocket();
                 }
             });
+        }else{
+            return Toast.message('请连接设备WIFI及打开GPS定位权限');
         }
     }
     /**
      * 监听是否退出后台
      */
     handleAppstatus = (status) => {
-        
-        if(this.status){
-            return;
-        }
-        if(status != 'active'){
-            return;
-        }
-        if(this.state.fileList.length > 0){
-            return;
-        }
         Applet.getWifiState().then(res => {
             let data = res.data;
-            if(typeof data === 'string'){
-                data = JSON.parse(data);
-            }
             if(data[0].ssid != this.state.wifiMessage.account){
-                return Toast.message('请连接设备WIFI');
+                return Toast.message('请连接设备WIFI及打开GPS定位权限');
+            }
+            if(this.status){
+                return;
+            }
+            if(status != 'active'){
+                return;
+            }
+            if(this.state.fileList.length > 0){
+                return;
             }
             this.onConfigSocket();
+        });
+    }
+    /**
+     * 监听退出
+     */
+    handleBackPress = () => {
+        console.log(this.state.isDownload,'触发');
+        if(!this.state.isDownload){
+            return false;
+        }
+        Modal.dialog({
+            contentText:'现在退出将会中断文件下载，是否继续？',
+            onConfirm:() => {
+                return false;
+            },
+            onCancel:() => {
+                return true;
+            }
         });
     }
     componentDidMount(){
         // 监听事件
         NetInfo.addEventListener('connectionChange',this.handleConnectivityChange);
         AppState.addEventListener('change',this.handleAppstatus);
+        // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         this.getSocketMessage();
         this.getFTPProgress();
         // 创建文件夹并且获取文件
@@ -156,11 +172,9 @@ export default class MediaSyn extends Component {
             this.localUrl = res;
             Applet.getFileList('mediaFile').then(res => {
                 let paths = res.fileList.files;
-                console.log(paths.length,'path');
                 if(paths.length <= 0){
                     return;
                 }
-                console.log(paths,123456789111);
                 for (let i = 0; i < paths.length; i++) {
                     const item = paths[i];
                     this.state.localFileList[i] = {};
@@ -209,9 +223,19 @@ export default class MediaSyn extends Component {
         
     }
     componentWillUnmount() {
+        this.state.fileList = [];
         NetInfo.removeEventListener('connectionChange',this.handleConnectivityChange);
         AppState.removeEventListener('change',this.handleAppstatus);
+        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+        JMUDPScoketManager.closeSocket();
+        if(this.JMFTPProgress){
+            this.JMFTPProgress.remove();
+        }
+        if(this.JMUDOScoket){
+            this.JMUDOScoket.remove();
+        }
         this.onClose();
+        
     }
     render() {
         const fileLength = this.state.fileChecked.length;
@@ -342,7 +366,7 @@ export default class MediaSyn extends Component {
         }else{
             element = <View style={[Styles.img,{marginRight:index+1%4===0?0:1}]}>
                 <TouchableOpacity style={Styles.imgTouch} activeOpacity={1} onPress={this.onSelect.bind(this,item,index)} >
-                    <ImageBackground  source={img?{uri:img}:noImage}  style={{position:'relative',width:'100%',height:'100%',backgroundColor:'#ccc'}}>
+                    <ImageBackground  source={img?{uri:img}:noImage}  style={{position:'relative',width:'100%',height:'100%',backgroundColor:'#666'}}>
                         <Text style={Styles.videoTime}>{item.timeLength}</Text>
                         {
                             isEdit?
@@ -438,10 +462,12 @@ export default class MediaSyn extends Component {
                     Applet.getVideoTime(item.localPath).then(file => {
                         item.timeLength = formatTime(file[0].videoTime);
                         this.state.fileList[item.index] = item;
-                        const fileList = JSON.parse(JSON.stringify(this.state.fileList));
+                        let fileList = JSON.parse(JSON.stringify(this.state.fileList));
                         if(Platform.OS === 'ios'){
                             Applet.getVideoFirstImage(item.localPath).then(images => {
                                 item.firstImage = images[0].videoFirstImagePath;
+                                this.state.fileList[item.index] = item;
+                                fileList = JSON.parse(JSON.stringify(this.state.fileList));
                                 this.setState({
                                     fileList,
                                     isDownload:false
@@ -714,16 +740,25 @@ export default class MediaSyn extends Component {
                          let connectIndex = 0;//连接次数
                          //  android递归连接3次设备，每次等待2s
                          Applet.openWifi().then(res => {
-                             console.log('打开wifi');
                              let connectWifi = (account,password) => {
                                  Applet.connectWifi(account,password).then(data => {
                                      connectIndex++;
                                      let connectTime = null;
                                      if(data.status == 1){
                                          connectTime = setTimeout(() => {
-                                             this.onConfigSocket();
-                                             clearTimeout(connectTime);
-                                         }, 1500);
+                                             Applet.getWifiInfo().then(res => {
+                                                 if(res.status){
+                                                     if(res.data[0].ssid === wifi.account){
+                                                         this.onConfigSocket();
+                                                         clearTimeout(connectTime);
+                                                     }else{
+                                                         this.onWifiModal();
+                                                     }
+                                                    
+                                                 }
+                                             });
+                                            
+                                         }, 1000);
                                          return;
                                      }
                                      if(connectIndex > 3){
@@ -773,7 +808,6 @@ export default class MediaSyn extends Component {
          this.status = 1;
          
          JMUDPScoketManager.configUDPSocket('255.255.255.255',1712,5000).then(res => {
-             //  console.log(res,'socket连接后的值');
              this.sendSocket();
          })
              .catch(res => {
@@ -798,7 +832,7 @@ export default class MediaSyn extends Component {
     *   接受scoket
      */
      getSocketMessage = () => {
-         JMUDPScoket.addListener(JMUDPScoketManager.kRNJMUDPSocketManager,(reminder) => {
+         this.JMUDOScoket = JMUDPScoket.addListener(JMUDPScoketManager.kRNJMUDPSocketManager,(reminder) => {
              if(!reminder){
                  return;
              }
@@ -821,9 +855,7 @@ export default class MediaSyn extends Component {
     onConnect = (data) => {
         JMFTPSyncFileManager.configFtpSyncFile('ftp://192.168.43.1','passive',10011,'admin','admin')
             .then(res => {
-                console.log(res,'配置FTP的参数');
                 JMFTPSyncFileManager.connectFTP().then(res => {
-                    console.log(res,'建立FTP链接成功');
                     // this.setState({
                     //     isConnect:true
                     // });
@@ -862,7 +894,6 @@ export default class MediaSyn extends Component {
             if(!item){
                 httpIndex++;
                 if(httpIndex >= pathIndex){
-                    console.log(folderListArr,'本次循环结束时',fileListArr);
                     // 若当前层查询结束时查询不到文件夹，则查询结束，否则继续循环
                     if(!folderListArr.length){
                         callback(fileListArr);
@@ -871,18 +902,21 @@ export default class MediaSyn extends Component {
                     httpIndex = 0;
                     pathIndex = folderListArr.length;
                     onfilesOne(folderListArr,httpIndex);
+                    return;
                 }else{
                     onfilesOne(pathArr,httpIndex,true);
+                    return;
                 }
             }
             console.log(item,'请求时');
             JMFTPSyncFileManager.findFTPFlies(item).then(res => {
-                console.log(res,'获取的文件');
                 httpIndex++;
                 const fileList = JSON.parse(res);
                 fileList.forEach((item,index) => {
                     if(item.fileType == 1){
-                        folderListArr.push(item.filePath);
+                        if(item.filePath){
+                            folderListArr.push(item.filePath);
+                        }
                     }else{
                         // 进行数据转换
                         let day = String(item.fileName).split('.')[0];
@@ -896,7 +930,6 @@ export default class MediaSyn extends Component {
                 // 成功回调之后若没有循环完当前层所有文件夹继续进行循环
                 //若循环完毕，进入第二层循环或结束循环
                 if(httpIndex >= pathIndex){
-                    console.log(folderListArr,'本次循环结束时',fileListArr);
                     // 若当前层查询结束时查询不到文件夹，则查询结束，否则继续循环
                     if(!folderListArr.length){
                         callback(fileListArr);
@@ -935,6 +968,7 @@ export default class MediaSyn extends Component {
             videoPath = data.video_dirs.split(',');
         }
         let folderListArr = [...photoPath,...videoPath];
+        console.log(folderListArr,'当前获取的文件夹数量');
         this.queryFile(folderListArr,(res) => {
             console.log(res,'获取到的文件结果');
             if(res && res.length != 0){
@@ -946,7 +980,7 @@ export default class MediaSyn extends Component {
      * 获取进度
      */
     getFTPProgress = () => {
-        JMFTPProgress.addListener('kRNJMFTPSyncFileManager',reminder => {
+        this.JMFTPProgress = JMFTPProgress.addListener('kRNJMFTPSyncFileManager',reminder => {
             clearTimeout(this.progressTime);
             
             const data = JSON.parse(reminder);
@@ -967,7 +1001,6 @@ export default class MediaSyn extends Component {
     downFTPCallback = (array,index) => {
         if(index == array.length - 1){
             const fileList = JSON.parse(JSON.stringify(this.state.fileList));
-            console.log(fileList,'数据');
             this.setState({
                 fileList,
                 fileChecked:[],
@@ -979,7 +1012,6 @@ export default class MediaSyn extends Component {
            
         }else{
             this.state.progressMessage.index = index + 2;
-            console.log(this.state.progressMessage.index,2213145);
             this.downFTPfile(array,index + 1);
         }
     }
@@ -998,7 +1030,6 @@ export default class MediaSyn extends Component {
             if(data.type === 'VIDEO'){
                 // 如果是视频获取视频长度
                 Applet.getVideoTime(paths).then(file => {
-                    console.log(file,'xiaziajieugo');
                     data.timeLength = formatTime(file[0].videoTime);
                     // ios获取视频第一帧
                     if(Platform.OS === 'ios'){
@@ -1020,10 +1051,14 @@ export default class MediaSyn extends Component {
             }
         })
             .catch(res => {
+                array.forEach((item,itemIndex) => {
+                    this.state.fileList[itemIndex].checked = false;
+                });
                 this.setState({
                     fileChecked:[],
                     isEdit:false,
-                    isDownload:false
+                    isDownload:false,
+                    fileList:this.state.fileList
                 });
                 // Toast.remove(this.loading);
                 return Toast.message('下载文件失败');
@@ -1034,7 +1069,6 @@ export default class MediaSyn extends Component {
      */
     deleteFtpfile = (array,index) => {
         JMFTPSyncFileManager.deleteFTPFile(array[index].filePath).then(res => {
-            console.log(res,index,array.length,'删除结果');
             if(index === array.length - 1){
                 let fileArray  = [];
                 this.state.fileList.forEach(item => {
