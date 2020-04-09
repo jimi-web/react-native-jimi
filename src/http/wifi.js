@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-09-24 09:21:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 19:15:37
+ * @LastEditTime: 2020-04-09 13:38:57
  */
 
-import {httpWifi} from './basic';
+import {httpWifi,getObject} from './basic';
 import {Platform} from 'react-native';
 
 
@@ -33,7 +33,7 @@ export const getWifiInfo = () => {
             if(res.code == 1300){
                 data.status = 1;
                 data.message = 'WIFI已打开';
-                data.data = res.data;
+                data.data = getObject(res.data);
             }
             resolve(data);
         });
@@ -60,7 +60,7 @@ export const getWifiState = ()=>{
                         if(res.code == 1300){
                             data.status = 1;
                             data.message = 'WIFI已打开';
-                            data.data = res.data;
+                            data.data = getObject(res.data);
                         }
                         resolve(data);
                        
