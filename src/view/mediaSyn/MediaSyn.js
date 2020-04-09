@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 19:45:54
+ * @LastEditTime: 2020-04-09 09:09:44
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl} from 'react-native';
@@ -420,6 +420,7 @@ export default class MediaSyn extends Component {
             //  前往详情需要先下载该图片/视频
             this.state.progressMessage.index = 1;
             this.state.progressMessage.total = 1;
+            this.state.progressMessage.progress = 0;
             this.setState({
                 isDownload:true,
                 progressMessage:this.state.progressMessage
@@ -444,15 +445,18 @@ export default class MediaSyn extends Component {
                                 this.setState({
                                     fileList,
                                     isDownload:false
+                                },() => {
+                                    this.props.onSelect && this.props.onSelect(item);
                                 });
-                                this.props.onSelect && this.props.onSelect(item);
                             });
                         }else{
                             this.setState({
                                 fileList,
                                 isDownload:false
+                            },() => {
+                                this.props.onSelect && this.props.onSelect(item);
                             });
-                            this.props.onSelect && this.props.onSelect(item);
+                            
                         }
                     });
                 }else{
@@ -461,8 +465,10 @@ export default class MediaSyn extends Component {
                     this.setState({
                         fileList,
                         isDownload:false
+                    },() => {
+                        this.props.onSelect && this.props.onSelect(item);
                     });
-                    this.props.onSelect && this.props.onSelect(item);
+                    
                 }
                 //  Toast.remove(loading);
             })
@@ -554,6 +560,7 @@ export default class MediaSyn extends Component {
          }else{
              this.state.progressMessage.total = fileChecked.length;
              this.state.progressMessage.index = 1;
+             this.state.progressMessage.progress = 0;
              this.setState({
                  progressMessage:this.state.progressMessage,
                  isDownload:true
@@ -606,7 +613,7 @@ export default class MediaSyn extends Component {
                     item.localPath = 'file://' + v.videoPath;
                     if(item.type == 'VIDEO'){
                         item.timeLength = formatTime(v.videoTime);
-                        item.firstImage = v.firstImage;
+                        item.firstImage = v.videoFirstImagePath;
                     }
                 }
                 
@@ -798,7 +805,6 @@ export default class MediaSyn extends Component {
              if(this.isReply){
                  return;
              }
-             
              let params = null;
              params = JSON.parse(reminder);
              params = JSON.parse(params.data);
@@ -853,8 +859,25 @@ export default class MediaSyn extends Component {
                 folderListArr = [];
             }
             const item = pathArr[index];
+            if(!item){
+                httpIndex++;
+                if(httpIndex >= pathIndex){
+                    console.log(folderListArr,'本次循环结束时',fileListArr);
+                    // 若当前层查询结束时查询不到文件夹，则查询结束，否则继续循环
+                    if(!folderListArr.length){
+                        callback(fileListArr);
+                        return;
+                    }
+                    httpIndex = 0;
+                    pathIndex = folderListArr.length;
+                    onfilesOne(folderListArr,httpIndex);
+                }else{
+                    onfilesOne(pathArr,httpIndex,true);
+                }
+            }
             console.log(item,'请求时');
             JMFTPSyncFileManager.findFTPFlies(item).then(res => {
+                console.log(res,'获取的文件');
                 httpIndex++;
                 const fileList = JSON.parse(res);
                 fileList.forEach((item,index) => {
@@ -872,7 +895,6 @@ export default class MediaSyn extends Component {
                 });
                 // 成功回调之后若没有循环完当前层所有文件夹继续进行循环
                 //若循环完毕，进入第二层循环或结束循环
-                console.log(httpIndex,pathIndex,folderListArr);
                 if(httpIndex >= pathIndex){
                     console.log(folderListArr,'本次循环结束时',fileListArr);
                     // 若当前层查询结束时查询不到文件夹，则查询结束，否则继续循环
@@ -930,10 +952,6 @@ export default class MediaSyn extends Component {
             const data = JSON.parse(reminder);
             let progress = 0;
             progress = Math.floor(JSON.parse(data.data).progress * 100);
-
-
-            console.log(this.state.progressMessage,'数据');
-            this.state.progressMessage.progress = 0;
             const progressMessage = {
                 ...this.state.progressMessage,
                 progress:progress
@@ -941,7 +959,6 @@ export default class MediaSyn extends Component {
             this.setState({
                 progressMessage,
             });
-            console.log(reminder,'当前设备返回的进度');
         });
     }
     /**
