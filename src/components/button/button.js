@@ -97,8 +97,11 @@ export default class Button extends TouchableOpacity {
             fontSize:textFont,
             color:textColor
         }].concat(titleStyle);
-        const titleEl = <Text style={titleStyles}>{title}</Text>;
-        return titleEl;
+        if(typeof title === 'string' || typeof title === 'number'){
+            return <Text style={titleStyles}>{title}</Text>
+        }else{
+            return title;
+        }
     }
     render(){
         return (

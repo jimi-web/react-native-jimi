@@ -36,6 +36,7 @@ export default class VideoScreen extends Component {
         onPlayChange:()=>{}
     }
 
+    
 
     constructor(props) {
         super(props);
@@ -56,6 +57,15 @@ export default class VideoScreen extends Component {
             currentProgressTime:-1,//当前进度
         };
     }
+
+    componentWillUnmount() {
+        if (this.state.isFullScreen) {
+            changeSreenDirection('portrait').then(()=>{
+                this.props.onChangeSreen && this.props.onChangeSreen(false);
+            });
+        } 
+    }
+
   
     render() {
         return (

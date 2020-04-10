@@ -286,7 +286,7 @@ export default class TrackUtils extends Component {
             trackPolylinePoint:allPoint,
             deviceMarker:deviceMarker,
             pointArr:pointArr,
-            totalProgress:allPoint.length,
+            totalProgress:allPoint.length-1,
             progress:0,
             totalDistance:this.countTotalTrack(allPoint)
         },()=>{
@@ -423,7 +423,7 @@ export default class TrackUtils extends Component {
         let pointArr = null;
         this.timer = setInterval(()=>{     
             //已播完
-            if(this.state.progress === this.state.totalProgress-1){
+            if(this.state.progress === this.state.totalProgress){
                 Toast.message('播放完成');
                 this.reset();
                 this.pause();
@@ -504,7 +504,7 @@ export default class TrackUtils extends Component {
             this.pause();
         }
 
-        if(progress > this.state.totalProgress-1 || progress < 1){
+        if(progress > this.state.totalProgress || progress < 1){
             if(progress<1){
                 this.setState({
                     progress:0,

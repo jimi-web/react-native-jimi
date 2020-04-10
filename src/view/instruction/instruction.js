@@ -7,7 +7,7 @@
  * @LastEditTime: 2020-04-08 18:01:23
  */
 import React, { Component } from 'react';
-import {View,Text,ScrollView,Image} from 'react-native';
+import {View,Text,ScrollView,Image,ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import {Toast,Button} from '../../components/index';
 import InsSwitch from './InsSwitch';
@@ -63,7 +63,10 @@ export default class Instruction extends Component {
                         ?
                         <View style={{marginTop:40,marginBottom:40,alignItems:'center'}}>
                             {
-                                this.state.setBtnFlag ?<Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}}  activeOpacity={1}  title={'发送中'} />:
+                                this.state.setBtnFlag ?
+                                <Button style={{backgroundColor:baseStyle.disableColor,borderColor:baseStyle.disableColor}} 
+                                activeOpacity={1} 
+                                title={<View style={{flexDirection:'row',alignItems:'center'}}><Text style={{color:'#fff',marginRight:10,fontSize:14}}>发送中</Text><ActivityIndicator size="small" color="#fff" /></View>} />:
                                     <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={'发送指令'} />
                             }
                         </View>

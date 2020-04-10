@@ -9,6 +9,7 @@
 import {StyleSheet} from 'react-native';
 
 const baseStyle = {
+    disableColor:'#98BBF9',
     mainColor:'#3479F6',
     mainFontSize:16,
     bottomBorderStyle:{

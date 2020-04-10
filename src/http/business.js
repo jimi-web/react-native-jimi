@@ -17,6 +17,8 @@ let isHttpLocationGetShow = true;
  * @param {Object} params 后台需要的参数url，method，data
  */
 const request = (params) => {
+    console.log(params,'request');
+    
     return new Promise((resolve,reject) => {
         let header = null;
         if( typeof params.header === 'number' && params.header){
@@ -58,7 +60,9 @@ const request = (params) => {
             onFail: (res) => {
                 reject(res);
                 Loading.hide();
-                if(!params.error){
+                if(params.error){
+                    console.log('无提示');
+                }else{
                     Toast.message('网络异常,请稍后再试'); 
                 }
             },
