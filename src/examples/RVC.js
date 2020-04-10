@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-25 16:39:42
+ * @LastEditTime: 2020-04-10 13:44:50
  */
 import React, { Component } from 'react';
 import { View} from 'react-native';
@@ -30,7 +30,7 @@ export default class Record extends Component {
     render(){
         return (
             <View style={{flex:1}}>
-                <Jimi.RVC params={this.params} onReversal={(data) => this.onReversal(data)} />
+                <Jimi.RVC code={'DVR,ON'} params={this.params} onReversal={(data) => this.onReversal(data)} />
             </View>
         );
     }

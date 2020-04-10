@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-31 16:02:43
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-01 18:04:30
+ * @LastEditTime: 2020-04-10 16:48:55
  */
 import React, {Component} from 'react';
 import { Jimi } from '../index';
@@ -23,15 +23,15 @@ export default class MediaDetails extends Component {
             type:data.type === 'VIDEO'?'mp4':'jpg',
         };
         return (
-            <Jimi.PhotoDeatil data={params} onDelete={(item) => this.onDelete(item)} />
+            <Jimi.MediaDetails  data={params} onDelete={(item) => this.onDelete(item)} />
         );
     }
 
     onDelete = (item) => {
-        const path = item.filePath;
-        Jimi.MediaSyn.deleteFTPFile(path).then(res => {
-            console.log(res,'1231231232');
-        });
+        console.log(Jimi.MediaSyc,1111);
+        Jimi.MediaSyc.deleteFTPFile(item);
+        this.props.navigation.goBack();
+        
     }
 
 }

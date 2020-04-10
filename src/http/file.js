@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-19 18:18:47
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-30 14:06:44
+ * @LastEditTime: 2020-04-10 16:21:42
  *
  */
 /**
@@ -131,10 +131,32 @@ export const fileDelete = (url) => {
  * @param  {string} url 图片路径
  */
 export const saveToAlbum = (url) => {
-    console.log(url,'saveToAlbum');
-    
+    console.log(url,'保存图片');
     return new Promise((resolve,reject) => {
         httpApp('jm_image.saveToAlbum', {
+            filePath: url,
+            onSuccess: (res) => {
+                resolve(res);
+            },
+            onFail: (res) => {
+                console.log(res,'报错');
+                reject(res);
+            },
+            onComplete: () => {
+                //
+            }
+        });
+    });     
+};
+
+
+/**
+ * 保存视频相册
+ * @param  {string} url 视频的本地
+ */
+export const saveVideoToAlbums = (url) => {
+    return new Promise((resolve,reject) => {
+        httpApp('jm_media.saveVideoToAlbum', {
             filePath: url,
             onSuccess: (res) => {
                 resolve(res);
