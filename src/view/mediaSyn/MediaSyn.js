@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-09 18:31:52
+ * @LastEditTime: 2020-04-10 17:57:09
  */
 import React, {Component} from 'react';
-import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl,BackHandler} from 'react-native';
+import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,DeviceEventEmitter,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl,BackHandler} from 'react-native';
 import PropTypes from 'prop-types';
 import Applet from '../../http/index';
 import {Toast,Modal,Loading} from '../../components/index';
@@ -26,33 +26,31 @@ import BottomToolbars from '../components/BottomToolbars';
 // console.log(FTPSyncFileManager,'模块');
 export default class MediaSyn extends Component {
     static propTypes = {
-        config:PropTypes.object,
+        udpConfig:PropTypes.object,
+        ftpConfig:PropTypes.object,
         subPath:PropTypes.string
     }
     static defaultProps = {
-        UNPConfig:{
-            baseUrl:'192.17.1.227',
+        udpConfig:{
+            host:'255.255.255.255',
+            port:1712,
+            timeout:5000,
+        },
+        ftpConfig:{
+            baseUrl:'ftp://192.168.43.1',
             mode:'passive',
-            port:1245679,
-            account:'jimitest',
-            password:'jimi123'
+            port:10011,
+            account:'admin',
+            password:'admin'
         },
         subPath:'',
-        
     }
     /**
      * 删除FTP文件
      * @param {String} path 路径
      */
-    static deleteFTPFile(path){
-        return new Promise((resolve,reject) => {
-            JMFTPSyncFileManager.deleteFTPFile(path).then(res => {
-                resolve(res);
-            })
-                .catch(res => {
-                    reject(res);
-                });
-        });
+    static deleteFTPFile(data){
+        DeviceEventEmitter.emit('jmDeleteFTPFile',data);
     }
     constructor(props){
         super(props);
@@ -104,7 +102,7 @@ export default class MediaSyn extends Component {
                 if(res.data[0].ssid != this.state.account){
                     return Toast.message('请连接设备WIFI');
                 }else{
-                    if(Platform.OS === 'ios'){
+                    if(Platform.OS == 'ios'){
                         return;
                     }
                     if(this.state.fileList.length > 0){
@@ -121,13 +119,13 @@ export default class MediaSyn extends Component {
      * 监听是否退出后台
      */
     handleAppstatus = (status) => {
+        if(status != 'active'){
+            return;
+        }
         Applet.getWifiState().then(res => {
             let data = res.data;
             if(data[0].ssid != this.state.wifiMessage.account){
                 return Toast.message('请连接设备WIFI');
-            }
-            if(status != 'active'){
-                return;
             }
             if(this.state.fileList.length > 0){
                 return;
@@ -188,8 +186,12 @@ export default class MediaSyn extends Component {
 
         });
     }
+    componentWillMount(){
+        DeviceEventEmitter.addListener('jmDeleteFTPFile', e => this.onSycDelete(e,0));
+    }
     componentDidMount(){
         // 监听事件
+        
         NetInfo.addEventListener('connectionChange',this.handleConnectivityChange);
         AppState.addEventListener('change',this.handleAppstatus);
         // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
@@ -220,6 +222,7 @@ export default class MediaSyn extends Component {
         
     }
     componentWillUnmount() {
+        DeviceEventEmitter.removeAllListeners('jmDeleteFTPFile');
         this.state.fileList = [];
         NetInfo.removeEventListener('connectionChange',this.handleConnectivityChange);
         AppState.removeEventListener('change',this.handleAppstatus);
@@ -243,7 +246,7 @@ export default class MediaSyn extends Component {
                         ?
                         this.state.fileList.length != 0
                             ?
-                            <ScrollView style={{flex:1,backgroundColor:'#fff',paddingBottom:54}}
+                            <ScrollView style={{flex:1,backgroundColor:'#fff'}}
                                 // refreshControl = {
                                 //     <RefreshControl
                                 //         refreshing={this.state.refreshing}
@@ -252,7 +255,7 @@ export default class MediaSyn extends Component {
                                 // }
                             >
                                 
-                                <View style={{flexDirection:'row',flexWrap: 'wrap'}}>
+                                <View style={{flexDirection:'row',flexWrap: 'wrap',paddingBottom:54}}>
                                     {
                                         this.state.fileList.map((item,index) => {
                                             return <View key={index}>
@@ -277,7 +280,7 @@ export default class MediaSyn extends Component {
                             <BottomToolbars>
                                 <View style={Styles.bottomToolbars}>
                                     <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={()=>{this.setState({isEdit:false});}}><Text style={[Styles.bottomToolbarsText,{color:'#000'}]}>{fileLength>0?'取消（'+fileLength+'）':'取消'}</Text></TouchableOpacity>
-                                    <TouchableOpacity onPress={this.onDownload} activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#3479F6':'#e1e1e1'}]}>保存至本地</Text></TouchableOpacity>
+                                    <TouchableOpacity onPress={this.onDownload} activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#3479F6':'#e1e1e1'}]}>下载</Text></TouchableOpacity>
                                     <TouchableOpacity activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.onDelete}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#FF3535':'#e1e1e1'}]}> 删除</Text></TouchableOpacity>
                                 </View>
                             </BottomToolbars>
@@ -297,6 +300,49 @@ export default class MediaSyn extends Component {
             </View>
         );
         
+    }
+    /**
+     * 同步删除文件
+     */
+    onSycDelete = (item) => {
+        JMFTPSyncFileManager.deleteFTPFile(item.filePath).then(res => {
+            let fileArray = [];
+            this.state.fileList.forEach(value => {
+                if(value.type === 'title'){
+                    let flag = true;
+                    value.subArr.forEach(v => {
+                        console.log(item,v,'数据',value);
+                        if(item.fileName == v.fileName && value.subArr.length <= 1){
+                            flag = false;
+                        }
+                    });
+                    console.log(flag,111);
+                    if(flag){
+                        fileArray.push(value);
+                    }
+                }else{
+                    if(item.fileName !== value.fileName){
+                        fileArray.push(value);
+                    }
+                }
+            });
+            let i = 0;
+            fileArray.forEach((value,index) => {
+                value.index = index;
+                //设置头部数据
+                if(value.type == 'title'){
+                    value.subArr = [];
+                    i = value.index;
+                }
+                if(value.type != 'title'){
+                    fileArray[i].subArr.push(value);
+                }
+            });
+            console.log(fileArray,'获取的最终数据');
+            this.setState({
+                fileList:fileArray
+            });
+        });
     }
     /*
     *渲染加载时的页面
@@ -558,9 +604,14 @@ export default class MediaSyn extends Component {
              return Toast.message('每次下载文件不超过15个');
          }
          let fileSize = 0;
+         let fileArray = [];
          fileChecked.forEach(item => {
              fileSize += Number(item.fileSize);
+             if(!item.localPath){
+                 fileArray.push(item);
+             }
          });
+         this.state.fileChecked = fileArray;
          if(fileSize > 10 * 1024 * 1024){
              Modal.dialog({
                  contentText:'选择的文件比较大，可能会耗费较长的时间，是否继续？',
@@ -573,7 +624,7 @@ export default class MediaSyn extends Component {
                          progressMessage:this.state.progressMessage,
                          isDownload:true
                      });
-                     this.downFTPfile(fileChecked,0);
+                     this.downFTPfile(this.state.fileChecked,0);
                      this.progressTime = setTimeout(() => {
                          Toast.message('文件下载失败');
                          clearTimeout(this.progressTime);
@@ -593,7 +644,7 @@ export default class MediaSyn extends Component {
                  clearTimeout(this.progressTime);
              },15000);
              //  this.loading = Toast.loading('下载中...');
-             this.downFTPfile(fileChecked,0);
+             this.downFTPfile(this.state.fileChecked,0);
          }
          
      }
@@ -917,7 +968,11 @@ export default class MediaSyn extends Component {
                     }else{
                         // 进行数据转换
                         let day = String(item.fileName).split('.')[0];
-                        day = day.split('-');
+                        if(String(day).indexOf('-') != -1){
+                            day = day.split('-');
+                        }else{
+                            day = day.split('_');
+                        }
                         day = `${day[0]}/${day[1]}/${day[2]} ${day[3]}:${day[4]}:${day[5]}`;
                         item.fileDate = new Date(day).Format('YYYY-MM-DD');
                         fileListArr.push(item);
@@ -1066,23 +1121,49 @@ export default class MediaSyn extends Component {
      */
     deleteFtpfile = (array,index) => {
         JMFTPSyncFileManager.deleteFTPFile(array[index].filePath).then(res => {
+            console.log(index,array.length,'index');
             if(index === array.length - 1){
                 let fileArray  = [];
-                this.state.fileList.forEach(item => {
+                this.state.fileList.forEach((item,i) => {
                     if(!item.checked){
                         fileArray.push(item);
                     }
                 });
+                // 数据归位
+                let i = 0;
+                fileArray.forEach((item,index) => {
+                    item.checked = false;
+                    item.index = index;
+                    item.index = index;
+                    //设置头部数据
+                    if(item.type == 'title'){
+                        item.subArr = [];
+                        i = item.index;
+                    }
+                    if(item.type != 'title'){
+                        fileArray[i].subArr.push(item);
+                    }
+                });
                 const fileList = JSON.parse(JSON.stringify(fileArray));
+                console.log(fileList,'删除时的数据');
                 this.setState({
                     fileList,
-                    isEdit:false
+                    isEdit:false,
+                    fileChecked:[],
                 });
                 Toast.remove(this.loading);
                 return Toast.message('文件删除成功');
             }
             this.deleteFtpfile(array,index + 1);
-        });
+        })
+            .catch(res => {
+                this.setState({
+                    isEdit:false,
+                    fileChecked:[],
+                });
+                Toast.remove(this.loading);
+                Toast.message('删除失败');
+            });
     }
     /**
      * 关闭连接

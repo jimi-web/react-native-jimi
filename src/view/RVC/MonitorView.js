@@ -4,19 +4,17 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-09 19:10:50
+ * @LastEditTime: 2020-04-10 15:09:11
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
-
-
-import { changeSreenDirection,createTheFolder,getMicrophone } from '../../http';
+import { changeSreenDirection,createTheFolder,getMicrophone,jmAjax } from '../../http';
 import RVCError from './RVCErrorHint';
 import RVCLoading from './RVCLoading';
 import RVCTimer from './RVCTimer';
 import PropTypes from 'prop-types';
 import {Toast,Icon} from '../../components/index';
-
+import api from '../../api/index';
 
 import { JMRTMPMonitorView} from 'react-native-rtmp-player-jm';
 const { JMRTMPPlayerManager } = NativeModules;
@@ -36,7 +34,8 @@ export default class MonitorView extends Component {
         LeftBootomRN:PropTypes.element,//视频左侧组件默认为null
         CenterRn:PropTypes.element,//视频中间组件,设置该组件默认加载和错误提示失效
         toolArr:PropTypes.array,//底部工具列表
-        filePath:PropTypes.string
+        filePath:PropTypes.string,//保存文件的地址
+        code:PropTypes.string,//唤醒设备指令
         
     }
     static defaultProps = {
@@ -140,7 +139,12 @@ export default class MonitorView extends Component {
         
     }
     componentDidMount(){
-        this.initialize();
+        // 当有code时进行唤醒设备在RVC初始化
+        if(this.props.code){
+            this.setInstruction();
+        }else{
+            this.initialize();
+        }
         this.onBackPress();
         this.onAppState();
         
@@ -150,10 +154,16 @@ export default class MonitorView extends Component {
      */
     onAppState = () => {
         this.appState = AppState.addEventListener('change', (status) => {
+            console.log(status,'时间内容');
             if(status == 'active'){
-                this.initialize();
+                if(this.props.code){
+                    JMRTMPPlayerManager.reStart();
+                    this.setInstruction();
+                }else{
+                    this.initialize();
+                }
             }else{
-                JMRTMPPlayerManager.deInitialize();
+                JMRTMPPlayerManager.stop();
             }
         });
     }
@@ -646,17 +656,39 @@ export default class MonitorView extends Component {
         }
         return element;
     }
+    /**
+     * 唤醒设备并初始化RVC
+     */
+    setInstruction = () => {
+        
+        const {code,params}  = this.props;
+        console.log(code,123456);
+        const insConfig = {
+            cmdCode:code,
+            cmdType:0,
+            cmdId:1009,
+            isSync:0,
+            offLineFlag:0,
+            instructSetting:{isOpen:'ON'}
+        };
+        jmAjax({
+            url:api.instruction,
+            method:'POST',
+            data:insConfig,
+            encoding:params.imei,
+            encodingType:true
+        }).then(res => {
+            this.initialize();
+           
+        });
+       
+        
+    }
     /** 
      * 视频初始化
      */
     initialize = () => {
-        // const params = {
-        //     key:'d0c67074f14e403d916379f6664414b2',
-        //     secret:'feef6c9e8ff94bfa95c2fc9b56b8c52a',
-        //     imei:'312345678912314',
-        // };
- 
-        const {params} = this.props;
+        const {params}  = this.props;
         if(!params){
             return;
         }

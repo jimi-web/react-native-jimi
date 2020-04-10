@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-24 09:21:33
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-27 18:23:50
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-10 15:27:12
  */
 
 import {httpApp} from './basic';
@@ -71,7 +71,7 @@ export const getVideoFirstImage = (videoPaths)=>{
  * 保存视频相册
  * @param  {string} url 图片路径
  */
-export const saveVideoToAlbum = (url) => {
+export const saveVideoToAlbums = (url) => {
     return new Promise((resolve,reject) => {
         httpApp('jm_media.saveVideoToAlbum', {
             filePath: url,
