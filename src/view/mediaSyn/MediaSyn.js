@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-09 18:31:52
+ * @LastEditTime: 2020-04-10 10:04:42
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl,BackHandler} from 'react-native';
@@ -26,7 +26,8 @@ import BottomToolbars from '../components/BottomToolbars';
 // console.log(FTPSyncFileManager,'模块');
 export default class MediaSyn extends Component {
     static propTypes = {
-        config:PropTypes.object,
+        UNPConfig:PropTypes.object,
+        ftpConfig:PropTypes.object,
         subPath:PropTypes.string
     }
     static defaultProps = {
@@ -558,9 +559,14 @@ export default class MediaSyn extends Component {
              return Toast.message('每次下载文件不超过15个');
          }
          let fileSize = 0;
+         let fileArray = [];
          fileChecked.forEach(item => {
              fileSize += Number(item.fileSize);
+             if(!item.localPath){
+                 fileArray.push(item);
+             }
          });
+         this.state.fileChecked = fileArray;
          if(fileSize > 10 * 1024 * 1024){
              Modal.dialog({
                  contentText:'选择的文件比较大，可能会耗费较长的时间，是否继续？',
@@ -573,7 +579,7 @@ export default class MediaSyn extends Component {
                          progressMessage:this.state.progressMessage,
                          isDownload:true
                      });
-                     this.downFTPfile(fileChecked,0);
+                     this.downFTPfile(this.state.fileChecked,0);
                      this.progressTime = setTimeout(() => {
                          Toast.message('文件下载失败');
                          clearTimeout(this.progressTime);
@@ -593,7 +599,7 @@ export default class MediaSyn extends Component {
                  clearTimeout(this.progressTime);
              },15000);
              //  this.loading = Toast.loading('下载中...');
-             this.downFTPfile(fileChecked,0);
+             this.downFTPfile(this.state.fileChecked,0);
          }
          
      }
@@ -1066,17 +1072,24 @@ export default class MediaSyn extends Component {
      */
     deleteFtpfile = (array,index) => {
         JMFTPSyncFileManager.deleteFTPFile(array[index].filePath).then(res => {
+            console.log(index,array.length,'index');
             if(index === array.length - 1){
                 let fileArray  = [];
-                this.state.fileList.forEach(item => {
+                this.state.fileList.forEach((item,i) => {
                     if(!item.checked){
                         fileArray.push(item);
                     }
                 });
+                // 数据归位
+                fileArray.forEach((item,index) => {
+                    item.checked = false;
+                    item.index = index;
+                });
                 const fileList = JSON.parse(JSON.stringify(fileArray));
                 this.setState({
                     fileList,
-                    isEdit:false
+                    isEdit:false,
+                    fileChecked:[],
                 });
                 Toast.remove(this.loading);
                 return Toast.message('文件删除成功');
