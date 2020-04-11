@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:52:42
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-28 17:42:53
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-11 18:48:45
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,Image,TouchableOpacity,Dimensions,Platform} from 'react-native';
@@ -139,7 +139,6 @@ export default class Photo extends Component {
      */
     upDate =()=>{
         getLocalList(this.props.filePath,(fileData)=>{
-            console.log(fileData,'更新数据');
             this.dataSort(fileData)
         });
         this.getFirstLongImg();
@@ -212,11 +211,6 @@ export default class Photo extends Component {
      */
     getFirstLongImg = async()=>{
         let img = await queryDeviceVideoPicFile({pageNum:1,pageSize:1});
-        console.log(img,'img');
-        
-        if(img.result.length === 0){
-            return;
-        }
         this.setState({
             longPhoto:[...img.result],
             longPhotoTotal:img.totalRecord

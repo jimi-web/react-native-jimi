@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-10 17:57:09
+ * @LastEditTime: 2020-04-11 16:03:21
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,DeviceEventEmitter,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl,BackHandler} from 'react-native';
@@ -98,7 +98,13 @@ export default class MediaSyn extends Component {
         }
         if(status.type == 'wifi'){
             Applet.getWifiInfo().then(res => {
-                console.log(res,'结果');
+                let data = res.data;
+                if(!data){
+                    return;
+                }
+                if(typeof data === 'string'){
+                    data = JSON.parse(data);
+                }
                 if(res.data[0].ssid != this.state.account){
                     return Toast.message('请连接设备WIFI');
                 }else{
@@ -124,6 +130,12 @@ export default class MediaSyn extends Component {
         }
         Applet.getWifiState().then(res => {
             let data = res.data;
+            if(!data){
+                return;
+            }
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
             if(data[0].ssid != this.state.wifiMessage.account){
                 return Toast.message('请连接设备WIFI');
             }
@@ -137,7 +149,6 @@ export default class MediaSyn extends Component {
      * 监听退出
      */
     handleBackPress = () => {
-        console.log(this.state.isDownload,'触发');
         if(!this.state.isDownload){
             return false;
         }
@@ -311,7 +322,6 @@ export default class MediaSyn extends Component {
                 if(value.type === 'title'){
                     let flag = true;
                     value.subArr.forEach(v => {
-                        console.log(item,v,'数据',value);
                         if(item.fileName == v.fileName && value.subArr.length <= 1){
                             flag = false;
                         }
@@ -597,11 +607,11 @@ export default class MediaSyn extends Component {
       */
      onDownload = () => {
          const {fileChecked} = this.state;
-         if(fileChecked.length <= 0){
-             return Toast.message('请选择文件');
+         if(!fileChecked.length){
+             return Toast.message('请选择文件！');
          }
          if(fileChecked.length > 15){
-             return Toast.message('每次下载文件不超过15个');
+             return Toast.message('每次下载文件不得超过15个！');
          }
          let fileSize = 0;
          let fileArray = [];
@@ -611,13 +621,16 @@ export default class MediaSyn extends Component {
                  fileArray.push(item);
              }
          });
+         if(!fileArray.length){
+             return Toast.message('选择的文件已下载，请勿重复下载！')
+         }
          this.state.fileChecked = fileArray;
          if(fileSize > 10 * 1024 * 1024){
              Modal.dialog({
                  contentText:'选择的文件比较大，可能会耗费较长的时间，是否继续？',
                  onConfirm:() => {
                      //  this.loading = Toast.loading('下载中...',30);
-                     this.state.progressMessage.total = fileChecked.length;
+                     this.state.progressMessage.total = this.state.fileChecked.length;
                      this.state.progressMessage.progress = 0;
                      this.state.progressMessage.index = 1;
                      this.setState({
@@ -632,7 +645,7 @@ export default class MediaSyn extends Component {
                  }
              });
          }else{
-             this.state.progressMessage.total = fileChecked.length;
+             this.state.progressMessage.total = this.state.fileChecked.length;
              this.state.progressMessage.index = 1;
              this.state.progressMessage.progress = 0;
              this.setState({
@@ -1020,7 +1033,6 @@ export default class MediaSyn extends Component {
             videoPath = data.video_dirs.split(',');
         }
         let folderListArr = [...photoPath,...videoPath];
-        console.log(folderListArr,'当前获取的文件夹数量');
         this.queryFile(folderListArr,(res) => {
             console.log(res,'获取到的文件结果');
             if(res && res.length != 0){
@@ -1052,7 +1064,11 @@ export default class MediaSyn extends Component {
      */
     downFTPCallback = (array,index) => {
         if(index == array.length - 1){
+            this.state.fileList.forEach(item => {
+                item.checked = false
+            })
             const fileList = JSON.parse(JSON.stringify(this.state.fileList));
+            
             this.setState({
                 fileList,
                 fileChecked:[],
@@ -1145,7 +1161,6 @@ export default class MediaSyn extends Component {
                     }
                 });
                 const fileList = JSON.parse(JSON.stringify(fileArray));
-                console.log(fileList,'删除时的数据');
                 this.setState({
                     fileList,
                     isEdit:false,
