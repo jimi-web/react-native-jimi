@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-07 11:22:57
+ * @LastEditTime: 2020-04-13 14:32:45
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -24,7 +24,6 @@ export default class Record extends Component {
     static propTypes = {
         params: PropTypes.object,
         insTimeArr:PropTypes.array,
-        insSutainTime:PropTypes.number,
         recordIns:PropTypes.string,
         recordStutainTrue:PropTypes.string,
         recordStutainFalse:PropTypes.string,
@@ -34,13 +33,48 @@ export default class Record extends Component {
         recordIns:'LY,ins#',//单个指令
         recordStutainTrue:'CXLY,ON,ins#',  //持续录音
         recordStutainFalse:'CXLY,OFF#',//关闭录音
-        insSutainTime:30,
         params:{
             pageNum: 1,
             pageSize: 10
             
         },
-        insTimeArr: ['30s','1分钟','2分钟','3分钟','4分钟','5分钟','持续录音']
+        insTimeArr:[
+            {
+                title:'30s',
+                value:30,
+                isChange:true
+            },
+            {
+                title:'1分钟',
+                value:60,
+                isChange:false
+            },
+            {
+                title:'2分钟',
+                value:120,
+                isChange:false
+            },
+            {
+                title:'3分钟',
+                value:180,
+                isChange:false
+            },
+            {
+                title:'4分钟',
+                value:240,
+                isChange:false
+            },
+            {
+                title:'5分钟',
+                value:300,
+                isChange:false
+            },
+            {
+                title:'持续录音',
+                value:'30',
+                isChange:false
+            },
+        ],
     };
     constructor(props) {
         super(props);
@@ -135,6 +169,16 @@ export default class Record extends Component {
             const key = value.encoding + 'locatorRecord';
             AsyncStorage.getItem(key).then(res => {
                 if(!res){
+                    let recordLength = 30
+                    this.props.insTimeArr.forEach(item => {
+                        if(item.isChange){
+                            recordLength = item.value
+                        }
+                    })
+                    this.setState({
+                        recordLength
+                    })
+                    console.log(recordLength,111)
                     return;
                 }
                 const data = JSON.parse(res);
@@ -715,7 +759,7 @@ export default class Record extends Component {
             if(data.isRecording){
                 instruction = this.props.recordStutainFalse;
             }else{
-                instruction = this.props.recordStutainTrue.replace('ins',this.props.insSutainTime);
+                instruction = this.props.recordStutainTrue.replace('ins',data.recordLength);
             }
         }else{
             instruction = this.props.recordIns.replace('ins',data.recordLength);
@@ -723,8 +767,6 @@ export default class Record extends Component {
         this.setState({
             isBeginRecord:false
         });
-        console.log(instruction,'指令');
-        
         this.setRecordInstruction(instruction).then(res => {
             this.setState({
                 isBeginRecord:true

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-10 15:01:42
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-13 14:36:59
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -146,7 +146,13 @@ export default class RecordControl extends Component {
      */
     renderModal = () => {
         const {insTimeArr} = this.props;
-        const time = insTimeArr;
+        const time = [];
+        insTimeArr.forEach((item,index) => {
+            time.push(item.title)
+            if(item.isChange){
+                this.state.index = index
+            }
+        })
         let modal = <View style={styles.datepicker}>
             <View style={styles.header}>
                 <TouchableOpacity activeOpacity={1} onPress={()=>{
@@ -176,9 +182,15 @@ export default class RecordControl extends Component {
      */
     onConfirm = () => {
         // console.log(this.state.time,'保存的时间');
-        const unit = String(this.state.time)[this.state.time.length - 1] === 's'?1:60;
-        let time = parseInt(this.state.time) * unit;
-        time = isNaN(time)?0:time;
+        const {insTimeArr} = this.props;
+        let time = 30;
+        insTimeArr.forEach(item => {
+            item.isChange = false;
+            if(item.title === this.state.time){
+                time = item.value
+                item.isChange = true
+            }
+        })
         const type = this.state.time == '持续录音'?1:0;
         this.props.onConfirm &&  this.props.onConfirm({type,time});
         Drawer.close(this.selectTime);

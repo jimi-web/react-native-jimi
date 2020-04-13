@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-02-19 16:59:18
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-13 09:21:49
  -->
 # 几米圈标准小程序
 
@@ -129,3 +129,10 @@
 8. 添加RVC业务组件及相关文档和实例
 9. 优化toast不能自定义位置问题,与样式问题
 10. 使用字体图标替换掉所有的图片
+
+
+###版本:'1.4.5'
+1. 新增指令配置功能，根据组件生成指令
+2. RVC新增摄像头功能
+3. 新增媒体同步组件
+4. 添加WIFI相关接口
