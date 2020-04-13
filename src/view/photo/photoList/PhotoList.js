@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:33:58
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-13 09:09:57
+ * @LastEditTime: 2020-04-11 10:41:27
  */
 import React, {Component} from 'react';
 import {View,Text,SectionList,StyleSheet,FlatList,TouchableOpacity,Image} from 'react-native';
@@ -289,7 +289,7 @@ export default class PhotoList extends Component {
      * 保存到相册
      */
     save = ()=>{
-        if(this.state.checkedList.length>0){
+        if(this.state.checkedList.length > 0){
             batchSaveToAlbum(this.state.checkedList,this.props.videoType,()=>{
                 this.onEdit(false);
             });
@@ -398,35 +398,3 @@ export default class PhotoList extends Component {
 
 
 }
-
-    const Styles = StyleSheet.create({
-    content:{
-        position:'relative',
-        flex:1,
-        backgroundColor:'#F7F7F7',
-    },
-    edit:{
-        position:'absolute',
-        right:10,
-        bottom:isIphoneX()?iphoneXHeight(10):10
-    },
-    bottomToolbars:{
-        flex:1,
-        flexDirection:'row'
-    },
-    bottomToolbarsBtn:{
-        flex:1
-    },
-    bottomToolbarsText:{
-        fontSize:17,
-        height:54,
-        lineHeight:54,
-        textAlign:'center'
-    },
-    sectionList:{
-        marginBottom:isIphoneX()?iphoneXHeight(54):54
-    },
-    itemList:{
-        marginBottom:10
-    }
-});

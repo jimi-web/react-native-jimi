@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:33:58
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 13:51:49
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-11 18:47:39
  */
 import React from 'react';
 import {View} from 'react-native';
@@ -240,6 +240,9 @@ export default class LongPhotoList extends LocalPhotoList {
     save = ()=>{
         let defaultCheckedList = this.state.defaultCheckedList;
         let  defaultList = this.state.defaultList;
+        if(!defaultCheckedList.length){
+            return;
+        }
         downloadFile(defaultCheckedList,this.state.localPhotoData.filePath,this.props.videoType,()=>{
             //更新数据
             defaultCheckedList.forEach((list)=>{
@@ -265,6 +268,9 @@ export default class LongPhotoList extends LocalPhotoList {
         let defaultList = this.state.defaultList;
         let localFileIds = [];
         let longFileIds = [];
+        if(!defaultCheckedList.length){
+            return;
+        }
         defaultCheckedList.forEach((item)=>{
             if(item.isDown){
                 localFileIds.push(item.url);
@@ -282,6 +288,9 @@ export default class LongPhotoList extends LocalPhotoList {
                         }
                     });
                 });
+                if(!defaultList.length){
+                    this.init()
+                }
                 this.setState({
                     defaultList:defaultList
                 },()=>{

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-10 15:09:11
+ * @LastEditTime: 2020-04-11 15:06:42
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -113,8 +113,6 @@ export default class MonitorView extends Component {
        
         this.photoPath = null;//当前文件夹的位置
         this.videoPath = null;
-        this.backHandler = null;
-        this.appState = null;
         this.errorNumber = 0;//记录当前播放过程中出错误的次数，达到三次以下进行静默重连。
         this.state = {
             rtmpManagerListener:new NativeEventEmitter(JMRTMPPlayerManager),
@@ -145,39 +143,34 @@ export default class MonitorView extends Component {
         }else{
             this.initialize();
         }
-        this.onBackPress();
-        this.onAppState();
+        AppState.addEventListener('change',this.handleAppstatus);
+        BackHandler.addEventListener('hardwareBackPress',this.handleBackHandler);
         
     }
     /**
      * 监听app状态
      */
-    onAppState = () => {
-        this.appState = AppState.addEventListener('change', (status) => {
-            console.log(status,'时间内容');
-            if(status == 'active'){
-                if(this.props.code){
-                    JMRTMPPlayerManager.reStart();
-                    this.setInstruction();
-                }else{
-                    this.initialize();
-                }
+    handleAppstatus = (status) => {
+        if(status == 'active'){
+            if(this.props.code){
+                JMRTMPPlayerManager.reStart();
+                this.setInstruction();
             }else{
-                JMRTMPPlayerManager.stop();
+                this.initialize();
             }
-        });
+        }else{
+            JMRTMPPlayerManager.stop();
+        }
     }
     /**
      * 监听后退按钮
      */
-    onBackPress = () => {
-        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-            if (this.state.isScreen) {
-                this.onReversal();
-                return true;
-            }
-            return false;
-        });
+    handleBackHandler = () => {
+        if (this.state.isScreen) {
+            this.onReversal();
+            return true;
+        }
+        return false;
     }
     componentWillMount() {
         // RVC监听
@@ -319,6 +312,8 @@ export default class MonitorView extends Component {
         if (recordStatusSubscription) recordStatusSubscription.remove();
         if (frameInfoSubscription) frameInfoSubscription.remove();
         if (receiveDeviceSubscription) receiveDeviceSubscription.remove();
+        BackHandler.removeEventListener('hardwareBackPress',this.handleBackHandler);
+        AppState.removeEventListener('change',this.handleAppstatus);
         this.onStop();
         // 事件释放
         DeviceEventEmitter.removeAllListeners('jmStopPlay');
@@ -660,7 +655,9 @@ export default class MonitorView extends Component {
      * 唤醒设备并初始化RVC
      */
     setInstruction = () => {
-        
+        this.setState({
+            RVCStatus:1
+        });
         const {code,params}  = this.props;
         console.log(code,123456);
         const insConfig = {
@@ -736,8 +733,6 @@ export default class MonitorView extends Component {
             screenClickNum:0,
             totalFrameCount:0
         });
-        this.backHandler = null;
-        this.appState = null;
         JMRTMPPlayerManager.deInitialize();
     }
     /**

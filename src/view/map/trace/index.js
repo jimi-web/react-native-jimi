@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-09 15:30:52
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-11 10:28:10
  */
 import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
@@ -318,13 +318,13 @@ export default class TraceUtils extends PositionUtils {
             latitude:this.state.deviceInfo.gpsLatitude,
             longitude:this.state.deviceInfo.gpsLongitude,
             onSuccess: () => {
-
+                //
             },
             onFail: () => {
                 // Toast.message('请下载地图');
             },
             onComplete:()=>{
-                
+                //
             }
         });
     }

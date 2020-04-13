@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:51:32
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-27 14:06:50
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-11 15:16:44
  */
 import React from 'react';
 import { Image } from 'react-native';
@@ -24,8 +24,8 @@ let save = null;
  * @param {Array} urlList 
  */
 export const batchFileDelete = (urlList,callBack)=>{
-        let del = Toast.loading('删除中...');
-        fileDeleteComm(del,urlList,callBack);
+    let del = Toast.loading('删除中...')          
+    fileDeleteComm(del,urlList,callBack);
 };
 
 /**
@@ -63,7 +63,7 @@ export const batchSaveToAlbum = (urlList,videoType,callBack)=>{
 
 
 /**
- * 保存成功回调
+ * 保存成功回调;
  */
 const saveSucceedCallBack  = (index,itself,callBack) =>{
     console.log('保存成功');
@@ -111,7 +111,7 @@ export const singleSaveToAlbum = (url,type,index,videoType,itself,callBack)=>{
 /**
  * 获取本地数据
  * @param {String} name 存储媒体文件夹名称
- */
+ */;
 export const getLocalList = async(name,fn)=> {
     try {
         let fileData = await getFileList(name);
@@ -132,7 +132,7 @@ export const getLocalList = async(name,fn)=> {
 
 
 /**
- *获取远程相册数据
+ *获取远程相册数据;
  * @param {Object} params 参数
  */
 export const queryDeviceVideoPicFile = (params)=>{
@@ -153,7 +153,7 @@ export const queryDeviceVideoPicFile = (params)=>{
 }
 
 
-
+                                                                                        ;                                                                                        ;                                        ;
 /**
  * 远程批量下载文件
  * @param {Object} params 

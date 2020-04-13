@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-10 15:07:29
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-11 10:48:49
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
@@ -118,11 +118,11 @@ export default class FenceList extends Component {
                         </TouchableOpacity>
                     </View>:
                     <View style={[FenceStyles.btnItem,{paddingTop:15}]}>
-                        <TouchableOpacity onPress={this.deselect}>
+                        <TouchableOpacity style={{paddingLeft:15,paddingRight:15}} onPress={this.deselect}>
                             <Text style={[FenceStyles.btnItemText,{color:'#000'}]}>取消</Text>
                         </TouchableOpacity>
                         <Text style={FenceStyles.btnItemLine}>|</Text>
-                        <TouchableOpacity onPress={this.onCheckAll}>
+                        <TouchableOpacity style={{paddingLeft:15,paddingRight:15}} onPress={this.onCheckAll}>
                             <Text  style={[FenceStyles.btnItemText,FenceStyles.allSelectText]}>{this.state.allSelectText}</Text>
                         </TouchableOpacity>
                         <Text style={FenceStyles.btnItemLine}>|</Text>
