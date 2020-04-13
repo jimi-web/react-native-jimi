@@ -8,6 +8,7 @@
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
+import api from '../api';
 import Loading from '../components/loading/Loading';
 
 let isHttpLocationGetShow = true;
@@ -247,6 +248,28 @@ export const getEncoding = () =>{
     });
 };
 
+
+ /**
+  * 流量卡
+  */
+export const goFlowCard = ({onSuccess,onFail})=>{
+    jmAjax({
+        url:api.encodeUserInfo,
+        method:'GET',
+        encoding:true,
+        encodingType:true,
+        data:{
+            apptype:'jmaxapp'
+        }
+    }).then((res)=>{
+        httpApp('jm_pay.loadPrepaidPage', {
+            url:api.flowUrl+res.data,
+            onSuccess: onSuccess,
+            // 请求失败
+            onFail:onFail
+        }); 
+    }); 
+}
 
 
 
