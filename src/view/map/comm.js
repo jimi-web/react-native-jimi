@@ -14,7 +14,7 @@ import api from '../../api/index';
  * 获取设备定位信息
  */
 export const getDevicePosition = (error)=> {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         jmAjax({
             url:api.position,
             method:'GET',
@@ -24,6 +24,8 @@ export const getDevicePosition = (error)=> {
         }).then((res)=>{
             let data = res.data;
             resolve(data);
+        }).catch((res)=>{
+            reject(res);
         }); 
     }); 
 }; 

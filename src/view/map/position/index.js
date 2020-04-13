@@ -242,16 +242,20 @@ export default class PositionUtils extends Component {
      * 请求数据默认
      */
     request = async()=>{
-        let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress,this.props.error);
-        this.setState({
-            lastAddress:deviceInfo.address
-        },()=>{
-            if(deviceInfo.latitude){
-                this.drawMarker(deviceInfo);
-            }else{
-                this.onDeviceChange(deviceInfo);
-            } 
-        });
+        try {
+            let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress,this.props.error);
+            this.setState({
+                lastAddress:deviceInfo.address
+            },()=>{
+                if(deviceInfo.latitude){
+                    this.drawMarker(deviceInfo);
+                }else{
+                    this.onDeviceChange(deviceInfo);
+                } 
+            });
+        } catch (error) {
+            Toast.remove(this.loading);
+        }
     }
 
 
