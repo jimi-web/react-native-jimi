@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-30 10:07:38
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-13 14:43:36
+ * @LastEditTime: 2020-04-14 16:32:52
  -->
 # `Record` 录音
 
@@ -16,6 +16,7 @@
 | recordIns | String | false | 'LY,OFF,ins#' | 单条录音指令（ins为当前可变化的值） |
 | recordStutainTrue | String | false | 'CXLY,ON,ins#' | 开启持续录音指令（ins为单断指令的值） |
 | recordStutainFalse | String | false | 'CXLY,OFF#' | 关闭持续录音指令 |
+| unit | String | false | 's' | value时间代表：s:秒，m：分，h：时 |
 
 ## insTimeArr
 | Prop | Type | Note |
@@ -76,7 +77,7 @@ export default class Record extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Jimi.Record insTimeArr={this.insTimeArr}></Jimi.Record>
+                <Jimi.Record insTimeArr={this.insTimeArr} unit={'s'}></Jimi.Record>
             </View>
         );
     }

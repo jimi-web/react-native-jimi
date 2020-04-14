@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-03 09:33:13
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-13 17:08:44
+ * @LastEditTime: 2020-04-14 16:36:19
  -->
 # 指令
 
@@ -28,6 +28,7 @@
 | style | object | false | 该值用于自定义组件样式 |
 | hint | string | false | 改值用于在验证组件值不合格的情况下抛给用户的提示，默认为：'您当前输入的格式有误！' |
 | contral | Number | false | 该参数用于此组件被哪个组件所控制，控制该组件的value必须为boolean |
+| contralValue | Number/String | false | 设置该参数后，会被contral该组件的的控制器组件中的值所控制，只有等于控制器中的value才会显示 |
 
 ## Events
 | Event Name | Returns | Notes |
