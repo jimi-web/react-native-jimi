@@ -66,7 +66,7 @@ export const batchSaveToAlbum = (urlList,videoType,callBack)=>{
  * 保存成功回调;
  */
 const saveSucceedCallBack  = (index,itself,callBack) =>{
-    console.log('保存成功');
+
     if(downloadFileIndex === index-1 ){
         downloadFileIndex=0;
         Toast.remove(save);
@@ -93,7 +93,6 @@ export const singleSaveToAlbum = (url,type,index,videoType,itself,callBack)=>{
             saveSucceedCallBack(index,itself,callBack);
         }).catch((error)=> {
             console.log(error,'视频下载失败');
-            
             saveFailedCallBack();
         }); 
     }else{
@@ -152,8 +151,6 @@ export const queryDeviceVideoPicFile = (params)=>{
     }); 
 }
 
-
-                                                                                        ;                                                                                        ;                                        ;
 /**
  * 远程批量下载文件
  * @param {Object} params 
@@ -165,7 +162,9 @@ export const downloadFile = (longList,filePath,videoType,callBack)=> {
     }
     let longPhotoList = longList[downloadFileIndex];
     if(longPhotoList.isDown){
-        singleSaveToAlbum(longPhotoList.url,longPhotoList.type,longList.length,videoType,downloadFile,callBack);
+        singleSaveToAlbum(longPhotoList.url,longPhotoList.type,longList.length,videoType,()=>{
+            downloadFile(longList,filePath,videoType,callBack);
+        },callBack);
     }else{
         const options = {
             fromUrl:longPhotoList.fileUrl ,
