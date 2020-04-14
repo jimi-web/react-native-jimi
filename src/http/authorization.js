@@ -21,7 +21,6 @@ class authorization {
                     Toast.message('内部服务器异常');
                 }
             });
-
         });
     }
 
@@ -71,19 +70,19 @@ class authorization {
             let auth =  prospectus.split(',');
             if(auth.includes(params.scope)){ //有授权获取code码
                 let getAuthorizeCode = await this.getAuthorizeCode(params);
-                params.callBack(getAuthorizeCode);
+                params.callBack && params.callBack(getAuthorizeCode);
             }else{  //无授权先请求授权弹框再获取code码
                 let obtainPermission = await this.obtainPermission(params);
                 if(obtainPermission){
                     let getAuthorizeCode = await this.getAuthorizeCode(params);
-                    params.callBack(getAuthorizeCode);
+                    params.callBack && params.callBack(getAuthorizeCode);
                 }
             } 
         }else{
             let obtainPermission = await this.obtainPermission(params);
             if(obtainPermission){
                 let getAuthorizeCode = await this.getAuthorizeCode(params);
-                params.callBack(getAuthorizeCode);
+                params.callBack && params.callBack(getAuthorizeCode);
             }
         }
     }
