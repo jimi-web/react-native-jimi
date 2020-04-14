@@ -49,7 +49,7 @@ const MapStyles =  StyleSheet.create({
     infoWindowItemImei:{
         justifyContent:'space-between'
     },  
-    imei:{
+    deviceStatus:{
         fontSize:16,
         color:'#000',
         paddingBottom:5
@@ -67,7 +67,8 @@ const MapStyles =  StyleSheet.create({
         height:13,
         borderWidth:1,
         borderColor:'#000',
-        borderRadius:2
+        borderRadius:2,
+        marginRight:4
     },
     batteryRight:{
         position:'absolute',

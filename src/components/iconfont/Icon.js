@@ -9,6 +9,15 @@ import { Svg, Path } from 'react-native-svg';
 // And then regenerate icons by using cli command.
 export const Icon = ({ color, name, size, ...rest }) => {
   switch (name) {
+    case 'Homepage_icon_charge':
+      return (
+        <Svg viewBox="0 0 1024 1024" width={size} height={size} {...rest}>
+          <Path
+            d="M398.222222 0L170.666667 625.777778 455.111111 568.888889 398.222222 1024l455.111111-739.555556-284.444444 56.888889 113.777778-341.333333z"
+            fill={getIconColor(color, 0, '#60D0AA')}
+          />
+        </Svg>
+      );
     case 'video_cutover_normal':
       return (
         <Svg viewBox="0 0 1024 1024" width={size} height={size} {...rest}>

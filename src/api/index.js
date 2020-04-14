@@ -69,7 +69,7 @@ const api  = {
     }
 };
 const share = {
-    shareUrl:'http://10.0.16.126:8080',
+    shareUrl:'http://apis.jimimax.com',
 };
 api.setApi(share);
 api.setServer();
