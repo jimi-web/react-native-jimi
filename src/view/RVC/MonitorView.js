@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-11 15:06:42
+ * @LastEditTime: 2020-04-14 10:37:33
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -307,11 +307,13 @@ export default class MonitorView extends Component {
         
     }
     componentWillUnmount() {
+        // 流媒体事件销毁
         if (playStatusSubscription) playStatusSubscription.remove();
         if (talkStatusSubscription) talkStatusSubscription.remove();
         if (recordStatusSubscription) recordStatusSubscription.remove();
         if (frameInfoSubscription) frameInfoSubscription.remove();
         if (receiveDeviceSubscription) receiveDeviceSubscription.remove();
+        // RN方法销毁
         BackHandler.removeEventListener('hardwareBackPress',this.handleBackHandler);
         AppState.removeEventListener('change',this.handleAppstatus);
         this.onStop();
@@ -721,7 +723,7 @@ export default class MonitorView extends Component {
      * 停止视频所有数据，广播，并将此页面恢复当初始化
      */
     onStop = () => {
-        this.onStopPlay();
+        JMRTMPPlayerManager.stop();
         this.setState({
             isScreen:false,
             isRecord:false,

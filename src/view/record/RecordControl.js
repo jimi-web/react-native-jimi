@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-13 14:36:59
+ * @LastEditTime: 2020-04-14 14:20:54
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -29,11 +29,19 @@ export default class RecordControl extends Component {
         if(this.props.isRecording){
             return time + 's'; 
         }
-        const s = time / 60 < 1?`${time}s`:`${time / 60}分钟`;
+       
+        let value = this.props.insTimeArr.find(item => {
+            return item.value === time;
+        })
+        let s = this.state.time;
+        if(!value){
+            value = this.props.insTimeArr[0];
+        }
+        s = value.title;
         return s;
     }
     render(){
-        const {isOpenSelect,height} = this.props;
+        const {isOpenSelect} = this.props;
         return (
             <BottomToolbars >
                 <View style={this.renderStyle()}>

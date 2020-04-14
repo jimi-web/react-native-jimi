@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-03 09:33:13
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-07 18:25:55
+ * @LastEditTime: 2020-04-13 17:08:44
  -->
 # 指令
 
@@ -116,8 +116,6 @@ content => Object 该content接收一个Object
 |---|---|---|
 | text | String | 该选择器的标题 |
 | stepValue | Array | 该内容参数和select一致 |
-
-
 
 #### `arrowButton` => Object
 ```

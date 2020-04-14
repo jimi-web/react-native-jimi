@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-13 14:32:45
+ * @LastEditTime: 2020-04-14 14:25:39
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -27,12 +27,14 @@ export default class Record extends Component {
         recordIns:PropTypes.string,
         recordStutainTrue:PropTypes.string,
         recordStutainFalse:PropTypes.string,
+        unit:PropTypes.string
 
     };
     static defaultProps = {
         recordIns:'LY,ins#',//单个指令
         recordStutainTrue:'CXLY,ON,ins#',  //持续录音
         recordStutainFalse:'CXLY,OFF#',//关闭录音
+        unit:'s',//录音值的单位
         params:{
             pageNum: 1,
             pageSize: 10
@@ -71,7 +73,7 @@ export default class Record extends Component {
             },
             {
                 title:'持续录音',
-                value:'30',
+                value:30,
                 isChange:false
             },
         ],
@@ -162,6 +164,18 @@ export default class Record extends Component {
         });
     }
     /**
+     * 根据单位计算当前时长的倍数
+     */
+    countUnit = () => {
+        const {unit} = this.props;
+        let unitArr = {
+            s:1,
+            m:60,
+            h:3600
+        }
+        return unitArr[unit];
+    }
+    /**
      * 获取存储的录音信息
      */
     getStorage = () => {
@@ -178,7 +192,6 @@ export default class Record extends Component {
                     this.setState({
                         recordLength
                     })
-                    console.log(recordLength,111)
                     return;
                 }
                 const data = JSON.parse(res);
@@ -195,7 +208,7 @@ export default class Record extends Component {
                     recordLength:data.recordLength,
                 });
                 if(isRecording && data.recordType == 0){
-                    let i = data.recordLength - recordTime;
+                    let i = data.recordLength * this.countUnit() - recordTime;
                     this.recordTimer = setInterval(()=>{
                         i--;
                         if(i <= 0){
@@ -771,9 +784,6 @@ export default class Record extends Component {
             this.setState({
                 isBeginRecord:true
             });
-            // if(res.code){
-            //     return Toast.message('指令发送失败');
-            // }
             if(res.data){
                 const content = typeof res.data.content === 'string'?JSON.parse(res.data.content) : {};
                 if(!content._code){
@@ -811,7 +821,7 @@ export default class Record extends Component {
                 }
             }else{
                 // 限时录音
-                let i = data.recordLength;
+                let i = data.recordLength * this.countUnit();
                 this.recordTimer = setInterval(() => {
                     i = i - 1;
                     if(this.backTimeLength){

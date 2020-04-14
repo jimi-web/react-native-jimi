@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-10 13:44:50
+ * @LastEditTime: 2020-04-14 10:22:46
  */
 import React, { Component } from 'react';
 import { View} from 'react-native';
@@ -26,6 +26,7 @@ export default class Record extends Component {
 
         };
     }
+
 
     render(){
         return (

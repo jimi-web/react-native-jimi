@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-08 17:02:08
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-16 14:01:54
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-13 17:27:10
  */
 import React, { Component } from 'react';
 import {
@@ -20,7 +20,7 @@ const { width } = Dimensions.get('window');
 export default class InsStep extends Component {
     constructor(props) {
         super(props);
-        this.width = width - 30;
+        this.width = width * 0.9;
         this.startX = 0;
         this.index = 0;
         this.i = this.props.data.content.stepValue.findIndex(item => {return item.value == this.props.data.value;});
@@ -42,7 +42,6 @@ export default class InsStep extends Component {
                 // 开始手势操作。给用户一些视觉反馈，让他们知道发生了什么事情！
             },
             onPanResponderMove: (evt, gestureState) => {
-                console.log(gestureState.moveX,'滑动中');
                 let moveX = gestureState.moveX;
                 if(moveX < this.startX){
                     moveX = 0;
@@ -107,14 +106,14 @@ export default class InsStep extends Component {
         const {content} = this.props.data;
         return (
             <View style={this.renderStyle()}>
-                <View style={{position:'relative',width:'100%',height:40,justifyContent:'space-between',alginItems:'end',flexDirection:'row'}}>
+                <View style={{position:'relative',width:'90%',height:40,justifyContent:'space-between',alginItems:'end',flexDirection:'row'}}>
                     {
                         content.stepValue.map((item,index) => {
-                            return <Text style={{lineHeight:60}} key={index}>{item.text}</Text>;
+                            return <Text style={{lineHeight:40}} key={index}>{item.text}</Text>;
                         })
                     }
                 </View>
-                <View {...this._panResponder.panHandlers} style={{position:'relative',height:40,justifyContent:'space-between',alginItems:'center',flexDirection:'row'}}>
+                <View {...this._panResponder.panHandlers} style={{position:'relative',width:'90%',height:40,justifyContent:'space-between',alginItems:'center',flexDirection:'row'}}>
                     <View style={{width:'100%',height:2,backgroundColor:'#c7c7c7',position:'absolute',top:19,left:0}}></View>
                     {
                         content.stepValue.map((item,index) => {

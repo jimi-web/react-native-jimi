@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-16 14:50:08
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-14 16:24:50
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
@@ -19,13 +19,16 @@ export default class InsModelSelect extends Component {
     }
     render(){
         let {content,value} = this.props.data;
+        const valueText = content.modelData.find(item => {
+            return item.value === value
+        })
         return <TouchableOpacity activeOpacity={0.6}  style={this.renderStyle()} onPress={this.onPress}>
             <View>
                 <Text style={{fontSize:14}}>{content.text}</Text>
                 {content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null}
             </View>
             <View style={{flexDirection:'row'}}>
-                <Text style={{marginRight:10}}>{value}</Text>
+                <Text style={{marginRight:10}}>{valueText.text}</Text>
                 <Icon name={'subordinate_arrow'} />
             </View>
         </TouchableOpacity >;
@@ -91,7 +94,6 @@ export default class InsModelSelect extends Component {
       onDrawer = (item) => {
           Drawer.close(this.id);
           const {data,index} = this.props;
-          const content = data.content;
           data.value = item.text;
           data.insValue = item.value;
           this.props.onPress && this.props.onPress(data,index);
