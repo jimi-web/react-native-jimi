@@ -334,7 +334,7 @@ export default class PositionUtils extends Component {
                             </View>
                         </View>
                         {
-                             locationData.powerStatus?
+                             locationData.powerStatus==1?
                              <Icon name={'Homepage_icon_charge'} size={10}></Icon>:null
                         }  
                     </View>
@@ -346,7 +346,7 @@ export default class PositionUtils extends Component {
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{locationData.gpsSpeed ? locationData.gpsSpeed:0}km/h</Text>
                 {
-                    locationData.powerStatus && locationData.powerPer != null ?
+                    locationData.powerStatus==1 && locationData.powerPer != null ?
                     <View style={{ flexDirection: 'row'}}>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.infoWindowTitle}>电压:{locationData.powerValue}</Text>

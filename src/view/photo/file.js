@@ -120,9 +120,9 @@ export const getLocalList = async(name,fn)=> {
             let fileUrl = await createTheFolder(name);
             if(fileUrl){
                 let fileData = await getFileList(name);
-                if(fileData.fileList.files.length===0){
-                    return;
-                }
+                // if(fileData.fileList.files.length===0){
+                //     return;
+                // }
                 fn(fileData);
             }
         }
