@@ -34,7 +34,7 @@ import Empty from '../examples/Empty';
 import Button from '../examples/Button';
 import Drawer from '../examples/Drawer';
 import Instruction from '../examples/Instruction';
-import FlowCard from '../examples/FlowCard';
+// import FlowCard from '../examples/FlowCard';
 import MediaSyn from '../examples/MediaSyn';
 import MediaContral from '../examples/MediaContral';
 import MediaDetails from '../examples/MediaDetails';
@@ -119,10 +119,10 @@ const AppNavigator = createStackNavigator(
             screen:Fence,
             navigationOptions:getOptions('围栏')            
         },
-        FlowCard:{
-            screen:FlowCard,
-            navigationOptions:getOptions('流量卡')            
-        },
+        // FlowCard:{
+        //     screen:FlowCard,
+        //     navigationOptions:getOptions('流量卡')            
+        // },
         Details:{
             screen:Details,
             navigationOptions:getOptions('详情')            

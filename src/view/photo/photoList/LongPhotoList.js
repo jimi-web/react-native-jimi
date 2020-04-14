@@ -66,12 +66,10 @@ export default class LongPhotoList extends LocalPhotoList {
             pageSize:this.state.pageSize,
         }).then((list)=>{
             console.log(list,'远程');
-            console.log(localPhotoData,'本地');
-            
             let longList  = list.result;
             let localPhotoData = this.state.localPhotoData;
             let localList = localPhotoData.fileList.files;
-   
+            console.log(localPhotoData,'本地');
             let storage = []; //用来记录已经和本地对比过并且赋值的数据
             //与本地资源做判断
             if(localList.length>0){
@@ -243,6 +241,8 @@ export default class LongPhotoList extends LocalPhotoList {
         if(!defaultCheckedList.length){
             return;
         }
+        console.log(defaultCheckedList,'被选中');
+        
         downloadFile(defaultCheckedList,this.state.localPhotoData.filePath,this.props.videoType,()=>{
             //更新数据
             defaultCheckedList.forEach((list)=>{

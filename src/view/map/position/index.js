@@ -319,9 +319,11 @@ export default class PositionUtils extends Component {
         let locationData = this.state.locationData;
         return <View style={[MapStyles.infoWindow,shadow,{borderRadius:infoBordeRadius},spaceBetween]}>
             <View style={[MapStyles.infoWindowItem,MapStyles.infoWindowItemImei]}>
-                <Text style={MapStyles.imei}>{locationData.deviceName}</Text>
+                {/* <Text style={MapStyles.imei}>{locationData.deviceName}</Text> */}
+                <Text style={[MapStyles.deviceStatus,{color:this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).color,paddingTop:1}]}>{this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).text}</Text>
                 {
                     locationData.powerPer != null ?
+                    <View style={{flexDirection:"row",alignItems:'center'}}>
                         <View style={MapStyles.batterybg}>
                             <View style={MapStyles.batteryRight}></View>
                             <View style={{position:'relative',height:9,width:18}}>
@@ -331,15 +333,25 @@ export default class PositionUtils extends Component {
                                 </View>
                             </View>
                         </View>
+                        {
+                             locationData.powerStatus==1?
+                             <Icon name={'Homepage_icon_charge'} size={10}></Icon>:null
+                        }  
+                    </View>
                         :null
                 }
             </View>
             <View style={MapStyles.infoWindowItem}>
-                <Text style={[MapStyles.infoWindowTitle,{color:this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).color,paddingTop:1}]}>{this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).text}</Text>
-                <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{this.posType().text}</Text>
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{locationData.gpsSpeed ? locationData.gpsSpeed:0}km/h</Text>
+                {
+                    locationData.powerStatus==1 && locationData.powerPer != null ?
+                    <View style={{ flexDirection: 'row'}}>
+                        <Text style={MapStyles.line}>|</Text>
+                        <Text style={MapStyles.infoWindowTitle}>电压:{locationData.powerValue}</Text>
+                    </View>:null
+                }
             </View>                              
             <View style={MapStyles.infoWindowItem}>
                 <Text style={MapStyles.infoWindowTitle}>定位时间：{this.posType().time}</Text>

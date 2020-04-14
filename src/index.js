@@ -11,9 +11,9 @@ import Circle from './components';
 import Jimi from './view';
 import Applet from './http/index';
 import Api from './api/index';
-// Api.setServer('http://apis.jimimax.com');
+Api.setServer('http://apis.jimimax.com');
 // Api.setServer('http://test.api.jimimax.comcom');
-Api.setServer('http://pre.api.jimimax.com');
+// Api.setServer('http://pre.api.jimimax.com');
 const Jm  = {
     Icon,
     Circle,

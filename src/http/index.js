@@ -7,7 +7,7 @@
  * @LastEditTime: 2020-04-10 15:27:51
  */
 import {httpApp,httpBlue,httpWifi,httpWs,httpCameraState,httpCameraInfo,httpClose} from './basic'; 
-import {request,jmAjax,httpExit,httpLocationGet,httpSamllLocation,getEncoding} from './business';
+import {request,jmAjax,httpExit,httpLocationGet,httpSamllLocation,getEncoding,goFlowCard} from './business';
 import {getSmallAppPath,getFileList,createFolder,createTheFolder,fileDelete,saveToAlbum,saveVideoToAlbums,saveImageToAlbum} from './file';
 import {playAudio,getVideoFirstImage,saveVideoToAlbum,getVideoTime,changeSreenDirection,stopAudio} from './media';
 import { getMicrophone,skipSetWifi } from './permissions';
@@ -29,6 +29,7 @@ const Applet  = {
     httpLocationGet,
     httpSamllLocation,
     getEncoding,
+    goFlowCard,
     
     getFileList,
     getSmallAppPath,

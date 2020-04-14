@@ -8,8 +8,7 @@
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,SectionList,TouchableOpacity,Image} from 'react-native';
-import {Button} from '../../components/index';
-import {Modal} from '../../components/index';
+import {goFlowCard} from '../../http';
 
 export default class Home extends Component{
     constructor(props){
@@ -114,7 +113,18 @@ export default class Home extends Component{
     }
 
     _onPress = (url)=>{
-        this.props.navigation.push(url);
+        if(url === 'FlowCard'){
+            goFlowCard({
+                onSuccess:()=>{
+
+                },
+                onFail:()=>{
+                    
+                }
+            })
+        }else{
+            this.props.navigation.push(url);
+        }
     }
 }
 
