@@ -17,8 +17,8 @@ class authorization {
                         Toast.message(res.message);
                     }
                 },
-                onFail:()=>{
-                    Toast.message('内部服务器异常');
+                onFail:(err)=>{
+                    Toast.message(err.message);
                 }
             });
         });
@@ -39,8 +39,8 @@ class authorization {
                         Toast.message('不授权将无法正确使用小程序！');
                     }
                 },
-                onFail:()=>{
-                    Toast.message('内部服务器异常');
+                onFail:(err)=>{
+                    Toast.message(err.message);
                 }
             });
         });
@@ -56,8 +56,8 @@ class authorization {
                 onSuccess:(res)=>{
                     resolve(res);
                 },
-                onFail:(res)=>{
-                    Toast.message('内部服务器异常');
+                onFail:(err)=>{
+                    Toast.message(err.message);
                 }
             }
             httpApp('jm_oauth.getAuthorizeCode',obj);  
