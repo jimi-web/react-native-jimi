@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-14 14:20:54
+ * @LastEditTime: 2020-04-16 10:38:27
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -29,7 +29,6 @@ export default class RecordControl extends Component {
         if(this.props.isRecording){
             return time + 's'; 
         }
-       
         let value = this.props.insTimeArr.find(item => {
             return item.value === time;
         })
