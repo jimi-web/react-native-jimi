@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-14 10:37:33
+ * @LastEditTime: 2020-04-16 10:32:10
  */
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
+import { View, Text, StyleSheet, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
 import { changeSreenDirection,createTheFolder,getMicrophone,jmAjax } from '../../http';
 import RVCError from './RVCErrorHint';
 import RVCLoading from './RVCLoading';
@@ -36,6 +36,7 @@ export default class MonitorView extends Component {
         toolArr:PropTypes.array,//底部工具列表
         filePath:PropTypes.string,//保存文件的地址
         code:PropTypes.string,//唤醒设备指令
+        rouseTime:PropTypes.number,//设备的休眠时间
         
     }
     static defaultProps = {
@@ -47,7 +48,8 @@ export default class MonitorView extends Component {
         topStatusIcon:[],
         isStopWork:false,
         toolArr:['screenshots','camera','record','tolk'],
-        filePath:'jmLocalPhotoList'
+        filePath:'jmLocalPhotoList',
+        rouseTime:2
     }
 
     /**
@@ -110,7 +112,7 @@ export default class MonitorView extends Component {
 
     constructor(props){
         super(props);
-       
+        this.backTime = 0;//退出到后台的时间
         this.photoPath = null;//当前文件夹的位置
         this.videoPath = null;
         this.errorNumber = 0;//记录当前播放过程中出错误的次数，达到三次以下进行静默重连。
@@ -138,11 +140,7 @@ export default class MonitorView extends Component {
     }
     componentDidMount(){
         // 当有code时进行唤醒设备在RVC初始化
-        if(this.props.code){
-            this.setInstruction();
-        }else{
-            this.initialize();
-        }
+        this.initialize();
         AppState.addEventListener('change',this.handleAppstatus);
         BackHandler.addEventListener('hardwareBackPress',this.handleBackHandler);
         
@@ -154,11 +152,17 @@ export default class MonitorView extends Component {
         if(status == 'active'){
             if(this.props.code){
                 JMRTMPPlayerManager.reStart();
-                this.setInstruction();
+                const activeTime = new Date().getTime();
+                if(activeTime - this.backTime > this.props.rouseTime * 1000){
+                    this.setInstruction();
+                }else{
+                    this.initialize();
+                }
             }else{
                 this.initialize();
             }
         }else{
+            this.backTime = new Date().getTime()
             JMRTMPPlayerManager.stop();
         }
     }
@@ -427,7 +431,7 @@ export default class MonitorView extends Component {
             <View style={styles}>
                 {{...iconArrs} = iconArr}
             </View>
-        ;
+            ;
         return element;
     }
     /**
@@ -613,7 +617,7 @@ export default class MonitorView extends Component {
      * 加载底部提示
      */
     renderBottomHint = () => {
-        let top = 5;
+        let bottom = 5;
         if(this.state.isScreen){
             bottom = Platform.OS == 'ios'?45:80;
             if(this.state.screenClickNum % 2 !== 0){
@@ -661,7 +665,6 @@ export default class MonitorView extends Component {
             RVCStatus:1
         });
         const {code,params}  = this.props;
-        console.log(code,123456);
         const insConfig = {
             cmdCode:code,
             cmdType:0,
@@ -678,10 +681,16 @@ export default class MonitorView extends Component {
             encodingType:true
         }).then(res => {
             this.initialize();
-           
-        });
-       
-        
+        })
+        .catch(res => {
+            this.initialize();
+        })
+    }
+    /**
+     * 设置设备唤醒时间
+     */
+    setDeviceTime = () => {
+
     }
     /** 
      * 视频初始化
@@ -705,7 +714,17 @@ export default class MonitorView extends Component {
             RVCStatus:1
         });
         JMRTMPPlayerManager.initialize(params.key, params.secret, params.imei);
+        JMRTMPPlayerManager.reStart();
         this.onStartPlay();
+        // JMRTMPPlayerManager.reStart().then(res => {
+        //     console.log(res,'成功回调')
+        //     this.onStartPlay();
+        // })
+        // .catch(res => {
+        //     console.log(res,'失败回调')
+        //     this.onStartPlay();
+        // })
+        
     }
     /**     
      * 播放视频

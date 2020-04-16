@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-14 14:25:39
+ * @LastEditTime: 2020-04-16 10:56:08
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -173,7 +173,7 @@ export default class Record extends Component {
             m:60,
             h:3600
         }
-        return unitArr[unit];
+        return unitArr[unit] || 1;
     }
     /**
      * 获取存储的录音信息
@@ -181,7 +181,9 @@ export default class Record extends Component {
     getStorage = () => {
         getEncoding().then(value => {
             const key = value.encoding + 'locatorRecord';
+           
             AsyncStorage.getItem(key).then(res => {
+                console.log(res,'获取的本地的数据')
                 if(!res){
                     let recordLength = 30
                     this.props.insTimeArr.forEach(item => {
@@ -198,7 +200,7 @@ export default class Record extends Component {
                 const recordTime = Math.floor((new Date().getTime() - data.recordCreatedTime) / 1000);
                 let isRecording;
                 if(data.isRecording && data.recordType == 0){
-                    isRecording = recordTime > data.recordLength?false:true;
+                    isRecording = recordTime > data.recordLength * this.countUnit()?false:true;
                 }else{
                     isRecording = data.isRecording;
                 }
