@@ -250,6 +250,7 @@ export default class PositionUtils extends Component {
                 if(deviceInfo.latitude){
                     this.drawMarker(deviceInfo);
                 }else{
+                    Toast.remove(this.loading);
                     this.onDeviceChange(deviceInfo);
                 } 
             });
