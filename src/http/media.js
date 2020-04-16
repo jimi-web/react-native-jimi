@@ -9,6 +9,10 @@
 
 import {httpApp} from './basic';
 
+/**
+ * 播放音频
+ * @param {String} url  音频路径
+ */
 export const playAudio = (url)=>{
     return new Promise((resolve,reject) => {
         httpApp('jm_media.playAudio',{
@@ -68,29 +72,6 @@ export const getVideoFirstImage = (videoPaths)=>{
 };
 
 /**
- * 保存视频相册
- * @param  {string} url 图片路径
- */
-export const saveVideoToAlbum = (url) => {
-    return new Promise((resolve,reject) => {
-        httpApp('jm_media.saveVideoToAlbum', {
-            filePath: url,
-            onSuccess: (res) => {
-                resolve(res);
-            },
-            onFail: (res) => {
-                console.log(res,'视频下载失败底层');
-                
-                reject(res);
-            },
-            onComplete: () => {
-                //
-            }
-        });
-    });     
-};
-
-/**
  * 获取视频时长
  * @param  {String} url 视频路径
  */
@@ -113,8 +94,8 @@ export const getVideoTime = (url) => {
 
 
 /**
- * 获取视频时长
- * @param  {String} orientation 视频路径,landscapeRight:右横向，landscapeLeft:左横向；portrait:竖屏
+ * 改变屏幕方向
+ * @param  {String} orientation landscapeRight:右横向，landscapeLeft:左横向；portrait:竖屏
  */
 export const changeSreenDirection = (orientation) => {
     return new Promise((resolve,reject) => {

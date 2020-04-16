@@ -28,7 +28,6 @@ import Video from './photo/photoDeatil/Video';
 import PhotoDeatil from './photo/photoDeatil/PhotoDeatil';
 import Empty from './empty/Empty';
 import RVC from './RVC/MonitorView';
-import FlowCard from './flowCard/index';
 import MediaSyc from './mediaSyn/MediaSyn';
 import Instruction from './instruction/instruction';
 import MediaContral from './mediaSyn/MediaContral';
@@ -58,7 +57,6 @@ const Jimi = {
     PhotoAlbum,
     Empty,
     RVC,
-    FlowCard,
     MediaSyc,
     Instruction,
     MediaContral,

@@ -97,13 +97,13 @@ Object.res
 filePath  | String | 文件夹路径 |无 
 fileList  | Array | 文件数组 |无
 
-## Applet.fileDelete(Array urlArray)
+## Applet.fileDelete(Array urlArray || String urlArray)
 批量删除文件
 
 
 ### 参数
-### Array urlArray
-文件地址数组
+### Array urlArray || String urlArray
+可以是文件地址数组[test/xixi.png,test/xixi.png,test/xixi.png],也可以是逗号分隔的字符串,例如'test/xixi.png,test/xixi.png,test/xixi.png'
 
 
 ### Demo
@@ -119,18 +119,39 @@ Applet.fileDelete(['test/xixi.png','test/hahah.png']).then(()=>{
 ```
 
 
-## Applet.saveToAlbum(String imgUrl)
+## Applet.saveToAlbum(String url)
 保存图片到相册
 
 ### 参数
-### String imgUrl
-图片位置
+### String url
+图片位置路径
 
 
 ### Demo
 
 ```
 Applet.saveToAlbum(['test/xixi.png').then(()=>{
+	//保存成功
+	
+}).catch((res)=>{
+	//保存失败
+});
+
+```
+
+
+## Applet.saveVideoToAlbum(String url)
+保存视频到相册
+
+### 参数
+### String videoUrl
+视频位置路径
+
+
+### Demo
+
+```
+Applet.saveVideoToAlbum(['test/xixi.mp4').then(()=>{
 	//保存成功
 	
 }).catch((res)=>{
@@ -151,3 +172,9 @@ code | -12 | 无控制权限 |无
 code | -13 | 文件不存在 |无
 code | -14 | 文件夹不存在 |无
 code | -15 | 路径异常(路径非法或操作不可操作的路径) |无
+
+
+
+
+
+

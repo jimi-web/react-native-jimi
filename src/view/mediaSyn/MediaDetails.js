@@ -13,7 +13,7 @@ import Video from '../photo/photoDeatil/Video';
 import {Icon} from '../../components/index';
 import BottomToolbars from '../components/BottomToolbars';
 import {Modal} from '../../components/index';
-import {createTheFolder,fileDelete,saveToAlbum,saveVideoToAlbums} from '../../http/index';
+import {createTheFolder,fileDelete,saveToAlbum,saveVideoToAlbum} from '../../http/index';
 import {batchFileDelete,batchSaveToAlbum,deleteDeviceVideoPicFile,downloadFile} from '../photo/file';
 import PropTypes from 'prop-types';
 import Toast from 'teaset/components/Toast/Toast';
@@ -140,7 +140,7 @@ export default class MediaDetails extends Component {
         const {data} = this.props;
         console.log(data,'保存');
         if(data.type === 'mp4'){
-            saveVideoToAlbums(data.url).then(res => {
+            saveVideoToAlbum(data.url).then(res => {
                 Toast.message('保存成功');
             });
         }else{
