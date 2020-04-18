@@ -8,8 +8,8 @@
  */
 import {httpApp,httpBlue,httpWifi,httpWs,httpCameraState,httpCameraInfo,httpClose} from './basic'; 
 import {request,jmAjax,httpExit,httpLocationGet,httpSamllLocation,getEncoding,goFlowCard} from './business';
-import {getSmallAppPath,getFileList,createFolder,createTheFolder,fileDelete,saveToAlbum,saveVideoToAlbums,saveImageToAlbum} from './file';
-import {playAudio,getVideoFirstImage,saveVideoToAlbum,getVideoTime,changeSreenDirection,stopAudio} from './media';
+import {getSmallAppPath,getFileList,createFolder,createTheFolder,fileDelete,saveToAlbum,saveVideoToAlbum,saveImageToAlbum} from './file';
+import {playAudio,getVideoFirstImage,getVideoTime,changeSreenDirection,stopAudio} from './media';
 import { getMicrophone,skipSetWifi } from './permissions';
 import {authorizationProcess} from './authorization';//授权
 import {getWifiState,connectWifi,getWifiInfo,openWifi} from './wifi';
@@ -37,7 +37,6 @@ const Applet  = {
     createTheFolder,
     fileDelete,
     saveToAlbum,
-    saveVideoToAlbums,
     saveImageToAlbum,
     
     playAudio,

@@ -112,7 +112,7 @@ export const fileDelete = (url) => {
     console.log(url,'删除');
     return new Promise((resolve,reject) => {
         httpApp('jm_file.delete', {
-            filePath: url.join(','),
+            filePath: typeof url === 'string' ? url: url.join(','),
             onSuccess: (res) => {
                 resolve(res);
             },
@@ -154,7 +154,7 @@ export const saveToAlbum = (url) => {
  * 保存视频相册
  * @param  {string} url 视频的本地
  */
-export const saveVideoToAlbums = (url) => {
+export const saveVideoToAlbum = (url) => {
     return new Promise((resolve,reject) => {
         httpApp('jm_media.saveVideoToAlbum', {
             filePath: url,

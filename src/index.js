@@ -14,7 +14,6 @@ import Api from './api/index';
 // Api.setServer('http://apis.jimimax.com');
 Api.setServer('http://test.api.jimimax.com');
 // Api.setServer('http://pre.api.jimimax.com');
-// Api.setServer('http://pre.api.jimimax.com');
 const Jm  = {
     Icon,
     Circle,

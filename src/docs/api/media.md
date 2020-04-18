@@ -28,26 +28,6 @@ videoPath | String | 视频路径 |无
 videoFirstImagePath | String | 首帧图片保存的路径，“YYYY-MM-dd-HH-mm-ss”格式的png |无
 
 
-## Applet.saveVideoToAlbum(String videoUrl)
-保存视频到相册
-
-### 参数
-### String videoUrl
-视频路径
-
-
-### Demo
-
-```
-Applet.saveVideoToAlbum('test/xixi.mp4').then(()=>{
-	//保存成功
-	
-}).catch((res)=>{
-	//保存失败
-});
-
-```
-
 ## Applet.getVideoTime(String videoPaths)
 获取视频时长
 
@@ -68,11 +48,77 @@ Applet.getVideoTime('test/xixi.mp4，test/hahahaha.mp4').then((res)=>{
 ```
 
 ### 成功参数
-Array.res
+Object.res
 
 属性 | 类型  | 说明 | 最低版本
 -|-|-|-
 videoPath | String | 视频路径 |无 
 videoTime | String | 视频时长 |无
+
+
+
+
+## Applet.playAudio(String url)
+播放音频
+
+### 参数
+### String url
+音频路径
+
+### Demo
+
+```
+Applet.playAudio('test/xixi.mp4').then((res)=>{
+	//播放成功
+	
+}).catch((res)=>{
+	//播放失败
+});
+
+```
+
+
+
+## Applet.stopAudio(String url)
+暂停音频
+
+### 参数
+### String url
+音频路径
+
+### Demo
+
+```
+Applet.stopAudio('test/xixi.mp4').then((res)=>{
+	//暂停成功
+	
+}).catch((res)=>{
+	//暂停失败
+});
+
+```
+
+
+## Applet.changeSreenDirection(String orientation)
+改变屏幕方向
+
+### 参数
+### String orientation
+landscapeRight:右横向，landscapeLeft:左横向；portrait:竖屏
+
+### Demo
+
+```
+Applet.changeSreenDirection('landscapeRight').then((res)=>{
+	//成功
+	
+}).catch((res)=>{
+	//失败
+});
+
+```
+
+
+
 
 
