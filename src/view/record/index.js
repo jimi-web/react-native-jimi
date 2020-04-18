@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-18 17:22:55
+ * @LastEditTime: 2020-04-18 17:37:49
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -41,39 +41,39 @@ export default class Record extends Component {
             
         },
         insTimeArr:[
-            // {
-            //     title:'30s',
-            //     value:30,
-            //     isChange:true
-            // },
             {
-                title:'1分钟',
-                value:1,
+                title:'30s',
+                value:30,
                 isChange:true
             },
             {
+                title:'1分钟',
+                value:60,
+                isChange:false
+            },
+            {
                 title:'2分钟',
-                value:2,
+                value:120,
                 isChange:false
             },
             {
                 title:'3分钟',
-                value:3,
+                value:180,
                 isChange:false
             },
             {
                 title:'4分钟',
-                value:4,
+                value:240,
                 isChange:false
             },
             {
                 title:'5分钟',
-                value:5,
+                value:300,
                 isChange:false
             },
             {
                 title:'持续录音',
-                value:1,
+                value:30,
                 isChange:false
             },
         ],
@@ -184,7 +184,6 @@ export default class Record extends Component {
             const key = value.encoding + 'locatorRecord';
            
             AsyncStorage.getItem(key).then(res => {
-                console.log(res,'获取的本地的数据')
                 if(!res){
                     let recordLength = 30
                     this.state.insTimeArr.forEach(item => {
@@ -228,7 +227,6 @@ export default class Record extends Component {
                     this.recordTimer = setInterval(()=>{
                         i--;
                         if(i <= 0){
-                            console.log(data.recordLength,'获取的录音长度')
                             this.setState({
                                 isRecording:false,
                                 recordLength:data.recordLength
@@ -784,7 +782,6 @@ export default class Record extends Component {
      * 开始录音
      */
     onRecord = (data) => {
-        console.log(data,'点击录音')
         let instruction;
         if(this.state.recordType){
             if(data.isRecording){
@@ -798,10 +795,8 @@ export default class Record extends Component {
         this.setState({
             isBeginRecord:false
         });
-        console.log(instruction,'发送请求时')
         this.backTimeLength = 0;
         this.setRecordInstruction(instruction).then(res => {
-            console.log(res,'录音结果')
             this.setState({
                 isBeginRecord:true
             });
