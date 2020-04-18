@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-16 10:38:27
+ * @LastEditTime: 2020-04-18 16:32:48
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -26,17 +26,20 @@ export default class RecordControl extends Component {
      * 时间处理
      */
     ftmTime = (time) =>{
+        console.log(time,'处理的录音')
         if(this.props.isRecording){
             return time + 's'; 
         }
         let value = this.props.insTimeArr.find(item => {
-            return item.value === time;
+            return item.value == time;
         })
         let s = this.state.time;
         if(!value){
             value = this.props.insTimeArr[0];
         }
+        
         s = value.title;
+        console.log(s,'获取的title')
         return s;
     }
     render(){
@@ -190,16 +193,17 @@ export default class RecordControl extends Component {
     onConfirm = () => {
         // console.log(this.state.time,'保存的时间');
         const {insTimeArr} = this.props;
-        let time = 30;
-        insTimeArr.forEach(item => {
+        let time = insTimeArr[0].time;
+        insTimeArr.forEach((item,i) => {
             item.isChange = false;
             if(item.title === this.state.time){
                 time = item.value
                 item.isChange = true
             }
         })
-        const type = this.state.time == '持续录音'?1:0;
-        this.props.onConfirm &&  this.props.onConfirm({type,time});
+        const type = this.state.index == insTimeArr.length - 1?1:0;
+        let insTimeArrs = JSON.parse(JSON.stringify(insTimeArr));
+        this.props.onConfirm &&  this.props.onConfirm({type,time,insTimeArrs});
         Drawer.close(this.selectTime);
     }
     /**

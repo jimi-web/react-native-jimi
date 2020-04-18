@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-14 16:28:11
+ * @LastEditTime: 2020-04-18 17:33:51
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';
@@ -49,6 +49,7 @@ export default class Instruction extends Component {
                             }
                         },
                         {
+                            contral:0,
                             type:'input',
                             content:{
                                 placeholder:'请输入SOS号码',
@@ -63,6 +64,7 @@ export default class Instruction extends Component {
                             border:true,
                             insID:'ins2',
                             insValue:'',
+                            stop:true
                         },
                         {
                             type:'input',

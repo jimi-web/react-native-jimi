@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-13 18:30:04
+ * @LastEditTime: 2020-04-18 17:31:42
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image,ActivityIndicator} from 'react-native';
@@ -164,7 +164,11 @@ export default class Instruction extends Component {
          for (let i = 0; i < this.state.insArr.length; i++) {
              const item = this.state.insArr[i];
              const content = item.content;
-             if(item.stop && content.rule){
+             let flag = true;
+             if(item.contral != undefined){
+                flag = this.state.insArr[item.contral].value;
+             }
+             if(item.stop && content.rule && flag){
                  let regExp = new RegExp(content.rule);//根据字符串生成正则
                  if(!regExp.test(item.value)){
                      return Toast.message(item.hint || '您当前输入的格式有误！');
