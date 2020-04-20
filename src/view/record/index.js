@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-20 14:44:10
+ * @LastEditTime: 2020-04-20 14:55:20
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -34,7 +34,7 @@ export default class Record extends Component {
         recordIns:'LY,ins#',//单个指令
         recordStutainTrue:'CXLY,ON,ins#',  //持续录音
         recordStutainFalse:'CXLY,OFF#',//关闭录音
-        unit:'m',//录音值的单位
+        unit:'s',//录音值的单位
         params:{
             pageNum: 1,
             pageSize: 10
@@ -185,7 +185,7 @@ export default class Record extends Component {
            
             AsyncStorage.getItem(key).then(res => {
                 if(!res){
-                    let recordLength = 30
+                    let recordLength = this.state.insTimeArr[0].value;
                     this.state.insTimeArr.forEach(item => {
                         item.isChange = false;
                         if(item.isChange){
@@ -209,9 +209,11 @@ export default class Record extends Component {
                     isRecording = data.isRecording;
                     return
                 }
+                let i = data.recordLength * this.countUnit() - recordTime;
                 if(isRecording){
                     this.setState({
                         isRecording,
+                        recordLength:i,
                         recordType:data.recordType,
                     });
                 }else{
@@ -223,7 +225,6 @@ export default class Record extends Component {
                 }
                 
                 if(isRecording && data.recordType == 0){
-                    let i = data.recordLength * this.countUnit() - recordTime;
                     this.recordTimer = setInterval(()=>{
                         i--;
                         if(i <= 0){
