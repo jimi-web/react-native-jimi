@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-18 16:32:48
+ * @LastEditTime: 2020-04-20 16:15:10
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -26,7 +26,6 @@ export default class RecordControl extends Component {
      * 时间处理
      */
     ftmTime = (time) =>{
-        console.log(time,'处理的录音')
         if(this.props.isRecording){
             return time + 's'; 
         }
