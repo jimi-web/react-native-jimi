@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-18 17:37:49
+ * @LastEditTime: 2020-04-20 14:44:10
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -716,7 +716,7 @@ export default class Record extends Component {
             }
         });
         if(!dataArr.length){
-            Toast.message('请选择需要删除的文件');
+            return Toast.message('请选择需要删除的文件');
         }
 
         const data = {
@@ -733,7 +733,8 @@ export default class Record extends Component {
                 pageSize:10
             };
             this.setState({
-                isOpenSelect:1
+                isOpenSelect:1,
+                changeFileLength:0
             });
             this.state.recordList = [];
             this.state.initFile = [];
@@ -892,7 +893,8 @@ export default class Record extends Component {
         if(type == 1){
             this.setState({
                 recordList:this.state.deleteRecordList,
-                isOpenSelect: type
+                isOpenSelect: type,
+                changeFileLength:0
             });
         }else{
             if(!this.state.recordList.length){
@@ -908,7 +910,8 @@ export default class Record extends Component {
                         const recordList = JSON.parse(JSON.stringify(this.state.recordList));
                         this.setState({
                             recordList,
-                            isOpenSelect:type
+                            isOpenSelect:type,
+                            changeFileLength:0
                         });
                     });
                 });
