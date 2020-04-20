@@ -30,7 +30,7 @@ const MapStyles =  StyleSheet.create({
         padding:15,
         paddingBottom:0,
         backgroundColor:'#fff',
-        width:280,
+        width:260,
     },
     infoWindowShadow:{
         shadowColor: '#000000',
@@ -41,7 +41,6 @@ const MapStyles =  StyleSheet.create({
     infoWindowItem:{
         flexDirection: 'row',
         paddingBottom:5,
-        alignItems:'center'
     },
     infoWindowTitle:{
         color:'#666',
@@ -50,14 +49,14 @@ const MapStyles =  StyleSheet.create({
     infoWindowItemImei:{
         justifyContent:'space-between'
     },  
-    deviceStatus:{
+    imei:{
         fontSize:16,
         color:'#000',
         paddingBottom:5
     },
     line:{
-        marginLeft:5,
-        marginRight:5,
+        marginLeft:10,
+        marginRight:10,
         color:'#E1E1E1'
     },
     batterybg:{
@@ -68,8 +67,7 @@ const MapStyles =  StyleSheet.create({
         height:13,
         borderWidth:1,
         borderColor:'#000',
-        borderRadius:2,
-        marginRight:4
+        borderRadius:2
     },
     batteryRight:{
         position:'absolute',

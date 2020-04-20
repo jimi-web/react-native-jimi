@@ -73,7 +73,6 @@ export default class TrackUtils extends Component {
         this.timer = null;
 
         this.state = {
-            initialRegion:this.props.initialRegion,
             mapType:this.props.mapType,//地图类型
             trafficEnabled:this.props.trafficEnabled,//路况是否开启
             isTrackPolylineShow:true,//轨迹线是否显示
@@ -289,7 +288,7 @@ export default class TrackUtils extends Component {
             pointArr:pointArr,
             totalProgress:allPoint.length-1,
             progress:0,
-            totalDistance:this.countTotalTrack(allPoint),
+            totalDistance:this.countTotalTrack(allPoint)
         },()=>{
             //如果是谷歌地图则设置可视区域
             if(this.state.userMapType){
@@ -439,11 +438,7 @@ export default class TrackUtils extends Component {
             this.setState({
                 progress:currentProgress,
                 pointArr:pointArr,
-                deviceMarker:deviceMarker,
-                initialRegion:{
-                    ...this.state.initialRegion,
-                    ...deviceMarker
-                }
+                deviceMarker:deviceMarker
             });
         },this.state.speed);
     }

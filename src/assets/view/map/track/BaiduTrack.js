@@ -40,7 +40,7 @@ export default class BaiduTrack extends TrackUtils {
                     mapType={this.state.mapType === 'standard' ? 1 : 2}
                     style={Styles.container}
                     zoom={18}
-                    center={this.state.initialRegion}
+                    center={this.props.initialRegion}
                     onMapLoaded={()=>{
                         this.onMapReady(0);
                     }}
@@ -82,6 +82,9 @@ export default class BaiduTrack extends TrackUtils {
                         rotate={this.state.deviceMarker.direction}
                         visible={this.state.deviceMarker.latitude?true:false}
                     />
+
+       
+
                 </MapView>
                 <View style={MapStyles.bottomContent}>
                     {this.controller()}
