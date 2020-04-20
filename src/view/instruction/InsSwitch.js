@@ -36,6 +36,7 @@ export default class InsSwitch extends Component {
         </View>;
     }
     renderStyle = () => {
+        
         const {border} = this.props.data;
         let style = this.props.style;
         let borderStyle = border?baseStyle.bottomBorderStyle:null;
@@ -55,7 +56,8 @@ export default class InsSwitch extends Component {
     *渲染开关
      */
     renderSwitch = () => {
-        const {data} = this.props;
+        
+        const { data } = this.props;
         let element = <Switch value={data.value} onValueChange={(value) => this.onValueChange(value)}  activeColor={'#13A887'} />;
         return element;
     }

@@ -9,9 +9,14 @@
 import {StyleSheet} from 'react-native';
 
 const baseStyle = {
-    disableColor:'#98BBF9',
-    mainColor:'#3479F6',
+    backgroundColor:'#f7f7f7',//背景颜色
+    disableColor:'#98BBF9',//禁用颜色
+    mainColor:'#3479F6',//主题色
+
+    //字体
     mainFontSize:16,
+    
+    
     bottomBorderStyle:{
         borderStyle:'solid',
         borderBottomColor:'#bebebe',

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-16 10:56:08
+ * @LastEditTime: 2020-04-20 14:55:20
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -83,6 +83,7 @@ export default class Record extends Component {
         this.backRecordPlayLength = 0;//录音播放时长
         this.backTimeLength = 0;//录音的时长
         this.userkey = null;
+        this.backDate = 0;
         // this.overlayKey = 0;
         this.totalPage = 10;//总页数
         this.isFolder = false;//判断是否创建或是否拥有该文件夹
@@ -95,14 +96,15 @@ export default class Record extends Component {
             changeFileLength: 0,//选中的文件长度
             recordType:0,//录音类型，0是正常，1是持续录音
             isRecording:false,//是否录制中
-            recordLength:30,//录音时长
+            recordLength:this.props.insTimeArr[0].value,//录音时长
             refreshing:true,//列表是否加载中
             /* 传参 */
             params: this.props.params,
             initFile: [],//原始数据
             recordList: [],//格式化之后数据
             deleteRecordList:[],//删除录音深拷贝数据
-            isBeginRecord:true
+            isBeginRecord:true,
+            insTimeArr:this.props.insTimeArr
         };
     }
     componentDidMount() {
@@ -129,39 +131,38 @@ export default class Record extends Component {
         if(this.state.isPlay){
             stopAudio(this.userkey);
         }
+        AppState.removeEventListener('change',this.handleAppstatus);
+    }
+    handleAppstatus = (status) => {
+        if(status == 'active'){
+            if(this.backDate != 0){
+                this.backTimeLength  = parseInt((new Date().getTime() - this.backDate) / 1000);
+                this.backRecordPlayLength = parseInt(new Date().getTime() - this.backDate);
+                // console.log(this.backTimeLength,this.backRecordPlayLength,89401);
+            }
+        }else{
+            // console.log(this.isPlay,23456);
+            if(this.state.isPlay && Platform.OS === 'ios'){
+                this.getPlayRecord().then(res => {
+                    this.getStopRecordList(res[0]).then(data => {
+                        this.setState({
+                            recordList:data,
+                            isPlay:false
+                        });
+                    });
+                });
+            }   
+            this.backTimeLength = 0;
+            this.backDate = new Date().getTime();
+        }
     }
     /**
      * 获取用户在后台的时间
      */
     getBackTime = () => {
         // 监听用户后台
-        let backDate = 0;
-        AppState.addEventListener('change', (status) => {
-            if(this.isLeave){
-                return;
-            }
-            if(status == 'active'){
-                if(backDate != 0){
-                    this.backTimeLength  = parseInt((new Date().getTime() - backDate) / 1000);
-                    this.backRecordPlayLength = parseInt(new Date().getTime() - backDate);
-                    // console.log(this.backTimeLength,this.backRecordPlayLength,89401);
-                }
-            }else{
-                // console.log(this.isPlay,23456);
-                if(this.state.isPlay && Platform.OS === 'ios'){
-                    this.getPlayRecord().then(res => {
-                        this.getStopRecordList(res[0]).then(data => {
-                            this.setState({
-                                recordList:data,
-                                isPlay:false
-                            });
-                        });
-                    });
-                }   
-                this.backTimeLength = 0;
-                backDate = new Date().getTime();
-            }
-        });
+        
+        AppState.addEventListener('change',this.handleAppstatus);
     }
     /**
      * 根据单位计算当前时长的倍数
@@ -183,16 +184,19 @@ export default class Record extends Component {
             const key = value.encoding + 'locatorRecord';
            
             AsyncStorage.getItem(key).then(res => {
-                console.log(res,'获取的本地的数据')
                 if(!res){
-                    let recordLength = 30
-                    this.props.insTimeArr.forEach(item => {
+                    let recordLength = this.state.insTimeArr[0].value;
+                    this.state.insTimeArr.forEach(item => {
+                        item.isChange = false;
                         if(item.isChange){
-                            recordLength = item.value
+                            recordLength = item.value;
+                            item.isChange = true;
                         }
                     })
+                    let insTimeArr = JSON.parse(JSON.stringify(this.state.insTimeArr))
                     this.setState({
-                        recordLength
+                        recordLength,
+                        insTimeArr
                     })
                     return;
                 }
@@ -203,14 +207,24 @@ export default class Record extends Component {
                     isRecording = recordTime > data.recordLength * this.countUnit()?false:true;
                 }else{
                     isRecording = data.isRecording;
+                    return
                 }
-                this.setState({
-                    isRecording,
-                    recordType:data.recordType,
-                    recordLength:data.recordLength,
-                });
+                let i = data.recordLength * this.countUnit() - recordTime;
+                if(isRecording){
+                    this.setState({
+                        isRecording,
+                        recordLength:i,
+                        recordType:data.recordType,
+                    });
+                }else{
+                    this.setState({
+                        isRecording,
+                        recordType:data.recordType,
+                        recordLength:data.recordLength,
+                    });
+                }
+                
                 if(isRecording && data.recordType == 0){
-                    let i = data.recordLength * this.countUnit() - recordTime;
                     this.recordTimer = setInterval(()=>{
                         i--;
                         if(i <= 0){
@@ -425,7 +439,7 @@ export default class Record extends Component {
                     fileNumber={this.state.changeFileLength}
                     recordType={this.state.recordType}
                     isRecording={this.state.isRecording}
-                    insTimeArr={this.props.insTimeArr}
+                    insTimeArr={this.state.insTimeArr}
                     onSelect={(type) => { this.onSelect(type); }}
                     onEmpty={() => { this.onEmpty(); }}
                     onDelete={() => { this.onDelete(); }}
@@ -703,7 +717,7 @@ export default class Record extends Component {
             }
         });
         if(!dataArr.length){
-            Toast.message('请选择需要删除的文件');
+            return Toast.message('请选择需要删除的文件');
         }
 
         const data = {
@@ -720,7 +734,8 @@ export default class Record extends Component {
                 pageSize:10
             };
             this.setState({
-                isOpenSelect:1
+                isOpenSelect:1,
+                changeFileLength:0
             });
             this.state.recordList = [];
             this.state.initFile = [];
@@ -782,6 +797,7 @@ export default class Record extends Component {
         this.setState({
             isBeginRecord:false
         });
+        this.backTimeLength = 0;
         this.setRecordInstruction(instruction).then(res => {
             this.setState({
                 isBeginRecord:true
@@ -863,10 +879,11 @@ export default class Record extends Component {
     /**
      * 修改时长
      */
-    onConfirm = ({type,time}) => {
+    onConfirm = ({type,time,insTimeArrs}) => {
         this.setState({
             recordLength:time,
             recordType:type,
+            insTimeArr:insTimeArrs
         });
         
     }
@@ -877,7 +894,8 @@ export default class Record extends Component {
         if(type == 1){
             this.setState({
                 recordList:this.state.deleteRecordList,
-                isOpenSelect: type
+                isOpenSelect: type,
+                changeFileLength:0
             });
         }else{
             if(!this.state.recordList.length){
@@ -893,7 +911,8 @@ export default class Record extends Component {
                         const recordList = JSON.parse(JSON.stringify(this.state.recordList));
                         this.setState({
                             recordList,
-                            isOpenSelect:type
+                            isOpenSelect:type,
+                            changeFileLength:0
                         });
                     });
                 });
