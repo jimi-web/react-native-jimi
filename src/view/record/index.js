@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-20 14:55:20
+ * @LastEditTime: 2020-04-20 16:36:05
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -34,46 +34,46 @@ export default class Record extends Component {
         recordIns:'LY,ins#',//单个指令
         recordStutainTrue:'CXLY,ON,ins#',  //持续录音
         recordStutainFalse:'CXLY,OFF#',//关闭录音
-        unit:'s',//录音值的单位
+        unit:'m',//录音值的单位
         params:{
             pageNum: 1,
             pageSize: 10
             
         },
         insTimeArr:[
+            // {
+            //     title:'30s',
+            //     value:30,
+            //     isChange:true
+            // },
             {
-                title:'30s',
-                value:30,
+                title:'1分钟',
+                value:1,
                 isChange:true
             },
             {
-                title:'1分钟',
-                value:60,
-                isChange:false
-            },
-            {
                 title:'2分钟',
-                value:120,
+                value:2,
                 isChange:false
             },
             {
                 title:'3分钟',
-                value:180,
+                value:3,
                 isChange:false
             },
             {
                 title:'4分钟',
-                value:240,
+                value:4,
                 isChange:false
             },
             {
                 title:'5分钟',
-                value:300,
+                value:5,
                 isChange:false
             },
             {
                 title:'持续录音',
-                value:30,
+                value:1,
                 isChange:false
             },
         ],
@@ -207,7 +207,6 @@ export default class Record extends Component {
                     isRecording = recordTime > data.recordLength * this.countUnit()?false:true;
                 }else{
                     isRecording = data.isRecording;
-                    return
                 }
                 let i = data.recordLength * this.countUnit() - recordTime;
                 if(isRecording){
@@ -310,7 +309,7 @@ export default class Record extends Component {
                     }
                 });
             });
-            item.timeLength  =  item.timeLength;
+            item.timeLength = item.timeLength;
             // 添加日期标识符
             item.today = new Date(item.createTime).Format('YYYY-MM-DD');
             if (index == 0) {
@@ -819,12 +818,11 @@ export default class Record extends Component {
                 const key = value.encoding + 'locatorRecord';
                 AsyncStorage.setItem(key,JSON.stringify(storage));
             });
-            // 修改录音状态
-            this.setState({
-                isRecording:!data.isRecording
-            });
             // 录音结束之后重新刷新数据
             if(this.state.recordType){
+                this.setState({
+                    isRecording:!data.isRecording,
+                });
                 // 持续录音
                 if(data.isRecording){
                     const listParams = {
@@ -840,6 +838,10 @@ export default class Record extends Component {
             }else{
                 // 限时录音
                 let i = data.recordLength * this.countUnit();
+                this.setState({
+                    isRecording:!data.isRecording,
+                    recordLength:i
+                });
                 this.recordTimer = setInterval(() => {
                     i = i - 1;
                     if(this.backTimeLength){
