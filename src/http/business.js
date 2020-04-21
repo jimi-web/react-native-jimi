@@ -265,6 +265,7 @@ export const goFlowCard = ({onSuccess,onFail})=>{
         httpApp('jm_pay.loadPrepaidPage', {
             url:api.flowUrl+res.data,
             title:'流量卡',
+            navigationBarTextStyle:'black',
             onSuccess: onSuccess,
             // 请求失败
             onFail:onFail
