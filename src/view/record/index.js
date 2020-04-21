@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-21 17:57:49
+ * @LastEditTime: 2020-04-21 18:54:19
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -73,7 +73,7 @@ export default class Record extends Component {
             },
             {
                 title:'持续录音',
-                value:30,
+                value:1,
                 isChange:false
             },
         ],
@@ -430,7 +430,6 @@ export default class Record extends Component {
                     isBeginRecord:true
                 });
             }
-
             if(isRecording && data.recordType == 0){
                 this.recordTimer = setInterval(()=>{
                     i--;

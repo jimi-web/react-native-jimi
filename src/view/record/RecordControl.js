@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-20 16:15:10
+ * @LastEditTime: 2020-04-21 18:53:41
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -108,6 +108,7 @@ export default class RecordControl extends Component {
      */
     onRecord = () => {
         const {isRecording,recordLength,recordType} = this.props;
+        console.log(recordLength,1111)
         let data = {
             recordLength:recordLength,
             isRecording:isRecording
@@ -192,10 +193,11 @@ export default class RecordControl extends Component {
     onConfirm = () => {
         // console.log(this.state.time,'保存的时间');
         const {insTimeArr} = this.props;
-        let time = insTimeArr[0].time;
+        let time = insTimeArr[0].value;
         insTimeArr.forEach((item,i) => {
             item.isChange = false;
-            if(item.title === this.state.time){
+            console.log(this.state.time,111234)
+            if(item.title == this.state.time){
                 time = item.value
                 item.isChange = true
             }
