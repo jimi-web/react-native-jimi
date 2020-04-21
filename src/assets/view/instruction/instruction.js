@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-18 17:31:42
+ * @LastEditTime: 2020-04-08 18:01:23
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image,ActivityIndicator} from 'react-native';
@@ -47,7 +47,7 @@ export default class Instruction extends Component {
                 {
                     this.props.hint ? 
                         <View style={{justifyContent:'center',padding:10,backgroundColor:'rgba(254, 116, 45, 0.5)'}}>
-                            <Text style={{color:'#FE742D',lineHeight:16}}>{this.props.hint}</Text>
+                            <Text style={{color:'#FE742D'}}>{this.props.hint}</Text>
                         </View>
                         :
                         null
@@ -103,10 +103,7 @@ export default class Instruction extends Component {
         this.state.insArr = this.props.instructionArr;
         let isShow = true; 
         if(item.contral !== undefined){
-            isShow = this.state.insArr[item.contral].value;
-            if(item.contralValue){
-                isShow = item.contralValue == isShow ? true : false;
-            } 
+            isShow = this.state.insArr[item.contral].value;   
         }
         if(!isShow &&(item.type != 'switch' || item.type != 'arrowButton')){
             return null;
@@ -164,11 +161,7 @@ export default class Instruction extends Component {
          for (let i = 0; i < this.state.insArr.length; i++) {
              const item = this.state.insArr[i];
              const content = item.content;
-             let flag = true;
-             if(item.contral != undefined){
-                flag = this.state.insArr[item.contral].value;
-             }
-             if(item.stop && content.rule && flag){
+             if(item.stop && content.rule){
                  let regExp = new RegExp(content.rule);//根据字符串生成正则
                  if(!regExp.test(item.value)){
                      return Toast.message(item.hint || '您当前输入的格式有误！');
@@ -210,12 +203,7 @@ export default class Instruction extends Component {
                     if(item.type == 'perch'){
                         ins = this.renderPerchIns(data,item,ins);
                     }else{
-                        //这里加入判断
-                        let contralValue = data[item.contral].value;
-                        if(item.contralValue){
-                            contralValue = item.contralValue == contralValue ? true : false;
-                        }
-                        if(contralValue){
+                        if(data[item.contral].value){
                             ins = ins.replace(item.insID,insValue);
                         }else{
                             ins = ins.replace(item.insID,'');
@@ -279,8 +267,6 @@ export default class Instruction extends Component {
             encoding:true,
             encodingType:true,
         }).then(res => {
-            console.log(res,'指令成功');
-            
             const insProps = {
                 params,
                 instrution 
@@ -290,8 +276,6 @@ export default class Instruction extends Component {
                 setBtnFlag:false
             });
         }).catch((res)=>{
-            console.log(res,'失败');
-            
             this.setState({
                 setBtnFlag:false
             });

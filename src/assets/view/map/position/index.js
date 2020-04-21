@@ -242,21 +242,16 @@ export default class PositionUtils extends Component {
      * 请求数据默认
      */
     request = async()=>{
-        try {
-            let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress,this.props.error);
-            this.setState({
-                lastAddress:deviceInfo.address
-            },()=>{
-                if(deviceInfo.latitude){
-                    this.drawMarker(deviceInfo);
-                }else{
-                    Toast.remove(this.loading);
-                    this.onDeviceChange(deviceInfo);
-                } 
-            });
-        } catch (error) {
-            Toast.remove(this.loading);
-        }
+        let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress,this.props.error);
+        this.setState({
+            lastAddress:deviceInfo.address
+        },()=>{
+            if(deviceInfo.latitude){
+                this.drawMarker(deviceInfo);
+            }else{
+                this.onDeviceChange(deviceInfo);
+            } 
+        });
     }
 
 
@@ -320,11 +315,9 @@ export default class PositionUtils extends Component {
         let locationData = this.state.locationData;
         return <View style={[MapStyles.infoWindow,shadow,{borderRadius:infoBordeRadius},spaceBetween]}>
             <View style={[MapStyles.infoWindowItem,MapStyles.infoWindowItemImei]}>
-                {/* <Text style={MapStyles.imei}>{locationData.deviceName}</Text> */}
-                <Text style={[MapStyles.deviceStatus,{color:this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).color,paddingTop:1}]}>{this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).text}</Text>
+                <Text style={MapStyles.imei}>{locationData.deviceName}</Text>
                 {
                     locationData.powerPer != null ?
-                    <View style={{flexDirection:"row",alignItems:'center'}}>
                         <View style={MapStyles.batterybg}>
                             <View style={MapStyles.batteryRight}></View>
                             <View style={{position:'relative',height:9,width:18}}>
@@ -334,33 +327,15 @@ export default class PositionUtils extends Component {
                                 </View>
                             </View>
                         </View>
-                        {
-                             locationData.powerStatus==1?
-                             <Icon name={'Homepage_icon_charge'} size={10}></Icon>:null
-                        }  
-                    </View>
                         :null
                 }
             </View>
             <View style={MapStyles.infoWindowItem}>
+                <Text style={[MapStyles.infoWindowTitle,{color:this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).color,paddingTop:1}]}>{this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).text}</Text>
+                <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{this.posType().text}</Text>
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{locationData.gpsSpeed ? locationData.gpsSpeed:0}km/h</Text>
-                {
-                    locationData.powerPer != null ?
-                    <View style={{ flexDirection: 'row',alignItems:'center'}}>
-                        <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.infoWindowTitle}>电源:{locationData.powerStatus==1?'已接通':'未接通'}</Text>
-                        {
-                            locationData.powerStatus==1?
-                            <View style={{ flexDirection: 'row',alignItems:'center'}}>
-                                <Text style={MapStyles.line}>|</Text>
-                                <Text style={MapStyles.infoWindowTitle}>电压:{locationData.powerValue?locationData.powerValue+'V':0}</Text>
-                            </View>:null
-                        }
-
-                    </View>:null
-                }
             </View>                              
             <View style={MapStyles.infoWindowItem}>
                 <Text style={MapStyles.infoWindowTitle}>定位时间：{this.posType().time}</Text>
