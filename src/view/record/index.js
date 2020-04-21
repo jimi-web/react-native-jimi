@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-20 16:36:05
+ * @LastEditTime: 2020-04-21 17:57:49
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -41,39 +41,39 @@ export default class Record extends Component {
             
         },
         insTimeArr:[
-            // {
-            //     title:'30s',
-            //     value:30,
-            //     isChange:true
-            // },
             {
-                title:'1分钟',
-                value:1,
+                title:'30s',
+                value:30,
                 isChange:true
             },
             {
+                title:'1分钟',
+                value:60,
+                isChange:false
+            },
+            {
                 title:'2分钟',
-                value:2,
+                value:120,
                 isChange:false
             },
             {
                 title:'3分钟',
-                value:3,
+                value:180,
                 isChange:false
             },
             {
                 title:'4分钟',
-                value:4,
+                value:240,
                 isChange:false
             },
             {
                 title:'5分钟',
-                value:5,
+                value:300,
                 isChange:false
             },
             {
                 title:'持续录音',
-                value:1,
+                value:30,
                 isChange:false
             },
         ],
@@ -110,8 +110,9 @@ export default class Record extends Component {
     componentDidMount() {
         this.getServerRecordFile(this.state.params);
         this.createFolder();
-        this.getStorage();
+        // this.getStorage();
         this.getBackTime();
+        this.getRecordInstruction()
         // this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
         //     if (!this.state.isChangeScreen) {
         //         this.changeSreenDirection('portrait');
@@ -222,7 +223,7 @@ export default class Record extends Component {
                         recordLength:data.recordLength,
                     });
                 }
-                
+
                 if(isRecording && data.recordType == 0){
                     this.recordTimer = setInterval(()=>{
                         i--;
@@ -370,9 +371,93 @@ export default class Record extends Component {
         }
     }
     /**
+     * 获取录音数据
+     */
+    getRecordInstruction = () => {
+        this.setState({
+            isBeginRecord:false
+        });
+        jmAjax({
+            url:api.instructionRecord,
+            method:'GET',
+            encoding:true,
+            encodingType:true,
+            data:{
+                instructionId:1002
+            },
+            header:0
+        }).then((res)=>{
+            console.log(res,'获取的录音数据')
+            let data = JSON.parse(res.data);
+            data = JSON.parse(data.recordData);
+            if(!res.data || data.recordData){
+                this.state.insTimeArr.forEach(item => {
+                    item.isChange = false;
+                    if(item.isChange){
+                        recordLength = item.value;
+                        item.isChange = true;
+                    }
+                })
+                let insTimeArr = JSON.parse(JSON.stringify(this.state.insTimeArr))
+                this.setState({
+                    recordLength,
+                    insTimeArr,
+                    isBeginRecord:true
+                })
+                return;
+            }
+           
+            const recordTime = Math.floor((new Date().getTime() - data.recordCreatedTime) / 1000);
+            let isRecording;
+            if(data.isRecording && data.recordType == 0){
+                isRecording = recordTime > data.recordLength * this.countUnit()?false:true;
+            }else{
+                isRecording = data.isRecording;
+            }
+            let i = data.recordLength * this.countUnit() - recordTime;
+            if(isRecording){
+                this.setState({
+                    isRecording,
+                    recordLength:i,
+                    recordType:data.recordType,
+                    isBeginRecord:true
+                });
+            }else{
+                this.setState({
+                    isRecording,
+                    recordType:data.recordType,
+                    recordLength:data.recordLength,
+                    isBeginRecord:true
+                });
+            }
+
+            if(isRecording && data.recordType == 0){
+                this.recordTimer = setInterval(()=>{
+                    i--;
+                    if(i <= 0){
+                        this.setState({
+                            isRecording:false,
+                            recordLength:data.recordLength
+                        });
+                        clearInterval(this.recordTimer);
+                    }else{
+                        this.setState({
+                            recordLength:i
+                        });
+                    }
+                },1000);
+            }
+        })
+        .catch(res => {
+            this.setState({
+                isBeginRecord:true
+            });
+        })
+    }
+    /**
      * 发送指令录音
      */
-    setRecordInstruction = (instrution) => {
+    setRecordInstruction = (instrution,storage) => {
         const params = {
             encodingType:'IMEI',
             cmdCode:instrution,
@@ -383,7 +468,7 @@ export default class Record extends Component {
             platform:'app',
             offLineInsType:'customIns',
             instructSetting:{
-                recordLength:this.state.recordLength
+                recordData:JSON.stringify(storage)
             }
         };
         return new Promise((resolve,reject) => {
@@ -797,7 +882,14 @@ export default class Record extends Component {
             isBeginRecord:false
         });
         this.backTimeLength = 0;
-        this.setRecordInstruction(instruction).then(res => {
+         //录音成功时储存录音状态
+         const storage = {
+            recordType:this.state.recordType,
+            recordLength:data.recordLength,
+            recordCreatedTime:new Date().getTime(),
+            isRecording:!this.state.isRecording
+        };
+        this.setRecordInstruction(instruction,storage).then(res => {
             this.setState({
                 isBeginRecord:true
             });
@@ -807,13 +899,6 @@ export default class Record extends Component {
                     return Toast.message(content._msg);
                 }
             }
-            //录音成功时储存录音状态
-            const storage = {
-                recordType:this.state.recordType,
-                recordLength:data.recordLength,
-                recordCreatedTime:new Date().getTime(),
-                isRecording:!this.state.isRecording
-            };
             getEncoding().then(value => {
                 const key = value.encoding + 'locatorRecord';
                 AsyncStorage.setItem(key,JSON.stringify(storage));

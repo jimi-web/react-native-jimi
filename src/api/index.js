@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-28 16:39:28
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-04-21 17:28:04
  */
 
 //后台地址
@@ -20,6 +20,7 @@ const serverUrl = {
 
     recordList:'/record/module/file/page',//获取录音列表
     instruction:'/proxy/module/instruction/sendInstruct',//发送指令
+    instructionRecord:'/proxy/module/instruction/record',//获取指令最新信息
     deleteRecord:'/record/module/file',//删除录音
     queryDeviceVideoPicFile: '/videopic/module/queryDeviceVideoPicFile',//获取视频和照片数据
     deleteDeviceVideoPicFile:'/videopic/module/deleteDeviceVideoPicFile',//删除视频和照片
