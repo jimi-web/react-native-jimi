@@ -440,10 +440,10 @@ export default class TrackUtils extends Component {
                 progress:currentProgress,
                 pointArr:pointArr,
                 deviceMarker:deviceMarker,
-                initialRegion:{
-                    ...this.state.initialRegion,
-                    ...deviceMarker
-                }
+                // initialRegion:{
+                //     ...this.state.initialRegion,
+                //     ...deviceMarker
+                // }
             });
         },this.state.speed);
     }
