@@ -36,6 +36,7 @@ export default class PositionUtils extends Component {
         mapControls:PropTypes.func,//添加地图控件
         onDeviceChange:PropTypes.func,//设备位置改变监听事件
         onMyChange:PropTypes.func,//我的位置改变监听事件
+        powerShow:PropTypes.bool,
     };
     static defaultProps = {
         trafficEnabled:false,
@@ -75,6 +76,7 @@ export default class PositionUtils extends Component {
         // customItem:null,
         roadBtnStyle:Styles.btn,
         mapTypeBtnStyle:Styles.btn,
+        powerShow:false
     };
 
     constructor(props) {
@@ -323,7 +325,7 @@ export default class PositionUtils extends Component {
                 {/* <Text style={MapStyles.imei}>{locationData.deviceName}</Text> */}
                 <Text style={[MapStyles.deviceStatus,{color:this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).color,paddingTop:1}]}>{this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).text}</Text>
                 {
-                    locationData.powerPer != null ?
+                    locationData.powerPer != null && this.props.powerShow ?
                     <View style={{flexDirection:"row",alignItems:'center'}}>
                         <View style={MapStyles.batterybg}>
                             <View style={MapStyles.batteryRight}></View>
@@ -347,7 +349,7 @@ export default class PositionUtils extends Component {
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{locationData.gpsSpeed ? locationData.gpsSpeed:0}km/h</Text>
                 {
-                    locationData.powerPer != null ?
+                    locationData.powerPer != null  && this.props.powerShow?
                     <View style={{ flexDirection: 'row',alignItems:'center'}}>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.infoWindowTitle}>电源:{locationData.powerStatus==1?'已接通':'未接通'}</Text>
