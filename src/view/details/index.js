@@ -38,7 +38,8 @@ export default class Details extends Component {
             setUpList.forEach((data)=>{
                 //图标更新
                 if(data.type === 'deviceIcon' && key=== 'deviceIcon' && nextPropsData[key] ){
-                    data.value = iconList.filter((item)=>item.key===nextPropsData[key])[0].icon('#888',30);
+                    let name = iconList.filter((item)=>item.key===nextPropsData[key])[0].name;
+                    data.value = <Icon name={name} size={30} />
                 }
                 
                 if(key === data.type && key!='deviceIcon'){

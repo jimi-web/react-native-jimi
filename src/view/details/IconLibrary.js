@@ -5,6 +5,7 @@ const { width } = Dimensions.get('window');
 import PropTypes from 'prop-types';
 import {jmAjax} from '../../http/business';
 import Api from '../../api/index';
+import {Icon} from '../../components/index';
 import {iconList} from './iconList';
 
 export default class IconTable extends Component { 
@@ -50,8 +51,7 @@ export default class IconTable extends Component {
                             onPress={()=>this.selectIcon(index)} 
                             key={'iconTable'+index} 
                         >
-                            {item.icon(item.isActivate?iconActive.color:iconDefault.color,40)
-                        }
+                             <Icon name={item.name} size={40}  color={item.isActivate?iconActive.color:iconDefault.color} />
                         </TouchableOpacity>
                     })
                 }
@@ -69,15 +69,16 @@ export default class IconTable extends Component {
      */
     init = ()=> {
         let { activateKey,iconArray } = this.state;
-        iconArray.forEach((item)=>{
+        let iconList =JSON.parse(JSON.stringify(iconArray));
+        iconList.forEach((item)=>{
             if(item.key === activateKey){
                 item.isActivate = true;
             }
         });
 
         this.setState({
-            iconArray
-        })
+            iconArray:iconList
+        });
     }
 
     /**
