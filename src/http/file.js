@@ -12,6 +12,7 @@
 */
 import {httpApp} from './basic'; 
 import {getEncoding} from './business'; 
+import Toast from '../components/index';
 export const getSmallAppPath = ()=>{
     return new Promise((resolve,reject) => {
         httpApp('jm_file.getSmallAppPath',{
@@ -163,6 +164,9 @@ export const saveVideoToAlbum = (url) => {
             },
             onFail: (res) => {
                 console.log(res,'报错');
+                if(res.code == -330){
+                    return Toast.message('视频解析失败！')
+                }
                 reject(res);
             },
             onComplete: () => {

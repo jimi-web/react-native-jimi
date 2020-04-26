@@ -34,7 +34,7 @@ export default class Record extends Component {
         recordIns:'LY,ins#',//单个指令
         recordStutainTrue:'CXLY,ON,ins#',  //持续录音
         recordStutainFalse:'CXLY,OFF#',//关闭录音
-        unit:'m',//录音值的单位
+        unit:'s',//录音值的单位
         params:{
             pageNum: 1,
             pageSize: 10

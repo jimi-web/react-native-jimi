@@ -26,9 +26,9 @@ import BottomToolbars from '../components/BottomToolbars';
 // console.log(FTPSyncFileManager,'模块');
 export default class MediaSyn extends Component {
     static propTypes = {
-        udpConfig:PropTypes.object,
-        ftpConfig:PropTypes.object,
-        subPath:PropTypes.string
+        udpConfig:PropTypes.object,// UDP配置
+        ftpConfig:PropTypes.object,// FTP配置
+        subPath:PropTypes.string, // 文件保存路径
     }
     static defaultProps = {
         udpConfig:{
@@ -43,7 +43,7 @@ export default class MediaSyn extends Component {
             account:'admin',
             password:'admin'
         },
-        subPath:'',
+        subPath:'',//文件保存路径
     }
     /**
      * 删除FTP文件
@@ -163,6 +163,7 @@ export default class MediaSyn extends Component {
         });
     }
 
+    // 获取本地文件
     getLocalFile = () => {
         Applet.createTheFolder('mediaFile').then(res => {
             this.localUrl = res;
@@ -202,7 +203,6 @@ export default class MediaSyn extends Component {
     }
     componentDidMount(){
         // 监听事件
-        
         NetInfo.addEventListener('connectionChange',this.handleConnectivityChange);
         AppState.addEventListener('change',this.handleAppstatus);
         // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
@@ -493,7 +493,6 @@ export default class MediaSyn extends Component {
         if(item.localPath){
             this.props.onSelect && this.props.onSelect(item);
         }else{
-            //  let loading = Toast.loading('下载中...',30000);
             //  前往详情需要先下载该图片/视频
             this.state.progressMessage.index = 1;
             this.state.progressMessage.total = 1;
@@ -502,11 +501,8 @@ export default class MediaSyn extends Component {
                 isDownload:true,
                 progressMessage:this.state.progressMessage
             });
-            //  设置超时时间
-            this.progressTime = setTimeout(() => {
-                Toast.message('文件下载失败');
-                clearTimeout(this.progressTime);
-            },15000);
+            
+            this.timeoutDispose();//  设置超时时间
             JMFTPSyncFileManager.downFTPFile(item.filePath,this.localUrl,item.fileName,String(index)).then(res => {
                 
                 item.localPath = `file://${this.localUrl}${item.fileName}`;
@@ -603,6 +599,15 @@ export default class MediaSyn extends Component {
          });
      }
      /**
+      * 超时处理
+      */
+     timeoutDispose = () => {
+        this.progressTime = setTimeout(() => {
+            Toast.message('文件下载失败');
+            clearTimeout(this.progressTime);
+        },15000);
+     }
+     /**
       * 下载文件
       */
      onDownload = () => {
@@ -613,12 +618,13 @@ export default class MediaSyn extends Component {
          if(fileChecked.length > 15){
              return Toast.message('每次下载文件不得超过15个！');
          }
+        //  获取选中文件及文件大小
          let fileSize = 0;
          let fileArray = [];
          fileChecked.forEach(item => {
-             fileSize += Number(item.fileSize);
              if(!item.localPath){
-                 fileArray.push(item);
+                fileSize += Number(item.fileSize);
+                fileArray.push(item);
              }
          });
          if(!fileArray.length){
@@ -638,10 +644,8 @@ export default class MediaSyn extends Component {
                          isDownload:true
                      });
                      this.downFTPfile(this.state.fileChecked,0);
-                     this.progressTime = setTimeout(() => {
-                         Toast.message('文件下载失败');
-                         clearTimeout(this.progressTime);
-                     },15000);
+                     this.timeoutDispose();
+                     
                  }
              });
          }else{
@@ -652,11 +656,7 @@ export default class MediaSyn extends Component {
                  progressMessage:this.state.progressMessage,
                  isDownload:true
              });
-             this.progressTime = setTimeout(() => {
-                 Toast.message('文件下载失败');
-                 clearTimeout(this.progressTime);
-             },15000);
-             //  this.loading = Toast.loading('下载中...');
+             this.timeoutDispose();
              this.downFTPfile(this.state.fileChecked,0);
          }
          
@@ -741,12 +741,6 @@ export default class MediaSyn extends Component {
             fileList:newList,
             refreshing:false
         });
-        // const timer = setTimeout(() => {
-        //     this.setState({
-               
-        //     });
-        //     clearTimeout(timer);
-        // },1500);
     }
     /**
      * 获取账号密码
@@ -818,7 +812,7 @@ export default class MediaSyn extends Component {
                                                  }
                                              });
                                              clearTimeout(connectTime);
-                                            
+                                             return;
                                          }, 1000);
                                          return;
                                      }
@@ -1034,33 +1028,12 @@ export default class MediaSyn extends Component {
         }
         let folderListArr = [...photoPath,...videoPath];
         this.queryFile(folderListArr,(res) => {
-            console.log(res,'获取到的文件结果');
-            if(res && res.length != 0){
-                this.ftmList(res);
-            }
+            this.ftmList(res);
         });
     }
+    
     /**
-     * 获取进度
-     */
-    getFTPProgress = () => {
-        this.JMFTPProgress = JMFTPProgress.addListener('kRNJMFTPSyncFileManager',reminder => {
-            clearTimeout(this.progressTime);
-            
-            const data = JSON.parse(reminder);
-            let progress = 0;
-            progress = Math.floor(JSON.parse(data.data).progress * 100);
-            const progressMessage = {
-                ...this.state.progressMessage,
-                progress:progress
-            };
-            this.setState({
-                progressMessage,
-            });
-        });
-    }
-    /**
-     * 回调逻辑
+     * 下载回调逻辑
      */
     downFTPCallback = (array,index) => {
         if(index == array.length - 1){
@@ -1110,7 +1083,6 @@ export default class MediaSyn extends Component {
                         this.state.fileList[dataIndex] = data;
                         this.downFTPCallback(array,index);
                     }
-                   
                 });
             }else{
                
@@ -1179,6 +1151,24 @@ export default class MediaSyn extends Component {
                 Toast.remove(this.loading);
                 Toast.message('删除失败');
             });
+    }
+    /**
+     * 获取进度
+     */
+    getFTPProgress = () => {
+        this.JMFTPProgress = JMFTPProgress.addListener('kRNJMFTPSyncFileManager',reminder => {
+            clearTimeout(this.progressTime);
+            
+            const data = JSON.parse(reminder);
+            let progress = Math.floor(JSON.parse(data.data).progress * 100);
+            const progressMessage = {
+                ...this.state.progressMessage,
+                progress:progress
+            };
+            this.setState({
+                progressMessage,
+            });
+        });
     }
     /**
      * 关闭连接

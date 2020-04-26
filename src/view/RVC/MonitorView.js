@@ -265,6 +265,22 @@ export default class MonitorView extends Component {
                     }
                 });
             }
+            // 其他错误情况
+            if(status > 3 && status != 14){
+                this.setState({
+                    bottomHint:<Text style={{color:'#fff'}}>对讲开启失败</Text>,
+                },() => {
+                    let timer =  setTimeout(() => {
+                        this.setState({
+                            isTolk:false,
+                            bottomHint:null,
+                            isBusy:false
+                        });
+                        //
+                        clearTimeout(timer);
+                    },500);
+                });
+            }
             
         });
         recordStatusSubscription = this.state.rtmpManagerListener.addListener(JMRTMPPlayerManager.kOnStreamPlayerRecordStatus, (reminder) => {
@@ -903,7 +919,8 @@ export default class MonitorView extends Component {
                 isCamera:!this.state.isCamera
             });
         }).catch((res)=>{
-            Toast.message('切换失败');
+            Toast.message('摄像头切换失败');
         });
+        this.props.onCamera && this.props.onCamera()
     }
 }

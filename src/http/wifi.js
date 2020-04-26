@@ -8,7 +8,7 @@
  */
 
 import {httpWifi,getObject} from './basic';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 
 /**
@@ -17,7 +17,7 @@ import {Platform} from 'react-native';
  * @param {*} data 发送的数据
  */
 export const getWifiMessage = (methods,data) => {
-    //
+    
 };
 
 

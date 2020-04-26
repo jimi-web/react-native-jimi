@@ -114,3 +114,11 @@
 
 ### basic.js
 底层通讯，对app事件进行监听，封装统一请求方法和格式，不对数据进行任何处理。
+
+
+### 问题记录
+1. 错误记录：node包中(node_modules\metro-config\src\defaults\blacklist.js)报错。
+   错误原因：NodeJS12.11.0版本以后更新了V8引擎，导致React Native启动 react-native run-android时node服务窗口闪退；
+   修改方式：修改sharedBlacklist变量第一列为：/node_modules[\/\\]react[\/\\]dist[\/\\].*/,
+
+   

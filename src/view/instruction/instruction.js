@@ -244,7 +244,12 @@ export default class Instruction extends Component {
            insArr:this.state.insArr
        };
        this.props.onIns && this.props.onIns(insProps);
-       if(data.stop && data.content.rule){
+       let flag = true;
+        // 处理被控制时值不被允许发送的逻辑   
+        if(data.contral != undefined){
+            flag = this.state.insArr[data.contral].value;
+        }
+       if(data.stop && data.content.rule && flag){
            let regExp = new RegExp(data.content.rule);//根据字符串生成正则
            if(!regExp.test(data.value)){
                return;
