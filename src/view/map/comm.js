@@ -14,6 +14,7 @@ import api from '../../api/index';
  * 获取设备定位信息
  */
 export const getDevicePosition = (error)=> {
+   console.log('执行') 
     return new Promise((resolve,reject) => {
         jmAjax({
             url:api.position,
@@ -22,6 +23,7 @@ export const getDevicePosition = (error)=> {
             encodingType:true,
             error:error
         }).then((res)=>{
+            console.log(res,'定位的数据')
             let data = res.data;
             resolve(data);
         }).catch((res)=>{

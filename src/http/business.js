@@ -116,7 +116,6 @@ export const jmAjax = (params)=> {
             });
         }else {
             request(params).then((res)=>{
-                console.log(res,'定位信息');
                 resolve(res);
             }).catch((res)=>{
                 reject(res);

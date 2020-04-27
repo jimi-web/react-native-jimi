@@ -13,7 +13,7 @@ import Styles from '../style/base';
 import MapStyles from '../style/position';
 import gps from '../../../libs/coversionPoint';
 import { devicePosition } from '../comm';
-import {httpLocationGet} from '../../../http/business';
+import {httpLocationGet,getEncoding} from '../../../http/index';
 import PropTypes from 'prop-types';
 import '../../../libs/time';
 
@@ -264,14 +264,14 @@ export default class PositionUtils extends Component {
             latitude:data.latitude,
             longitude: data.longitude,
         };
-        
-        AsyncStorage.getItem('jmDeviceName').then((value)=>{
-            if(value != data.deviceName){
-                AsyncStorage.setItem('jmDeviceName', data.deviceName);
-            }
-        });
-       
-        
+        getEncoding().then(res => {
+            let key = res.encoding + 'jmDeviceName';
+            AsyncStorage.getItem(key).then((value)=>{
+                if(value != data.deviceName){
+                    AsyncStorage.setItem(key, data.deviceName);
+                }
+            });
+        })
         data.gpsTime = new Date(data.gpsTime).Format('YYYY-MM-DD hh:mm:ss');
         data.time = data.time ? new Date(data.time).Format('YYYY-MM-DD hh:mm:ss'):'';
         data.otherPosTime = new Date(data.otherPosTime).Format('YYYY-MM-DD hh:mm:ss');

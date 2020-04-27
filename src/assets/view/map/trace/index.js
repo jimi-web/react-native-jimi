@@ -76,12 +76,14 @@ export default class TraceUtils extends PositionUtils {
     }
 
     asyncStorageAeviceName = async () => {
-        let result = await AsyncStorage.getItem('jmDeviceName');
+        let key = await getEncoding().encoding + 'jmDeviceName';
+        let result = await AsyncStorage.getItem(key);
         if(result){
             this.setState({
                 asyncStorageAeviceName:result
             });
         }
+        
     }
 
 

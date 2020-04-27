@@ -94,7 +94,7 @@ export default class InsModelSelect extends Component {
       onDrawer = (item) => {
           Drawer.close(this.id);
           const {data,index} = this.props;
-          data.value = item.text;
+          data.value = item.value;
           data.insValue = item.value;
           this.props.onPress && this.props.onPress(data,index);
       }

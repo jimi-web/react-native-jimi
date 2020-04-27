@@ -10,7 +10,7 @@ import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
 import {Theme,Icon} from '../../../components/index';
 import PropTypes from 'prop-types';
-import {httpApp} from '../../../http/basic';
+import {httpApp,getEncoding} from '../../../http/index';
 import api from '../../../api/index';
 import Share from '../share/Share';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
@@ -76,12 +76,14 @@ export default class TraceUtils extends PositionUtils {
     }
 
     asyncStorageAeviceName = async () => {
-        let result = await AsyncStorage.getItem('jmDeviceName');
+        let key = await getEncoding().encoding + 'jmDeviceName';
+        let result = await AsyncStorage.getItem(key);
         if(result){
             this.setState({
                 asyncStorageAeviceName:result
             });
         }
+        
     }
 
 

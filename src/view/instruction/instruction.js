@@ -244,6 +244,9 @@ export default class Instruction extends Component {
            insArr:this.state.insArr
        };
        this.props.onIns && this.props.onIns(insProps);
+       if(this.props.isButton){
+            return;
+        }
        let flag = true;
         // 处理被控制时值不被允许发送的逻辑   
         if(data.contral != undefined){
@@ -254,9 +257,6 @@ export default class Instruction extends Component {
            if(!regExp.test(data.value)){
                return;
            }
-       }
-       if(this.props.isButton){
-           return;
        }
        this.setInstruction(this.state.insArr,ins);
    }
