@@ -36,7 +36,8 @@ export default class PositionUtils extends Component {
         mapControls:PropTypes.func,//添加地图控件
         onDeviceChange:PropTypes.func,//设备位置改变监听事件
         onMyChange:PropTypes.func,//我的位置改变监听事件
-        powerShow:PropTypes.bool,
+        powerShow:PropTypes.bool,//是否开启电量相关功能
+        isVoltage:PropTypes.bool,//是否开启电压（受powerShow控制）
     };
     static defaultProps = {
         trafficEnabled:false,
@@ -76,7 +77,8 @@ export default class PositionUtils extends Component {
         // customItem:null,
         roadBtnStyle:Styles.btn,
         mapTypeBtnStyle:Styles.btn,
-        powerShow:false
+        powerShow:false,
+        isVoltage:true
     };
 
     constructor(props) {
@@ -296,7 +298,7 @@ export default class PositionUtils extends Component {
             }else {
                 //安卓infoWindwo更新需要延迟10ms
                 setTimeout(()=>{
-                    this.InfoWindowFunc.update();
+                    this.InfoWindowFunc.update && this.InfoWindowFunc.update();
                 },10);
             }
             //仅初始化会可视化两点坐标
@@ -358,7 +360,7 @@ export default class PositionUtils extends Component {
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.infoWindowTitle}>电源:{locationData.powerStatus==1?'已接通':'未接通'}</Text>
                         {
-                            locationData.powerStatus==1?
+                            locationData.powerStatus==1 && this.props.isVoltage?
                             <View style={{ flexDirection: 'row',alignItems:'center'}}>
                                 <Text style={MapStyles.line}>|</Text>
                                 <Text style={MapStyles.infoWindowTitle}>电压:{locationData.powerValue?locationData.powerValue+'V':0}</Text>

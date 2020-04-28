@@ -20,7 +20,7 @@ const { width } = Dimensions.get('window');
 export default class InsStep extends Component {
     constructor(props) {
         super(props);
-        this.width = width * 0.9;
+        this.width = width * 0.8;
         this.startX = 0;
         this.index = 0;
         this.i = this.props.data.content.stepValue.findIndex(item => {return item.value == this.props.data.value;});
@@ -106,7 +106,7 @@ export default class InsStep extends Component {
         const {content} = this.props.data;
         return (
             <View style={this.renderStyle()}>
-                <View style={{position:'relative',width:'90%',height:40,justifyContent:'space-between',alginItems:'end',flexDirection:'row'}}>
+                <View style={{position:'relative',width:'80%',height:40,justifyContent:'space-between',alginItems:'end',flexDirection:'row'}}>
                     {
                         content.stepValue.map((item,index) => {
                             return <Text style={{lineHeight:40}} key={index}>{item.text}</Text>;

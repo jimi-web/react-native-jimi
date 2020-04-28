@@ -93,14 +93,22 @@ export default class Details extends Component {
             },{
                 icon:require('../../assets/detail/details_list_sim.png'),
                 name:'SIM卡号',
-                accessory:null,
+                accessory:<Icon name={'list_copy'} size={14} style={Styles.accessory} />,
                 value:this.props.data.simNo,
+                onPress:()=>{
+                    Clipboard.setString(this.state.setUpList[4].value);
+                    Toast.message('SIM卡号复制成功','short','center');
+                },
                 type:'simNo'
             },{
                 icon:require('../../assets/detail/details_list_iccid.png'),
                 name:'ICCID',
-                accessory:null,
+                accessory:<Icon name={'list_copy'} size={14} style={Styles.accessory} />,
                 value:this.props.data.iccid,
+                onPress:()=>{
+                    Clipboard.setString(this.state.setUpList[5].value);
+                    Toast.message('SIM卡号复制成功','short','center');
+                },
                 type:'iccid'
             }]
         }

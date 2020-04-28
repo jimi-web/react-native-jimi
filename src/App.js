@@ -7,7 +7,7 @@
  * @LastEditTime : 2019-12-29 16:14:07
  */
 import React, {Component} from 'react';
-import {Root} from './router/index';
+import { Root } from './router/index';
 import store from './store/index';
 import { Provider } from 'react-redux';
 import './libs/time';

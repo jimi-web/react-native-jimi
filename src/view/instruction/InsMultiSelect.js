@@ -48,7 +48,7 @@ export default class InsMultiSelect extends Component {
                 <Text style={{fontSize:14}}>{item.text}</Text>
             </View>
             <View>
-                {isSelect?<Icon name={'gou'} color={`${baseStyle.mainColor}`}/> : null}
+                {isSelect?<Icon name={'icon-gou'} color={`${baseStyle.mainColor}`}/> : null}
             </View>
         </View >;
         return element;

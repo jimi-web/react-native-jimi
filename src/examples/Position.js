@@ -62,7 +62,7 @@ export default class Position extends Component {
                         // refreshTime={2000}
                         onMapClick={()=>{
                             console.log('点击事件');
-                            this.map.upDate();
+                            this.map.upDate && this.map.upDate();
                         }}
                         // getData={this.getPoint}
                         trafficEnabled={false}

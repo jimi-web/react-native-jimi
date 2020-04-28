@@ -12,7 +12,7 @@ import {createBottomTabNavigator,createAppContainer} from 'react-navigation';
 import {Text,Image,View} from 'react-native';
 import HomePage from '../page/home';
 import ConfigurationPage from '../page/configuration';
-import Icon from '../assets';
+import  Icon  from '../assets';
 const tabNav  = createBottomTabNavigator(
     {
         Home:{screen:HomePage},

@@ -387,7 +387,6 @@ export default class Record extends Component {
             },
             header:0
         }).then((res)=>{
-            console.log(res,'获取的录音数据')
             let data = JSON.parse(res.data);
             data = JSON.parse(data.recordData);
             if(!res.data || data.recordData){
