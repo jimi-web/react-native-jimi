@@ -17,7 +17,6 @@ export default class InsMultiSelect extends Component {
         super(props);
     }
     render(){
-        const {data,index} = this.props;
         const {content} = this.props.data;
         return (
             <View>
@@ -36,12 +35,14 @@ export default class InsMultiSelect extends Component {
         const {value} = this.props.data;
         // 计算当前item是否选中
         let isSelect = false;
+        console.log(item,value)
         for (let i = 0; i < value.length; i++) {
             const v = value[i];
             if(item.value == v){
                 isSelect = true;
             }
         }
+        
         let element =  
         <View style={this.renderStyle()}>
             <View>
@@ -72,28 +73,35 @@ export default class InsMultiSelect extends Component {
     onPress = (item) => {
         const {data,index} = this.props;
         const {content} = data;
-       
+        console.log(item,1111)
         let arr = [];
+        let insContent = ''
         // 计算当前选中或取消的值
         for (let i = 0; i < content.multiArr.length; i++) {
             const v = content.multiArr[i].value;
             if(data.value.indexOf(v) != -1){
                 if(item.value != v){
                     arr.push(v);
+                    insContent += v;
                 }
             }else{
                 if(item.value == v){
                     arr.push(v);
+                    insContent += v;
                 }
             }
         }
         if(content.isMust && arr.length === 0){
-            return Toast.message('当前选择不可为空');
+            return
         }
         data.value = arr;
-        console.log(data.value,'获取的值');
         if(data.insID){
-            data.insValue = data.value.join(content.symbol);
+            if(content.symbol){
+                data.insValue = data.value.join(content.symbol);
+            }else{
+                data.insValue = insContent;
+            }
+            
         }
         console.log(data);
         this.props.onMultiSelect && this.props.onMultiSelect(data,index);

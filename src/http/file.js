@@ -40,8 +40,6 @@ export const getFileList = (url)=>{
         getSmallAppPath().then(location => {
             getEncoding().then(data => {
                 const filePath = `${location.filePath}/${data.encoding}/${url}/`;
-                // const filePath = `${location.filePath}`;
-                console.log(filePath,'获取');
                 httpApp('jm_file.getFileList',{
                     filePath,
                     onSuccess:(res)=>{
@@ -110,7 +108,6 @@ export const createTheFolder = (url) => {
  * @param {Array} url 
  */
 export const fileDelete = (url) => {
-    console.log(url,'删除');
     return new Promise((resolve,reject) => {
         httpApp('jm_file.delete', {
             filePath: typeof url === 'string' ? url: url.join(','),
@@ -140,7 +137,6 @@ export const saveToAlbum = (url) => {
                 resolve(res);
             },
             onFail: (res) => {
-                console.log(res,'报错');
                 reject(res);
             },
             onComplete: () => {

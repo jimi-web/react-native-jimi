@@ -25,13 +25,7 @@ export const isIphoneX =()=> {
             screenHeight === X_WIDTH && screenWidth === X_HEIGHT)
     );  
 };
-// 1. 完成几米圈V320小程序中挪车相关功能联调。
-// 2. 完成微信小程序对接V320真是设备相关功能。
-// 3. 几米圈挪车小程序相关功能及接口联调。
 
-// 1. V320设备相关小程序的联调测试支持。
-// 2. DVR小程序问题优化。
-// 3. 标准组件自测及代码优化。
 export const iphoneXHeight = (initHeight = 0)=>{
     return initHeight+Theme.iphoneXBottomDefault;
 };

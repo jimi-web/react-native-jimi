@@ -402,7 +402,7 @@ export default class PositionUtils extends Component {
      */
     batteryState =()=>{
         let stateOject = {};
-        stateOject.per = this.state.locationData.powerPer ;
+        stateOject.per = this.state.locationData.powerPer;
         stateOject.bgColor = this.state.locationData.powerPer > 20 ? '#13A887' : '#F82E1B';
         return stateOject;
     }

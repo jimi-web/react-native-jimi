@@ -290,7 +290,7 @@ export default class MediaSyn extends Component {
                         this.state.isEdit ? 
                             <BottomToolbars>
                                 <View style={Styles.bottomToolbars}>
-                                    <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={()=>{this.setState({isEdit:false});}}><Text style={[Styles.bottomToolbarsText,{color:'#000'}]}>{fileLength>0?'取消（'+fileLength+'）':'取消'}</Text></TouchableOpacity>
+                                    <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={this.onCancel}><Text style={[Styles.bottomToolbarsText,{color:'#000'}]}>{fileLength>0?'取消（'+fileLength+'）':'取消'}</Text></TouchableOpacity>
                                     <TouchableOpacity onPress={this.onDownload} activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#3479F6':'#e1e1e1'}]}>下载</Text></TouchableOpacity>
                                     <TouchableOpacity activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.onDelete}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#FF3535':'#e1e1e1'}]}> 删除</Text></TouchableOpacity>
                                 </View>
@@ -311,6 +311,18 @@ export default class MediaSyn extends Component {
             </View>
         );
         
+    }
+    onCancel = () => {
+        this.state.fileList.forEach(item => {
+            item.checked = false
+        })
+        let fileList = JSON.parse(JSON.stringify(this.state.fileList));
+        let fileChecked = [];
+        this.setState({
+            fileList,
+            fileChecked,
+            isEdit:false,
+        });
     }
     /**
      * 同步删除文件
