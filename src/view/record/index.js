@@ -270,9 +270,21 @@ export default class Record extends Component {
         });
     }
     /**
+     * 处理录音类型
+     */
+    disposeRecordType = (type) => {
+       let typeArr = {
+           MANUAL:'手动录音',
+           SHAKE:'震动录音',
+           PHONIC:'声控录音'
+       }
+       return typeArr[type] || '未知方式';
+    }
+    /**
      * 数据处理
      */
     ftmRecord = (file,serverParams) => {
+        console.log(file,'录音数据')
         const data = JSON.parse(JSON.stringify(file));
         // 数据重组
         // data[0].create_time = new Date().getTime();
@@ -281,7 +293,7 @@ export default class Record extends Component {
             // 修改成显示数据
             item.createTimeFtm = new Date(item.createTime).Format('hh:mm:ss');
             item.row = 1;
-            item.recordType = item.recordType == 'MANUAL' ? '手动录音' : '震动录音';
+            item.recordType = this.disposeRecordType(item.recordType);
             item.progress = 0;
             item.isChange = false;
             
