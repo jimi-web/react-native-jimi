@@ -93,9 +93,12 @@ export default class Details extends Component {
             },{
                 icon:require('../../assets/detail/details_list_sim.png'),
                 name:'SIM卡号',
-                accessory:<Icon name={'list_copy'} size={14} style={Styles.accessory} />,
+                accessory:this.props.data.simNo ? <Icon name={'list_copy'} size={14} style={Styles.accessory} /> : null,
                 value:this.props.data.simNo,
                 onPress:()=>{
+                    if(!this.state.setUpList[4].value){
+                        return
+                    }
                     Clipboard.setString(this.state.setUpList[4].value);
                     Toast.message('SIM卡号复制成功','short','center');
                 },
@@ -103,9 +106,12 @@ export default class Details extends Component {
             },{
                 icon:require('../../assets/detail/details_list_iccid.png'),
                 name:'ICCID',
-                accessory:<Icon name={'list_copy'} size={14} style={Styles.accessory} />,
+                accessory:this.props.data.iccid ? <Icon name={'list_copy'} size={14} style={Styles.accessory} /> : null,
                 value:this.props.data.iccid,
                 onPress:()=>{
+                    if(!this.state.setUpList[5].value){
+                        return
+                    }
                     Clipboard.setString(this.state.setUpList[5].value);
                     Toast.message('SIM卡号复制成功','short','center');
                 },

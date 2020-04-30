@@ -13,7 +13,6 @@ import {
     DeviceEventEmitter,
     TouchableOpacity,
     Text,
-    Image,
     Platform
 } from 'react-native';
 import Theme from '../themes/index';
@@ -47,16 +46,6 @@ export default class InputBox extends Component {
             autoFocus:true
         };
     }
-
-    componentDidMount() {
-        DeviceEventEmitter.addListener('jmInputBoxShow', res=>{
-            this.setState({
-                visible:res.visible,
-                searchValue:res.value
-            });
-        });
-    }
-
     static show(value) {
         let data = {
             value:value,
@@ -67,6 +56,15 @@ export default class InputBox extends Component {
 
     static hide() {
         DeviceEventEmitter.emit('jmInputBoxShow',{visible:false});
+    }
+    
+    componentDidMount() {
+        DeviceEventEmitter.addListener('jmInputBoxShow', res=>{
+            this.setState({
+                visible:res.visible,
+                searchValue:res.value
+            });
+        });
     }
 
     componentWillUnmount() {
@@ -175,7 +173,7 @@ export default class InputBox extends Component {
           this.setState({
               visible: false
           });
-          this.props.onConfirm&& this.props.onConfirm(this.state.searchValue);
+          this.props.onConfirm && this.props.onConfirm(this.state.searchValue);
       }
   };
 
