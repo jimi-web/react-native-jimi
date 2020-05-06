@@ -111,17 +111,11 @@ export default class Record extends Component {
         this.getServerRecordFile(this.state.params);
         this.createFolder();
         // this.getStorage();
-        this.getBackTime();
-        this.getRecordInstruction()
-        // this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-        //     if (!this.state.isChangeScreen) {
-        //         this.changeSreenDirection('portrait');
-        //         return true;
-        //     }
-        //     return false;
-        // });
+        // this.getBackTime();
+        this.getRecordInstruction();
+
+        AppState.addEventListener('change',this.handleAppstatus);
     }
-    
     componentWillUnmount(){
         if(this.recordTimer){
             clearInterval(this.recordTimer);
@@ -134,6 +128,9 @@ export default class Record extends Component {
         }
         AppState.removeEventListener('change',this.handleAppstatus);
     }
+    /**
+     * 用户推到后台
+     */
     handleAppstatus = (status) => {
         if(status == 'active'){
             if(this.backDate != 0){
@@ -142,8 +139,7 @@ export default class Record extends Component {
                 // console.log(this.backTimeLength,this.backRecordPlayLength,89401);
             }
         }else{
-            // console.log(this.isPlay,23456);
-            if(this.state.isPlay && Platform.OS === 'ios'){
+            if(this.state.isPlay){
                 this.getPlayRecord().then(res => {
                     this.getStopRecordList(res[0]).then(data => {
                         this.setState({
@@ -163,7 +159,7 @@ export default class Record extends Component {
     getBackTime = () => {
         // 监听用户后台
         
-        AppState.addEventListener('change',this.handleAppstatus);
+       
     }
     /**
      * 根据单位计算当前时长的倍数
@@ -697,7 +693,9 @@ export default class Record extends Component {
      */
     getStopRecordList = (data) => {
         return new Promise(resolve => {
+            console.log(this.userkey,'停止录音参数')
             stopAudio(this.userkey).then(res => {
+                console.log(res,'停止录音的结果')
                 data.progress = 0;
                 data.type = 2;
                 this.state.recordList[data.index] = data;
