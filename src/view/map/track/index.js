@@ -94,6 +94,7 @@ export default class TrackUtils extends Component {
             }, //终点的标注
             pointArr:[],//存储播放中的轨迹数组
             trackPolylinePoint:[],//存储整条轨迹线
+            visualRange:[],//可是区域范围
             deviceMarker:{
                 latitude:0,
                 longitude:0,
@@ -285,6 +286,7 @@ export default class TrackUtils extends Component {
             startMarker:{latitude:trackData[0].latitude,longitude:trackData[0].longitude},
             endMarker:{latitude:trackData[trackData.length-1].latitude,longitude:trackData[trackData.length-1].longitude},
             trackPolylinePoint:allPoint,
+            visualRange:allPoint,
             deviceMarker:deviceMarker,
             pointArr:pointArr,
             totalProgress:allPoint.length-1,
@@ -440,6 +442,10 @@ export default class TrackUtils extends Component {
                 progress:currentProgress,
                 pointArr:pointArr,
                 deviceMarker:deviceMarker,
+                visualRange:[{
+                    latitude:deviceMarker.latitude,
+                    longitude :deviceMarker.longitude,
+                }]
                 // initialRegion:{
                 //     ...this.state.initialRegion,
                 //     ...deviceMarker
@@ -466,7 +472,8 @@ export default class TrackUtils extends Component {
             progress:0,
             isPlay:false,
             pointArr:[this.state.trackPolylinePoint[0]],
-            deviceMarker:deviceMarker
+            deviceMarker:deviceMarker,
+            visualRange:this.state.trackPolylinePoint
         });
     }
 

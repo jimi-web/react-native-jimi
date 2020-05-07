@@ -44,7 +44,7 @@ export default class BaiduTrack extends TrackUtils {
                     onMapLoaded={()=>{
                         this.onMapReady(0);
                     }}
-                    visualRange = {this.state.trackPolylinePoint}
+                    visualRange = {this.state.visualRange}
                     trafficEnabled={this.state.trafficEnabled}
                 >
                     <Overlay.Polyline

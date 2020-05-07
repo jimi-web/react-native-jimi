@@ -20,7 +20,7 @@ Applet.getVideoFirstImage('test/video.mp4').then((res)=>{
 ```
 
 ### 成功参数
-Object.res
+Object res
 
 属性 | 类型  | 说明 | 最低版本
 -|-|-|-
@@ -48,7 +48,7 @@ Applet.getVideoTime('test/xixi.mp4，test/hahahaha.mp4').then((res)=>{
 ```
 
 ### 成功参数
-Object.res
+Object res
 
 属性 | 类型  | 说明 | 最低版本
 -|-|-|-
