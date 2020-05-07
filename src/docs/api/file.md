@@ -13,7 +13,7 @@ Applet.getSmallAppPath().then((res)=>{
 ```
 
 ### 成功参数
-Object.res
+Object res
 
 属性 | 类型  | 说明 | 最低版本
 -|-|-|-
@@ -90,7 +90,7 @@ Applet.getFileList('test').then((res)=>{
 ```
 
 ### 成功参数
-Object.res
+Object res
 
 属性 | 类型  | 说明 | 最低版本
 -|-|-|-
@@ -162,7 +162,7 @@ Applet.saveVideoToAlbum(['test/xixi.mp4').then(()=>{
 
 
 ### 文件接口所有失败参数
-Object.res
+Object res
 
 属性 | 返回  | 说明 | 最低版本
 -|-|-|-

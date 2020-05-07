@@ -17,7 +17,7 @@ Applet.httpLocationGet('WGS84').then((res)=>{
 
 ```
 ### 成功参数
-Object.res
+Object res
 
 属性 | 类型  | 说明 | 最低版本
 -|-|-|-
@@ -25,7 +25,7 @@ lat | String | 经度 |无
 lng | String | 纬度 |无
 
 ### 失败参数
-Object.res
+Object res
 
 属性 | 返回  | 说明 | 最低版本
 -|-|-|-
