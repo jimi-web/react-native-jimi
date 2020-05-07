@@ -390,7 +390,7 @@ export default class PositionUtils extends Component {
         let stateOject = null;
         let colorArray = [{text:'离线',color:'#000'},{text:'在线',color:'#13A887'},{text:'休眠',color:'#000'}];
         stateOject = deviceStatus ? colorArray[deviceStatus]:colorArray[0];
-        stateOject = stateOject ? stateOject : colorArray[0]
+        stateOject = stateOject ? stateOject:colorArray[0];
         if(name){
             stateOject.text = name;
         }

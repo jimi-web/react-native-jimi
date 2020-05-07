@@ -113,7 +113,7 @@ export default class Details extends Component {
                         return
                     }
                     Clipboard.setString(this.state.setUpList[5].value);
-                    Toast.message('SIM卡号复制成功','short','center');
+                    Toast.message('ICCID复制成功','short','center');
                 },
                 type:'iccid'
             }]
