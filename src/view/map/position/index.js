@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
- * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-09 14:44:47
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-05-09 09:09:07
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,DeviceEventEmitter,AsyncStorage} from 'react-native';

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-19 15:01:45
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-26 15:36:17
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-05-09 09:20:40
  */
 
 
@@ -85,7 +85,7 @@ export default class RvcLoading extends Component {
         const errorMessages = errArray.filter(item => {
             return item.code == errorCode;
         });
-        const message = errorMessages[0].message || '连接超时';
+        const message = `${errorMessages[0].message}[${errorMessages[0].code}]` || '网络不给力[-1]';
         return message;
     }
 }             

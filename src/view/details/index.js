@@ -176,12 +176,12 @@ export default class Details extends Component {
         }).then((res)=>{
             let setUpList = this.state.setUpList;
             setUpList[0].value = deviceName;
-                this.setState({
-                    setUpList:setUpList
-                },()=>{
-                    this.props.onDeviceNameChange(deviceName);
-                    Toast.message('修改成功','short','center')
-                });
+            this.setState({
+                setUpList:setUpList
+            },()=>{
+                this.props.onDeviceNameChange(deviceName);
+                Toast.message('修改成功','short','center')
+            });
         });
     }
 

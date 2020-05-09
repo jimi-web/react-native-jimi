@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-21 17:10:35
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-05-09 09:19:11
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -206,7 +206,7 @@ export default class MonitorView extends Component {
                     this.setState({
                         isPlay:false,
                         RVCStatus:reminder.errCode,
-                        errorMessage:reminder.errMsg
+                        errorMessage:`网络不给力[${reminder.errCode}]`
                     });
                 }else{
                     this.onStartPlay();

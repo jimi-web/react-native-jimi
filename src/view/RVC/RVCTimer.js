@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-24 10:06:24
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-24 11:52:53
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-05-09 09:21:22
  */
  
 import React, { Component } from 'react';
@@ -50,7 +50,6 @@ export default class RVCTimer extends Component {
             m = parseInt(i / 60 % 60);
             m = m > 9? m : `0${m}`;
             h = parseInt(i / 360 % 24);
-            console.log(h,m,s,i);
             this.setState({
                 element:`${h}:${m}:${s}`
             });
