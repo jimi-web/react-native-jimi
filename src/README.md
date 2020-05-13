@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-26 16:48:01
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-13 09:21:49
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-05-13 11:43:34
  -->
 # 几米圈标准小程序
 
@@ -27,74 +27,87 @@
 ## 模块依赖
 ```bash
 # 请安装模块依赖
-1. "react": "16.6.3",
-2. "react-native": "0.58.6"
-3. "teaset": "^0.7.0"
-4. "react-native-maps": "0.24.0"
-5. "react-native-baidu-map-jm": "1.2.0"
-6. "react-native-shadow": "1.2.2",
-7. "react-native-svg": "9.3.7",
-8. "react-navigation": "3.6.1",
-9. "react-native-fs": "2.13.3",
-10."prop-types": "15.7.2",
-11."react-native-gesture-handler": "1.3.0",
-12."react-native-photoview-jm": "1.0.22",
-13."react-native-video": "5.0.2",
-14."react-native-rtmp-player-jm": "1.1.4",
+"node-forge": "0.9.1",
+"prop-types": "15.7.2",
+"react": "16.6.3",
+"react-native": "0.58.6",
+"react-native-baidu-map-jm": "1.3.1",
+"react-native-fs": "2.13.3",
+"react-native-ftp-jm": "^1.0.4",
+"react-native-gesture-handler": "1.3.0",
+"react-native-maps": "0.24.0",
+"react-native-orientation": "3.1.3",
+"react-native-photoview-jm": "1.0.24",
+"react-native-rtmp-player-jm": "1.1.4",
+"react-native-shadow": "1.2.2",
+"react-native-svg": "9.3.7",
+"react-native-swiper": "1.5.14",
+"react-native-video": "5.0.2",
+"react-navigation": "3.6.1",
+"react-redux": "6.0.1",
+"redux": "4.0.1",
+"redux-thunk": "2.3.0",
+"teaset": "0.6.3"
 ```
 
 ## 组件
 # 业务组件
-[`<Jimi.BaiduPosition />`定位](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Position.md)<br>
+[`<Jimi.BaiduPosition />`定位](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Position.md)<br>
 
-[`<Jimi.BaiduTrack />`轨迹](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Track.md)<br>
+[`<Jimi.BaiduTrack />`轨迹](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Track.md)<br>
 
-[`<Jimi.BaiduTrace />`追踪](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Trace.md)<br>
+[`<Jimi.BaiduTrace />`追踪](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Trace.md)<br>
 
-[`<Jimi.BaiduFenceList />`围栏列表](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/FenceList.md)<br>
+[`<Jimi.BaiduFenceList />`围栏列表](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/FenceList.md)<br>
 
-[`<Jimi.BaiduAddFence />`添加围栏](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/AddFence.md)<br>
+[`<Jimi.BaiduAddFence />`添加围栏](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/AddFence.md)<br>
 
-[`<Jimi.Share />`分享](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Share.md)<br>
+[`<Jimi.Share />`分享](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Share.md)<br>
 
-[`<Jimi.Record />`录音](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Record.md)<br>
+[`<Jimi.Record />`录音](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Record.md)<br>
 
-[`<Jimi.Photo />`相册文件夹](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Photo.md)<br>
+[`<Jimi.Photo />`相册文件夹](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Photo.md)<br>
 
-[`<Jimi.PhotoList />`相册列表](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/PhotoList.md)<br>
+[`<Jimi.PhotoAlbum />`相册轮播](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/PhotoAlbum.md)<br>
 
-[`<Jimi.PhotoDeatil  />`图片和视频详情](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/PhotoDeatil.md)<br>
+[`<Jimi.PhotoList />`相册列表](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/PhotoList.md)<br>
 
-[`<Jimi.Photograph  />`图片](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Photograph.md)<br>
+[`<Jimi.PhotoDeatil  />`图片和视频详情](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/PhotoDeatil.md)<br>
 
-[`<Jimi.Video />`视频](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Video.md)<br>
+[`<Jimi.Photograph  />`图片](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Photograph.md)<br>
 
-[`<Jimi.RVC />`RVC(实时视频)](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/RVC.md)<br>
+[`<Jimi.Video />`视频](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Video.md)<br>
 
-[`<Jimi.Empty />`数据空白](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/view/Empty.md)<br>
+[`<Jimi.RVC />`RVC(实时视频)](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/RVC.md)<br>
+
+[`<Jimi.Empty />`数据空白](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Empty.md)<br>
+
+[`<Jimi.Details />`设备详情](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/Details.md)<br>
+
+[`<Jimi.IconLibrary />`图标库](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/view/IconLibrary.md)<br>
 
 
 # 基础组件
 
-[`<Circle.Toast />`提示](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Toast.md)<br>
+[`<Circle.Toast />`提示](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/Toast.md)<br>
 
-[`<Circle.PullList />`上拉加载下拉刷新（无分组列表）](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/PullList.md)<br>
+[`<Circle.PullList />`上拉加载下拉刷新（无分组列表）](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/PullList.md)<br>
 
-[`<Circle.GroupList />`上拉加载下拉刷新（分组列表）](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/GroupList.md)<br>
+[`<Circle.GroupList />`上拉加载下拉刷新（分组列表）](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/GroupList.md)<br>
 
-[`<Circle.Switch />`开关](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Switch.md)<br>
+[`<Circle.Switch />`开关](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/Switch.md)<br>
 
-[`<Circle.Drawer />`底部抽屉](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Drawer.md)<br>
+[`<Circle.Drawer />`底部抽屉](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/Drawer.md)<br>
 
-[`<Circle.Wheel />`滚轮](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Wheel.md)<br>
+[`<Circle.Wheel />`滚轮](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/Wheel.md)<br>
 
-[`<Circle.Modal />`弹框](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Modal.md)
+[`<Circle.Modal />`弹框](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/Modal.md)
 
-[`<Circle.Icon />`图标](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Icon.md)
+[`<Circle.Icon />`图标](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/Icon.md)
 
-[`<Circle.Button />`按钮](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Button.md)
+[`<Circle.Button />`按钮](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/Button.md)
 
-[`<Circle.Datepicker />`日历选择器](http://172.16.0.101:3000/jmax/react-native-jimi/src/master/src/docs/components/Datepicker.md)
+[`<Circle.Datepicker />`日历选择器](http://10.0.10.85/cp/frontend/jmax_rn_standard/blob/master/src/docs/components/Datepicker.md)
 <br>
 
 ## 方法
