@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 14:24:44
+ * @LastEditTime: 2020-05-12 16:51:32
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions} from 'react-native';
@@ -42,9 +42,9 @@ export default class Datepicker extends Component {
             [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
         ];
         this.hours = [];
-        for (let i = 0; i <= 24; ++i) this.hours.push(i);
+        for (let i = 0; i <= 23; ++i) this.hours.push(i);
         this.mins = [];
-        for (let i = 0; i <= 60; ++i) this.mins.push(i);
+        for (let i = 0; i <= 59; ++i) this.mins.push(i);
         
 
         this.state ={
