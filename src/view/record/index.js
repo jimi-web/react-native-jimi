@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-21 18:54:19
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-02 15:26:07
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -820,7 +820,7 @@ export default class Record extends Component {
             if(res.code){
                 return Toast.message(res.message);
             }
-            Toast.message('文件删除成功');
+            Toast.message('删除成功');
             const params = {
                 pageNum:1,
                 pageSize:10

@@ -3,6 +3,24 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:20:04
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-08-05 17:20:42
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-01 15:25:57
  */
+import Chinese from './Chinese';
+import English from './English';
+import I18n from 'i18n-js';
+
+
+I18n.setLanguage =(locale,obj)=>{
+    I18n.translations = {
+        'zh-Hans':Object.assign(Chinese,obj && obj.cn),
+        'en':Object.assign(English,obj && obj.en)
+    };
+    
+    I18n.locale = locale;
+};
+
+
+I18n.setLanguage('en');
+
+export default I18n;

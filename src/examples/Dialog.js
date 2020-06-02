@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-12-27 17:43:23
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-31 14:12:30
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-02 15:54:03
  */
 import React,{Component} from 'react';
 import {View,StyleSheet} from 'react-native';
@@ -51,7 +51,7 @@ export default class Dialog extends Component {
     }
 
     toast = ()=> {
-        Toast.message('嘻嘻嘻嘻dasdasdasdasdasdad');
+        Toast.message('dasdasdasdasdasdad');
     }
 
     loading = ()=> {

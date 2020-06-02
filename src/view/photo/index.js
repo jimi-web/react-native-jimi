@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:52:42
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-11 18:48:45
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-02 15:02:39
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,Image,TouchableOpacity,Dimensions,Platform} from 'react-native';
@@ -214,7 +214,7 @@ export default class Photo extends Component {
         this.setState({
             longPhoto:[...img.result],
             longPhotoTotal:img.totalRecord
-        })
+        });
     }
 }
 

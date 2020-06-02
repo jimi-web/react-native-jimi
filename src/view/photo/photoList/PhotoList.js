@@ -3,13 +3,12 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:33:58
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-11 10:41:27
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-02 14:45:00
  */
 import React, {Component} from 'react';
 import {View,Text,SectionList,StyleSheet,FlatList,TouchableOpacity,Image} from 'react-native';
 import Empty from '../../empty/Empty';
-import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 import PhotoListTitle from './PhotoListTitle';
 import PhotoListItem from './PhotoListItem';
 import {batchFileDelete,batchSaveToAlbum} from '../file';

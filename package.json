@@ -9,6 +9,7 @@
     "android": "react-native bundle --entry-file index.js --platform android --dev false --bundle-output ./bundles/index.android.jsbundle --assets-dest ./bundles"
   },
   "dependencies": {
+    "i18n-js": "^3.7.0",
     "node-forge": "0.9.1",
     "prop-types": "15.7.2",
     "react": "16.6.3",

@@ -2064,6 +2064,11 @@ http-errors@~1.7.2:
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
 
+i18n-js@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.npm.taobao.org/i18n-js/download/i18n-js-3.7.0.tgz#84bf7706610f8a2589b3d6b15083a0a38a33dcb7"
+  integrity sha1-hL93BmEPiiWJs9axUIOgo4oz3Lc=
+
 iconv-lite@^0.4.17, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
