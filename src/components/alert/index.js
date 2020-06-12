@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-10-12 14:01:19
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 18:11:08
+ * @LastEditTime: 2020-06-04 11:43:29
  */
 import React, {Component} from 'react';
 import {Text, View,StyleSheet,TouchableOpacity} from 'react-native';
@@ -33,7 +33,7 @@ export default class alertView extends Component{
                 </View>
                 <View style={styles.dialogButton}>
                     <TouchableOpacity activeOpacity={1} style={styles.dialogText} onPress={() => {this.props.onConfirm && this.props.onConfirm();}}>
-                        <Text style={{color:'#3479F6',fontSize:17}}>{'确定'}</Text>
+                        <Text style={{color:'#3479F6',fontSize:17}}>{I18n.t('确定')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

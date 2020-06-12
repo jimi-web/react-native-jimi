@@ -3,14 +3,13 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-08 17:02:08
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-13 17:27:10
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-04 09:54:45
  */
 import React, { Component } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     Dimensions,
     PanResponder
 } from 'react-native';

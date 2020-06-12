@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:52:42
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-02 15:02:39
+ * @LastEditTime: 2020-06-03 15:28:32
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,Image,TouchableOpacity,Dimensions,Platform} from 'react-native';
@@ -62,7 +62,7 @@ export default class Photo extends Component {
         let localVideoimg = this.state.localVideo.length>0?this.state.localVideo[0].videoFirstImage:null;
         return <View style={Styles.content}>
             <View>
-                <Text style={Styles.header}>相册</Text>
+            <Text style={Styles.header}>{I18n.t('相册')}</Text>
                 <View style={ Styles.fileType}>
                     {this.fileTypeItem(0,localPhotoimg,this.props.placeholderImg,'本地相册',this.state.localPhoto,true)}
                     {this.fileTypeItem(1,longPhotoimg,this.props.placeholderImg,'远程相册')}
@@ -74,7 +74,7 @@ export default class Photo extends Component {
             </View>
             <View style={Styles.line}></View>
             <View>
-                <Text style={Styles.header}>视频</Text>
+                <Text style={Styles.header}>{I18n.t('视频')}</Text>
                 <View style={ Styles.fileType}>
                     {this.fileTypeItem(0,localVideoimg,this.props.placeholderVideo,'本地视频',this.state.localVideo,true)}
                     <View style={Styles.fileTypeItem}>
@@ -98,7 +98,7 @@ export default class Photo extends Component {
      */
     fileTypeItem = (fileType,img,placeholder,name,mediaList,isRight)=>{
         return <View style={[Styles.fileTypeItem,{marginRight:isRight?25:0}]} onLayout={this.fileTypeItemOnLayout}>
-            <TouchableOpacity style={[Styles.imgBtn,{height:this.state.fileTypeItemHeight}]} activeOpacity={1} onPress={()=>{this.onTouch({fileType:fileType,title:name,mediaList:mediaList});}}>
+            <TouchableOpacity style={[Styles.imgBtn,{height:this.state.fileTypeItemHeight}]} activeOpacity={1} onPress={()=>{this.onTouch({fileType:fileType,title:I18n.t(name),mediaList:mediaList});}}>
                 {
                     img?
                         <Image style={{width:'100%',height:'100%',borderRadius:2}} resizeMode={'cover'} source={{uri:img}}></Image>
@@ -117,7 +117,7 @@ export default class Photo extends Component {
      */
     fileTypeName = (name,num,isRight)=>{
         return <View style={[Styles.fileTypeName,{marginRight:isRight?25:0}]}>
-            <Text style={Styles.name}>{name}</Text>
+            <Text style={Styles.name}>{I18n.t(name)}</Text>
             <Text style={Styles.num}>{num}</Text>
         </View>;
     }

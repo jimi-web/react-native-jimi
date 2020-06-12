@@ -3,11 +3,11 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-05-09 09:09:07
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-11 17:23:08
  */
 import React, {Component} from 'react';
-import {View,TouchableOpacity,Image,Text,DeviceEventEmitter,AsyncStorage} from 'react-native';
+import {View,TouchableOpacity,Image,Text,AsyncStorage} from 'react-native';
 import { Icon,Toast } from '../../../components/index'
 import Styles from '../style/base';
 import MapStyles from '../style/position';
@@ -17,7 +17,7 @@ import {httpLocationGet,getEncoding} from '../../../http/index';
 import PropTypes from 'prop-types';
 import '../../../libs/time';
 
-export default class PositionUtils extends Component { 
+export default class PositionUtils extends Component {
     static propTypes = {
         trafficEnabled:PropTypes.bool,//是否开启路况
         isRefresh:PropTypes.bool,//是否刷新
@@ -146,7 +146,7 @@ export default class PositionUtils extends Component {
             console.log('调用刷新');
             this.mapViewFunc.reloadView();
         }  
-        this.loading = Toast.loading('加载中...');
+        this.loading = Toast.loading(I18n.t('加载中')+'...');
         this.setState({
             userMapType:type
         },()=>{
@@ -328,7 +328,7 @@ export default class PositionUtils extends Component {
         return <View style={[MapStyles.infoWindow,shadow,{borderRadius:infoBordeRadius},spaceBetween]}>
             <View style={[MapStyles.infoWindowItem,MapStyles.infoWindowItemImei]}>
                 {/* <Text style={MapStyles.imei}>{locationData.deviceName}</Text> */}
-                <Text style={[MapStyles.deviceStatus,{color:this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).color,paddingTop:1}]}>{this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).text}</Text>
+                <Text style={[MapStyles.deviceStatus,{color:this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).color,paddingTop:1}]}>{I18n.t(this.deviceState(locationData.deviceStatus,locationData.deviceStatusName).text)}</Text>
                 {
                     locationData.powerPer != null && this.props.powerShow ?
                     <View style={{flexDirection:"row",alignItems:'center'}}>
@@ -351,19 +351,19 @@ export default class PositionUtils extends Component {
                 }
             </View>
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>{this.posType().text}</Text>
+                <Text style={MapStyles.infoWindowTitle}>{I18n.t(this.posType().text)}</Text>
                 <Text style={MapStyles.line}>|</Text>
                 <Text style={MapStyles.infoWindowTitle}>{locationData.gpsSpeed ? locationData.gpsSpeed:0}km/h</Text>
                 {
                     locationData.powerPer != null  && this.props.powerShow?
                     <View style={{ flexDirection: 'row',alignItems:'center'}}>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.infoWindowTitle}>电源:{locationData.powerStatus==1?'已接通':'未接通'}</Text>
+                        <Text style={MapStyles.infoWindowTitle}>{I18n.t('电源')}:{locationData.powerStatus==1?I18n.t('已接通'):I18n.t('未接通')}</Text>
                         {
                             locationData.powerStatus==1 && this.props.isVoltage?
                             <View style={{ flexDirection: 'row',alignItems:'center'}}>
                                 <Text style={MapStyles.line}>|</Text>
-                                <Text style={MapStyles.infoWindowTitle}>电压:{locationData.powerValue?locationData.powerValue+'V':0}</Text>
+                                <Text style={MapStyles.infoWindowTitle}>{I18n.t('电压')}:{locationData.powerValue?locationData.powerValue+'V':0}</Text>
                             </View>:null
                         }
 
@@ -371,13 +371,13 @@ export default class PositionUtils extends Component {
                 }
             </View>      
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>定位时间：{this.posType().time}</Text>
+                <Text style={MapStyles.infoWindowTitle}>{I18n.t('定位时间')}：{this.posType().time}</Text>
             </View>     
             <View style={MapStyles.infoWindowItem}>
-                <Text style={MapStyles.infoWindowTitle}>通讯时间：{locationData.time}</Text>
+                <Text style={MapStyles.infoWindowTitle}>{I18n.t('通讯时间')}：{locationData.time}</Text>
             </View>    
             <View style={[MapStyles.infoWindowItem,{paddingBottom:0}]}>
-                <Text style={MapStyles.infoWindowTitle}>地址：{locationData.address}{'\n'}                                                        
+                <Text style={MapStyles.infoWindowTitle}>{I18n.t('地址')}：{locationData.address}{'\n'}                                                        
                 </Text>
             </View>     
         </View>;

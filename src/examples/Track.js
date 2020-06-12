@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-10 11:02:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 16:15:45
+ * @LastEditTime: 2020-06-12 11:28:04
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -34,7 +34,7 @@ export default class Track extends Component {
         //     pause:require('../assets/track/repeat.png')
         // };
         return <View style={{flex:1}}>
-            {
+            {/* {
                 this.state.isBaidu ? 
                     <Jimi.BaiduTrack
                         // getData={this.getTrackPoints}
@@ -52,13 +52,20 @@ export default class Track extends Component {
                         mapTypeBtnStyle={styles.set}
                         polylineOptions = {polylineOptions}
                         playPolylineOptions = {playPolylineOptions}
-                        playImg={playImg}
+                        // playImg={playImg}
                     >
-                        {
-                            this.customItem()
-                        }
-                    </Jimi.GoogleTrack>            
-            }
+
+                    </Jimi.GoogleTrack>       
+                    
+                    
+            } */}
+            <Jimi.Track  
+                mapTypeBtnStyle={styles.set}
+            >
+                {
+                    this.customItem()
+                }
+            </Jimi.Track>
         </View>;
     }
 

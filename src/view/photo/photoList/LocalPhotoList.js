@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:33:58
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 13:51:49
+ * @LastEditTime: 2020-06-03 15:21:28
  */
 import React, {Component} from 'react';
 import {View,Text,SectionList,StyleSheet,FlatList,TouchableOpacity,Image} from 'react-native';
@@ -124,9 +124,9 @@ export default class LocalPhotoList extends Component {
             </TouchableOpacity>:
             <BottomToolbars>
                 <View style={Styles.bottomToolbars}>
-                    <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={()=>this.onEdit(false)}><Text style={[Styles.bottomToolbarsText,{color:'#000'}]}>{checkedListLen>0?'取消（'+checkedListLen+'）':'取消'}</Text></TouchableOpacity>
-                    <TouchableOpacity activeOpacity={checkedListLen>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.save}><Text style={[Styles.bottomToolbarsText,{color:checkedListLen>0?'#3479F6':'#e1e1e1'}]}>保存至本地</Text></TouchableOpacity>
-                    <TouchableOpacity activeOpacity={checkedListLen>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.delete}><Text style={[Styles.bottomToolbarsText,{color:checkedListLen>0?'#FF3535':'#e1e1e1'}]}> 删除</Text></TouchableOpacity>
+                    <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={()=>this.onEdit(false)}><Text style={[Styles.bottomToolbarsText,{color:'#000'}]}>{checkedListLen>0?I18n.t('取消')+'（'+checkedListLen+'）':I18n.t('取消')}</Text></TouchableOpacity>
+                    <TouchableOpacity activeOpacity={checkedListLen>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.save}><Text style={[Styles.bottomToolbarsText,{color:checkedListLen>0?'#3479F6':'#e1e1e1'}]}>{I18n.t('保存至本地')}</Text></TouchableOpacity>
+                    <TouchableOpacity activeOpacity={checkedListLen>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.delete}><Text style={[Styles.bottomToolbarsText,{color:checkedListLen>0?'#FF3535':'#e1e1e1'}]}>{I18n.t('删除')}</Text></TouchableOpacity>
                 </View>
             </BottomToolbars>;
         return btn;
@@ -394,7 +394,7 @@ export default class LocalPhotoList extends Component {
         if(param.getTime()>=sundayTime){
             return week[param.getDay()];
         }
-        return day;
+        return I18n.t(day);
     }
 
 

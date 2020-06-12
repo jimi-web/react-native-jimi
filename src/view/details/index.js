@@ -19,7 +19,9 @@ export default class Details extends Component {
 
     static defaultProps = {
         onSetUpIcon:()=>{},
-        detailMarginRight:24
+        detailMarginRight:24,
+        onDeviceNameChange:()=>{
+        }
     }
 
     componentWillReceiveProps(nextProps){
@@ -42,7 +44,16 @@ export default class Details extends Component {
                     data.value = <Icon name={name} size={30} />
                 }
                 
-                if(key === data.type && key!='deviceIcon'){
+
+                if(data.type === 'simNo' && key ==='simNo'){
+                    data.value = nextPropsData[key]?nextPropsData[key]:I18n.t('未检测到SIM卡号')
+                }
+
+                if(data.type === 'iccid' && key ==='iccid'){
+                    data.value = nextPropsData[key]?nextPropsData[key]:I18n.t('未检测到ICCID')
+                }
+
+                if(key === data.type && key!='deviceIcon' && key!='simNo' && key!='iccid'){
                     data.value = nextPropsData[key];
                 }
             })
@@ -100,7 +111,7 @@ export default class Details extends Component {
                         return
                     }
                     Clipboard.setString(this.state.setUpList[4].value);
-                    Toast.message('SIM卡号复制成功','short','center');
+                    Toast.message(I18n.t('SIM卡号复制成功'),'short','center');
                 },
                 type:'simNo'
             },{
@@ -113,7 +124,7 @@ export default class Details extends Component {
                         return
                     }
                     Clipboard.setString(this.state.setUpList[5].value);
-                    Toast.message('ICCID复制成功','short','center');
+                    Toast.message(I18n.t('ICCID复制成功'),'short','center');
                 },
                 type:'iccid'
             }]
@@ -132,7 +143,7 @@ export default class Details extends Component {
                     style={css}
                     activeOpacity={item.accessory=='onPress'?0.2:1}
                     icon={<Image source={item.icon} style={Styles.iconStyle} />} 
-                    title={<Text style={{marginLeft:8}}>{item.name}</Text>} 
+                    title={<Text style={{marginLeft:8}}>{I18n.t(item.name)}</Text>} 
                     accessory={item.accessory ? item.accessory :'none'} 
                     onPress={item.onPress?()=>item.onPress(item.value):()=>{}}
                     bottomSeparator={border}
@@ -152,7 +163,7 @@ export default class Details extends Component {
      */
     inputBoxElement = ()=>{
         return <InputBox 
-            title={'请输入设备名称'}
+            title={I18n.t('请输入设备名称')}
             maxLength={15}
             onConfirm={(value)=>{
                 this.updateDeviceName(value);
@@ -180,7 +191,7 @@ export default class Details extends Component {
                 setUpList:setUpList
             },()=>{
                 this.props.onDeviceNameChange(deviceName);
-                Toast.message('修改成功','short','center')
+                Toast.message(I18n.t('修改成功'),'short','center')
             });
         });
     }

@@ -4,8 +4,9 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:05:47
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-01 15:28:12
+ * @LastEditTime: 2020-06-04 14:42:50
  */
+
 import React, {Component} from 'react';
 import { Root } from './router/index';
 import store from './store/index';
@@ -20,9 +21,10 @@ export default class App extends Component{
     }
 
     render() {
+        console.log(I18n,'路由先加载');
         return (
             <Provider store={store}>
-                <Root/>
+                <Root />
             </Provider>
         );
     }

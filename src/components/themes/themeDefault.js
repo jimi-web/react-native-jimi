@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:12:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-11 10:32:07
+ * @LastEditTime: 2020-06-12 13:35:20
  */
 import {PixelRatio} from 'react-native';
 
@@ -93,7 +93,7 @@ export default {
     
     //track
     startEndImgWidth:20,
-    startEndImgHeight:20,
+    startEndImgHeight:34,
     maximumTrackTintColor:'#C0BDC0',
     minimumTrackTintColor:'#2D292D',
     thumbTintColor:'#333033',

@@ -56,7 +56,7 @@ export default class IconTable extends Component {
                     })
                 }
             </View>
-            <Button title={'保存'} type={'primary'} style={Styles.btn} onPress={this.onSave} ></Button>
+            <Button title={I18n.t('保存')} type={'primary'} style={Styles.btn} onPress={this.onSave} ></Button>
         </View>
     }
 
@@ -106,7 +106,7 @@ export default class IconTable extends Component {
      * 保存图标
      */
     onSave =()=> {
-        let loading = Toast.loading('修改中...');
+        let loading = Toast.loading(I18n.t('修改中')+'...');
         jmAjax({
             url:Api.updateDeviceInfo,
             method:'POST',
@@ -117,7 +117,7 @@ export default class IconTable extends Component {
             }
         }).then((res)=>{
             Toast.remove(loading);
-            Toast.message('修改成功','short','center')
+            Toast.message(I18n.t('修改成功'),'short','center')
             this.props.onSaveCallBack(this.state.activateKey);
         }).catch(()=>{
             Toast.remove(loading);

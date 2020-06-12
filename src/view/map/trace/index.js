@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-11 10:28:10
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-02 18:09:16
  */
 import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
@@ -111,9 +111,9 @@ export default class TraceUtils extends PositionUtils {
                     <View style={[MapStyles.item,MapStyles.state]}>
                         <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).color,paddingTop:1}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).text:'离线'}</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>距离{this.state.distance? distance(this.state.distance):0+'m'}</Text>
+                        <Text style={MapStyles.text}>{I18n.t('距离')}{this.state.distance? distance(this.state.distance):0+'m'}</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>{deviceInfo.posType?this.posType(deviceInfo).text:'无'}</Text>
+                        <Text style={MapStyles.text}>{deviceInfo.posType?I18n.t(this.posType(deviceInfo).text):I18n.t('无')}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>{deviceInfo.gpsSpeed?deviceInfo.gpsSpeed:0}km/h</Text>
                     </View>
@@ -121,10 +121,10 @@ export default class TraceUtils extends PositionUtils {
                         this.state.pullState ?
                             <View>
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>定位时间：{deviceInfo.posType?this.posType(deviceInfo).time:'无'}</Text>
+                                    <Text style={MapStyles.text}>{I18n.t('定位时间')}：{deviceInfo.posType?this.posType(deviceInfo).time:I18n.t('无')}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
-                                    <Text style={MapStyles.text}>通讯时间：{deviceInfo.time?deviceInfo.time:'无'}</Text>
+                                    <Text style={MapStyles.text}>{I18n.t('通讯时间')}：{deviceInfo.time?deviceInfo.time:I18n.t('无')}</Text>
                                 </View> 
                                 <View style={MapStyles.item}>
                                     <Text style={MapStyles.text}>{deviceInfo.address?deviceInfo.address:null}{'\n'}</Text>
@@ -153,10 +153,10 @@ export default class TraceUtils extends PositionUtils {
      */
     drawerShare = ()=> {
         return <Share 
-            checkedTitle ={this.props.checkedTitle}
+            checkedTitle ={I18n.t(this.props.checkedTitle)}
             shareUrl ={this.props.shareUrl}
-            shareTitle ={this.props.shareTitle}
-            shareText ={this.props.shareText}
+            shareTitle ={I18n.t(this.props.shareTitle)}
+            shareText ={I18n.t(this.props.shareText)}
             token={this.props.token ? this.props.token : ''} 
             onFile={()=>{
                 this.props.onFile &&  this.props.onFile();
@@ -313,7 +313,7 @@ export default class TraceUtils extends PositionUtils {
      */
     navigation = ()=>{
         if(!this.state.deviceMarker){
-            Toast.message('无定位信息无法导航');
+            Toast.message(I18n.t('无定位信息无法导航'));
             return;
         }
         httpApp('jm_location.navigation',{

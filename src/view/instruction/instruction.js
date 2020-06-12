@@ -3,11 +3,11 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-18 17:31:42
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-04 09:55:15
  */
 import React, { Component } from 'react';
-import {View,Text,ScrollView,Image,ActivityIndicator} from 'react-native';
+import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import {Toast,Button} from '../../components/index';
 import InsSwitch from './InsSwitch';
@@ -66,8 +66,8 @@ export default class Instruction extends Component {
                                 this.state.setBtnFlag ?
                                 <Button style={{backgroundColor:baseStyle.disableColor,borderColor:baseStyle.disableColor}} 
                                 activeOpacity={1} 
-                                title={<View style={{flexDirection:'row',alignItems:'center'}}><Text style={{color:'#fff',marginRight:10,fontSize:14}}>发送中</Text><ActivityIndicator size="small" color="#fff" /></View>} />:
-                                    <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={'发送指令'} />
+                                title={<View style={{flexDirection:'row',alignItems:'center'}}><Text style={{color:'#fff',marginRight:10,fontSize:14}}>{I18n.t('发送中')}</Text><ActivityIndicator size="small" color="#fff" /></View>} />:
+                                    <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={I18n.t('发送指令')} />
                             }
                         </View>
                         :

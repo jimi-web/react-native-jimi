@@ -3,12 +3,15 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-31 16:09:31
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-12 11:24:25
  */
 
 // import Photo from './photo/index';
 import '../libs/time';
+import Track from './map/track/Track';
+import Trace from './map/trace/Trace';
+import Position from './map/position/Position';
 import BaiduPosition from './map/position/BaiduPosition';
 import GooglePosition from './map/position/GooglePosition';
 import BaiduTrack from './map/track/BaiduTrack';
@@ -37,6 +40,9 @@ import IconLibrary from './details/IconLibrary';
 import PhotoAlbum from './photo/photoDeatil/PhotoAlbum';
 
 const Jimi = {
+    Track,
+    Trace,
+    Position,
     BaiduPosition,
     GooglePosition,
     BaiduTrack,

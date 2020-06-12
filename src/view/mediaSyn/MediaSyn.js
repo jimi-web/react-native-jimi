@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-11 16:03:21
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-11 17:26:30
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,DeviceEventEmitter,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl,BackHandler} from 'react-native';
@@ -106,7 +106,7 @@ export default class MediaSyn extends Component {
                     data = JSON.parse(data);
                 }
                 if(res.data[0].ssid != this.state.account){
-                    return Toast.message('请连接设备WIFI');
+                    return Toast.message(I18n.t('请连接设备WIFI'));
                 }else{
                     if(Platform.OS == 'ios'){
                         return;
@@ -118,7 +118,7 @@ export default class MediaSyn extends Component {
                 }
             });
         }else{
-            return Toast.message('请连接设备WIFI');
+            return Toast.message(I18n.t('请连接设备WIFI'));
         }
     }
     /**
@@ -137,7 +137,7 @@ export default class MediaSyn extends Component {
                 data = JSON.parse(data);
             }
             if(data[0].ssid != this.state.wifiMessage.account){
-                return Toast.message('请连接设备WIFI');
+                return Toast.message(I18n.t('请连接设备WIFI'));
             }
             if(this.state.fileList.length > 0){
                 return;
@@ -153,7 +153,7 @@ export default class MediaSyn extends Component {
             return false;
         }
         Modal.dialog({
-            contentText:'现在退出将会中断文件下载，是否继续？',
+            contentText:I18n.t('现在退出将会中断文件下载，是否继续?'),
             onConfirm:() => {
                 return false;
             },
@@ -290,9 +290,9 @@ export default class MediaSyn extends Component {
                         this.state.isEdit ? 
                             <BottomToolbars>
                                 <View style={Styles.bottomToolbars}>
-                                    <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={this.onCancel}><Text style={[Styles.bottomToolbarsText,{color:'#000'}]}>{fileLength>0?'取消（'+fileLength+'）':'取消'}</Text></TouchableOpacity>
-                                    <TouchableOpacity onPress={this.onDownload} activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#3479F6':'#e1e1e1'}]}>下载</Text></TouchableOpacity>
-                                    <TouchableOpacity activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.onDelete}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#FF3535':'#e1e1e1'}]}> 删除</Text></TouchableOpacity>
+                                    <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={this.onCancel}><Text style={[Styles.bottomToolbarsText,{color:'#000'}]}>{fileLength>0?I18n.t('取消')+'（'+fileLength+'）':I18n.t('取消')}</Text></TouchableOpacity>
+                                    <TouchableOpacity onPress={this.onDownload} activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#3479F6':'#e1e1e1'}]}>{I18n.t('下载')}</Text></TouchableOpacity>
+                                    <TouchableOpacity activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.onDelete}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#FF3535':'#e1e1e1'}]}>{I18n.t('删除')} </Text></TouchableOpacity>
                                 </View>
                             </BottomToolbars>
                             :
@@ -374,11 +374,11 @@ export default class MediaSyn extends Component {
         const element = 
         <View style={{flex:1}}>
             <View style={{backgroundColor:'rgba(254, 116, 45, 0.2)',height:32}}>
-                <Text style={{color:'#FE742D',lineHeight:32,paddingLeft:10}}>同步前请先链接设备的wifi热点</Text>
+                <Text style={{color:'#FE742D',lineHeight:32,paddingLeft:10}}>{I18n.t('同步前请先链接设备的wifi热点')}</Text>
             </View>
             <TouchableOpacity activeOpacity={0.6} onPress={this.onDeviceMifi.bind(this,this.state.wifiMessage)} style={{flex:6,alignItems:'center',justifyContent: 'center'}}>
                 <ImageBackground style={{width:268,height:280,alignItems:'center',position:'relative'}} source={require('../../assets/medias/Connect_pic.png')}>
-                    <Text style={{color:'#fff',marginTop:50}}>{this.state.connectText}</Text>
+                    <Text style={{color:'#fff',marginTop:50}}>{I18n.t(this.state.connectText)}</Text>
                     <Image style={{marginTop:30}} source={connectImage} />
                     {
                         this.state.isFail ?
@@ -391,11 +391,11 @@ export default class MediaSyn extends Component {
             </TouchableOpacity>
             <View style={{flex:3,alignItems:'center'}}>
                 <View style={{flexDirection:'row',paddingTop:60,alignItems:'flex-start',width:200}}>
-                    <Text style={{fontSize:15,color:'#fff'}}>WIFI名称：</Text>
+                <Text style={{fontSize:15,color:'#fff'}}>{I18n.t('WIFI名称')}：</Text>
                     <Text style={{fontSize:15,color:'#fff'}}>{this.state.wifiMessage.account}</Text>
                 </View>
                 <View style={{flexDirection:'row',paddingTop:30,alignItems:'flex-start',width:200}}>
-                    <Text style={{fontSize:15,color:'#fff'}}>WIFI密码：</Text>
+                    <Text style={{fontSize:15,color:'#fff'}}>{I18n.t('WIFI密码')}：</Text>
                     <Text style={{fontSize:15,color:'#fff'}}>{this.state.wifiMessage.password}</Text>
                 </View>
             </View>
@@ -463,10 +463,10 @@ export default class MediaSyn extends Component {
         element = <View style={{backgroundColor:'rgba(0, 0, 0, 0.6)',position:'absolute',top:0,left:0,height:'100%',width:'100%',justifyContent:'center',alignItems:'center'}}>
             <View style={{backgroundColor:'#fff',width:160,height:120,borderRadius:6,justifyContent:'center',alignItems:'center'}}>
                 <View style={{width:120}}>
-                    <Text>当前正在下载 {progressMessage.index}/{progressMessage.total}</Text>
+                <Text>{I18n.t('当前正在下载')}{progressMessage.index}/{progressMessage.total}</Text>
                 </View>
                 <View style={{paddingTop:20,width:120,flexDirection:'row'}}>
-                    <Text>当前进度： </Text>
+                    <Text>{I18n.t('当前进度')}： </Text>
                     <Text style={{color:'#000'}}>{progressMessage.progress}%</Text>
                 </View>
             </View>
@@ -478,7 +478,7 @@ export default class MediaSyn extends Component {
      */
     onWifiModal = () => {
         Modal.dialog({
-            contentText:'当前设备未连接WIFI无法进行媒体同步，是否前往连接设备WIFI？',
+            contentText:I18n.t('当前设备未连接WIFI无法进行媒体同步，是否前往连接设备WIFI?'),
             onConfirm:() => {
                 Applet.skipSetWifi();
             }
@@ -489,7 +489,7 @@ export default class MediaSyn extends Component {
             return;
         }
         Modal.dialog({
-            contentText:'连接设备失败，是否重试？',
+            contentText:I18n.t('连接设备失败，是否重试?'),
             onConfirm:() => {
                 this.status = 0;
                 this.isReply = false;
@@ -564,7 +564,7 @@ export default class MediaSyn extends Component {
                     this.setState({
                         isDownload:false
                     });
-                    return Toast.message('下载失败');
+                    return Toast.message(I18n.t('下载失败'));
                 });
         }
     }
@@ -615,7 +615,7 @@ export default class MediaSyn extends Component {
       */
      timeoutDispose = () => {
         this.progressTime = setTimeout(() => {
-            Toast.message('文件下载失败');
+            Toast.message(I18n.t('文件下载失败'));
             clearTimeout(this.progressTime);
         },15000);
      }
@@ -625,10 +625,10 @@ export default class MediaSyn extends Component {
      onDownload = () => {
          const {fileChecked} = this.state;
          if(!fileChecked.length){
-             return Toast.message('请选择文件！');
+             return Toast.message(I18n.t('请选择文件')+'！');
          }
          if(fileChecked.length > 15){
-             return Toast.message('每次下载文件不得超过15个！');
+             return Toast.message(I18n.t('每次下载文件不得超过15个!'));
          }
         //  获取选中文件及文件大小
          let fileSize = 0;
@@ -640,12 +640,12 @@ export default class MediaSyn extends Component {
              }
          });
          if(!fileArray.length){
-             return Toast.message('选择的文件已下载，请勿重复下载！')
+             return Toast.message(I18n.t('选择的文件已下载，请勿重复下载!'))
          }
          this.state.fileChecked = fileArray;
          if(fileSize > 10 * 1024 * 1024){
              Modal.dialog({
-                 contentText:'选择的文件比较大，可能会耗费较长的时间，是否继续？',
+                 contentText:I18n.t('选择的文件比较大，可能会耗费较长的时间，是否继续？'),
                  onConfirm:() => {
                      //  this.loading = Toast.loading('下载中...',30);
                      this.state.progressMessage.total = this.state.fileChecked.length;
@@ -679,9 +679,9 @@ export default class MediaSyn extends Component {
      onDelete = () => {
          const {fileChecked} = this.state;
          if(fileChecked.length <= 0){
-             return Toast.message('请选择文件');
+             return Toast.message(I18n.t('请选择文件'));
          }
-         this.loading = Toast.loading('删除中...');
+         this.loading = Toast.loading(I18n.t('删除中')+'...');
          this.deleteFtpfile(fileChecked,0);
      }
      /**
@@ -889,7 +889,7 @@ export default class MediaSyn extends Component {
             refreshing:false
         });
         JMUDPScoketManager.send('jimi',1).then(res => {
-            Toast.message('已发送消息给设备');
+            Toast.message(I18n.t('已发送消息给设备'));
         })
             .catch(res => {
                 this.connectModal();
@@ -927,13 +927,11 @@ export default class MediaSyn extends Component {
                     //     isConnect:true
                     // });
                     this.onFindFiles(data);
-                })
-                    .catch(res => {
-                        this.connectModal();
-                    });
+                }).catch(res => {
+                    this.connectModal();
+                });
 
-            })
-            .catch(() => {
+            }).catch(() => {
                 this.connectModal();
             });
     }
@@ -1014,7 +1012,7 @@ export default class MediaSyn extends Component {
                 }
             })
                 .catch(res => {
-                    Toast.message('获取文件中断');
+                    Toast.message(I18n.t('获取文件中断'));
                     callback(fileListArr);
                     // httpIndex++;
                     // const daeta = {
@@ -1061,7 +1059,7 @@ export default class MediaSyn extends Component {
                 isDownload:false
             });
             Toast.remove(this.loading);
-            return Toast.message('下载成功');
+            return Toast.message(I18n.t('下载成功'));
            
         }else{
             this.state.progressMessage.index = index + 2;
@@ -1113,7 +1111,7 @@ export default class MediaSyn extends Component {
                     fileList:this.state.fileList
                 });
                 // Toast.remove(this.loading);
-                return Toast.message('下载文件失败');
+                return Toast.message(I18n.t('下载失败'));
             });
     }
     /**
@@ -1151,7 +1149,7 @@ export default class MediaSyn extends Component {
                     fileChecked:[],
                 });
                 Toast.remove(this.loading);
-                return Toast.message('文件删除成功');
+                return Toast.message(I18n.t('删除成功'));
             }
             this.deleteFtpfile(array,index + 1);
         })
@@ -1161,7 +1159,7 @@ export default class MediaSyn extends Component {
                     fileChecked:[],
                 });
                 Toast.remove(this.loading);
-                Toast.message('删除失败');
+                Toast.message(I18n.t('删除失败'));
             });
     }
     /**

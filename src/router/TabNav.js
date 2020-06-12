@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-09 09:45:53
- * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-12 10:50:30
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-04 14:29:13
  */
 
 import React, {Component} from 'react';
@@ -44,6 +44,8 @@ const tabNav  = createBottomTabNavigator(
         },
         defaultNavigationOptions:({navigation }) => ({
             tabBarLabel:({tintColor})=>{
+                console.log(I18n,'tab栏得');
+                
                 const routeName = navigation.state.routeName;
                 let tabName = '首页';
                 let tabIcon = 'home';
@@ -62,9 +64,8 @@ const tabNav  = createBottomTabNavigator(
                 }
                 return <View style={{justifyContent:'center',flex:1}}>
                     <Icon style={{width:23,height:23,marginLeft:'auto',marginRight:'auto'}} model={2} type={type} name={tabIcon}/>
-                    <Text style={{textAlign:'center',fontSize:10}}>{tabName}</Text>
+                    <Text style={{textAlign:'center',fontSize:10}}>{I18n.t(tabName)}</Text>
                 </View>;
-                
             },
             tabBarVisible:navigation.state.params && navigation.state.params.param === null ? false : true
         }),

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-16 14:24:30
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-02 16:50:58
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity} from 'react-native';
@@ -34,7 +34,7 @@ export default class MediaContral extends Component {
                     timeConfig.length
                         ?
                         <View>
-                            <Text style={{fontSize:14,color:'#4D4D4D',paddingTop:16,paddingBottom:16}}>{'拍摄时间'}</Text>
+                            <Text style={{fontSize:14,color:'#4D4D4D',paddingTop:16,paddingBottom:16}}>{I18n.t('拍摄时间')}</Text>
                             <View style={{flexDirection:'row',flexWrap:'wrap'}}>
                                 {
                                     timeConfig.map((item,index) => {
@@ -48,7 +48,7 @@ export default class MediaContral extends Component {
                 }
                 {
                     <View>
-                        <Text style={{fontSize:14,color:'#4D4D4D',paddingTop:16,paddingBottom:16}}>{'摄像头'}</Text>
+                        <Text style={{fontSize:14,color:'#4D4D4D',paddingTop:16,paddingBottom:16}}>{I18n.t('摄像头')}</Text>
                         <View style={{flexDirection:'row',justifyContent:'space-around'}}>
                             {
                                 lensConfig.map((item,index) => {
@@ -60,7 +60,7 @@ export default class MediaContral extends Component {
                 }
                 <TouchableOpacity onPress={this.onIns} activeOpacity={0.6}>
                     <View style={{backgroundColor:'#f7f7f7',height:8}}></View>
-                    <Text style={{fontSize:17,color:'#333',textAlign:'center',lineHeight:50}}>确定</Text>
+                    <Text style={{fontSize:17,color:'#333',textAlign:'center',lineHeight:50}}>{I18n.t('确定')}</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -72,7 +72,7 @@ export default class MediaContral extends Component {
         console.log(item,888);
         let element = <View style={{alignItems:'center',padding:14}}>
             <Image source={item.icon[item.status]} />
-            <Text style={{marginTop:4,width:'100%',color:item.status?'#3479F6':'#959595'}}>{item.name}</Text>
+            <Text style={{marginTop:4,width:'100%',color:item.status?'#3479F6':'#959595'}}>{I18n.t(item.name)}</Text>
         </View>;
         return element;
     }

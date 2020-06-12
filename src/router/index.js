@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-02 11:42:36
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-11 14:19:10
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -42,11 +42,12 @@ import Details from '../examples/Detail';
 import IconLibrary from '../examples/IconLibrary';
 import PhotoAlbum from '../examples/PhotoAlbum';
 
-const getOptions = (title) => {
+const getOptions = (title,navigation) => {
+    console.log(navigation,'定位');
     let headerTitle = {};
     if(title){
         headerTitle = {
-            title:title
+            title:navigation?navigation.state.params.I18n?navigation.state.params.I18n.t(title):title:title
         };
     }
     return {
@@ -84,7 +85,7 @@ const AppNavigator = createStackNavigator(
         },
         Photo:{
             screen:Photo,
-            navigationOptions:getOptions('相册')
+            navigationOptions:({navigation})=>getOptions('相册',navigation)
         },
         PhotoList:{
             screen:PhotoList,
@@ -92,45 +93,45 @@ const AppNavigator = createStackNavigator(
         },
         Position:{
             screen:Position,
-            navigationOptions:getOptions('定位')
+            navigationOptions:({ navigation }) => getOptions('定位',navigation)
         },
         Track:{
             screen:Track,
-            navigationOptions:getOptions('轨迹')
+            navigationOptions:({ navigation }) => getOptions('轨迹',navigation)
         },
         Trace:{
             screen:Trace,
-            navigationOptions:getOptions('追踪')
+            navigationOptions:({ navigation }) => getOptions('追踪',navigation)
         },
         Test:{
             screen:Test,
-            navigationOptions:getOptions('测试')
+            navigationOptions:({ navigation }) => getOptions('测试',navigation)
         },
         Record:{
             screen:Record,
-            navigationOptions:getOptions('录音')
+            navigationOptions:({ navigation }) => getOptions('录音',navigation)
         },
         PrivacyAgreement:{
             screen:PrivacyAgreement,
-            navigationOptions:getOptions('隐私政策')            
+            navigationOptions:({ navigation }) => getOptions('隐私政策',navigation)           
         },
         Fence:{
             screen:Fence,
-            navigationOptions:getOptions('围栏')            
+            navigationOptions:({ navigation }) => getOptions('围栏',navigation)            
         },
         Details:{
             screen:Details,
-            navigationOptions:getOptions('详情')            
+            navigationOptions:({ navigation }) => getOptions('详情',navigation)            
         },
         PhotoAlbum:{
             screen:PhotoAlbum,
-            navigationOptions:getOptions()            
+            navigationOptions:({ navigation }) => getOptions()            
         },
         AddFence:{
             screen:AddFence,
             navigationOptions: ({ navigation }) => (
                 {
-                    ...getOptions('添加围栏'),
+                    ...getOptions('添加围栏',navigation),
                     headerStyle:{
                         backgroundColor:'#fff',
                         borderBottomColor:'#fff',
@@ -140,84 +141,83 @@ const AppNavigator = createStackNavigator(
         },
         Share:{
             screen:Share,
-            navigationOptions:getOptions('分享')            
+            navigationOptions:({ navigation }) => getOptions('分享',navigation)           
         },
         PullList:{
             screen:PullList,
-            navigationOptions:getOptions('普通列表')            
+            navigationOptions:({ navigation }) => getOptions('普通列表',navigation)           
         },
         GroupList:{
             screen:GroupList,
-            navigationOptions:getOptions('分组列表')            
+            navigationOptions:({ navigation }) => getOptions('分组列表',navigation)            
         },
         PullView:{
             screen:PullView,
-            navigationOptions:getOptions('上拉刷新下拉加载')        
+            navigationOptions:({ navigation }) => getOptions('上拉刷新下拉加载',navigation)        
         },        
         Switch:{
             screen:Switch,
-            navigationOptions:getOptions('开关')            
+            navigationOptions:({ navigation }) => getOptions('开关',navigation)            
         },
         GetWheel:{
             screen:GetWheel,
-            navigationOptions:getOptions('滚轮')            
+            navigationOptions:({ navigation }) => getOptions('滚轮',navigation)            
         },
         PhotoDeatil:{
             screen:PhotoDeatil,
-            navigationOptions:getOptions()            
+            navigationOptions:({ navigation }) => getOptions()            
         },  
         Datepicker:{
             screen:Datepicker,
-            navigationOptions:getOptions('日期选择器')            
+            navigationOptions:({ navigation }) => getOptions('日期选择器',navigation)            
         },  
         RVC:{
             screen:RVC,
         },  
         Dialog:{
             screen:Dialog,
-            navigationOptions:getOptions('弹框')     
+            navigationOptions:({ navigation }) => getOptions('弹框',navigation)     
         },  
         Icon:{
             screen:Icon,
-            navigationOptions:getOptions('图标')     
+            navigationOptions:({ navigation }) => getOptions('图标',navigation)     
         }, 
         Empty:{
             screen:Empty,
-            navigationOptions:getOptions('数据空白')     
+            navigationOptions:({ navigation }) => getOptions('数据空白',navigation)     
         }, 
         Button:{
             screen:Button,
-            navigationOptions:getOptions('按钮')     
+            navigationOptions:({ navigation }) => getOptions('按钮',navigation)     
         },
         Drawer:{
             screen:Drawer,
-            navigationOptions:getOptions('底部抽屉')     
+            navigationOptions:({ navigation }) => getOptions('底部抽屉',navigation)     
         },     
         Instruction:{
             screen:Instruction,
-            navigationOptions:getOptions('指令')     
+            navigationOptions:({ navigation }) => getOptions('指令',navigation)     
         },
         MediaSyn:{
             screen:MediaSyn,
-            navigationOptions:getOptions('媒体同步')     
+            navigationOptions:({ navigation }) => getOptions('媒体同步',navigation)     
         },
         MediaContral:{
             screen:MediaContral,
-            navigationOptions:getOptions('远程拍摄')     
+            navigationOptions:({ navigation }) => getOptions('远程拍摄',navigation)     
         },
         MediaDetails:{
             screen:MediaDetails,
-            navigationOptions:getOptions('媒体同步')     
+            navigationOptions:({ navigation }) => getOptions('媒体同步',navigation)     
         },
         Instructions:{
             screen:Instructions,
-            navigationOptions:getOptions('指令详情')     
+            navigationOptions:({ navigation }) => getOptions('指令详情',navigation)     
         },
         IconLibrary:{
             screen:IconLibrary,
-            navigationOptions:getOptions('图标库')     
-        },
-        
+            navigationOptions:({ navigation }) => getOptions('图标库',navigation)     
+        }
     });
 
 export const Root = createAppContainer(AppNavigator);

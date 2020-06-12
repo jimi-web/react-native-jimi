@@ -4,12 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:20:04
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-01 15:25:57
+ * @LastEditTime: 2020-06-11 14:37:46
  */
 import Chinese from './Chinese';
 import English from './English';
 import I18n from 'i18n-js';
 
+I18n.fallbacks = true;
 
 I18n.setLanguage =(locale,obj)=>{
     I18n.translations = {
@@ -20,7 +21,5 @@ I18n.setLanguage =(locale,obj)=>{
     I18n.locale = locale;
 };
 
-
-I18n.setLanguage('en');
 
 export default I18n;

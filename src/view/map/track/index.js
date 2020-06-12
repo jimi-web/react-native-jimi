@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 14:38:55
+ * @LastEditTime: 2020-06-12 14:01:46
  */
 import React, {Component} from 'react';
 import {TouchableOpacity,Image} from 'react-native';
@@ -195,7 +195,7 @@ export default class TrackUtils extends Component {
      * 数据请求模式判断
      */
     requestMode = ()=>{
-        this.loading = Toast.loading('加载中...');
+        this.loading = Toast.loading(I18n.t('加载中')+'...');
         if(this.props.getData){
             this.getTrackPoints();
         }else{
@@ -351,7 +351,7 @@ export default class TrackUtils extends Component {
     onReplay = () => {
         let trackData = this.state.trackData;
         if(trackData.length === 0){
-            Toast.message('暂无轨迹');
+            Toast.message(I18n.t('暂无轨迹'));
             return;
         }
         let deviceMarker = trackData[0];
@@ -382,7 +382,7 @@ export default class TrackUtils extends Component {
                  isPlay:isPlay
              });
          }else{
-             Toast.message('暂无轨迹，无法播放');
+             Toast.message(I18n.t('暂无轨迹，无法播放'));
              this.setState({
                  isPlay:false
              });
@@ -427,7 +427,7 @@ export default class TrackUtils extends Component {
         this.timer = setInterval(()=>{     
             //已播完
             if(this.state.progress === this.state.totalProgress){
-                Toast.message('播放完成');
+                Toast.message(I18n.t('播放完成'));
                 this.reset();
                 this.pause();
                 return;
@@ -496,7 +496,7 @@ export default class TrackUtils extends Component {
      *  可是可视范围内(仅限谷歌)
      */
     fitAllMarkers =()=> {
-        this.map.fitToCoordinates(this.state.trackPolylinePoint, {
+        this.map.fitToCoordinates(this.state.visualRange, {
             edgePadding:{top: 40,right: 40,bottom: 40,left: 40 },
             animated: true,
         });
@@ -564,7 +564,7 @@ export default class TrackUtils extends Component {
                isPlay:false
            }); 
        }
-       Toast.message('暂无轨迹');
+       Toast.message(I18n.t('暂无轨迹'));
        this.setState({
            trackData:[],
            startMarker:{

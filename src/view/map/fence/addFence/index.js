@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-10 16:24:00
+ * @LastEditTime: 2020-06-11 16:11:35
  */
 import React, {Component} from 'react';
-import {View,TouchableOpacity,Image,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
+import {View,TouchableOpacity,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
 import {Theme,Icon} from '../../../../components/index';
 import {MapSearch} from 'react-native-baidu-map-jm';
 import PropTypes from 'prop-types';
@@ -92,7 +92,7 @@ export default class AddFenceUtils extends Component {
         return  <View style={[AddFenceStyles.search,this.state.isDelShow?{borderTopRightRadius:0,borderBottomRightRadius:0}:{}]}>
             <SearchInput 
                 style={AddFenceStyles.searchInput}
-                placeholder='请输入搜索地址' 
+                placeholder={I18n.t('请输入搜索地址')}
                 placeholderTextColor='#D8D8D8'
                 onFocus={()=>{
                     this.onFocus();
@@ -141,7 +141,7 @@ export default class AddFenceUtils extends Component {
                                 },deviceInfo.address);
                             }}
                         >
-                            <Text style={[AddFenceStyles.placename,AddFenceStyles.deviceLocation]}>{'【设备位置】'}</Text>
+                            <Text style={[AddFenceStyles.placename,AddFenceStyles.deviceLocation]}>{'【'+I18n.t('设备位置')+'】'}</Text>
                             <Text style={AddFenceStyles.fullAddress}>{this.state.deviceInfo.address}</Text>
                         </TouchableOpacity> :null
                 }
@@ -198,14 +198,14 @@ export default class AddFenceUtils extends Component {
             <View style={AddFenceStyles.btn}>
                 <View style={AddFenceStyles.leftBtn}>
                     <TouchableOpacity style={[AddFenceStyles.alarmBtn,inStype.btnStyle]} onPress={()=>{this.selectAlarmText('in');}}>
-                        <Text style={[AddFenceStyles.alarmText,inStype.textStyle]}>进围栏报警</Text>
+                        <Text style={[AddFenceStyles.alarmText,inStype.textStyle]}>{I18n.t('进围栏报警')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[AddFenceStyles.alarmBtn,{marginLeft:15},outStype.btnStyle]} onPress={()=>{this.selectAlarmText('out');}}>
-                        <Text style={[AddFenceStyles.alarmText,outStype.textStyle]}>出围栏报警</Text>
+                        <Text style={[AddFenceStyles.alarmText,outStype.textStyle]}>{I18n.t('出围栏报警')}</Text>
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={AddFenceStyles.save} onPress={this.onSave}>
-                    <Text style={AddFenceStyles.saveText}>保存</Text>
+                    <Text style={AddFenceStyles.saveText}>{I18n.t('保存')}</Text>
                 </TouchableOpacity>
             </View>
         </View>;
@@ -216,7 +216,7 @@ export default class AddFenceUtils extends Component {
      */
     inputBoxElement = ()=>{
         return <InputBox 
-            title={'请输入围栏名称'}
+            title={I18n.t('请输入围栏名称')}
             maxLength={15}
             onConfirm={(value)=>{
                 this.setState({
@@ -319,7 +319,7 @@ export default class AddFenceUtils extends Component {
   
 
     init = ()=>{
-        this.loading = Toast.loading('加载中...');
+        this.loading = Toast.loading(I18n.t('加载中')+'...');
         if(this.props.fenceId){
             this.getFence();
         }else {
@@ -397,8 +397,7 @@ export default class AddFenceUtils extends Component {
             }else {
                 this.props.onDeviceChange && this.props.onDeviceChange(deviceInfo);
                 Toast.remove(this.loading);
-            }
-           
+            }  
         }
     }
 
@@ -512,7 +511,7 @@ export default class AddFenceUtils extends Component {
             encoding:true,
             encodingType:true
         }).then((res)=>{
-            Toast.message('保存成功');
+            Toast.message(I18n.t('保存成功'));
             DeviceEventEmitter.emit('jmFenceList',{});//围栏列表刷新
             this.props.onSave && this.props.onSave();
         });
@@ -565,7 +564,7 @@ export default class AddFenceUtils extends Component {
     radiusTip = ()=> {
         return <View  style={[{backgroundColor:'#fff0',height:34,width:74,alignItems:'center'}]}>
             <View style={AddFenceStyles.radiusTip}>
-                <Text style={AddFenceStyles.radiusTipText} >半径:{distance(this.state.radius,true)}</Text>
+                <Text style={AddFenceStyles.radiusTipText} >{I18n.t('半径')+':'+distance(this.state.radius,true)}</Text>
             </View>
             <View style={AddFenceStyles.radiusTipLine}>
             </View>

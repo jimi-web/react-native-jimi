@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 10:20:35
+ * @LastEditTime: 2020-06-12 13:57:18
  */
 
 import React, {Component} from 'react';
@@ -68,6 +68,9 @@ export default class GoogleTrack extends TrackUtils {
                 {
                     this.mapTypeBtn()
                 } 
+               {
+                    this.pullTime()
+                }                  
                 {
                     this.props.children
                 }
@@ -84,7 +87,7 @@ export default class GoogleTrack extends TrackUtils {
                 coordinate={this.state.startMarker}
             >
                 <Image 
-                    style={[this.props.startMarkerOptions.style ? this.props.startMarkerOptions.style:MapStyles.startEndImg,{transform:[{rotate:this.state.startMarker.direction+'deg'}]}]} 
+                    style={[this.props.startMarkerOptions.style ? this.props.startMarkerOptions.style:MapStyles.startEndImg]} 
                     source={this.props.startMarkerOptions.image? this.props.startMarkerOptions.image :require('../../../assets/track/trajectory_map_start.png') }/>              
             </Marker>:null;
         return markers;
@@ -99,7 +102,7 @@ export default class GoogleTrack extends TrackUtils {
                 coordinate={this.state.endMarker}
             >
                 <Image 
-                    style={[this.props.endMarkerOptions.style ? this.props.endMarkerOptions.style:MapStyles.startEndImg,{transform:[{rotate:this.state.endMarker.direction+'deg'}]}]} 
+                    style={[this.props.endMarkerOptions.style ? this.props.endMarkerOptions.style:MapStyles.startEndImg]} 
                     source={this.props.endMarkerOptions.image? this.props.endMarkerOptions.image :require('../../../assets/track/trajectory_map_end.png')}/>              
             </Marker>:null;
         return markers;

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:48:19
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-22 16:15:35
+ * @LastEditTime: 2020-06-04 18:23:11
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
@@ -24,7 +24,7 @@ export default class Fence extends Component {
             getData = {this.getList}
             onAddEditFence={(data)=>{
                 console.log(data);
-                let obj = data ? {fenceId:data.fenceId} : null;
+                let obj = data ? {fenceId:data.fenceId,I18n:I18n} : {I18n:I18n};
                 this.props.navigation.push('AddFence',obj);
             }}
         ></Jimi.FenceList>;

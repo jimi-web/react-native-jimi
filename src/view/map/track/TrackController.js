@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-09 16:48:57
+ * @LastEditTime: 2020-06-02 18:32:59
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Slider} from 'react-native';
@@ -70,9 +70,9 @@ export default class Track extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={MapStyles.speed}>
-                        <Text style={[MapStyles.speedText,{marginRight:15}]}>总里程：{this.props.totalDistance?distance(this.props.totalDistance):0+'m' }</Text>
+                        <Text style={[MapStyles.speedText,{marginRight:15}]}>{I18n.t('总里程')}：{this.props.totalDistance?distance(this.props.totalDistance):0+'m' }</Text>
                         <Text style={[MapStyles.speedText,{fontSize:12}]}>|</Text>
-                        <Text style={[MapStyles.speedText,{marginLeft:15}]}>时速：{deviceInformation.gpsSpeed?deviceInformation.gpsSpeed:0}km/h</Text>
+                        <Text style={[MapStyles.speedText,{marginLeft:15}]}>{I18n.t('时速')}：{deviceInformation.gpsSpeed?deviceInformation.gpsSpeed:0}km/h</Text>
                     </View>
                 </View>
                 <Slider
@@ -105,7 +105,7 @@ export default class Track extends Component {
                         <Icon  name={this.state.speedOption.img}  size={22} />
                     </TouchableOpacity>    
                     <TouchableOpacity activeOpacity={1} style={MapStyles.playControllerTextStyle}  onPress={this.showType}  >
-                        <Text style={{fontSize:14,color:'#5E5E5E'}}>{this.state.showTypeText}</Text>
+                        <Text style={{fontSize:14,color:'#5E5E5E'}}>{I18n.t(this.state.showTypeText)}</Text>
                         <Icon  name={'trajectory_time_selection_arrow1'}  size={10} />
                     </TouchableOpacity>                                                                  
                 </View>
@@ -136,7 +136,7 @@ export default class Track extends Component {
 
     onShowType = (val,text) =>{
         this.setState({
-            showTypeText:text
+            showTypeText:I18n.t(text)
         });
         this.props.onShowType && this.props.onShowType(val);
     }

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-21 17:31:47
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-11 10:35:38
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-03 15:24:56
  */
 import React,{Component} from 'react';
 import {View,StyleSheet,TouchableOpacity,Text} from 'react-native';
@@ -29,7 +29,7 @@ export default class PhotoListTitle extends Component{
             {
                 isEdit? 
                     <TouchableOpacity onPress={onAllChecked}>
-                        <Text style={Styles.select}>{allChecked?'全不选':'全选'}</Text>
+                        <Text style={Styles.select}>{allChecked?I18n.t('全不选'):I18n.t('全选')}</Text>
                     </TouchableOpacity>:null
             }
         </View>;

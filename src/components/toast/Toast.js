@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-10-10 16:01:37
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-29 15:13:08
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-04 11:44:12
  */
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
@@ -17,7 +17,7 @@ export default class Toast extends Overlay {
     static messageDefaultPosition = 'bottom';
     static loadingDefaultDuration = 30000;
     static loadingDefaultPosition = 'center';
-    static loadingDefaultText = '加载中...';
+    static loadingDefaultText ='加载中...';
     static loadingDefaultIcon = <ActivityIndicator size='large' color={'#fff'} />;
     static loadingDefaultStyle = {paddingLeft:25,paddingRight:25,paddingTop:15,paddingBottom:15};
 
