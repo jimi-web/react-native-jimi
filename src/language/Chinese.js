@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:50:38
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-02 16:01:29
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-06-11 15:58:59
  */
 const Chinese = {
     /*******  http方法  ********/
@@ -169,7 +169,7 @@ const Chinese = {
     '卫星':'卫星',
     '基站':'基站',
 
-     /*******  围栏  ********/
+    /*******  围栏  ********/
     '全选':'全选',
     '全不选':'全不选',
     '选择':'选择',

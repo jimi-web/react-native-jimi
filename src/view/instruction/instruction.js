@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-18 17:31:42
+ * @LastEditTime: 2020-06-15 13:49:18
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,Image,ActivityIndicator} from 'react-native';
@@ -75,10 +75,6 @@ export default class Instruction extends Component {
                 }
             </ScrollView>
         );
-    }
-
-    componentWillMount(){
-        console.log(this.state.instructionArr,'instructionArrinstructionArrinstructionArrinstructionArr');
     }
     /**
      * 渲染每一行的样式
@@ -296,11 +292,9 @@ export default class Instruction extends Component {
             });
         }).catch((res)=>{
             console.log(res,'失败');
-            
             this.setState({
                 setBtnFlag:false
             });
-            console.log(res.message);
         }); 
     }
 }

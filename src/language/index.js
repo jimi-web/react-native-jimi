@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:20:04
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-01 15:25:57
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-06-10 10:49:49
  */
 import Chinese from './Chinese';
 import English from './English';
@@ -16,7 +16,6 @@ I18n.setLanguage =(locale,obj)=>{
         'zh-Hans':Object.assign(Chinese,obj && obj.cn),
         'en':Object.assign(English,obj && obj.en)
     };
-    
     I18n.locale = locale;
 };
 
