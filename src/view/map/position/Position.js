@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 10:41:34
+ * @LastEditTime: 2020-06-15 11:05:45
  */
 import React,{Component} from 'react';
 import {View} from 'react-native';

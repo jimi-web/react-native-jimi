@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:48:19
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-19 18:10:11
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-15 11:16:20
  */
 import React, {Component} from 'react';
 import {Jimi} from '../index';
@@ -23,7 +23,7 @@ export default class BaiduAddFence extends Component {
     render() {
         let {params} = this.props.navigation.state;
         return  <View style={{flex:1}}>
-            {
+            {/* {
                 this.state.isBaidu ? <Jimi.BaiduAddFence
                     // getData = {this.getPoint}
                     fenceId={params?params.fenceId:''}
@@ -45,7 +45,21 @@ export default class BaiduAddFence extends Component {
                     }}
                 >
                 </Jimi.GoogleAddFence>
-            }
+            } */}
+            <Jimi.AddFence
+                    fenceId={params?params.fenceId:''}
+                    onSave={()=>{
+                        this.props.navigation.goBack();
+                    }}
+                    onDeviceChange = {(data)=>{
+                        console.log(data,'设备数据');
+                    }}
+                    strokeStyle={{
+                        width:3,
+                        color:'#8bc34a'}
+                    }
+                    fillColor={'#8bc34a3d'}                
+            ></Jimi.AddFence>
         </View>;
     }
 

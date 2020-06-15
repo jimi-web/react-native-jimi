@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 10:31:53
+ * @LastEditTime: 2020-06-15 10:52:10
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -78,6 +78,8 @@ export default class GooglePosition extends PositionUtils {
      * 设置中心点缩放
      */
     regionChange = (data) =>{
+        console.log(data,'datadatadatadata');
+        
         //避免与气泡冲突
         if(this.state.isInit){
             this.state.region = data;

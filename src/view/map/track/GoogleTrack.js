@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 13:57:18
+ * @LastEditTime: 2020-06-12 16:34:27
  */
 
 import React, {Component} from 'react';
@@ -52,6 +52,7 @@ export default class GoogleTrack extends TrackUtils {
                     onMapReady={()=>{
                         this.onMapReady(1);
                     }}
+                    onRegionChange={this.onRegionChange}
                 >
                     {this.startMarker()}
                     {this.endMarker()}
@@ -152,6 +153,13 @@ export default class GoogleTrack extends TrackUtils {
             strokeWidth={width}
         />:null; 
         return track;        
+    }
+
+    /**
+     * 缩放地图事件
+     */
+    onRegionChange =(data)=> {
+        this.state.initialRegion = data;
     }
  
 }
