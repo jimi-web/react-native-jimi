@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-03 16:54:07
+ * @LastEditTime: 2020-06-15 16:49:18
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter} from 'react-native';
