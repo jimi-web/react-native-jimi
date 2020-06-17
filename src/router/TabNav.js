@@ -44,6 +44,8 @@ const tabNav  = createBottomTabNavigator(
         },
         defaultNavigationOptions:({navigation }) => ({
             tabBarLabel:({tintColor})=>{
+                console.log(I18n,'tab栏得');
+                
                 const routeName = navigation.state.routeName;
                 let tabName = '首页';
                 let tabIcon = 'home';

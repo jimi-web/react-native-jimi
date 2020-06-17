@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-17 17:18:22
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-17 18:11:36
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
@@ -19,6 +19,7 @@ import InsInput from './InsInput';
 import InsModelSelect from './InsModelSelect';
 import InsStep from './InsStep';
 import InsTab from './InsTab';
+import InsTime from './InsTime';
 import Api from '../../api';
 import {jmAjax} from '../../http/index';
 export default class Instruction extends Component {
@@ -196,7 +197,11 @@ export default class Instruction extends Component {
             element = <InsStep style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
             break;
         case 'tab':
-            element = <InsTab style={[baseStyle.leftOrRight]} isShow={isShow}  index={index} data={item} onSelect={(data,index) => this.onIns(data,index)} ></InsTab>
+            element = <InsTab style={[baseStyle.leftOrRight]} isShow={isShow}  index={index} data={item} onSelect={(data,index) => this.onIns(data,index)} />;
+            break;
+        case 'time':
+            element = <InsTime style={[baseStyle.leftOrRight,style]} index={index} data={item} onConfirm= {(data,index) => this.onIns(data,index)}/>;  
+            break;
         case 'perch':
             element = null;  
             break;

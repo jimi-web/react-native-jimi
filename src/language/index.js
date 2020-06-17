@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:20:04
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-17 17:17:58
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-17 18:23:23
  */
 import Chinese from './Chinese';
 import English from './English';

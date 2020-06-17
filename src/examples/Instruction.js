@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-17 16:28:43
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-17 18:23:01
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';

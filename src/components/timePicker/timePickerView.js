@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-16 14:50:24
+ * @LastEditTime: 2020-06-17 18:22:44
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions} from 'react-native';
@@ -37,9 +37,9 @@ export default class timePickerView extends Component {
         this.hours = [];
         this.hoursNum = 0;
         this.minNum = 0;
-        for (let i = 1; i <= 23; ++i){
-            this.hoursNum = i<10 ? '0'+i :i;
-            this.hours.push(this.hoursNum.toString());
+        for (let i = 0; i <= 23; ++i){
+            // this.hoursNum = i<10 ? '0'+i :i;
+            this.hours.push(i.toString());
         } 
         this.mins = [];
         for (let i = 0; i <= 59; ++i){

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:50:38
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-15 13:52:15
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-17 18:23:14
  */
 const Chinese = {   
     /***  提示toast  ***/
