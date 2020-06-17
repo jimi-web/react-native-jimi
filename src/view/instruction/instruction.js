@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-17 16:58:38
+ * @LastEditTime: 2020-06-17 17:18:22
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
@@ -18,6 +18,7 @@ import InsMultiSelect from './InsMultiSelect';
 import InsInput from './InsInput';
 import InsModelSelect from './InsModelSelect';
 import InsStep from './InsStep';
+import InsTab from './InsTab';
 import Api from '../../api';
 import {jmAjax} from '../../http/index';
 export default class Instruction extends Component {
@@ -63,7 +64,7 @@ export default class Instruction extends Component {
                 }
                 {
                     this.props.instructionArr.map((item,index) => {
-                        return <View key={index} style={this.renderItemStyle()}>{this.renderInstruction(item,index)}</View>;
+                        return <View key={index} style={this.renderItemStyle(item)}>{this.renderInstruction(item,index)}</View>;
                     })
                 }
                 {/* 底部按钮 */}
@@ -88,8 +89,8 @@ export default class Instruction extends Component {
     /**
      * 渲染每一行的样式
      */
-    renderItemStyle = () => {
-        const {itemStyle} = this.props;
+    renderItemStyle = (item) => {
+        let itemStyle = item.itemStyle ? item.itemStyle: {};
         const styles = [
             {
                 justifyContent:'center',
@@ -194,6 +195,8 @@ export default class Instruction extends Component {
         case 'step':
             element = <InsStep style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
             break;
+        case 'tab':
+            element = <InsTab style={[baseStyle.leftOrRight]} isShow={isShow}  index={index} data={item} onSelect={(data,index) => this.onIns(data,index)} ></InsTab>
         case 'perch':
             element = null;  
             break;

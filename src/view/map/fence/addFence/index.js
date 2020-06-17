@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 16:11:35
+ * @LastEditTime: 2020-06-15 16:02:47
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -336,7 +336,7 @@ export default class AddFenceUtils extends Component {
                 this.editFenceDefaultValue(res);
             });
         }else{
-            let deviceInfo = await devicePosition();
+            let deviceInfo = await devicePosition('','',this.state.userMapType);
             this.editFenceDefaultValue(deviceInfo);
             
         }
@@ -354,7 +354,7 @@ export default class AddFenceUtils extends Component {
             }
         }).then((res)=>{
             let data = res.data;
-            let baidu = gps.GPSToBaidu(data.latitude,data.longitude);
+            let baidu =  this.state.userMapType? gps.GPSToChina(data.latitude,data.longitude):gps.GPSToBaidu(data.latitude,data.longitude);
             
             //编辑赋值
             this.setState({
@@ -391,7 +391,7 @@ export default class AddFenceUtils extends Component {
                 this.addNewFenceDefaultValue(data);
             });
         }else {
-            let deviceInfo = await devicePosition();
+            let deviceInfo = await devicePosition('','',this.state.userMapType);
             if(deviceInfo.latitude){
                 this.addNewFenceDefaultValue(deviceInfo);
             }else {
@@ -487,8 +487,11 @@ export default class AddFenceUtils extends Component {
      * 保存
      */
     onSave = ()=> {
-        let baiduToChina = gps.baiduToChina(this.state.fencePoint.latitude,this.state.fencePoint.longitude);
-        let chinaToGPS = gps.chinaToGPS(baiduToChina.lat,baiduToChina.lng);
+        let china = this.state.userMapType?{
+                lat:this.state.fencePoint.latitude,
+                lng:this.state.fencePoint.longitude
+            } :gps.baiduToChina(this.state.fencePoint.latitude,this.state.fencePoint.longitude);
+        let chinaToGPS = gps.chinaToGPS(china.lat,china.lng);
        
         //传入的数据
         let data = {
@@ -533,16 +536,17 @@ export default class AddFenceUtils extends Component {
                 }
             });
     
-            if(!this.state.userMapType){
-                let baiduToChina = gps.baiduToChina(params.latitude,params.longitude);
-                let chinaToGPS = gps.chinaToGPS(baiduToChina.lat,baiduToChina.lng);
-                //解析地址
-                geocoder({latitude:chinaToGPS.lat,longitude:chinaToGPS.lng}).then((res)=>{
-                    this.setState({
-                        fenceAddress:res.address
-                    });
-                }); 
-            }
+            let china =this.state.userMapType?{
+                lat:this.fomatFloat(params.latitude,6),
+                lng:this.fomatFloat(params.longitude,6)
+            } :gps.baiduToChina(params.latitude,params.longitude);
+            let chinaToGPS = gps.chinaToGPS(china.lat,china.lng);
+            //解析地址
+            geocoder({latitude:chinaToGPS.lat,longitude:chinaToGPS.lng}).then((res)=>{
+                this.setState({
+                    fenceAddress:res.address
+                });
+            }); 
         }
     }
 

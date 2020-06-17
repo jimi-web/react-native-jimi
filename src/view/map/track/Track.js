@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 14:18:58
+ * @LastEditTime: 2020-06-15 11:09:00
  */
 import React,{Component} from 'react';
 import {View} from 'react-native';
@@ -19,7 +19,7 @@ export default class Track extends Component {
     render(){
         return <View style={{flex:1}}>
             {
-                I18n.locale === 'en' ? <BaiduTrack {...this.props} >
+                I18n.locale === 'zh-Hans' ? <BaiduTrack {...this.props} >
                     {this.props.children}
                 </BaiduTrack> : <GoogleTrack {...this.props} >
                     {this.props.children}

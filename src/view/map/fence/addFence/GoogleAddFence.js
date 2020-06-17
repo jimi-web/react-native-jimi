@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-12 16:14:36
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 16:47:09
+ * @LastEditTime: 2020-06-15 15:50:02
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -30,9 +30,9 @@ export default class GoogleAddFence extends AddFenceUtils {
     
     render(){
         return <View style={[AddFenceStyles.map,{position:'relative'}]}>
-            {
+            {/* {
                 this.searchElement()
-            }
+            } */}
             <View style={[AddFenceStyles.map,{backgroundColor:'red'}]}>
                 <MapView
                     {...this.props}

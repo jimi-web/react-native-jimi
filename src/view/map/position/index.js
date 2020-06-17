@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 17:23:08
+ * @LastEditTime: 2020-06-15 10:50:57
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,AsyncStorage} from 'react-native';
@@ -247,7 +247,7 @@ export default class PositionUtils extends Component {
      */
     request = async()=>{
         try {
-            let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress,this.props.error);
+            let deviceInfo = await devicePosition(this.state.markerPoint,this.state.lastAddress,this.state.userMapType,this.props.error);
             this.setState({
                 lastAddress:deviceInfo.address
             },()=>{
@@ -281,9 +281,7 @@ export default class PositionUtils extends Component {
                 }
             });
         })
-        
-       
-        
+         
         data.gpsTime = new Date(data.gpsTime).Format('YYYY-MM-DD hh:mm:ss');
         data.time = data.time ? new Date(data.time).Format('YYYY-MM-DD hh:mm:ss'):'';
         data.otherPosTime = new Date(data.otherPosTime).Format('YYYY-MM-DD hh:mm:ss');
@@ -303,6 +301,8 @@ export default class PositionUtils extends Component {
             }
             //仅初始化会可视化两点坐标
             if(!this.state.isInit){ 
+                console.log(this.state.isInit,'isInit');
+                
                 this.setState({
                     isInit:true,
                     region:{

@@ -4,11 +4,12 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:46:00
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 11:24:25
+ * @LastEditTime: 2020-06-15 11:19:43
  */
 
 // import Photo from './photo/index';
 import '../libs/time';
+import AddFence from './map/fence/addFence/AddFence';
 import Track from './map/track/Track';
 import Trace from './map/trace/Trace';
 import Position from './map/position/Position';
@@ -50,6 +51,7 @@ const Jimi = {
     BaiduTrace,
     GoogleTrace,
     FenceList,
+    AddFence,
     BaiduAddFence,
     GoogleAddFence,
     Record,

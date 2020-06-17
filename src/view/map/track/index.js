@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 14:01:46
+ * @LastEditTime: 2020-06-12 17:15:08
  */
 import React, {Component} from 'react';
-import {TouchableOpacity,Image} from 'react-native';
+import {TouchableOpacity,Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../style/base';
 import { Icon,Toast } from '../../../components/index'
@@ -237,7 +237,7 @@ export default class TrackUtils extends Component {
         }).then((res)=>{
             let result = res.data;
             result.forEach((res)=> {
-                let baidu = gps.GPSToBaidu(res.latitude,res.longitude);
+                let baidu = this.state.userMapType ? gps.GPSToChina(res.latitude,res.longitude): gps.GPSToBaidu(res.latitude,res.longitude);
                 res.latitude = baidu.lat;
                 res.longitude = baidu.lng;
             });
@@ -450,6 +450,8 @@ export default class TrackUtils extends Component {
                 //     ...this.state.initialRegion,
                 //     ...deviceMarker
                 // }
+            },()=>{
+                this.onViewArea(deviceMarker);
             });
         },this.state.speed);
     }
@@ -501,6 +503,27 @@ export default class TrackUtils extends Component {
             animated: true,
         });
     }
+    
+    /**
+     * 可视区域（仅限谷歌）
+     */
+    onViewArea =(point)=> {
+        const dimensions = Dimensions.get('window');//获取屏幕大小
+        if(this.state.userMapType){
+            this.map.pointForCoordinate(point).then(coordinate => {
+                if(coordinate.x < 10 || coordinate.y < 10 || coordinate.x > dimensions.width - 10 || coordinate.x > dimensions.height * 0.7 - 10){
+                    this.setState({
+                        initialRegion:{
+                            ...this.state.initialRegion,
+                            latitude:point.latitude,
+                            longitude:point.longitude
+                        }
+                    });
+                }
+            });
+        }    
+    }
+    
 
     /**
      * 滑块事件

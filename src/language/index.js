@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:20:04
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-15 13:52:26
+ * @LastEditTime: 2020-06-17 17:17:58
  */
 import Chinese from './Chinese';
 import English from './English';
@@ -19,6 +19,5 @@ I18n.setLanguage =(locale,obj)=>{
     };
     I18n.locale = locale;
 };
-
 
 export default I18n;

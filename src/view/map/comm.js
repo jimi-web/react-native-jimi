@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-10 10:52:06
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-03 16:15:10
+ * @LastEditTime: 2020-06-12 17:23:12
  */
 import {jmAjax} from '../../http/business';
 import gps from '../../libs/coversionPoint';
@@ -58,7 +58,7 @@ export const geocoder = (data)=> {
 /**
  * 设备完整信息已经解析完地址的
  */
-export const devicePosition = async(lastPoint={},lastAddress,error)=> {
+export const devicePosition = async(lastPoint={},lastAddress,userMapType,error)=> {
     let deviceInfo = await getDevicePosition(error);
     deviceInfo.gpsLatitude = deviceInfo.latitude;
     deviceInfo.gpsLongitude = deviceInfo.longitude;
@@ -68,7 +68,7 @@ export const devicePosition = async(lastPoint={},lastAddress,error)=> {
             let distance = gps.distance(lastPoint.latitude,lastPoint.longitude,deviceInfo.latitude,deviceInfo.longitude);
             if(distance>10){
                 info = await geocoder(deviceInfo);
-                let baidu = gps.GPSToBaidu(info.latitude,info.longitude);
+                let baidu = userMapType? gps.GPSToChina(info.latitude,info.longitude) :gps.GPSToBaidu(info.latitude,info.longitude);
                 info.latitude = baidu.lat;
                 info.longitude = baidu.lng;
             }else {
@@ -77,7 +77,7 @@ export const devicePosition = async(lastPoint={},lastAddress,error)=> {
             }
         }else{
             info = await geocoder(deviceInfo);
-            let baidu = gps.GPSToBaidu(info.latitude,info.longitude);
+            let baidu = userMapType? gps.GPSToChina(info.latitude,info.longitude) :gps.GPSToBaidu(info.latitude,info.longitude);
             info.latitude = baidu.lat;
             info.longitude = baidu.lng;
         } 

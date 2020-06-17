@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 14:19:10
+ * @LastEditTime: 2020-06-12 16:18:50
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -44,6 +44,7 @@ import PhotoAlbum from '../examples/PhotoAlbum';
 
 const getOptions = (title,navigation) => {
     console.log(navigation,'定位');
+
     let headerTitle = {};
     if(title){
         headerTitle = {

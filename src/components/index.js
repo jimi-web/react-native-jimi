@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-08 14:28:59
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2019-12-25 16:16:09
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-16 14:06:49
  */
 
 import TopView from './overlay/TopView';
@@ -23,6 +23,7 @@ import Switch from './switch/Switch';
 import Drawer from './drawer/Drawer';
 import Wheel from './wheel/Wheel';
 import Datepicker from './datePickerDialog/DatePicker';
+import TimePicker from './timePicker/timePicker';
 import Modal from './modal/Modal';
 import Icon from './iconfont/Icon';
 
@@ -44,7 +45,8 @@ const Circle = {
     Wheel,
     Datepicker,
     Modal,
-    Icon
+    Icon,
+    TimePicker
 };
 
 module.exports =  Circle;
