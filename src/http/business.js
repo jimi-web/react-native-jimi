@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-24 10:41:38
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-11 14:39:38
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -19,7 +19,6 @@ let isHttpLocationGetShow = true;
  */
 const request = (params) => {
     console.log(params,'request');
-    
     return new Promise((resolve,reject) => {
         let header = null;
         if( typeof params.header === 'number' && params.header){
@@ -64,7 +63,7 @@ const request = (params) => {
                 if(params.error){
                     console.log('无提示');
                 }else{
-                    Toast.message('网络异常,请稍后再试'); 
+                    Toast.message(I18n.t('网络异常,请稍后再试')); 
                 }
             },
             onComplete: (res) => {
@@ -237,7 +236,7 @@ export const getEncoding = () =>{
             // 请求失败
             onFail: () => {
                 reject();
-                Toast.message('设备唯一码请求失败');
+                Toast.message(I18n.t('设备唯一码请求失败'));
             },
             // 请求失败或成功
             onComplete: () => {

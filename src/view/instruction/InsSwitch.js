@@ -7,7 +7,7 @@
  * @LastEditTime: 2020-03-18 11:34:00
  */
 import React, { Component } from 'react';
-import {View,Text,StyleSheet} from 'react-native';
+import {View,Text} from 'react-native';
 import PropTypes from 'prop-types';
 import {Switch} from '../../components/index';
 import baseStyle from '../baseStyle';

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-09-29 10:20:11
+ * @LastEditTime: 2020-06-12 13:52:40
  */
 
 import React from 'react';
@@ -54,20 +54,17 @@ export default class BaiduTrack extends TrackUtils {
                         points={this.state.pointArr}/>
                    
                     {/* 整条轨迹 */}
-
                     <Overlay.Polyline
                         width={this.props.polylineOptions ? this.props.polylineOptions.width ? this.props.polylineOptions.width :2 : 2}
                         color={this.props.polylineOptions ? this.props.polylineOptions.color ? this.props.polylineOptions.color :'#50AE6F' : '#50AE6F'}
                         visible ={this.state.isTrackPolylineShow}
                         points={this.state.trackPolylinePoint}/>
-
                     {/* 起点 */}
                     <Overlay.Marker
                         location={this.state.startMarker}
                         icon={this.props.startMarkerOptions.image}
                         visible={this.state.startMarker.latitude?true:false}
                     />
-
                     {/* 终点 */}
                     <Overlay.Marker
                         location={this.state.endMarker}

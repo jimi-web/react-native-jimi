@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-07 11:23:39
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-02 16:55:51
  */
 import React, {Component} from 'react';
 import {View,Image,TouchableOpacity} from 'react-native';
@@ -173,7 +173,7 @@ export default class MediaContral extends Component {
              if(res.code){
                  return;
              }
-             Toast.message('拍摄成功');
+             Toast.message(I18n.t('拍摄成功'));
          });
      }
     

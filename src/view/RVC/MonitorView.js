@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-05-09 09:19:11
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-11 17:25:18
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -206,7 +206,7 @@ export default class MonitorView extends Component {
                     this.setState({
                         isPlay:false,
                         RVCStatus:reminder.errCode,
-                        errorMessage:`网络不给力[${reminder.errCode}]`
+                        errorMessage:`${I18n.t('网络不给力')}[${reminder.errCode}]`
                     });
                 }else{
                     this.onStartPlay();
@@ -221,7 +221,7 @@ export default class MonitorView extends Component {
             const status = reminder.status;
             if(status == 1){
                 this.setState({
-                    bottomHint:<Text style={{color:'#fff'}}>对讲准备就绪……</Text>,
+                    bottomHint:<Text style={{color:'#fff'}}>{I18n.t('对讲准备就绪')}……</Text>,
                     isBusy:true
 
                 });
@@ -229,13 +229,13 @@ export default class MonitorView extends Component {
             if(status == 2){
                 this.setState({
                     isTolk:true,
-                    bottomHint:<RVCTimer status={true} title={'对讲：'} />,
+                    bottomHint:<RVCTimer status={true} title={I18n.t('对讲')+'：'} />,
                     
                 });
             }
             if(status == 3){
                 this.setState({
-                    bottomHint:<Text style={{color:'#fff'}}>对讲已停止</Text>,
+                    bottomHint:<Text style={{color:'#fff'}}>{I18n.t('对讲已停止')}</Text>,
                 },() => {
                     let timer =  setTimeout(() => {
                         this.setState({
@@ -268,7 +268,7 @@ export default class MonitorView extends Component {
             // 其他错误情况
             if(status > 3 && status != 14){
                 this.setState({
-                    bottomHint:<Text style={{color:'#fff'}}>对讲开启失败</Text>,
+                    bottomHint:<Text style={{color:'#fff'}}>{I18n.t('对讲开启失败')}</Text>,
                 },() => {
                     let timer =  setTimeout(() => {
                         this.setState({
@@ -288,14 +288,14 @@ export default class MonitorView extends Component {
             const status = reminder.status;
             if(status == 1){
                 this.setState({
-                    bottomHint:<RVCTimer title={'录制：'} status={true} />,
+                    bottomHint:<RVCTimer title={I18n.t('录制')+'：'} status={true} />,
                     isRecord:true,
                     isBusy:true
                 });
             }
             if(status == 2){
                 this.setState({
-                    bottomHint:<Text style={{color:'#fff'}}>录制结束</Text>,
+                    bottomHint:<Text style={{color:'#fff'}}>{I18n.t('录制结束')}</Text>,
                 },() => {
                     let timer =  setTimeout(() => {
                         this.setState({
@@ -810,8 +810,7 @@ export default class MonitorView extends Component {
                     screenHeight:Platform.OS !== 'ios' && this.state.isScreen? height - 35 : height,
                     isScreen:!this.state.isScreen
                 });
-            },50);
-            
+            },50); 
         });
     }
     /**
@@ -851,7 +850,7 @@ export default class MonitorView extends Component {
             JMRTMPPlayerManager.startTalk();
             this.setState({
                 isTolk:true,
-                bottomHint:<Text style={{color:'#fff'}}>{'对讲准备中……'}</Text>
+                bottomHint:<Text style={{color:'#fff'}}>{I18n.t('对讲准备中')+'……'}</Text>
             });
         }
     }
@@ -865,7 +864,7 @@ export default class MonitorView extends Component {
         });
         if(this.photoPath){
             JMRTMPPlayerManager.snapshot(this.photoPath + time + '.png').then(res => {
-                Toast.message('图片已保存');
+                Toast.message(I18n.t('图片已保存'));
                 this.setState({
                     isSnapshot:false
                 });
@@ -874,7 +873,7 @@ export default class MonitorView extends Component {
             createTheFolder(this.props.filePath).then(res =>{
                 this.photoPath = res;
                 JMRTMPPlayerManager.snapshot(this.photoPath + time + '.png').then(res => {
-                    Toast.message('图片已保存');
+                    Toast.message(I18n.t('图片已保存'));
                     this.setState({
                         isSnapshot:false
                     });
@@ -919,7 +918,7 @@ export default class MonitorView extends Component {
                 isCamera:!this.state.isCamera
             });
         }).catch((res)=>{
-            Toast.message('摄像头切换失败');
+            Toast.message(I18n.t('摄像头切换失败'));
         });
         this.props.onCamera && this.props.onCamera()
     }

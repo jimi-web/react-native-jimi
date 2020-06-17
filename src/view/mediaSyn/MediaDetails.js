@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-04-10 14:42:51
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-10 18:00:06
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-11 15:12:18
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
@@ -95,11 +95,11 @@ export default class MediaDetails extends Component {
                             <View style={Styles.bottomToolbars}>
                                 <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={this.delete}>
                                     <Icon name={'photo_details_delete'} size={22}></Icon>
-                                    <Text style={[Styles.bottomToolbarsText]}>删除</Text>
+                                    <Text style={[Styles.bottomToolbarsText]}>{I18n.t('删除')}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity  style={Styles.bottomToolbarsBtn} onPress={this.save} >
                                     <Icon name={'photo_details_save'} size={22}></Icon>
-                                    <Text style={[Styles.bottomToolbarsText]}>保存至本地</Text>
+                                    <Text style={[Styles.bottomToolbarsText]}>{I18n.t('保存至本地')}</Text>
                                 </TouchableOpacity>
                             </View>
                         </BottomToolbars>:null
@@ -121,10 +121,10 @@ export default class MediaDetails extends Component {
     delete = ()=>{
         const {data} = this.props;
         Modal.dialog({
-            contentText:'是否删除该文件？',
+            contentText:I18n.t('是否删除该文件?'),
             onConfirm:() => {
                 fileDelete([data.url]).then(res => {
-                    Toast.message('删除成功');
+                    Toast.message(I18n.t('删除成功'));
                 });
                 this.props.onDelete && this.props.onDelete(data);
             }
@@ -141,11 +141,11 @@ export default class MediaDetails extends Component {
         console.log(data,'保存');
         if(data.type === 'mp4'){
             saveVideoToAlbum(data.url).then(res => {
-                Toast.message('保存成功');
+                Toast.message(I18n.t('保存成功'));
             });
         }else{
             saveToAlbum(data.url).then(res => {
-                Toast.message('保存成功');
+                Toast.message(I18n.t('保存成功'));
             });
         }
         this.props.onSave && this.props.onSave(data);

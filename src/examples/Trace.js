@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 13:38:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-18 11:56:58
+ * @LastEditTime: 2020-06-12 11:07:40
  */
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
@@ -24,30 +24,33 @@ export default class Track extends Component {
             width: 3
         };
         return (
-            <View style={{ flex: 1 }}>
-                {this.state.isBaidu ? 
-                    <Jimi.BaiduTrace
-                        onDeviceChange = {(data)=>{
-                            console.log(data,'设备数据');
+            // <View style={{ flex: 1 }}>
+            //     {this.state.isBaidu ? 
+            //         <Jimi.BaiduTrace
+            //             onDeviceChange = {(data)=>{
+            //                 console.log(data,'设备数据');
                             
-                        }}
-                        onMyChange = {(data)=>{
-                            console.log(data,'我的位置');
-                        }}
-                        isRefresh={true}
-                        polylineOptions={playPolylineOptions}
-                        onFile={()=>{
-                            this.props.navigation.push('PrivacyAgreement');
-                        }}
-                    >
-                        {this.customItem()}
-                    </Jimi.BaiduTrace>
-                    : 
-                    <Jimi.GoogleTrace polylineOptions={playPolylineOptions}>
-                        {this.customItem()}
-                    </Jimi.GoogleTrace>
-                }
-            </View>
+            //             }}
+            //             onMyChange = {(data)=>{
+            //                 console.log(data,'我的位置');
+            //             }}
+            //             isRefresh={true}
+            //             polylineOptions={playPolylineOptions}
+            //             onFile={()=>{
+            //                 this.props.navigation.push('PrivacyAgreement');
+            //             }}
+            //         >
+            //             {this.customItem()}
+            //         </Jimi.BaiduTrace>
+            //         : 
+            //         <Jimi.GoogleTrace polylineOptions={playPolylineOptions}>
+            //             {this.customItem()}
+            //         </Jimi.GoogleTrace>
+            //     }
+            // </View>
+            <Jimi.Trace>
+                 {this.customItem()}
+            </Jimi.Trace>
         );
     }
 

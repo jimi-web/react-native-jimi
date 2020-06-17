@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 09:15:05
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-04 18:00:42
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,SectionList,TouchableOpacity,Image} from 'react-native';
@@ -123,7 +123,7 @@ export default class Home extends Component{
                 }
             })
         }else{
-            this.props.navigation.push(url);
+            this.props.navigation.push(url,{I18n:I18n});
         }
     }
 }

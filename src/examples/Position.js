@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-09 14:46:12
+ * @LastEditTime: 2020-06-12 11:02:30
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -37,7 +37,7 @@ export default class Position extends Component {
         };
 
         return <View style={{flex:1}}>
-            {
+            {/* {
                 !this.state.isBaidu ?
                     <Jimi.GooglePosition
                         style={{height:200}}
@@ -77,7 +77,18 @@ export default class Position extends Component {
                             this.customItem()
                         }
                     </Jimi.BaiduPosition>
-            }
+            } */}
+            <Jimi.Position
+                onMapClick={()=>{
+                    console.log('点击事件');
+                    this.map.upDate && this.map.upDate();
+                }}
+                trafficEnabled={false}
+                mapType={'standard'}
+                ChangePositionBtn={car}
+            >
+                {this.customItem()}
+            </Jimi.Position>
         </View>;  
     }
 

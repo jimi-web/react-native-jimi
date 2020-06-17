@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-19 15:01:45
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-05-09 09:20:40
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-02 17:41:21
  */
 
 
@@ -69,7 +69,7 @@ export default class RvcLoading extends Component {
         return (
             <TouchableOpacity style={{width:200,height:200,position:'absolute',zIndex:335,alignItems:'center',justifyContent:'center'}}  activeOpacity={1} onPress={this.onAgain}>
                 <Text style={{fontSize:14,color:'#fff',marginBottom:15}}>{this.getErrorMessage()}</Text>
-                <Text style={{fontSize:14,color:'#fff',padding:10,borderColor:'#fff',borderStyle:'solid',borderWidth:1,borderRadius:4}}>{'点击重试'}</Text>
+                <Text style={{fontSize:14,color:'#fff',padding:10,borderColor:'#fff',borderStyle:'solid',borderWidth:1,borderRadius:4}}>{I18n.t('点击重试')}</Text>
             </TouchableOpacity>
         );
     }
@@ -85,7 +85,7 @@ export default class RvcLoading extends Component {
         const errorMessages = errArray.filter(item => {
             return item.code == errorCode;
         });
-        const message = `${errorMessages[0].message}[${errorMessages[0].code}]` || '网络不给力[-1]';
+        const message = `${I18n.t(errorMessages[0].message)}[${errorMessages[0].code}]` || I18n.t('网络不给力')+'[-1]';
         return message;
     }
 }             

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-21 18:53:41
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-11 17:23:28
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -69,11 +69,11 @@ export default class RecordControl extends Component {
             <View style={styles.touchStyle}>
                 <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {this.props.onSelect && this.props.onSelect(0);}}>
                     <Icon name={'operating_select_disable'} size={20} />
-                    <Text style={{fontSize:10,color:'#979797'}}>{'选择'}</Text>
+                    <Text style={{fontSize:10,color:'#979797'}}>{I18n.t('选择')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={1} style={{paddingLeft:20}} onPress={this.onSelectTimeLength}>
                     <Icon name={'recording_operating_duration'} size={21} />
-                    <Text style={{fontSize:10,color:'#979797'}}>{'时长'}</Text>
+                    <Text style={{fontSize:10,color:'#979797'}}>{I18n.t('时长')}</Text>
                 </TouchableOpacity>
             </View>
             <View style={{flex:1}}>
@@ -83,12 +83,12 @@ export default class RecordControl extends Component {
                             ?
                             <Button  activeOpacity={isRecording?1:0} onPress={this.onRecord} titleStyle={[styles.titleStyle]} style={[styles.buttonStyle,{backgroundColor,borderColor}]} title={`${text}（${this.ftmTime(recordLength)}）`}  />
                             :
-                            <Button onPress={this.onRecord} titleStyle={styles.titleStyle} style={styles.buttonStyle} title={text}  />
+                            <Button onPress={this.onRecord} titleStyle={styles.titleStyle} style={styles.buttonStyle} title={I18n.t(text)}  />
                         :
                         <Button  activeOpacity={1} titleStyle={styles.titleStyle} style={[styles.buttonStyle,{backgroundColor:'#98BBF9',borderColor:'#98BBF9'}]}>
                             <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
                                 <ActivityIndicator size="small" color="#fff" />
-                                <Text style={{color:'#fff',marginLeft:10,fontSize:16}}>加载中...</Text>
+                                <Text style={{color:'#fff',marginLeft:10,fontSize:16}}>{I18n.t('加载中')}...</Text>
                             </View>
                         </Button>
                 }
@@ -98,7 +98,7 @@ export default class RecordControl extends Component {
     onSelectTimeLength = () => {
         const {isRecording} = this.props;
         if(isRecording || !this.props.isBeginRecord){
-            return Toast.message('当前设备正在录音');
+            return Toast.message(I18n.t('当前设备正在录音'));
         }
         this.renderModal();
     }
@@ -126,13 +126,13 @@ export default class RecordControl extends Component {
         const {fileNumber} = this.props;
         return <View style={styles.controlStyle}>
             <TouchableOpacity activeOpacity={1} style={styles.deleteBtn} onPress={() => {this.props.onSelect && this.props.onSelect(1);}}>
-                <Text style={[styles.letBorder,{color:'#000'}]}>{'取消'}</Text>
+                <Text style={[styles.letBorder,{color:'#000'}]}>{I18n.t('取消')}</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={1} style={styles.deleteBtn} onPress={() => {this.props.onEmpty && this.props.onEmpty();}}>
-                <Text style={[styles.letBorder,{color:Theme.buttonTextColorDefault}]}>{'清空'}</Text>
+                <Text style={[styles.letBorder,{color:Theme.buttonTextColorDefault}]}>{I18n.t('清空')}</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={1} style={styles.deleteBtn}>
-                <Text style={[styles.letBorder,{color:'#FF3535'}]} onPress={() => {this.props.onDelete && this.props.onDelete();}}>{`删除(${fileNumber})`}</Text>
+                <Text style={[styles.letBorder,{color:'#FF3535'}]} onPress={() => {this.props.onDelete && this.props.onDelete();}}>{I18n.t('删除')`(${fileNumber})`}</Text>
             </TouchableOpacity>
         </View>;
     }
@@ -168,10 +168,10 @@ export default class RecordControl extends Component {
                 <TouchableOpacity activeOpacity={1} onPress={()=>{
                     Drawer.close(this.selectTime);
                 }} >
-                    <Text style={styles.headerText}>{'取消'}</Text>
+                    <Text style={styles.headerText}>{I18n.t('取消')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={1} onPress={this.onConfirm} >
-                    <Text style={styles.headerText}>{'确定'}</Text>
+                    <Text style={styles.headerText}>{I18n.t('确定')}</Text>
                 </TouchableOpacity>
             </View>
             <View style={{backgroundColor:'#fff',justifyContent: 'center', alignItems: 'center'}}>

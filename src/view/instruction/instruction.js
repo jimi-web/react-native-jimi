@@ -4,10 +4,10 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-15 13:49:18
+ * @LastEditTime: 2020-06-17 16:58:38
  */
 import React, { Component } from 'react';
-import {View,Text,ScrollView,Image,ActivityIndicator} from 'react-native';
+import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import {Toast,Button} from '../../components/index';
 import InsSwitch from './InsSwitch';
@@ -32,6 +32,15 @@ export default class Instruction extends Component {
         instruction:'21323,ins1,ins2,ins3,ins4,ins5,ins6#',
         isButton:false,
         
+    }
+    /**
+     * 将指令数据格式化成国际化包
+     * @param {Object} data 指令数据
+     */
+    static ftmInternation(data){
+        data.forEach(item => {
+             
+        })
     }
     constructor(props){ 
         super(props);
@@ -66,8 +75,8 @@ export default class Instruction extends Component {
                                 this.state.setBtnFlag ?
                                 <Button style={{backgroundColor:baseStyle.disableColor,borderColor:baseStyle.disableColor}} 
                                 activeOpacity={1} 
-                                title={<View style={{flexDirection:'row',alignItems:'center'}}><Text style={{color:'#fff',marginRight:10,fontSize:14}}>发送中</Text><ActivityIndicator size="small" color="#fff" /></View>} />:
-                                    <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={'发送指令'} />
+                                title={<View style={{flexDirection:'row',alignItems:'center'}}><Text style={{color:'#fff',marginRight:10,fontSize:14}}>{I18n.t('发送中')}</Text><ActivityIndicator size="small" color="#fff" /></View>} />:
+                                    <Button style={{backgroundColor:baseStyle.mainColor}} titleStyle={{color:'#fff'}} onPress={() => this.onButton()} title={I18n.t('发送指令')} />
                             }
                         </View>
                         :
@@ -92,19 +101,69 @@ export default class Instruction extends Component {
         ].concat(itemStyle);
         return styles;
     }
+    /**
+     * 计算指令控制器，当指令属于受控状态会根据受控参数返回true和false
+     * @param {*} data 整个指令列表
+     * @param {*} item 当前条的数据
+     */
+    countContral = (data,item) => {
+        console.log(item,111)
+        // 若该指令不被控制则返回true
+        if(item.contral == undefined){
+            return true;
+        }
+        if(typeof item.contral != 'number' && Array.isArray(item.contral) == false){
+            throw 'contral 需要一个Number/Array类型';
+        }
+        // 该指令根据控制字段来显示和隐藏
+        if(item.contralValue == undefined){
+            let insContralValue = data[item.contral].value;
+            return insContralValue;
+        }
+        // 若该条参数只被一个控制器控制则根据对应的值进行判断
+        if(typeof item.contralValue == 'string' || typeof item.contralValue == 'number' || typeof item.contralValue === 'boolean'){
+            let insContralValue = data[item.contral].value;
+            return insContralValue === item.contralValue
+        }
+        // 若被多个控制器控制则需要输入数组,并且控制器和值的下标一一对应。
+        if(Array.isArray(item.contralValue) && Array.isArray(item.contral)){
+            for (let i = 0; i < item.contral.length; i++) {
+                const insContralValue = data[item.contral[i]].value;//控制器的值
+                const itemValue = item.contralValue[i];//对应控制器的值
+                if(typeof itemValue == 'string' || typeof itemValue == 'number' || typeof itemValue === 'boolean'){
+                    let flag = true;
+                    if(itemValue == undefined || itemValue === '*'){
+                        flag  = false;
+                    }
+                    // 只要一个条件未满住，则隐藏
+                    if(insContralValue !== itemValue && flag){
+                        return false;
+                    }
+                }
+                // 兼容多个值对应一个控制器
+                if(Array.isArray(itemValue)){
+                    for (let i = 0; i < itemValue.length; i++) {
+                        const v = itemValue[i];
+                        if(v === insContralValue){
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+        return true;
+    }
     /*
     *渲染指令
     */
     renderInstruction = (item,index) => {
         this.state.insArr = this.props.instructionArr;
-        let isShow = true; 
-        if(item.contral !== undefined){
-            isShow = this.state.insArr[item.contral].value;
-            if(item.contralValue){
-                isShow = item.contralValue == isShow ? true : false;
-            } 
-        }
-        if(!isShow &&(item.type != 'switch' || item.type != 'arrowButton')){
+        let isShow = this.countContral(this.state.insArr,item);
+        if(!isShow){
             return null;
         }
 
@@ -160,10 +219,7 @@ export default class Instruction extends Component {
          for (let i = 0; i < this.state.insArr.length; i++) {
              const item = this.state.insArr[i];
              const content = item.content;
-             let flag = true;
-             if(item.contral != undefined){
-                flag = this.state.insArr[item.contral].value;
-             }
+             let flag = this.countContral(this.state.insArr,item);
              if(item.stop && content.rule && flag){
                  let regExp = new RegExp(content.rule);//根据字符串生成正则
                  if(!regExp.test(item.value)){
@@ -183,10 +239,13 @@ export default class Instruction extends Component {
       * 渲染占位指令内容
       */
      renderPerchIns = (data,item,ins) => {
-         const value = data[item.contral].value;
-         const insVlue = item.insSymmetry[value];
-         const perchIns = ins.replace(item.insID,insVlue);
-         return perchIns;
+        if(typeof item.contral != 'string'){
+            throw 'contral 需要一个String类型';
+        }
+        const value = data[item.contral].value;
+        const insVlue = item.insSymmetry[value];
+        const perchIns = ins.replace(item.insID,insVlue);
+        return perchIns;
      }
     /*
     *匹配指令统一方法
@@ -197,7 +256,6 @@ export default class Instruction extends Component {
         for (let i = 0; i < data.length; i++) {
             const item = data[i];
             if(item.insID){
-                console.log(item,'内容');
                 let insValue = item.insValue;
                 if(item.content && item.content.symbol){
                     insValue += item.content.symbol;
@@ -207,11 +265,8 @@ export default class Instruction extends Component {
                         ins = this.renderPerchIns(data,item,ins);
                     }else{
                         //这里加入判断
-                        let contralValue = data[item.contral].value;
-                        if(item.contralValue){
-                            contralValue = item.contralValue == contralValue ? true : false;
-                        }
-                        if(contralValue){
+                        let insStatus = this.countContral(data,item)
+                        if(insStatus){
                             ins = ins.replace(item.insID,insValue);
                         }else{
                             ins = ins.replace(item.insID,'');

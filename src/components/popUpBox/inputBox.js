@@ -3,8 +3,8 @@
  * @version:
  * @Author: xieruizhi
  * @Date: 2019-10-09 15:34:12
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-10 09:53:07
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-04 09:32:05
  */
 import React, { Component } from 'react';
 import {
@@ -42,7 +42,7 @@ export default class InputBox extends Component {
             isDelShow: true,
             visible: false,
             inputBoxTop:'50%',
-            title:this.props.title ?this.props.title :'输入框',
+            title:this.props.title ?this.props.title :I18n.t('输入框'),
             autoFocus:true
         };
     }
@@ -121,7 +121,7 @@ export default class InputBox extends Component {
                     </View>
                     <View style={styles.btn}>
                         <TouchableOpacity style={styles.btnItem} onPress={()=>{this.onCancel();}}>
-                            <Text style={styles.btnItemText}>取消</Text>
+                            <Text style={styles.btnItemText}>{I18n.t('取消')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[
@@ -130,7 +130,7 @@ export default class InputBox extends Component {
                             ]}
                             onPress={()=>{this.onConfirm();}}
                         >
-                            <Text style={styles.btnItemText}>确定</Text>
+                            <Text style={styles.btnItemText}>{I18n.t('确定')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

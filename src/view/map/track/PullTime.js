@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-16 09:59:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-09 17:27:29
+ * @LastEditTime: 2020-06-03 14:35:54
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,DeviceEventEmitter} from 'react-native';
@@ -89,7 +89,7 @@ export default class PullTime extends Component {
                             >
                                 {
                                     this.state.timeType.map((item,index)=>{
-                                        return <SegmentedBar.Item title={item.key} key={'SegmentedBar'+index} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle}  />;
+                                        return <SegmentedBar.Item title={I18n.t(item.key)} key={'SegmentedBar'+index} titleStyle={MapStyles.titleStyle} activeTitleStyle={MapStyles.activeTitleStyle}  />;
                                     })
                                 }
                             </SegmentedBar>
@@ -98,7 +98,7 @@ export default class PullTime extends Component {
                     <View style={MapStyles.slideModalTimeContent}>
                         <ListRow title={
                             <View style={MapStyles.listRow}>
-                                <Text style={MapStyles.listRowTitle}>开始时间</Text>
+                                <Text style={MapStyles.listRowTitle}>{I18n.t('开始时间')}</Text>
                                 <Text style={MapStyles.listRowValue}>{this.state.startDate}</Text>
                             </View>
                         }  accessory='indicator'
@@ -108,7 +108,7 @@ export default class PullTime extends Component {
                         />
                         <ListRow title={
                             <View style={[MapStyles.listRow]}>
-                                <Text style={MapStyles.listRowTitle}>结束时间</Text>
+                                <Text style={MapStyles.listRowTitle}>{I18n.t('结束时间')}</Text>
                                 <Text style={MapStyles.listRowValue}>{this.state.endDate}</Text>
                             </View>
                         }  accessory='indicator'
@@ -125,11 +125,11 @@ export default class PullTime extends Component {
                                     });
                                 }} >
                               
-                                    <Text style={[MapStyles.btnItemText]}>取消</Text>  
+                                <Text style={[MapStyles.btnItemText]}>{I18n.t('取消')}</Text>  
                                 </TouchableOpacity>  
                             </BoxShadow>
                             <TouchableOpacity activeOpacity={1} style={[MapStyles.btnItem,MapStyles.confirm]} onPress={this.onConfirm} >
-                                <Text style={[MapStyles.btnItemText,{color:'#fff'}]}>确认</Text>
+                                <Text style={[MapStyles.btnItemText,{color:'#fff'}]}>{I18n.t('确定')}</Text>
                             </TouchableOpacity>  
                         </View>
                     </View>
@@ -151,7 +151,7 @@ export default class PullTime extends Component {
        
         //相隔时间校验
         if(parseInt((etdt-stdt)/ (1000 * 60 * 60 * 24))>this.props.dimDd){
-            Toast.message('选择的时间只允许在'+this.props.dimDd+'天之内');
+            Toast.message(I18n.t('选择的时间的范围在')+this.props.dimDd+I18n.t('天'));
             return;
         }
 
@@ -223,7 +223,7 @@ export default class PullTime extends Component {
         let atPresent = new Date();
         let getTime = new Date(value.replace(/-/g,'/'));
         if(getTime>atPresent){
-            Toast.message('选择的时间不能大于当前时间');
+            Toast.message(I18n.t('选择的时间不能大于当前时间'));
             return;
         }
 
@@ -237,7 +237,7 @@ export default class PullTime extends Component {
         
         //开始时间和结束时间差校验
         if(stdt>etdt){
-            Toast.message('开始时间不能大于结束时间');
+            Toast.message(I18n.t('开始时间不能大于结束时间'));
             return;
         }
  

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-12-27 17:43:23
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-28 10:30:35
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-04 18:01:54
  */
 import React,{Component} from 'react';
 import { Jimi,Api,Applet} from '../index';
@@ -31,7 +31,7 @@ export default class Details extends Component {
             data = {this.state.data}
             onSetUpIcon = {()=>{
                 //跳转到设置图标界面
-                this.props.navigation.push('IconLibrary',{activateKey:this.state.data.deviceIcon,callBack:(value)=>{
+                this.props.navigation.push('IconLibrary',{I18n:I18n,activateKey:this.state.data.deviceIcon,callBack:(value)=>{
                     //设置图标后回调获取更新后的图标，重新更新数据
                     let data = this.state.data;
                     data.deviceIcon = value;

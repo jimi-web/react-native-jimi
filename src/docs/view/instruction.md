@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-03 09:33:13
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-14 16:36:19
+ * @LastEditTime: 2020-06-17 16:43:23
  -->
 # 指令
 
@@ -27,8 +27,8 @@
 | insSymmetry | boolean | false | 该参数用于对开关等需要固定值形态的值进行替换的规则 |
 | style | object | false | 该值用于自定义组件样式 |
 | hint | string | false | 改值用于在验证组件值不合格的情况下抛给用户的提示，默认为：'您当前输入的格式有误！' |
-| contral | Number | false | 该参数用于此组件被哪个组件所控制，控制该组件的value必须为boolean |
-| contralValue | Number/String | false | 设置该参数后，会被contral该组件的的控制器组件中的值所控制，只有等于控制器中的value才会显示 |
+| contral | Number/Array | false | 该参数用于此组件被哪个组件所控制,当该类型为Array时可声明该类型被多个控制，Array中必须为Number |
+| contralValue | Number/String/Array | false | 设置该参数后，会被contral该组件的的控制器组件中的值所控制，只有等于控制器中的value才会显示。</br>当该参数为Array时，会根据下标一一对应contral中控制器的值。当然Array中也可以通过设置Array来声明一个控制器对应多个值的控制</br>当类型为Array时，若对应下标为undefined或设置*时，会跟随contral的值来控制 |
 
 ## Events
 | Event Name | Returns | Notes |

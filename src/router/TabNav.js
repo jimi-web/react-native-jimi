@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 09:45:53
  * @LastEditors: liujinyuan
- * @LastEditTime: 2019-09-12 10:50:30
+ * @LastEditTime: 2020-06-15 15:03:03
  */
 
 import React, {Component} from 'react';
@@ -62,9 +62,8 @@ const tabNav  = createBottomTabNavigator(
                 }
                 return <View style={{justifyContent:'center',flex:1}}>
                     <Icon style={{width:23,height:23,marginLeft:'auto',marginRight:'auto'}} model={2} type={type} name={tabIcon}/>
-                    <Text style={{textAlign:'center',fontSize:10}}>{tabName}</Text>
+                    <Text style={{textAlign:'center',fontSize:10}}>{I18n.t(tabName)}</Text>
                 </View>;
-                
             },
             tabBarVisible:navigation.state.params && navigation.state.params.param === null ? false : true
         }),

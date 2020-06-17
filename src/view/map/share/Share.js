@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-23 10:48:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-21 18:33:33
+ * @LastEditTime: 2020-06-11 16:33:53
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Modal,StyleSheet,Dimensions,Animated} from 'react-native';
@@ -142,20 +142,20 @@ export default class Share extends Component {
             <TouchableOpacity style={MapStyles.shadow} onPress={this.hide}></TouchableOpacity>
             <Animated.View style={[MapStyles.share,{height:modalHeight}]}>
                 <View style={MapStyles.shareTime}>
-                    <Text style={MapStyles.shareTitle}>分享时间</Text>
+                    <Text style={MapStyles.shareTitle}>{I18n.t('分享时间')}</Text>
                     <View style={MapStyles.shareSelectTime}>
                         {
                             this.state.shareTime.map((item,index)=>{
                                 return <TouchableOpacity key={'shareTime'+index} 
                                     style={[MapStyles.shareSelectTimeButton,this.state.activeIndex===index?MapStyles.shareSelectTimeButtonAactive:null]} 
                                     onPress={()=>this.onChangeTime(item.value,index)}>
-                                    <Text style={[MapStyles.shareSelectTimeButtonText,this.state.activeIndex===index?MapStyles.shareSelectTimeButtonAactiveText:null]}>{item.key}</Text>
+                                    <Text style={[MapStyles.shareSelectTimeButtonText,this.state.activeIndex===index?MapStyles.shareSelectTimeButtonAactiveText:null]}>{I18n.t(item.key)}</Text>
                                 </TouchableOpacity>;
                             })
                         }
                         <View style={{flexDirection:'row',paddingLeft:'2%'}}>
                             <Checkbox
-                                title={'我已阅读并同意'}
+                                title={I18n.t('我已阅读并同意')}
                                 checked={this.state.isChecked}
                                 onChange={this.onCheckChange}
                                 checkedIcon={<Image style={{width: 12, height: 12}} source={require('../../../assets/trace/track_share_checkbox_on.png')}  />}
@@ -175,7 +175,7 @@ export default class Share extends Component {
                     </View>
                 </View>
                 <View style={MapStyles.shareType}>
-                    <Text style={MapStyles.shareTitle}>分享到</Text>
+                        <Text style={MapStyles.shareTitle}>{I18n.t('分享到')}</Text>
                     <View style={MapStyles.shareTypeImg}>
                         {
                             this.state.shareType.map((item,index)=>{
@@ -189,10 +189,10 @@ export default class Share extends Component {
                 </View>
                 <View style={MapStyles.shareLine}></View>
                 <TouchableOpacity style={MapStyles.shareCancel} onPress={this.hide}>
-                    <Text style={MapStyles.shareCancelText}>取消</Text>
+                    <Text style={MapStyles.shareCancelText}>{I18n.t('取消')}</Text>
                 </TouchableOpacity>
             </Animated.View>
-            <Toast message={this.state.message}></Toast>
+            <Toast message={I18n.t(this.state.message)}></Toast>
         </Modal>;
     }
 

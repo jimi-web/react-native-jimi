@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:51:32
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-11 15:16:44
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-11 17:26:57
  */
 import React from 'react';
 import { Image } from 'react-native';
@@ -24,7 +24,7 @@ let save = null;
  * @param {Array} urlList 
  */
 export const batchFileDelete = (urlList,callBack)=>{
-    let del = Toast.loading('删除中...')          
+    let del = Toast.loading(I18n.t('删除中')+'...')          
     fileDeleteComm(del,urlList,callBack);
 };
 
@@ -38,12 +38,12 @@ export const fileDeleteComm = async(loading,urlList,callBack)=>{
     try {
         let succeed = await fileDelete(urlList);
         Toast.remove(loading);
-        Toast.loading('删除成功',1000,'center',succeedImg);
+        Toast.loading(I18n.t('删除成功'),1000,'center',succeedImg);
         callBack && callBack();
         return succeed;
     } catch (error) {
         console.log(error,'本地删除失败');
-        Toast.loading('删除失败',1000,'center',failImg);
+        Toast.loading(I18n.t('删除失败'),1000,'center',failImg);
         return ;
     }
 }
@@ -70,7 +70,7 @@ const saveSucceedCallBack  = (index,itself,callBack) =>{
     if(downloadFileIndex === index-1 ){
         downloadFileIndex=0;
         Toast.remove(save);
-        Toast.loading('保存成功',1000,'center',succeedImg);
+        Toast.loading(I18n.t('保存成功'),1000,'center',succeedImg);
         callBack && callBack();
     }else{
         downloadFileIndex++;
@@ -82,7 +82,7 @@ const saveFailedCallBack = ()=>{
     console.log('本地下载失败');
     downloadFileIndex = 0;
     Toast.remove(save);
-    Toast.loading('保存失败',1000,'center',failImg);
+    Toast.loading(I18n.t('保存失败'),1000,'center',failImg);
 }
 
 
@@ -223,7 +223,7 @@ export const downloadFile = (longList,filePath,videoType,callBack)=> {
  * 删除照片
  */
 export const deleteDeviceVideoPicFile = (params)=>{
-        let del = Toast.loading('删除中...');
+        let del = Toast.loading(I18n.t('删除中')+'...')    
         console.log(params);
         jmAjax({
             url:api.deleteDeviceVideoPicFile,

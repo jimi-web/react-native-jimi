@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-10-12 14:01:19
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-08 19:34:12
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-04 11:42:41
  */
 import React, {Component} from 'react';
 import {Text, View,StyleSheet,TouchableOpacity} from 'react-native';
@@ -31,10 +31,10 @@ export default class Dialog extends Component{
                 </View>
                 <View style={styles.dialogButton}>
                     <TouchableOpacity activeOpacity={1} style={[styles.dialogText,styles.dialogTextBorder]} onPress={() => {this.props.onCancel && this.props.onCancel();}}>
-                        <Text style={{color:Theme.buttonBorderColorPrimary,fontSize:17}}>{'取消'}</Text>
+                        <Text style={{color:Theme.buttonBorderColorPrimary,fontSize:17}}>{I18n.t('取消')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={1} style={styles.dialogText} onPress={() => {this.props.onConfirm && this.props.onConfirm();}}>
-                        <Text style={{color:Theme.buttonBorderColorPrimary,fontSize:17}}>{'确定'}</Text>
+                        <Text style={{color:Theme.buttonBorderColorPrimary,fontSize:17}}>{I18n.t('确定')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

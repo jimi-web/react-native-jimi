@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-21 15:20:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 14:52:12
+ * @LastEditTime: 2020-06-03 16:54:07
  */
 import React, {Component} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Modal,DeviceEventEmitter} from 'react-native';
@@ -95,16 +95,16 @@ export default class Datepicker extends Component {
                             isShowDatepicker:false
                         });
                     }} >
-                        <Text style={styles.headerText}>取消</Text>
+                        <Text style={styles.headerText}>{I18n.t('取消')}</Text>
                     </TouchableOpacity>
-                    <Text style={{color:'#000',fontSize:17}}>选择时间</Text>
+                    <Text style={{color:'#000',fontSize:17}}>{I18n.t('选择时间')}</Text>
                     <TouchableOpacity activeOpacity={1} onPress={()=>{
                         this.props.onConfirm &&  this.props.onConfirm(this.state.finalResult);
                         this.setState({
                             isShowDatepicker:false
                         });
                     }} >
-                        <Text style={styles.headerText}>确定</Text>
+                        <Text style={styles.headerText}>{I18n.t('确定')}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.wheel} >

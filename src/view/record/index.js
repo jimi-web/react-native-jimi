@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-02 15:26:07
+ * @LastEditTime: 2020-06-04 14:44:01
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -289,7 +289,7 @@ export default class Record extends Component {
             // 修改成显示数据
             item.createTimeFtm = new Date(item.createTime).Format('hh:mm:ss');
             item.row = 1;
-            item.recordType = this.disposeRecordType(item.recordType);
+            item.recordType = I18n.t(this.disposeRecordType(item.recordType));
             item.progress = 0;
             item.isChange = false;
             
@@ -545,7 +545,7 @@ export default class Record extends Component {
      */
     onRefresh = () => {
         if(this.state.isPlay){
-            return Toast.message('当前录音正在播放');
+            return Toast.message(I18n.t('当前录音正在播放'));
         }
         const pageNum = 1;
         const params = {
@@ -592,17 +592,17 @@ export default class Record extends Component {
         }
         if(this.totalPage <= this.state.params.pageNum){
             return <View style={{alignItems:'center',padding:20,marginBottom:25}}>
-                <Text>{'没有更多数据了'}</Text>
+                <Text>{I18n.t('没有更多数据了')}</Text>
             </View>;
         }
         if(this.state.isOpenSelect === 0){
             return <View style={{alignItems:'center',padding:20,marginBottom:25}}>
-                <Text>{'请取消选择操作'}</Text>
+                <Text>{I18n.t('请取消选择操作')}</Text>
             </View>;
         }
         return <View style={{alignItems:'center',padding:20,marginBottom:25}}>
             <ActivityIndicator animating={true} color={'#ccc'}  />
-            <Text>{'数据加载中，请稍后'}</Text>
+            <Text>{I18n.t('数据加载中，请稍后')}</Text>
         </View>;
     }
     /**
@@ -809,7 +809,7 @@ export default class Record extends Component {
             }
         });
         if(!dataArr.length){
-            return Toast.message('请选择需要删除的文件');
+            return Toast.message(I18n.t('请选择需要删除的文件'));
         }
 
         const data = {
@@ -820,7 +820,7 @@ export default class Record extends Component {
             if(res.code){
                 return Toast.message(res.message);
             }
-            Toast.message('删除成功');
+            Toast.message(I18n.t('删除成功'));
             const params = {
                 pageNum:1,
                 pageSize:10
@@ -844,7 +844,7 @@ export default class Record extends Component {
         // />; 
         // this.overlayKey = Overlay.add(element);
         Modal.dialog({
-            contentText:'清空所有录音数据将不可恢复，是否确定？',
+            contentText:I18n.t('清空所有录音数据将不可恢复，是否确定')+'？',
             onConfirm:()=>{
                 this.onConfirmEmpty();
             }
@@ -862,7 +862,7 @@ export default class Record extends Component {
                 initFile:[],
                 deleteRecordList:[]
             },()=>{
-                Toast.message('录音已清空');
+                Toast.message(I18n.t('录音已清空'));
             });
             // Overlay.remove(this.overlayKey);
             // const params = {
@@ -959,7 +959,7 @@ export default class Record extends Component {
                             this.state.initFile = [];
                             this.getServerRecordFile(listParams);
                         },10000);
-                        Toast.message('设备上传中，请耐心等待');
+                        Toast.message(I18n.t('设备上传中，请耐心等待'));
                         clearInterval(this.recordTimer);
                     }
                 }, 1000);
@@ -994,7 +994,7 @@ export default class Record extends Component {
             });
         }else{
             if(!this.state.recordList.length){
-                return Toast.message('当前没有录音文件，无法进行操作！');
+                return Toast.message(I18n.t('当前没有录音文件，无法进行操作')+'！');
             }
             if(this.state.isPlay){
                 this.getPlayRecord().then(res => {
@@ -1151,7 +1151,7 @@ export default class Record extends Component {
             text = item.recordType;
             break;
         }
-        return <Text style={{ color: textColor, fontSize: Theme.recordTypeTextSize,width:120 }}>{text}</Text>;
+        return <Text style={{ color: textColor, fontSize: Theme.recordTypeTextSize,width:120 }}>{I18n.t(text)}</Text>;
     }
 
 }

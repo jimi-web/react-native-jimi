@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-11 10:48:49
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-11 17:26:21
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
@@ -45,7 +45,7 @@ export default class FenceList extends Component {
     }
     
     componentDidMount(){
-        this.loading = Toast.loading('加载中...');
+        this.loading = Toast.loading(I18n.t('加载中')+'...');
         this.getFenceList();
     }
 
@@ -104,36 +104,36 @@ export default class FenceList extends Component {
                             this.state.fenceList.length>0 ?
                                 <TouchableOpacity onPress={()=>this.onSelect(true)}>
                                     <Icon name={'operating_select_disable'} size={20} />
-                                    <Text style={{fontSize:10,marginTop:2,color:'#979797'}}>选择</Text>
+                                    <Text style={{fontSize:10,marginTop:2,color:'#979797'}}>{I18n.t('选择')}</Text>
                                 </TouchableOpacity>
                                 :
                                 <TouchableOpacity activeOpacity={1}>
                                     <Icon name={'operating_select_disable'} size={20} color={'#E9E9E9'} />
-                                    <Text style={{fontSize:10,marginTop:2,color:'#E9E9E9'}}>选择</Text>
+                                    <Text style={{fontSize:10,marginTop:2,color:'#E9E9E9'}}>{I18n.t('选择')}</Text>
                                 </TouchableOpacity> }
                         <TouchableOpacity style={FenceStyles.add} activeOpacity={0.5} 
                             onPress={()=>{this.props.onAddEditFence && this.props.onAddEditFence();}}>
                             <Icon name={'fence_operating_add'} size={15} color={'#fff'} />
-                            <Text style={FenceStyles.addText}>添加围栏</Text>
+                            <Text style={FenceStyles.addText}>{I18n.t('添加围栏')}</Text>
                         </TouchableOpacity>
                     </View>:
                     <View style={[FenceStyles.btnItem,{paddingTop:15}]}>
                         <TouchableOpacity style={{paddingLeft:15,paddingRight:15}} onPress={this.deselect}>
-                            <Text style={[FenceStyles.btnItemText,{color:'#000'}]}>取消</Text>
+                            <Text style={[FenceStyles.btnItemText,{color:'#000'}]}>{I18n.t('取消')}</Text>
                         </TouchableOpacity>
                         <Text style={FenceStyles.btnItemLine}>|</Text>
                         <TouchableOpacity style={{paddingLeft:15,paddingRight:15}} onPress={this.onCheckAll}>
-                            <Text  style={[FenceStyles.btnItemText,FenceStyles.allSelectText]}>{this.state.allSelectText}</Text>
+                            <Text  style={[FenceStyles.btnItemText,FenceStyles.allSelectText]}>{I18n.t(this.state.allSelectText)}</Text>
                         </TouchableOpacity>
                         <Text style={FenceStyles.btnItemLine}>|</Text>
                         {
                             this.state.delList.length>0 ? 
                                 <TouchableOpacity onPress={this.deltip}>
                                     <Text  style={[FenceStyles.btnItemText,{color:'#FF3535'}]}>
-                                        {'删除('+this.state.delList.length+')'}
+                                        {I18n.t('删除')+'('+this.state.delList.length+')'}
                                     </Text>
                                 </TouchableOpacity>:
-                                <Text style={[FenceStyles.btnItemText,{color:'#d1d1d1'}]}>删除</Text>
+                                <Text style={[FenceStyles.btnItemText,{color:'#d1d1d1'}]}>{I18n.t('删除')}</Text>
                         }
                     </View>
             }
@@ -268,7 +268,7 @@ export default class FenceList extends Component {
 
     
     del = ()=>{
-        this.loading = Toast.loading('删除中...');
+        this.loading = Toast.loading(I18n.t('删除中')+'...');
         let delId = [];//给后台删除的数据
         let delList = this.state.delList;
         let fenceList = this.state.fenceList;
@@ -306,7 +306,7 @@ export default class FenceList extends Component {
      */
     deltip = ()=>{
         Modal.dialog({
-            contentText:'确认删除围栏吗？',
+            contentText:I18n.t('确认删除围栏吗?'),
             onConfirm:()=>{
                 this.del();
             }
