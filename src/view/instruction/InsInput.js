@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-02 17:27:35
+ * @LastEditTime: 2020-06-17 15:38:25
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,TextInput } from 'react-native';
@@ -28,14 +28,17 @@ export default class InsArrowButton extends Component {
                     isShow ? 
 
                         <View style={this.renderStyle()}>
-                            <View>
+                            <View style={{flexDirection:'row',alignItems:'center'}}>
                                 <Text style={{fontSize:14}}>{content.text}</Text>
                                 {
                                     content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null
                                 }
+                                <TextInput style={{marginLeft:30,width:150}} keyboardType={content.keyboardType || 'default'} onFocus={this.onFocus} onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={content.maxLength || 50} placeholder={content.placeholder} defaultValue={value}></TextInput>
                             </View>
                             <View>
-                                <TextInput keyboardType={content.keyboardType || 'default'} onFocus={this.onFocus} onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={content.maxLength || 50} placeholder={content.placeholder} defaultValue={value}></TextInput>
+                                {
+                                    content.unit?<Text style={{marginLeft:10,color:'#C7C7C7',fontSize:14}}>{content.unit}</Text>:null
+                                }
                             </View>
                         </View >
                         :

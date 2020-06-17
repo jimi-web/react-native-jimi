@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-10 11:22:20
+ * @LastEditTime: 2020-06-17 15:09:27
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
@@ -45,7 +45,7 @@ export default class InsTab extends Component {
             {
                 justifyContent:'center',
                 flex:1,
-                height:50,
+                height:45,
                 borderBottomWidth:value == item.value?2:0,
                 borderBottomColor:'#3479F6'
             },

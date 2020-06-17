@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-15 10:50:57
+ * @LastEditTime: 2020-06-17 17:56:15
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,AsyncStorage} from 'react-native';
@@ -38,6 +38,7 @@ export default class PositionUtils extends Component {
         onMyChange:PropTypes.func,//我的位置改变监听事件
         powerShow:PropTypes.bool,//是否开启电量相关功能
         isVoltage:PropTypes.bool,//是否开启电压（受powerShow控制）
+        onUserMapType:PropTypes.func
     };
     static defaultProps = {
         trafficEnabled:false,
@@ -78,7 +79,8 @@ export default class PositionUtils extends Component {
         roadBtnStyle:Styles.btn,
         mapTypeBtnStyle:Styles.btn,
         powerShow:false,
-        isVoltage:true
+        isVoltage:true,
+        onUserMapType:()=>{}
     };
 
     constructor(props) {
@@ -163,6 +165,8 @@ export default class PositionUtils extends Component {
                     }
                 },this.props.refreshTime);
             }
+
+            this.props.onUserMapType(this.state.userMapType);
         });
     }
 
@@ -302,7 +306,6 @@ export default class PositionUtils extends Component {
             //仅初始化会可视化两点坐标
             if(!this.state.isInit){ 
                 console.log(this.state.isInit,'isInit');
-                
                 this.setState({
                     isInit:true,
                     region:{
