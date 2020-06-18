@@ -88,7 +88,7 @@ export default class RecordControl extends Component {
                         <Button  activeOpacity={1} titleStyle={styles.titleStyle} style={[styles.buttonStyle,{backgroundColor:'#98BBF9',borderColor:'#98BBF9'}]}>
                             <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
                                 <ActivityIndicator size="small" color="#fff" />
-                                <Text style={{color:'#fff',marginLeft:10,fontSize:16}}>{I18n.t('加载中')}...</Text>
+                                <Text style={{color:'#fff',marginLeft:10,fontSize:16}}>{I18n.t('加载中')}</Text>
                             </View>
                         </Button>
                 }

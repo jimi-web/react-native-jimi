@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 17:26:21
+ * @LastEditTime: 2020-06-18 14:15:17
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
@@ -268,7 +268,7 @@ export default class FenceList extends Component {
 
     
     del = ()=>{
-        this.loading = Toast.loading(I18n.t('删除中')+'...');
+        this.loading = Toast.loading(I18n.t('删除中'));
         let delId = [];//给后台删除的数据
         let delList = this.state.delList;
         let fenceList = this.state.fenceList;

@@ -4,13 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 14:39:38
+ * @LastEditTime: 2020-06-18 15:19:46
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
 import api from '../api';
 import Loading from '../components/loading/Loading';
-
+import I18n from '../language/index';
 let isHttpLocationGetShow = true;
 
 /**
@@ -187,7 +187,7 @@ export const httpLocationGet = (type) =>{
             // 请求失败
             onFail: (res) => {
                 if(isHttpLocationGetShow){
-                    Toast.message(errorCode(res.code));
+                    Toast.message(I18n.t(errorCode(res.code)));
                     isHttpLocationGetShow = false;
                 }
                 reject(res);
@@ -262,7 +262,7 @@ export const goFlowCard = ({onSuccess,onFail})=>{
     }).then((res)=>{
         httpApp('jm_pay.loadPrepaidPage', {
             url:api.flowUrl+res.data,
-            title:'流量卡',
+            title:I18n.t('流量卡'),
             navigationBarTextStyle:'black',
             onSuccess: onSuccess,
             // 请求失败

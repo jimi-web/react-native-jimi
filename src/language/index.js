@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:20:04
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-18 09:55:01
+ * @LastEditTime: 2020-06-18 16:04:00
  */
 import Chinese from './Chinese';
 import English from './English';
@@ -19,5 +19,11 @@ I18n.setLanguage =(locale,obj)=>{
     };
     I18n.locale = locale?locale:'zh-Hans';
 };
+
+I18n.translations = {
+    'zh-Hans':Chinese,
+    'en':English
+};
+
 
 export default I18n;

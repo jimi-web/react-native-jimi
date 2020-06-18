@@ -1132,7 +1132,7 @@ export default class Record extends Component {
             text = item.recordType;
             break;
         case 1:
-            text = '下载中…';
+            text = '下载中';
             textColor = Theme.recordTypeTextPrimaryColor;
             break;
         case 2:

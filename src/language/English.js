@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-15 14:23:51
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-18 15:32:19
  */
 const English = {
     /***  提示toast  ***/
