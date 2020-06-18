@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:20:04
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-17 18:23:23
+ * @LastEditTime: 2020-06-18 09:55:01
  */
 import Chinese from './Chinese';
 import English from './English';
@@ -17,7 +17,7 @@ I18n.setLanguage = (locale,obj)=>{
         'zh-Hans':Object.assign(Chinese,obj && obj.cn),
         'en':Object.assign(English,obj && obj.en)
     };
-    I18n.locale = locale;
+    I18n.locale = locale?locale:'zh-Hans';
 };
 I18n.insInternation = (text) => {
     if(text === '' || text === undefined){

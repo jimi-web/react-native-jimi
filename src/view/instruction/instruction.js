@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-18 11:57:32
+ * @LastEditTime: 2020-06-18 14:25:55
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
@@ -250,8 +250,8 @@ export default class Instruction extends Component {
     /*
     * 点击跳转（跳转位置由外部自定义）
      */
-     onArrowButton = (data) => {
-         this.props.onArrowButton && this.props.onArrowButton(data);
+     onArrowButton = (data,index) => {
+         this.props.onArrowButton && this.props.onArrowButton(data,index);
      }
      /*
      * 点击发送按钮

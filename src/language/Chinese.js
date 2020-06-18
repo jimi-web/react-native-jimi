@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:50:38
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-17 18:23:14
+ * @LastEditTime: 2020-06-18 13:58:08
  */
 const Chinese = {   
     /***  提示toast  ***/
@@ -123,6 +123,9 @@ const Chinese = {
     '基础组件':'基础组件',
     '底部抽屉':'底部抽屉',
     '设置':'设置',
+    '更多':'更多',
+    '导航':'导航',
+    '位置分享':'位置分享',
     
     /***  模块内容content  ***/
     //远程拍摄
