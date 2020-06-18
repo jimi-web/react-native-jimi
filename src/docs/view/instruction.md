@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-03 09:33:13
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-17 16:43:23
+ * @LastEditTime: 2020-06-18 14:25:12
  -->
 # 指令
 
@@ -35,6 +35,11 @@
 |---|---|---|
 | onIns | ins | 每次操作类型的回调，返回用户修改过后组装好的参数及指令 |
 | setInstruction | ins | 指令发送后的回调，返回用户修改过后组装好的参数及指令 |
+
+## Function => 挂在在ins上的静态方法
+| Function Name | Returns | Notes |
+|---|---|---|
+| ftmInternation | ins | 将指令配置格式化成当前语言的国际文字 |
 
 
 ## DataType

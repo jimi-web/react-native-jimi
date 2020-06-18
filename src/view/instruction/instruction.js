@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-18 11:22:01
+ * @LastEditTime: 2020-06-18 11:57:32
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
@@ -19,6 +19,7 @@ import InsInput from './InsInput';
 import InsModelSelect from './InsModelSelect';
 import InsStep from './InsStep';
 import InsTab from './InsTab';
+import InsTime from './InsTime';
 import Api from '../../api';
 import {jmAjax} from '../../http/index';
 import I18n from '../../language/index';
@@ -49,6 +50,7 @@ export default class Instruction extends Component {
                 const instructionArr = item.data.instructionArr
                 if(Array.isArray(instructionArr)){
                     instructionArr.forEach(value => {
+                        value.hint = I18n.insInternation(value.hint);
                         if(typeof value.content === 'string' || typeof value.content === 'number'){
                             value.content = I18n.insInternation(value.content);
                         }else if(Array.isArray(value.content)){
@@ -59,6 +61,7 @@ export default class Instruction extends Component {
                         }else if(typeof value.content === 'object'){
                             value.content.placeholder = I18n.insInternation(value.content.placeholder);
                             value.content.text = I18n.insInternation(value.content.text);
+                            value.content.unit = I18n.insInternation(value.content.unit);
                             if(Array.isArray(value.content.stepValue)){
                                 value.content.stepValue.forEach(stepValue => {
                                     stepValue.text = I18n.insInternation(stepValue.text);
@@ -228,7 +231,11 @@ export default class Instruction extends Component {
             element = <InsStep style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onEndTouches={(data,index) => this.onIns(data,index)}/>;  
             break;
         case 'tab':
-            element = <InsTab style={[baseStyle.leftOrRight]} isShow={isShow}  index={index} data={item} onSelect={(data,index) => this.onIns(data,index)} ></InsTab>
+            element = <InsTab style={[baseStyle.leftOrRight]} isShow={isShow}  index={index} data={item} onSelect={(data,index) => this.onIns(data,index)} />;
+            break;
+        case 'time':
+            element = <InsTime style={[baseStyle.leftOrRight,style]} index={index} data={item} onConfirm= {(data,index) => this.onIns(data,index)}/>;  
+            break;
         case 'perch':
             element = null;  
             break;
@@ -274,8 +281,8 @@ export default class Instruction extends Component {
       * 渲染占位指令内容
       */
      renderPerchIns = (data,item,ins) => {
-        if(typeof item.contral != 'string'){
-            throw 'contral 需要一个String类型';
+        if(typeof item.contral != 'number'){
+            throw 'contral 需要一个Number类型';
         }
         const value = data[item.contral].value;
         const insVlue = item.insSymmetry[value];
