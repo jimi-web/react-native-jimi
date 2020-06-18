@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-18 15:32:19
+ * @LastEditTime: 2020-06-18 16:40:43
  */
 const English = {
     /***  提示toast  ***/
@@ -269,6 +269,8 @@ const English = {
     '3分钟':'3分钟',
     '4分钟':'4分钟',
     '5分钟':'5分钟',  
+
+    'SOS号码设置':'sosososos'
 };
 
 export default English;

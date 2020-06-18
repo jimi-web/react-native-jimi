@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-17 18:23:31
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-06-18 11:55:43
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,TextInput } from 'react-native';
@@ -73,7 +73,7 @@ export default class InsArrowButton extends Component {
         if(rule){
             let regExp = new RegExp(rule);//根据字符串生成正则
             if(!regExp.test(data.value)){
-                Toast.message(data.hint || I18n.t('您当前输入的格式有误')+'！');
+                Toast.message(data.hint || I18n.t('您当前输入的格式有误'));
             }
         }
         data.insValue = data.value;

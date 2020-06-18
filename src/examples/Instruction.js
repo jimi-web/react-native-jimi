@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-17 18:23:01
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-06-18 11:49:21
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';
@@ -1217,7 +1217,18 @@ export default class Instruction extends Component {
                 }
             }
         ]
+        this.state = {
+            data:[]
+        }
         
+    }
+    componentDidMount(){
+        const data = Jimi.Instruction.ftmInternation(this.data);
+        console.log(data,'获取的数据');
+        this.setState({
+            data
+        })
+
     }
     render(){
         return (
