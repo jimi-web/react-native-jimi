@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-17 17:18:22
+ * @LastEditTime: 2020-06-18 11:22:01
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
@@ -21,6 +21,7 @@ import InsStep from './InsStep';
 import InsTab from './InsTab';
 import Api from '../../api';
 import {jmAjax} from '../../http/index';
+import I18n from '../../language/index';
 export default class Instruction extends Component {
 
     static propTypes = {
@@ -40,12 +41,43 @@ export default class Instruction extends Component {
      */
     static ftmInternation(data){
         data.forEach(item => {
-             
+             if(item.content){
+                 item.content.text = I18n.insInternation(item.content.text);
+             }
+             if(item.data){
+                item.data.hint = I18n.insInternation(item.data.hint);
+                const instructionArr = item.data.instructionArr
+                if(Array.isArray(instructionArr)){
+                    instructionArr.forEach(value => {
+                        if(typeof value.content === 'string' || typeof value.content === 'number'){
+                            value.content = I18n.insInternation(value.content);
+                        }else if(Array.isArray(value.content)){
+                            value.content.forEach(v => {
+                                v.text = I18n.insInternation(v.text);
+                                v.viceText = I18n.insInternation(v.viceText);
+                            })
+                        }else if(typeof value.content === 'object'){
+                            value.content.placeholder = I18n.insInternation(value.content.placeholder);
+                            value.content.text = I18n.insInternation(value.content.text);
+                            if(Array.isArray(value.content.stepValue)){
+                                value.content.stepValue.forEach(stepValue => {
+                                    stepValue.text = I18n.insInternation(stepValue.text);
+                                })
+                            }
+                            if(Array.isArray(value.content.modelData)){
+                                value.content.modelData.forEach(modelData => {
+                                    modelData.text = I18n.insInternation(modelData.text);
+                                })
+                            }
+                        }
+                    })
+                }
+             }
         })
+        return data;
     }
     constructor(props){ 
         super(props);
-        // this.insArr = JSON.parse(JSON.stringify(this.props.instructionArr));
         this.state = {
             insArr:JSON.parse(JSON.stringify(this.props.instructionArr)),
             setBtnFlag:false
@@ -319,7 +351,6 @@ export default class Instruction extends Component {
      */
     setInstruction = (params,instrution) => {
         const url = Api.instruction;
-        console.log('内容：',instrution,'参数：',params);
         const data = {
             encodingType:'IMEI',
             cmdCode:instrution,

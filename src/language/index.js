@@ -12,12 +12,18 @@ import I18n from 'i18n-js';
 
 I18n.fallbacks = true;
 
-I18n.setLanguage =(locale,obj)=>{
+I18n.setLanguage = (locale,obj)=>{
     I18n.translations = {
         'zh-Hans':Object.assign(Chinese,obj && obj.cn),
         'en':Object.assign(English,obj && obj.en)
     };
     I18n.locale = locale;
 };
+I18n.insInternation = (text) => {
+    if(text === '' || text === undefined){
+        return '';
+    }
+    return I18n.t(text)
+}
 
 export default I18n;
