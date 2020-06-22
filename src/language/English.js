@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-22 11:20:34
+ * @LastEditTime: 2020-06-22 11:40:45
  */
 const English = {
    /***  提示toast  ***/
@@ -125,7 +125,7 @@ const English = {
     '设置':'set',
     '更多':'more',
     '导航':'navigation',
-    '位置分享':'Position to share',
+    '位置分享':'Share',
     
     /***  模块内容content  ***/
     //远程拍摄
@@ -231,8 +231,8 @@ const English = {
     '全不选':'check ball',
     '选择':'select',
     '添加围栏':'Add',
-    '进围栏报警':'Fence entry alarm',
-    '出围栏报警':'Out of fence alarm',
+    '进围栏报警':'In',
+    '出围栏报警':'Out',
     '开始录音':'Start',
     '关闭持续录音':'Turn off',
     '录音中':'Recording',

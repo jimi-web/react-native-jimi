@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-22 10:21:46
+ * @LastEditTime: 2020-06-22 11:28:44
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -67,11 +67,11 @@ export default class RecordControl extends Component {
         }
         return <View style={styles.controlStyle}>
             <View style={styles.touchStyle}>
-                <TouchableOpacity activeOpacity={1} style={{paddingRight:15}} onPress={() => {this.props.onSelect && this.props.onSelect(0);}}>
+                <TouchableOpacity activeOpacity={1} style={{paddingRight:15,alignItems:'center'}} onPress={() => {this.props.onSelect && this.props.onSelect(0);}}>
                     <Icon name={'operating_select_disable'} size={20} />
                     <Text style={{fontSize:10,color:'#979797'}}>{I18n.t('选择')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={1} style={{paddingLeft:20}} onPress={this.onSelectTimeLength}>
+                <TouchableOpacity activeOpacity={1} style={{paddingLeft:20,alignItems:'center'}} onPress={this.onSelectTimeLength}>
                     <Icon name={'recording_operating_duration'} size={21} />
                     <Text style={{fontSize:10,color:'#979797'}}>{I18n.t('时长')}</Text>
                 </TouchableOpacity>
@@ -271,8 +271,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     wheelItem:{
-        height: 200, 
-        width: 100
+        height: 220, 
+        width:width,
+    },
+    headerText:{
+        fontSize:18,
+        color:'#3479F6'
     },
     itemStyle:{
         textAlign: 'center',
