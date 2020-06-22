@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-18 14:15:17
+ * @LastEditTime: 2020-06-22 09:54:38
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
@@ -82,7 +82,7 @@ export default class FenceList extends Component {
                             })
                         }
                         <View style={FenceStyles.space}></View>
-                    </ScrollView>: <Empty />
+                    </ScrollView>: <Empty text={I18n.t('暂无内容')} />
                    
           
             }

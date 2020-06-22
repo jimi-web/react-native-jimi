@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-04 14:44:01
+ * @LastEditTime: 2020-06-22 10:22:22
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -609,7 +609,7 @@ export default class Record extends Component {
      * 错误提示
      */
     renderLoading = () => {
-        return <Empty onPress={() => {this.getServerRecordFile({pageNum:1,pageSize:10});}} />;
+        return <Empty onPress={() => {this.getServerRecordFile({pageNum:1,pageSize:10});}} text={I18n.t('暂无内容')} />;
     }
     /**
      * 

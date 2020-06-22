@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 17:23:28
+ * @LastEditTime: 2020-06-22 10:21:46
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -81,7 +81,7 @@ export default class RecordControl extends Component {
                     isBeginRecord?
                         recordType == 0
                             ?
-                            <Button  activeOpacity={isRecording?1:0} onPress={this.onRecord} titleStyle={[styles.titleStyle]} style={[styles.buttonStyle,{backgroundColor,borderColor}]} title={`${text}（${this.ftmTime(recordLength)}）`}  />
+                            <Button  activeOpacity={isRecording?1:0} onPress={this.onRecord} titleStyle={[styles.titleStyle]} style={[styles.buttonStyle,{backgroundColor,borderColor}]} title={`${I18n.t(text)}（${this.ftmTime(recordLength)}）`}  />
                             :
                             <Button onPress={this.onRecord} titleStyle={styles.titleStyle} style={styles.buttonStyle} title={I18n.t(text)}  />
                         :

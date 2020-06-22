@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-19 13:49:47
+ * @LastEditTime: 2020-06-22 11:20:34
  */
 const English = {
    /***  提示toast  ***/
@@ -215,6 +215,7 @@ const English = {
     '对话框':'dialog box ',
     '提示框':'tooltip',
     '轻提示':'Light hint',
+    '暂无数据':'No Data',
 
     /*** 按钮button  ***/
     '确定':'confirm',
@@ -229,12 +230,12 @@ const English = {
     '全选':'check all ',
     '全不选':'check ball',
     '选择':'select',
-    '添加围栏':'Add a fence',
+    '添加围栏':'Add',
     '进围栏报警':'Fence entry alarm',
     '出围栏报警':'Out of fence alarm',
-    '开始录音':'Start the recording',
-    '关闭持续录音':'Turn off continuous recording',
-    '录音中':'In the recording',
+    '开始录音':'Start',
+    '关闭持续录音':'Turn off',
+    '录音中':'Recording',
     '时长':'duration',
     '清空':'empty',
 

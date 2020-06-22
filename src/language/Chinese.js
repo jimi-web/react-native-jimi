@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:50:38
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-18 16:21:25
+ * @LastEditTime: 2020-06-22 11:20:18
  */
 const Chinese = {   
     /***  提示toast  ***/
@@ -215,6 +215,7 @@ const Chinese = {
     '对话框':'对话框',
     '提示框':'提示框',
     '轻提示':'轻提示',
+    '暂无数据':'暂无数据',
 
     /*** 按钮button  ***/
     '确定':'确定',
