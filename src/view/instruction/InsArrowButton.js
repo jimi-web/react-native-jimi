@@ -4,13 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-25 16:26:40
+ * @LastEditTime: 2020-06-22 15:35:51
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity,Image} from 'react-native';
-import PropTypes from 'prop-types';
-import {Switch,Icon} from '../../components/index';
+import {Icon} from '../../components/index';
 import baseStyle from '../baseStyle';
+import I18n from '../../language/index'
 
 export default class InsArrowButton extends Component {
     constructor(props){
@@ -25,9 +25,9 @@ export default class InsArrowButton extends Component {
                     <Image style={{width:22,height:22}} source={typeof content.img == 'string'?{uri:content.img}:content.img} />
                 </View>
                 <View>
-                    <Text style={{fontSize:14}}>{content.text}</Text>
+                    <Text style={{fontSize:14}}>{I18n.t(content.text)}</Text>
                     {
-                        content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null
+                        content.viceText?<Text style={{fontSize:10}}>{I18n.t(content.viceText)}</Text>:null
                     }
                 </View>
             </View>

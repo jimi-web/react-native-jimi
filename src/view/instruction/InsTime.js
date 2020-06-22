@@ -3,14 +3,14 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-17 13:54:13
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-06-22 15:37:13
  */
 import React, { Component } from 'react';
-import {View,Text,TouchableOpacity,Image} from 'react-native';
-import PropTypes from 'prop-types';
+import {View,Text,TouchableOpacity} from 'react-native';
 import {Icon,TimePicker} from '../../components/index';
 import baseStyle from '../baseStyle';
+import I18n from '../../language/index';
 
 export default class InsTime extends Component {
     constructor(props){
@@ -22,14 +22,14 @@ export default class InsTime extends Component {
            
             <View style={{justifyContent:'center',flexDirection:'row',alignItems:'center'}}>
                 <View>
-                    <Text style={{fontSize:14}}>{content.text}</Text>
+                    <Text style={{fontSize:14}}>{I18n.t(content.text)}</Text>
                     {
-                        content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null
+                        content.viceText?<Text style={{fontSize:10}}>{I18n.t(content.viceText)}</Text>:null
                     }
                 </View>
             </View>
             <View style={{flexDirection:'row'}}>
-                <Text style={{marginRight:10}}>{value}</Text>
+                <Text style={{marginRight:10}}>{I18n.t(value)}</Text>
                 <Icon name={'subordinate_arrow'} />
             </View>
         </TouchableOpacity >;

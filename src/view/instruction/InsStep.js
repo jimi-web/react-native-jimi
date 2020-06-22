@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-08 17:02:08
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-15 15:27:10
+ * @LastEditTime: 2020-06-22 15:05:28
  */
 import React, { Component } from 'react';
 import {
@@ -14,6 +14,7 @@ import {
     PanResponder
 } from 'react-native';
 import {Icon} from '../../components';
+import I18n from '../../language/index';
 const { width } = Dimensions.get('window');
 
 export default class InsStep extends Component {
@@ -110,7 +111,7 @@ export default class InsStep extends Component {
                 <View style={{position:'relative',marginLeft:(width - this.width)  / 2,width:this.width,height:40,justifyContent:'space-between',alginItems:'end',flexDirection:'row'}}>
                     {
                         content.stepValue.map((item,index) => {
-                            return <Text style={{lineHeight:40}} key={index}>{item.text}</Text>;
+                            return <Text style={{lineHeight:40}} key={index}>{I18n.t(item.text)}</Text>;
                         })
                     }
                 </View>

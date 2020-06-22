@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-18 14:25:55
+ * @LastEditTime: 2020-06-22 15:40:45
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
@@ -37,39 +37,39 @@ export default class Instruction extends Component {
         
     }
     /**
-     * 将指令数据格式化成国际化包
+     * 将指令数据格式化成国际化包(由于二次传输，不建议使用该方法)
      * @param {Object} data 指令数据
      */
     static ftmInternation(data){
         data.forEach(item => {
              if(item.content){
-                 item.content.text = I18n.insInternation(item.content.text);
+                 item.content.text = I18n.t(item.content.text);
              }
              if(item.data){
-                item.data.hint = I18n.insInternation(item.data.hint);
+                item.data.hint = I18n.t(item.data.hint);
                 const instructionArr = item.data.instructionArr
                 if(Array.isArray(instructionArr)){
                     instructionArr.forEach(value => {
-                        value.hint = I18n.insInternation(value.hint);
+                        value.hint = I18n.t(value.hint);
                         if(typeof value.content === 'string' || typeof value.content === 'number'){
-                            value.content = I18n.insInternation(value.content);
+                            value.content = I18n.t(value.content);
                         }else if(Array.isArray(value.content)){
                             value.content.forEach(v => {
-                                v.text = I18n.insInternation(v.text);
-                                v.viceText = I18n.insInternation(v.viceText);
+                                v.text = I18n.t(v.text);
+                                v.viceText = I18n.t(v.viceText);
                             })
                         }else if(typeof value.content === 'object'){
-                            value.content.placeholder = I18n.insInternation(value.content.placeholder);
-                            value.content.text = I18n.insInternation(value.content.text);
-                            value.content.unit = I18n.insInternation(value.content.unit);
+                            value.content.placeholder = I18n.t(value.content.placeholder);
+                            value.content.text = I18n.t(value.content.text);
+                            value.content.unit = I18n.t(value.content.unit);
                             if(Array.isArray(value.content.stepValue)){
                                 value.content.stepValue.forEach(stepValue => {
-                                    stepValue.text = I18n.insInternation(stepValue.text);
+                                    stepValue.text = I18n.t(stepValue.text);
                                 })
                             }
                             if(Array.isArray(value.content.modelData)){
                                 value.content.modelData.forEach(modelData => {
-                                    modelData.text = I18n.insInternation(modelData.text);
+                                    modelData.text = I18n.t(modelData.text);
                                 })
                             }
                         }
@@ -92,7 +92,7 @@ export default class Instruction extends Component {
                 {
                     this.props.hint ? 
                         <View style={{justifyContent:'center',padding:10,backgroundColor:'rgba(254, 116, 45, 0.5)'}}>
-                            <Text style={{color:'#FE742D',lineHeight:16}}>{this.props.hint}</Text>
+                            <Text style={{color:'#FE742D',lineHeight:16}}>{I18n.t(this.props.hint)}</Text>
                         </View>
                         :
                         null
@@ -143,7 +143,6 @@ export default class Instruction extends Component {
      * @param {*} item 当前条的数据
      */
     countContral = (data,item) => {
-        console.log(item,111)
         // 若该指令不被控制则返回true
         if(item.contral == undefined){
             return true;

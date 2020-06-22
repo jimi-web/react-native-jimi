@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-03 09:33:13
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-18 14:25:12
+ * @LastEditTime: 2020-06-22 15:42:51
  -->
 # 指令
 
@@ -39,7 +39,7 @@
 ## Function => 挂在在ins上的静态方法
 | Function Name | Returns | Notes |
 |---|---|---|
-| ftmInternation | ins | 将指令配置格式化成当前语言的国际文字 |
+| ftmInternation | ins | 将指令配置格式化成当前语言的国际文字(只要设置语言和配置，指令模块将自动设置国际化。若不需要国际化也不需担心，将自动加载当前文字) |
 
 
 ## DataType

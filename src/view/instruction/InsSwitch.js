@@ -4,13 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 11:34:00
+ * @LastEditTime: 2020-06-22 15:36:54
  */
 import React, { Component } from 'react';
 import {View,Text} from 'react-native';
-import PropTypes from 'prop-types';
 import {Switch} from '../../components/index';
 import baseStyle from '../baseStyle';
+import I18n from '../../language/index';
 
 export default class InsSwitch extends Component {
     constructor(props){
@@ -20,10 +20,10 @@ export default class InsSwitch extends Component {
         let {content} = this.props.data;
         return <View style={this.renderStyle()}>
             <View>
-                <Text style={{fontSize:14}}>{content.text}</Text>
+                <Text style={{fontSize:14}}>{I18n.t(content.text)}</Text>
                 {
                     content.viceText?
-                        <Text style={{fontSize:10}}>{content.viceText}</Text>
+                        <Text style={{fontSize:10}}>{I18n.t(content.viceText)}</Text>
                         :
                         null
                 }

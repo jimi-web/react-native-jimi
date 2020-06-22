@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-18 11:49:21
+ * @LastEditTime: 2020-06-22 15:32:44
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';
@@ -1221,14 +1221,6 @@ export default class Instruction extends Component {
             data:[]
         }
         
-    }
-    componentDidMount(){
-        const data = Jimi.Instruction.ftmInternation(this.data);
-        console.log(data,'获取的数据');
-        this.setState({
-            data
-        })
-
     }
     render(){
         return (

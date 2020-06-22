@@ -4,13 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-14 16:24:50
+ * @LastEditTime: 2020-06-22 15:36:27
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
-import {Switch,Icon,Datepicker,Drawer} from '../../components/index';
+import {Icon,Datepicker,Drawer} from '../../components/index';
 import baseStyle from '../baseStyle';
+import I18n from '../../language/index'
 
 export default class InsModelSelect extends Component {
     constructor(props){
@@ -24,11 +24,11 @@ export default class InsModelSelect extends Component {
         })
         return <TouchableOpacity activeOpacity={0.6}  style={this.renderStyle()} onPress={this.onPress}>
             <View>
-                <Text style={{fontSize:14}}>{content.text}</Text>
-                {content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null}
+                <Text style={{fontSize:14}}>{I18n.t(content.text)}</Text>
+                {content.viceText?<Text style={{fontSize:10}}>{I18n.t(content.viceText)}</Text>:null}
             </View>
             <View style={{flexDirection:'row'}}>
-                <Text style={{marginRight:10}}>{valueText.text}</Text>
+                <Text style={{marginRight:10}}>{I18n.t(valueText.text)}</Text>
                 <Icon name={'subordinate_arrow'} />
             </View>
         </TouchableOpacity >;
