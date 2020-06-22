@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:20:04
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-18 16:04:00
+ * @LastEditTime: 2020-06-18 17:09:32
  */
 import Chinese from './Chinese';
 import English from './English';
