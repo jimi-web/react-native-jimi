@@ -3,13 +3,13 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-14 16:24:50
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-22 15:29:47
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import {Switch,Icon,Datepicker,Drawer} from '../../components/index';
+import {Icon,Datepicker,Drawer,TimePicker} from '../../components/index';
 import baseStyle from '../baseStyle';
 
 export default class InsModelSelect extends Component {
@@ -19,16 +19,16 @@ export default class InsModelSelect extends Component {
     }
     render(){
         let {content,value} = this.props.data;
-        const valueText = content.modelData.find(item => {
+        const valueText = content.modelData? content.modelData.find(item => {
             return item.value === value
-        })
+        }):[];
         return <TouchableOpacity activeOpacity={0.6}  style={this.renderStyle()} onPress={this.onPress}>
             <View>
                 <Text style={{fontSize:14}}>{content.text}</Text>
                 {content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null}
             </View>
             <View style={{flexDirection:'row'}}>
-                <Text style={{marginRight:10}}>{valueText.text}</Text>
+                <Text style={{marginRight:10}}>{content.modelData?valueText.text:value}</Text>
                 <Icon name={'subordinate_arrow'} />
             </View>
         </TouchableOpacity >;
@@ -61,13 +61,23 @@ export default class InsModelSelect extends Component {
                     this.props.onPress && this.props.onPress(data,index);
                 }
             });
+        }else if(content.modelType == 'TimePicker'){
+            TimePicker.show({
+                onConfirm:(value)=>{
+                    data.value = value;
+                    if(data.insID){
+                        data.insValue = data.value;
+                    }
+                    this.props.onPress && this.props.onPress(data,index);
+                },
+                defaultValue:data.value
+            });     
         }
+
         if(content.modelType == 'Custom'){
             const element = this.renderDrawerElement(content);
             this.id = Drawer.open(element);
         }
-        
-        
     }
     /*
     *渲染底部抽屉
