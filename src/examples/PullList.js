@@ -144,7 +144,7 @@ export default class PullView  extends Component {
     footerEmptyDataComponent=()=>{
         return <View style={{alignItems:'center',position:'absolute',width:280,height:168,top:'50%',left:'50%',marginLeft:-140,marginTop:-163}}>
             <Image source={require('../assets/fence/list_empty.png')}></Image>
-            <Text style={{marginTop:20}}>暂无数据</Text>
+            <Text style={{marginTop:20}}>{I18n.t('暂无数据')}</Text>
         </View>;
     }
 }

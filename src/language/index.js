@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:20:04
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-22 15:34:42
+ * @LastEditTime: 2020-06-22 15:46:16
  */
 import Chinese from './Chinese';
 import English from './English';
@@ -29,7 +29,6 @@ I18n.setLanguage = (locale,obj)=>{
  */
 const fn = I18n.t;
 I18n.t = (key) => {
-    console.log(key,'国际化',isInternationalization)
     if(!isInternationalization){
         return key;
     }
@@ -38,5 +37,11 @@ I18n.t = (key) => {
     }
     return fn(key)
 }
+
+I18n.translations = {
+    'zh-Hans':Chinese,
+    'en':English
+};
+
 
 export default I18n;

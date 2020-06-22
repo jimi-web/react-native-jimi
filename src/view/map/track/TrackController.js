@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-02 18:32:59
+ * @LastEditTime: 2020-06-22 09:50:34
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Slider} from 'react-native';
@@ -125,12 +125,12 @@ export default class Track extends Component {
      */
     showType = ()=> {
         let items = [
-            {title: '全部', onPress: () => this.onShowType(0,'全部')},
-            {title: '卫星' ,onPress: () => this.onShowType(1,'卫星')},
-            {title: '基站',onPress: () => this.onShowType(2,'基站')},
-            {title: 'WiFi',onPress: () => this.onShowType(3,'WiFi')},
+            {title: '全部', onPress: () => this.onShowType(0,I18n.t('全部'))},
+            {title: '卫星' ,onPress: () => this.onShowType(1,I18n.t('卫星'))},
+            {title: '基站',onPress: () => this.onShowType(2,I18n.t('基站'))},
+            {title: 'WiFi',onPress: () => this.onShowType(3,I18n.t('WiFi'))},
         ];
-        let cancelItem = {title: '取消'};
+        let cancelItem = {title: I18n.t('取消')};
         ActionSheet.show(items, cancelItem);
     }
 

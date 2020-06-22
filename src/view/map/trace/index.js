@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-02 18:09:16
+ * @LastEditTime: 2020-06-22 14:13:36
  */
 import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
@@ -109,9 +109,9 @@ export default class TraceUtils extends PositionUtils {
                         <Text style={MapStyles.title}>{deviceInfo.deviceName?deviceInfo.deviceName:this.state.asyncStorageAeviceName}</Text>
                     </View> 
                     <View style={[MapStyles.item,MapStyles.state]}>
-                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).color,paddingTop:1}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).text:'离线'}</Text>
+                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).color,paddingTop:1}]}>{deviceInfo.deviceStatus?I18n.t(this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).text):I18n.t('离线')}</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>{I18n.t('距离')}{this.state.distance? distance(this.state.distance):0+'m'}</Text>
+                        <Text style={MapStyles.text}>{I18n.t('距离')}:{this.state.distance? distance(this.state.distance):0+'m'}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>{deviceInfo.posType?I18n.t(this.posType(deviceInfo).text):I18n.t('无')}</Text>
                         <Text style={MapStyles.line}>|</Text>

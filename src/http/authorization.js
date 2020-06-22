@@ -1,7 +1,15 @@
+/*
+ * @Description: 
+ * @Version: 
+ * @Autor: xieruizhi
+ * @Date: 2020-06-17 18:20:18
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-18 15:16:46
+ */ 
 
 import {httpApp} from './basic';
 import {Toast} from '../components/index';
-
+import I18n from '../language/index';
 class authorization {
     /**
      * 获取授权信息
@@ -36,7 +44,7 @@ class authorization {
                     if (res && res.isPermission && parseInt(res.isPermission) == 1) { 
                         resolve(true);
                     }else{
-                        Toast.message('不授权将无法正确使用小程序！');
+                        Toast.message(I18n.t('不授权将无法正确使用小程序'));
                     }
                 },
                 onFail:(err)=>{

@@ -681,7 +681,7 @@ export default class MediaSyn extends Component {
          if(fileChecked.length <= 0){
              return Toast.message(I18n.t('请选择文件'));
          }
-         this.loading = Toast.loading(I18n.t('删除中')+'...');
+         this.loading = Toast.loading(I18n.t('删除中'));
          this.deleteFtpfile(fileChecked,0);
      }
      /**

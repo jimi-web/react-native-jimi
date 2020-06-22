@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-21 17:31:47
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-11-27 18:17:45
+ * @LastEditTime: 2020-06-18 16:27:01
  */
 import React,{Component} from 'react';
 import {View,StyleSheet,TouchableOpacity,Dimensions,ImageBackground,Image,Text} from 'react-native';
@@ -37,7 +37,6 @@ export default class PhotoListItem extends Component{
                                 uncheckedIcon={<Image style={{width: 21, height: 21,}} source={require('../../../assets/photo/checkbox_nor.png')} />}
                             />:null
                     }
-                    
                 </ImageBackground>
             </TouchableOpacity>
         </View>;

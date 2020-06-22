@@ -81,11 +81,11 @@ export default class PhotoAlbum extends Component {
                                 <View style={Styles.bottomToolbars}>
                                     <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={this.delete}>
                                         <Icon name={'photo_details_delete'} size={22}></Icon>
-                                        <Text style={[Styles.bottomToolbarsText]}>删除</Text>
+                                        <Text style={[Styles.bottomToolbarsText]}>{I18n.t('删除')}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity  style={Styles.bottomToolbarsBtn} onPress={this.save} >
                                         <Icon name={'photo_details_save'} size={22}></Icon>
-                                        <Text style={[Styles.bottomToolbarsText]}>保存至本地</Text>
+                                        <Text style={[Styles.bottomToolbarsText]}>{I18n.t('保存至本地')}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </BottomToolbars>:null

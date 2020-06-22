@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-22 15:40:45
+ * @LastEditTime: 2020-06-22 15:46:23
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
@@ -19,7 +19,6 @@ import InsInput from './InsInput';
 import InsModelSelect from './InsModelSelect';
 import InsStep from './InsStep';
 import InsTab from './InsTab';
-import InsTime from './InsTime';
 import Api from '../../api';
 import {jmAjax} from '../../http/index';
 import I18n from '../../language/index';
@@ -231,9 +230,6 @@ export default class Instruction extends Component {
             break;
         case 'tab':
             element = <InsTab style={[baseStyle.leftOrRight]} isShow={isShow}  index={index} data={item} onSelect={(data,index) => this.onIns(data,index)} />;
-            break;
-        case 'time':
-            element = <InsTime style={[baseStyle.leftOrRight,style]} index={index} data={item} onConfirm= {(data,index) => this.onIns(data,index)}/>;  
             break;
         case 'perch':
             element = null;  

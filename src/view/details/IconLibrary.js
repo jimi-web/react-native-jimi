@@ -106,7 +106,7 @@ export default class IconTable extends Component {
      * 保存图标
      */
     onSave =()=> {
-        let loading = Toast.loading(I18n.t('修改中')+'...');
+        let loading = Toast.loading(I18n.t('修改中'));
         jmAjax({
             url:Api.updateDeviceInfo,
             method:'POST',

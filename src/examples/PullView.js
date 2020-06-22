@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-12-27 17:43:23
- * @LastEditors  : xieruizhi
- * @LastEditTime : 2019-12-28 10:30:35
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-22 11:17:55
  */
 import React,{Component} from 'react';
 import {View,StyleSheet,Text,Dimensions} from 'react-native';
@@ -32,7 +32,7 @@ export default class PullView extends Component {
     }
 
     _onPress = (name)=>{
-        this.props.navigation.push(name);
+        this.props.navigation.push(name,{I18n:I18n});
     }  
 }
 

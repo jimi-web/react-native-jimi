@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:33:58
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-03 15:21:28
+ * @LastEditTime: 2020-06-22 10:02:46
  */
 import React, {Component} from 'react';
 import {View,Text,SectionList,StyleSheet,FlatList,TouchableOpacity,Image} from 'react-native';
@@ -59,7 +59,7 @@ export default class LocalPhotoList extends Component {
     render(){
         return <View style={Styles.content}>
             {
-                this.state.defaultList.length === 0? <Empty />:
+                this.state.defaultList.length === 0? <Empty text={I18n.t('暂无内容')} />:
            
                     <SectionList
                         style={this.state.isEdit?Styles.sectionList:{}}
@@ -385,16 +385,16 @@ export default class LocalPhotoList extends Component {
         var yestday = new Date(today - 24*3600*1000).getTime();
         let week = ['周日','周一','周二','周三','周四','周五','周六'];
         if(today === param.getTime()){
-            return '今天';
+            return I18n.t('今天');
         }
         if(yestday === param.getTime()){
-            return '昨天';
+            return I18n.t('昨天');
         }
         let sundayTime =  new Date(today - date.getDay()*24*3600*1000).getTime(); 
         if(param.getTime()>=sundayTime){
-            return week[param.getDay()];
+            return I18n.t(week[param.getDay()]);
         }
-        return I18n.t(day);
+        return day;
     }
 
 

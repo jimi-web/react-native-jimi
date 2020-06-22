@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-22 10:19:51
+ * @LastEditTime: 2020-06-22 15:46:33
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -609,7 +609,7 @@ export default class Record extends Component {
      * 错误提示
      */
     renderLoading = () => {
-        return <Empty onPress={() => {this.getServerRecordFile({pageNum:1,pageSize:10});}} />;
+        return <Empty onPress={() => {this.getServerRecordFile({pageNum:1,pageSize:10});}} text={I18n.t('暂无内容')} />;
     }
     /**
      * 
@@ -1132,7 +1132,7 @@ export default class Record extends Component {
             text = item.recordType;
             break;
         case 1:
-            text = '下载中…';
+            text = '下载中';
             textColor = Theme.recordTypeTextPrimaryColor;
             break;
         case 2:

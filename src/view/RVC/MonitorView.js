@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 17:25:18
+ * @LastEditTime: 2020-06-18 16:11:41
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -221,7 +221,7 @@ export default class MonitorView extends Component {
             const status = reminder.status;
             if(status == 1){
                 this.setState({
-                    bottomHint:<Text style={{color:'#fff'}}>{I18n.t('对讲准备就绪')}……</Text>,
+                    bottomHint:<Text style={{color:'#fff'}}>{I18n.t('对讲准备就绪')}</Text>,
                     isBusy:true
 
                 });
@@ -850,7 +850,7 @@ export default class MonitorView extends Component {
             JMRTMPPlayerManager.startTalk();
             this.setState({
                 isTolk:true,
-                bottomHint:<Text style={{color:'#fff'}}>{I18n.t('对讲准备中')+'……'}</Text>
+                bottomHint:<Text style={{color:'#fff'}}>{I18n.t('对讲准备中')}</Text>
             });
         }
     }
