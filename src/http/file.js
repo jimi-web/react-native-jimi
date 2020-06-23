@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-19 18:18:47
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-18 15:21:02
+ * @LastEditTime: 2020-06-22 17:36:05
  *
  */
 /**
@@ -42,6 +42,8 @@ export const getFileList = (url)=>{
         getSmallAppPath().then(location => {
             getEncoding().then(data => {
                 const filePath = `${location.filePath}/${data.encoding}/${url}/`;
+                console.log(filePath,'获取文件来源');
+                
                 httpApp('jm_file.getFileList',{
                     filePath,
                     onSuccess:(res)=>{

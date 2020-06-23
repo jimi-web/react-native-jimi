@@ -20,8 +20,8 @@ export default class PullList  extends Component {
         footerFailureComponent:PropTypes.element,//自定义底部失败控件
         footerNoMoreDataComponent:PropTypes.element,//自定义底部已加载全部数据控件
         footerEmptyDataComponent:PropTypes.element,//自定义空数据控件
-        onRefresh:PropTypes.func,//上拉刷新监听事件
-        onPullUp:PropTypes.func,//下拉加载监听事件
+        onRefresh:PropTypes.func,//上拉加载监听事件
+        onPullUp:PropTypes.func,//下拉刷新监听事件
         onFail:PropTypes.func,//加载失败点击事件
         onEndReachedThreshold:PropTypes.number
         

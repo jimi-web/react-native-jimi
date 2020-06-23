@@ -3,12 +3,13 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:17:51
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-09 16:44:23
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-23 14:44:19
  */
 import {Dimensions,Platform} from 'react-native';
 import Theme from '../components/themes/index';
 import md5 from './md5';
+import I18n from '../language/index';
 /**
  * 兼容ios
  */
@@ -42,11 +43,11 @@ export const parseDate = (time) => {
     var dZero = new Date(new Date().toLocaleDateString()).getTime();
     var d = 24 * 60 * 60 * 1000;
     if (time > dZero) {
-        return '今天';
+        return I18n.t('今天');
     } else if (time > dZero - d) {
-        return '昨天';
+        return I18n.t('昨天');
     } else if (time > dZero - d * 2) {
-        return '前天';
+        return I18n.t('前天');
     } else {
         return new Date(time).Format('YYYY-MM-DD');
     }

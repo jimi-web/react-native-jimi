@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-17 16:06:14
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-22 11:28:44
+ * @LastEditTime: 2020-06-23 17:01:34
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,StyleSheet,Dimensions,ActivityIndicator} from 'react-native';
@@ -22,6 +22,7 @@ export default class RecordControl extends Component {
             index:0,
         };
     }
+
     /**
      * 时间处理
      */
@@ -132,7 +133,7 @@ export default class RecordControl extends Component {
                 <Text style={[styles.letBorder,{color:Theme.buttonTextColorDefault}]}>{I18n.t('清空')}</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={1} style={styles.deleteBtn}>
-                <Text style={[styles.letBorder,{color:'#FF3535'}]} onPress={() => {this.props.onDelete && this.props.onDelete();}}>{I18n.t('删除')`(${fileNumber})`}</Text>
+                <Text style={[styles.letBorder,{color:'#FF3535'}]} onPress={() => {this.props.onDelete && this.props.onDelete();}}>{`(${I18n.t('删除')}${fileNumber})`}</Text>
             </TouchableOpacity>
         </View>;
     }

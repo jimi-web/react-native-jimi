@@ -154,7 +154,7 @@ const AppNavigator = createStackNavigator(
         },
         PullView:{
             screen:PullView,
-            navigationOptions:({ navigation }) => getOptions('上拉刷新下拉加载',navigation)        
+            navigationOptions:({ navigation }) => getOptions('上拉加载下拉刷新',navigation)        
         },        
         Switch:{
             screen:Switch,

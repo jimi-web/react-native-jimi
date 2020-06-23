@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-22 15:46:33
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-23 17:05:19
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -994,7 +994,7 @@ export default class Record extends Component {
             });
         }else{
             if(!this.state.recordList.length){
-                return Toast.message(I18n.t('当前没有录音文件，无法进行操作')+'！');
+                return Toast.message(I18n.t('当前没有录音文件，无法进行操作'));
             }
             if(this.state.isPlay){
                 this.getPlayRecord().then(res => {

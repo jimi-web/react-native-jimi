@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-24 15:28:09
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 13:44:51
+ * @LastEditTime: 2020-06-23 10:44:06
  -->
 
 # `PullList` 上拉加载下拉刷新（无分组列表）
@@ -31,8 +31,8 @@
 ## Events
 | Event Name | Returns | Notes |
 |---|---|---|
-|onRefresh| 无 |上拉刷新监听事件 |
-|onPullUp| 无 | 下拉加载监听事件 |
+|onRefresh| 无 |上拉加载监听事件 |
+|onPullUp| 无 | 下拉刷新监听事件 |
 |onFail| 无 | 当pullUpStatus为3的时候的点击事件 |
 
 

@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-09 13:51:44
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-04 18:00:42
+ * @LastEditTime: 2020-06-23 10:43:33
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,SectionList,TouchableOpacity,Image} from 'react-native';
@@ -71,7 +71,7 @@ export default class Home extends Component{
                     title:'图标',
                     url:'Icon'
                 },{
-                    title:'上拉刷新下拉加载',
+                    title:'上拉加载下拉刷新',
                     url:'PullView'
                 },{
                     title:'开关',
