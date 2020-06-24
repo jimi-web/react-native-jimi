@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-03-10 14:38:11
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 17:26:30
+ * @LastEditTime: 2020-06-24 10:27:57
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity,Dimensions,DeviceEventEmitter,NativeModules,NativeEventEmitter,ImageBackground,ScrollView,AppState, Platform,NetInfo,RefreshControl,BackHandler} from 'react-native';
@@ -246,7 +246,6 @@ export default class MediaSyn extends Component {
             this.JMUDOScoket.remove();
         }
         this.onClose();
-        
     }
     render() {
         const fileLength = this.state.fileChecked.length;
@@ -291,7 +290,7 @@ export default class MediaSyn extends Component {
                             <BottomToolbars>
                                 <View style={Styles.bottomToolbars}>
                                     <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={this.onCancel}><Text style={[Styles.bottomToolbarsText,{color:'#000'}]}>{fileLength>0?I18n.t('取消')+'（'+fileLength+'）':I18n.t('取消')}</Text></TouchableOpacity>
-                                    <TouchableOpacity onPress={this.onDownload} activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#3479F6':'#e1e1e1'}]}>{I18n.t('下载')}</Text></TouchableOpacity>
+                                    <TouchableOpacity onPress={this.onDownload} activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#3479F6':'#e1e1e1'}]}>{I18n.t('保存到本地')}</Text></TouchableOpacity>
                                     <TouchableOpacity activeOpacity={fileLength>0?0:1} style={Styles.bottomToolbarsBtn} onPress={this.onDelete}><Text style={[Styles.bottomToolbarsText,{color:fileLength>0?'#FF3535':'#e1e1e1'}]}>{I18n.t('删除')} </Text></TouchableOpacity>
                                 </View>
                             </BottomToolbars>
@@ -310,7 +309,6 @@ export default class MediaSyn extends Component {
                 }
             </View>
         );
-        
     }
     onCancel = () => {
         this.state.fileList.forEach(item => {
@@ -484,6 +482,7 @@ export default class MediaSyn extends Component {
             }
         });
     }
+    
     connectModal = () => {
         if(!this.status){
             return;

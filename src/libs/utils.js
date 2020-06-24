@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:17:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-23 14:44:19
+ * @LastEditTime: 2020-06-23 18:30:27
  */
 import {Dimensions,Platform} from 'react-native';
 import Theme from '../components/themes/index';
@@ -104,14 +104,14 @@ export const dateConversion = (day)=>{
     var yestday = new Date(today - 24*3600*1000).getTime();
     let week = ['周日','周一','周二','周三','周四','周五','周六'];
     if(today === param.getTime()){
-        return '今天';
+        return I18n.t('今天');
     }
     if(yestday === param.getTime()){
-        return '昨天';
+        return I18n.t('昨天');
     }
     let sundayTime =  new Date(today - date.getDay()*24*3600*1000).getTime(); 
     if(param.getTime()>=sundayTime){
-        return week[param.getDay()];
+        return I18n.t(week[param.getDay()]);
     }
     return day;
 };

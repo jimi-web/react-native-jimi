@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-17 18:26:37
+ * @LastEditTime: 2020-06-24 15:29:29
  * */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,AsyncStorage} from 'react-native';
@@ -306,14 +306,18 @@ export default class PositionUtils extends Component {
             //仅初始化会可视化两点坐标
             if(!this.state.isInit){ 
                 console.log(this.state.isInit,'isInit');
-                
-                this.setState({
-                    isInit:true,
-                    region:{
-                        ...this.state.region,
-                        ...point
-                    }
-                });
+                    this.setState({
+                        region:{
+                            ...this.state.region,
+                            ...point
+                        }
+                    },()=>{
+                        setTimeout(() => {
+                            this.setState({
+                                isInit:true,
+                            });
+                        },1000);
+                    });
             }
 
             Toast.remove(this.loading);

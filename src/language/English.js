@@ -3,7 +3,7 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
- * @LastEditTime: 2020-06-23 17:04:06
+ * @LastEditTime: 2020-06-24 10:16:14
  */
 const English ={
    /***  提示toast  ***/
@@ -32,7 +32,7 @@ const English ={
     "拍摄成功":"Taken",
     "请连接设备WIFI":"Please join the device WiFi",
     "当前正在下载":"Currently downloading...",
-    "当前进度":"Current progress",
+    "当前进度":"Progress",
     "下载失败":"Download failed",
     "文件下载失败":"Failed to download file",
     "请选择文件":"Please select file(s)",
@@ -57,6 +57,7 @@ const English ={
     "对讲开启失败":"Initiate call failed",
     "录制":"Record",
     "录制结束":"Record ended",
+    '录制失败':'Record Failed',
     "对讲准备中":"Preparing...",
     "视频停止播放":"Playback stopped",
     "请求超时":"Request timeout",

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:52:42
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-03 15:28:32
+ * @LastEditTime: 2020-06-24 14:06:15
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,Image,TouchableOpacity,Dimensions,Platform} from 'react-native';
@@ -160,6 +160,8 @@ export default class Photo extends Component {
         }
         //获取视频时长
         let getTime = await getVideoTime(fileList.join(','));
+        console.log(getTime);
+        
         //获取视频第一帧
         let firstImg = null;
         if(Platform.OS == 'ios'){

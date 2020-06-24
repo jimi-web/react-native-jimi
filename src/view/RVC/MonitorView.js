@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-12-11 14:05:24
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-18 16:11:41
+ * @LastEditTime: 2020-06-24 14:03:26
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, DeviceEventEmitter,TouchableOpacity ,AppState,Platform,NativeModules,NativeEventEmitter, Dimensions,BackHandler} from 'react-native';
@@ -284,6 +284,8 @@ export default class MonitorView extends Component {
             
         });
         recordStatusSubscription = this.state.rtmpManagerListener.addListener(JMRTMPPlayerManager.kOnStreamPlayerRecordStatus, (reminder) => {
+            console.log(reminder,'录音回调啦啦啦啦啦');
+            
             this.props.onRecord && this.props.onRecord(reminder);//录制时的信息
             const status = reminder.status;
             if(status == 1){
@@ -291,6 +293,8 @@ export default class MonitorView extends Component {
                     bottomHint:<RVCTimer title={I18n.t('录制')+'：'} status={true} />,
                     isRecord:true,
                     isBusy:true
+                },()=>{
+                    console.log(this.state.isRecord,'isRecord'); 
                 });
             }
             if(status == 2){
@@ -305,6 +309,21 @@ export default class MonitorView extends Component {
                         });
                         clearTimeout(timer);
                     },500);
+                });
+            }
+
+            if(status == 4){
+                this.setState({
+                    bottomHint:<Text style={{color:'#fff'}}>{I18n.t('录制失败')}</Text>,
+                },() => {
+                    let timer =  setTimeout(() => {
+                        this.setState({
+                            isRecord:false,
+                            bottomHint:null,
+                            isBusy:false
+                        });
+                        clearTimeout(timer);
+                    },1000);
                 });
             }
         });
@@ -888,6 +907,8 @@ export default class MonitorView extends Component {
     onRecord = () => {
         const time = new Date().getTime();
         if(this.state.isRecord){
+            console.log('停止录音');
+            
             JMRTMPPlayerManager.stopRecording();
         }else{
             if(this.state.RVCStatus != 2){
@@ -903,6 +924,8 @@ export default class MonitorView extends Component {
                 JMRTMPPlayerManager.startRecording(this.videoPath + time + '.mp4');
             }else{
                 createTheFolder(this.props.filePath).then(res =>{
+                    console.log(res,'创建地址');
+                    
                     this.videoPath = res;
                     JMRTMPPlayerManager.startRecording(this.videoPath + time + '.mp4');
                 });
