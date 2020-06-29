@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-28 10:17:36
+ * @LastEditTime: 2020-06-29 17:32:08
  */
 import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
@@ -61,7 +61,7 @@ export default class TraceUtils extends PositionUtils {
             myMarker:null,
             deviceInfo:{},//设备信息
             asyncStorageAeviceName:'',
-            pullUpHeight:isIphoneX()?iphoneXHeight(80):80,//上拉框高度
+            pullUpHeight:90,//上拉框高度
             touchStart:null,
             pullState:0,//0为默认高度，1为上拉
             positionBtnHeight:10,//定位高度
@@ -93,7 +93,7 @@ export default class TraceUtils extends PositionUtils {
         let pullUpDownImg = this.state.pullState === 0 ? 'track_operating_expand' :'track_operating_contract';
         let deviceInfo = this.state.deviceInfo;
         return (
-            <View  activeOpacity={1} style={[MapStyles.box,{height:this.state.pullUpHeight}]}>
+            <View  activeOpacity={1} style={[MapStyles.box]} onLayout={this.infobox}>
                 <TouchableOpacity  style={MapStyles.navigation}  onPress={()=>{
                     this.navigation();
                 }}>
@@ -171,7 +171,7 @@ export default class TraceUtils extends PositionUtils {
      * 将地图顶置上去
      */
     whitespace =()=>{
-        return <View style={[MapStyles.whitespace,{height:isIphoneX()?iphoneXHeight(90):90}]}></View>;
+        return <View style={[MapStyles.whitespace,{height:this.state.pullUpHeight}]}></View>;
     }
 
 
@@ -210,17 +210,13 @@ export default class TraceUtils extends PositionUtils {
 
     pullUp = ()=>{
         this.setState({
-            pullUpHeight:isIphoneX()?iphoneXHeight(180):180,
             pullState:1,
-            positionBtnHeight:100
         });
     }
 
     pulldown = ()=>{
         this.setState({
-            pullUpHeight:isIphoneX()?iphoneXHeight(80):80,
             pullState:0,
-            positionBtnHeight:10
         });  
     }
 
@@ -333,5 +329,12 @@ export default class TraceUtils extends PositionUtils {
         });
     }
 
-
+    infobox = (e)=>{
+        this.setState({
+            positionBtnHeight:e.nativeEvent.layout.height-(e.nativeEvent.layout.height-10),
+            pullUpHeight:e.nativeEvent.layout.height
+        });
+        console.log(e.nativeEvent.layout,'信息框高度');
+        
+    }
 }

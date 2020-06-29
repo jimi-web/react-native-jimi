@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-15 16:02:47
+ * @LastEditTime: 2020-06-29 18:10:32
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -392,6 +392,8 @@ export default class AddFenceUtils extends Component {
             });
         }else {
             let deviceInfo = await devicePosition('','',this.state.userMapType);
+            console.log(deviceInfo,'设备信息');
+            
             if(deviceInfo.latitude){
                 this.addNewFenceDefaultValue(deviceInfo);
             }else {
@@ -531,6 +533,8 @@ export default class AddFenceUtils extends Component {
         if(this.state.isValuation){
             this.setState({
                 fencePoint:{
+                    latitudeDelta:params.latitudeDelta,
+                    longitudeDelta:params.longitudeDelta,                
                     latitude:this.fomatFloat(params.latitude,6),
                     longitude:this.fomatFloat(params.longitude,6)
                 }
