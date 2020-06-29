@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-22 15:45:47
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-28 11:28:55
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
@@ -28,7 +28,7 @@ export default class InsModelSelect extends Component {
                 {content.viceText?<Text style={{fontSize:10}}>{I18n.t(content.viceText)}</Text>:null}
             </View>
             <View style={{flexDirection:'row'}}>
-                <Text style={{marginRight:10}}>{I18n.t(content.modelData?valueText.text:value)}</Text>
+                <Text style={{marginRight:10}}>{content.modelData?I18n.t(valueText.text):value}</Text>
                 <Icon name={'subordinate_arrow'} />
             </View>
         </TouchableOpacity >;

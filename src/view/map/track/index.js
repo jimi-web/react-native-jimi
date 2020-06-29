@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 17:15:08
+ * @LastEditTime: 2020-06-28 16:06:41
  */
 import React, {Component} from 'react';
 import {TouchableOpacity,Dimensions} from 'react-native';
@@ -235,6 +235,8 @@ export default class TrackUtils extends Component {
             encodingType:true,
             data:data
         }).then((res)=>{
+            console.log(res,'地址轨迹');
+            
             let result = res.data;
             result.forEach((res)=> {
                 let baidu = this.state.userMapType ? gps.GPSToChina(res.latitude,res.longitude): gps.GPSToBaidu(res.latitude,res.longitude);

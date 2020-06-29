@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-22 15:46:23
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-28 11:30:22
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,ActivityIndicator} from 'react-native';
@@ -217,7 +217,7 @@ export default class Instruction extends Component {
             element = <InsInput style={[baseStyle.leftOrRight,style]} isShow={isShow} index={index} data={item} onInput={(data,index) => this.onIns(data,index)} />;
             break;
         case 'title':
-            element = <View index={index} style={[{flex:1,justifyContent:'center',paddingTop:12,paddingBottom:12,paddingLeft:15,paddingRight:15,backgroundColor:'#f7f7f7'},style]}><Text>{item.content}</Text></View>;  
+            element = <View index={index} style={[{flex:1,justifyContent:'center',paddingTop:12,paddingBottom:12,paddingLeft:15,paddingRight:15,backgroundColor:'#f7f7f7'},style]}><Text>{I18n.t(item.content)}</Text></View>;  
             break;
         case 'arrowButton':
             element = <InsArrowButton style={[baseStyle.leftOrRight,style]} index={index} data={item} onPress={(item) => this.onArrowButton(item,index)} />;  

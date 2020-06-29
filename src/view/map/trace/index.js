@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-22 14:13:36
+ * @LastEditTime: 2020-06-28 10:17:36
  */
 import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
@@ -34,6 +34,7 @@ export default class TraceUtils extends PositionUtils {
         onDeviceChange:PropTypes.func,
         onMyChange:PropTypes.func,//我的位置改变监听事件
         ChangePositionBtn:PropTypes.object,
+        isShareBtn:PropTypes.bool
     };
 
     static defaultProps = {
@@ -47,7 +48,8 @@ export default class TraceUtils extends PositionUtils {
         shareUrl:api.shareUrl,
         shareTitle:'我的实时位置',
         shareText:'点击查看我现在在哪里吧！',
-        ChangePositionBtn:{}
+        ChangePositionBtn:{},
+        isShareBtn:true
     };
 
 
@@ -140,12 +142,12 @@ export default class TraceUtils extends PositionUtils {
      * 路况按钮
      */
     shareBtn = ()=> {
-        return <TouchableOpacity style={[Styles.btn,Styles.shareBtn,this.props.shareBtnStyle]}  activeOpacity={0.5} onPress={()=>{
+        return this.props.isShareBtn ?<TouchableOpacity style={[Styles.btn,Styles.shareBtn,this.props.shareBtnStyle]}  activeOpacity={0.5} onPress={()=>{
             this.share.show();
         }}>
             <Icon name={'track_map_share'} size={'100%'} />
             {/* <Image style={Styles.btnImg} source={require('../../../assets/trace/track_map_share.png')} /> */}
-        </TouchableOpacity>;
+        </TouchableOpacity>:null;
     }
 
     /**

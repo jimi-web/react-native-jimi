@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-12 16:14:36
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-15 15:50:02
+ * @LastEditTime: 2020-06-28 16:43:50
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -33,7 +33,7 @@ export default class GoogleAddFence extends AddFenceUtils {
             {/* {
                 this.searchElement()
             } */}
-            <View style={[AddFenceStyles.map,{backgroundColor:'red'}]}>
+            <View style={[AddFenceStyles.map]}>
                 <MapView
                     {...this.props}
                     ref={ref => {
@@ -68,7 +68,7 @@ export default class GoogleAddFence extends AddFenceUtils {
                         strokeWidth={this.props.strokeStyle.width}
                     />
                     <Marker coordinate={this.state.fencePoint}>
-                        <View style={{marginTop:-30}}>
+                        <View >
                             {
                                 this.radiusTip()
                             }
