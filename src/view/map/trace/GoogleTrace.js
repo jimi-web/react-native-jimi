@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 11:12:46
+ * @LastEditTime: 2020-06-29 11:20:26
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
@@ -40,9 +40,6 @@ export default class GoogleTrace extends TraceUtils {
                 {
                     this.polyline()
                 }
-                {
-                    this.props.children
-                }
             </GooglePosition>
             {
                 this.whitespace()
@@ -55,6 +52,9 @@ export default class GoogleTrace extends TraceUtils {
             }
             {
                 this.drawerShare()
+            }
+            {
+                this.props.children
             }
         </View>;
     }

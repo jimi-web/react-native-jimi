@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 11:02:30
+ * @LastEditTime: 2020-06-29 11:36:58
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -86,8 +86,9 @@ export default class Position extends Component {
                 trafficEnabled={false}
                 mapType={'standard'}
                 ChangePositionBtn={car}
+                customItem={this.customItem}
             >
-                {this.customItem()}
+                {/* {this.customItem()} */}
             </Jimi.Position>
         </View>;  
     }

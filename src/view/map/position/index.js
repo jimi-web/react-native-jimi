@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-24 15:29:29
+ * @LastEditTime: 2020-06-29 16:25:33
  * */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,AsyncStorage} from 'react-native';
@@ -29,7 +29,7 @@ export default class PositionUtils extends Component {
         edgePadding:PropTypes.object, //标记距离地图内边距(暂不需要)
         ChangePositionBtn:PropTypes.object,//切换车和我的位置的按钮属性
         getData:PropTypes.func,//获取定位信息
-        // customItem:PropTypes.func,//在地图上自定义其他元素
+        customItem:PropTypes.func,//在地图上自定义其他元素
         markerInfoWindow:PropTypes.object,//infoWindow
         roadBtnStyle:PropTypes.object,//路况样式
         mapTypeBtnStyle:PropTypes.object,//地图类型样式
@@ -75,7 +75,7 @@ export default class PositionUtils extends Component {
             isCustom:false,
             visible:true
         },
-        // customItem:null,
+        customItem:null,
         roadBtnStyle:Styles.btn,
         mapTypeBtnStyle:Styles.btn,
         powerShow:false,
@@ -116,24 +116,19 @@ export default class PositionUtils extends Component {
             },
             userMapType:0,//0为百度，1为谷歌
             lastAddress:null,//上一次定位点的地址
-            visualRange:null
+            visualRange:null,
+            backupsPhonePoint:{
+                latitude: 0,
+                longitude: 0, 
+            },  //我得位置备份
+            backupsLocationData:null,//定位数据备份
         };
     }
 
 
     upDate =()=>{
-        // DeviceEventEmitter.emit('jmPosition',{});
         this.getMarker();
     }
-
-    
-    componentWillMount(){
-
-        // DeviceEventEmitter.addListener('jmPosition', ()=>{
-        //     this.getMarker();
-        // });
-    }
-
     componentWillUnmount() {
         Toast.remove(this.loading);
         clearInterval(this.timeInterval);
@@ -157,14 +152,15 @@ export default class PositionUtils extends Component {
                 this.getPhonePoint();
             }
             
-            if(this.props.isRefresh){
-                this.timeInterval = setInterval(() => {
-                    this.getMarker();
-                    if(this.state.ChangePositionBtn.isShow){
-                        this.getPhonePoint();
-                    }
-                },this.props.refreshTime);
-            }
+            // if(this.props.isRefresh){
+            //     this.timeInterval = setInterval(() => {
+            //         this.getMarker();
+            //         if(this.state.ChangePositionBtn.isShow){
+            //             this.getPhonePoint();
+            //         }
+            //     },this.props.refreshTime);
+            // }
+            this.startRefresh();
 
             this.props.onUserMapType(this.state.userMapType);
         });
@@ -225,6 +221,7 @@ export default class PositionUtils extends Component {
 
             this.setState({
                 phonePoint:point,
+                backupsPhonePoint:point,
             },()=>{
                 this.onMyChange(point);
             });
@@ -292,7 +289,8 @@ export default class PositionUtils extends Component {
        
         this.setState({
             markerPoint:point,
-            locationData:data       
+            locationData:data,
+            backupsLocationData:data       
         },()=>{
             this.onDeviceChange(this.state.locationData);
             if(this.state.userMapType){
@@ -478,9 +476,9 @@ export default class PositionUtils extends Component {
     // /**
     //  * 自定义覆盖物
     //  */
-    // customOverlay = ()=> {
-    //     return this.props.customItem?this.props.customItem() :null;
-    // }
+    customOverlay = ()=> {
+        return this.props.customItem?this.props.customItem() :null;
+    }
 
     /**
      * 监听数据变化
@@ -494,5 +492,47 @@ export default class PositionUtils extends Component {
      */
     onMyChange =(data)=>{
         this.props.onMyChange && this.props.onMyChange(data);
+    }
+
+    /**
+     * 暂停刷新
+     */
+    stopRefresh = ()=> {
+        console.log('关闭刷新');
+        //手动停止刷新
+        if(this.state.userMapType){
+            this.setState({
+                locationData:null,
+                phonePoint:{
+                    latitude: 0,
+                    longitude: 0, 
+                },  
+            });
+        }
+        clearInterval(this.timeInterval);
+    }
+
+    /**
+     * 定时器开启刷新
+     */
+    startRefresh = ()=> {
+        console.log('开启刷新');
+        if(this.props.isRefresh){
+            //仅谷歌地图需要做此操作
+            if(this.state.userMapType){
+                this.setState({
+                    locationData:this.state.backupsLocationData,
+                    phonePoint:this.state.backupsPhonePoint
+                },()=>{
+                    this.showInfoWindow('markers');
+                });
+            }
+            this.timeInterval = setInterval(() => {
+                this.getMarker();
+                if(this.state.ChangePositionBtn.isShow){
+                    this.getPhonePoint();
+                }
+            },this.props.refreshTime);
+        }        
     }
 }

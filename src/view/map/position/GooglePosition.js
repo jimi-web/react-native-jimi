@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-15 10:52:10
+ * @LastEditTime: 2020-06-29 11:32:51
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -53,9 +53,8 @@ export default class GooglePosition extends PositionUtils {
                     {this.markers()}
                     {this.myMarker()}
                     {
-                        // this.props.mapControls? this.props.mapControls():null
                         this.props.children
-                    }
+                    } 
                 </MapView>
                 {/* 按钮功能 */}
                 {
@@ -66,10 +65,10 @@ export default class GooglePosition extends PositionUtils {
                 }
                 {
                     this.phonePointBtn()
-                }
+                }   
                 {
-                    this.props.children
-                }                    
+                    this.customOverlay()
+                }             
             </View>
         );
     }

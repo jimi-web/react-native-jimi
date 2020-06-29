@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 11:12:35
+ * @LastEditTime: 2020-06-29 11:16:25
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
@@ -42,9 +42,6 @@ export default class BaiduTrace extends TraceUtils {
                 {
                     this.polyline()
                 }
-                {
-                    this.props.children
-                }
             </BaiduPosition>
             {
                 this.whitespace()
@@ -58,6 +55,9 @@ export default class BaiduTrace extends TraceUtils {
             {
                 this.drawerShare()
             }
+            {
+                this.props.children
+            }            
         </View>;
     }
 
