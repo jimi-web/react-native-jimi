@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-30 15:08:53
+ * @LastEditTime: 2020-07-01 13:35:04
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -541,7 +541,7 @@ export default class AddFenceUtils extends Component {
             } :gps.baiduToChina(params.latitude,params.longitude);
             let chinaToGPS = gps.chinaToGPS(china.lat,china.lng);
             //解析地址
-            geocoder({latitude:chinaToGPS.lat,longitude:chinaToGPS.lng}).then((res)=>{
+            geocoder({gpsLatitude:chinaToGPS.lat,gpsLongitude:chinaToGPS.lng}).then((res)=>{
                 this.setState({
                     fenceAddress:res.address
                 });

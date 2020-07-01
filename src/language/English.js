@@ -3,7 +3,7 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
- * @LastEditTime: 2020-06-30 16:38:22
+ * @LastEditTime: 2020-07-01 15:52:54
  */
 const English ={
    /***  提示toast  ***/
@@ -88,7 +88,7 @@ const English ={
     "录音已清空":"Cleared",
     "设备上传中，请耐心等待":"The device is uploading, please wait",
     "当前没有录音文件，无法进行操作":"No recorded audios, operation cannot be performed.",
-    "下载中…":"Download...",
+    "下载中":"Download...",
     "当前设备正在录音":"The device is currently recording...",
     
     /***  导航标题title  ***/
