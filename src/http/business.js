@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-18 15:19:46
+ * @LastEditTime: 2020-06-30 15:27:32
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -54,7 +54,7 @@ const request = (params) => {
                     resolve(res);
                 }else {
                     reject(res);
-                    Toast.message(`${res.message}[${res.code}]`);
+                    Toast.message(`${I18n.t(res.message)}[${res.code}]`);
                 }
             },
             onFail: (res) => {

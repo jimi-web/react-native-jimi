@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 16:34:27
+ * @LastEditTime: 2020-06-30 11:34:13
  */
 
 import React, {Component} from 'react';
@@ -118,7 +118,7 @@ export default class GoogleTrack extends TrackUtils {
                 coordinate={this.state.deviceMarker}
             >
                 <Image 
-                    style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:Styles.deviceMarker,{transform:[{rotate:this.state.deviceMarker.direction+'deg'}]}]} 
+                    style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:Styles.deviceMarker,{transform:[{rotate:this.state.deviceMarker.direction?this.state.deviceMarker.direction+'deg':'0deg'}]}]} 
                     source={this.props.deviceMarkerOptions.image? this.props.deviceMarkerOptions.image :require('../../../assets/map/device.png')}/>              
             </Marker>:null;
         return markers;

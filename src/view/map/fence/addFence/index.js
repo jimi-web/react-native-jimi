@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-29 18:10:32
+ * @LastEditTime: 2020-06-30 15:08:53
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -338,7 +338,6 @@ export default class AddFenceUtils extends Component {
         }else{
             let deviceInfo = await devicePosition('','',this.state.userMapType);
             this.editFenceDefaultValue(deviceInfo);
-            
         }
     }
 
@@ -355,12 +354,12 @@ export default class AddFenceUtils extends Component {
         }).then((res)=>{
             let data = res.data;
             let baidu =  this.state.userMapType? gps.GPSToChina(data.latitude,data.longitude):gps.GPSToBaidu(data.latitude,data.longitude);
-            
             //编辑赋值
             this.setState({
                 deviceInfo:deviceInfo.latitude?deviceInfo:null,
                 fencePoint:{
-                    ...this.state.fencePoint,
+                    latitudeDelta:this.getGoogleZoom(data.radius*2*3),
+                    longitudeDelta:this.getGoogleZoom(data.radius*2*2),
                     latitude:baidu.lat,
                     longitude:baidu.lng  
                 },
@@ -392,8 +391,6 @@ export default class AddFenceUtils extends Component {
             });
         }else {
             let deviceInfo = await devicePosition('','',this.state.userMapType);
-            console.log(deviceInfo,'设备信息');
-            
             if(deviceInfo.latitude){
                 this.addNewFenceDefaultValue(deviceInfo);
             }else {
@@ -446,8 +443,6 @@ export default class AddFenceUtils extends Component {
      * 搜索框值返回事件
      */
     onChangeText = (value)=> {
-        console.log(value);
-        
         if(!value){
             this.setState({
                 addressList:[],
@@ -534,7 +529,7 @@ export default class AddFenceUtils extends Component {
             this.setState({
                 fencePoint:{
                     latitudeDelta:params.latitudeDelta,
-                    longitudeDelta:params.longitudeDelta,                
+                    longitudeDelta:params.longitudeDelta,             
                     latitude:this.fomatFloat(params.latitude,6),
                     longitude:this.fomatFloat(params.longitude,6)
                 }

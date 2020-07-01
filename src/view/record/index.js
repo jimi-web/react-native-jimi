@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-23 17:05:19
+ * @LastEditTime: 2020-07-01 09:33:46
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -289,7 +289,7 @@ export default class Record extends Component {
             // 修改成显示数据
             item.createTimeFtm = new Date(item.createTime).Format('hh:mm:ss');
             item.row = 1;
-            item.recordType = I18n.t(this.disposeRecordType(item.recordType));
+            item.recordType = this.disposeRecordType(item.recordType);
             item.progress = 0;
             item.isChange = false;
             

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-29 16:25:33
+ * @LastEditTime: 2020-06-30 11:22:59
  * */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,AsyncStorage} from 'react-native';
@@ -206,6 +206,8 @@ export default class PositionUtils extends Component {
             let lng = Number(data.lng);
             if(this.state.userMapType){
                 data = gps.GPSToChina(lat,lng);
+                lat = data.lat;
+                lng = data.lng;
             }
 
             //获取上一次设置的经纬度,减少渲染
@@ -429,7 +431,7 @@ export default class PositionUtils extends Component {
             type.time = data.otherPosTime;
             break;
         case 'WIFI':
-            type.text = 'WIFI定位';
+            type.text = 'WIFI定位1';
             type.time = data.otherPosTime;
         } 
         return type;        

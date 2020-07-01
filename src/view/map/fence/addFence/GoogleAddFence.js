@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-12 16:14:36
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-28 16:43:50
+ * @LastEditTime: 2020-06-30 11:32:50
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -57,7 +57,7 @@ export default class GoogleAddFence extends AddFenceUtils {
                         coordinate={this.state.deviceInfo?{longitude:this.state.deviceInfo.longitude,latitude:this.state.deviceInfo.latitude}:{longitude:0,latitude:0}}
                     > 
                         <Image 
-                            style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:Styles.deviceMarker,{transform:[{rotate:this.state.deviceInfo? this.state.deviceInfo.direction+'deg':'0deg'}]}]} 
+                            style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:Styles.deviceMarker,{transform:[{rotate:this.state.deviceInfo? this.state.deviceInfo.direction?this.state.deviceInfo.direction+'deg':'0deg':'0deg'}]}]} 
                             source={this.props.deviceMarkerOptions.image} />
                     </Marker>
                     <Circle center={this.state.fencePoint}

@@ -3,7 +3,7 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
- * @LastEditTime: 2020-06-24 10:16:14
+ * @LastEditTime: 2020-06-30 16:38:22
  */
 const English ={
    /***  提示toast  ***/
@@ -156,7 +156,7 @@ const English ={
     "休眠":"Sleep",
     "GPS定位":"GPS",
     "LBS定位":"LBS",
-    "WIFI定位":"WiFi",
+    "WIFI定位1":"WiFi",
     //追踪
     "《使用协议和隐私政策》":"User Agreement and Privacy Policy",
     "我的实时位置":"My live location",
@@ -263,7 +263,52 @@ const English ={
     "2分钟":"2 mins",
     "3分钟":"3 mins",
     "4分钟":"4 mins",
-    "5分钟":"5 mins"
+    "5分钟":"5 mins",
+
+    /** 后台提示语 **/
+    "服务内部错误，请联系管理员":"Internal error, please contact the administrator",
+    "服务不可用":"Service unavailable",
+    "围栏信息不存在":"Fence not present",
+    "用户不合法":"Invalid user",
+    "地址解析异常":"Address resolve exception",
+    "保存围栏信息异常":"Exception while saving fence",
+    "查询围栏列表异常":"Exception while querying fence list",
+    "查询围栏信息异常":"Exception while querying fence",
+    "删除围栏信息异常":"Exception while deleting fence",
+    "围栏名称已存在":"Fence name already exists",
+    "最多只能创建50个围栏":"Cannot create more than 50 fences",
+    "未找到查询的结果":"No results were found for this query",
+    "初始化定位器信息异常":"Exception while initializing tracker",
+    "查询定位器信息异常":"Exception while querying tracker info",
+    "网关内部错误":"Gateway internal error",
+    "网关转发错误":"Gateway forwarding error",
+    "没有权限访问":"No access",
+    "转发请求超时":"Forwarding request timeout",
+    "账号在其他设备登录":"Account already signed in on another device",
+    "动态密码错误":"OTP error",
+    "当前请求已经超过允许时限,已失效":"The time limit for this request was exceeded",
+    "链接已失效":"This link is no longer available",
+    "您无权操作此数据":"Not authorized to perform on the data",
+    "60秒后才能获取验证码":"Get a new code after 60s",
+    "设备已被绑定":"Device already bound",
+    "设备不属于当前用户":"The device does not belong to the current user",
+    "非绑定设备不能进行分享":"Devices not bound cannot be shared",
+    "该链接已被分享或失效":"This link already shared or no longer available",
+    "设备分享已达到最大次数":"Maximum number of device shares reached",
+    "设备名称已存在":"Device name already exists",
+    "当前用户已绑定该设备":"The current user is already bound with the device",
+    "设备绑定失败":"Binding failed",
+    "亲，不能分享设备给自己哦":"Oops, you cannot share a device to yourself.",
+    "设备编码不能为空":"Device code cannot be blank",
+    "产品额度不足":"Credit insufficient",
+    "设备解绑异常":"Exception while unbinding the device",
+    "修改设备信息异常":"Exception while modifying device info",
+    "修改设备名称异常":"Exception while changing device name",
+    "查询设备图标异常":"Exception while querying device icon",
+    "定位器不存在":"Tracker does not exist",
+    "设备卡号或ICCID为空":"Device IMEI or ICCID is null",
+    "设备未绑定":"Device not bound",
+    "设备不在线":"Device not online",
 }
 
 export default English;

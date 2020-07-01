@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-29 11:32:51
+ * @LastEditTime: 2020-06-30 11:33:15
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -139,7 +139,7 @@ export default class GooglePosition extends PositionUtils {
                 coordinate={this.state.markerPoint}
             >
                 <Image 
-                    style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction+'deg'}]}]} 
+                    style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction?this.state.locationData.direction+'deg':'0deg'}]}]} 
                     source={this.props.deviceMarkerOptions.image? this.props.deviceMarkerOptions.image :require('../../../assets/map/device.png') }/>
                 {
                     this.props.markerInfoWindow.visible ? 
