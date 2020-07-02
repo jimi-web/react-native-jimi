@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:50:38
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-30 16:59:13
+ * @LastEditTime: 2020-07-02 10:23:54
  */
 const Chinese = {   
     /***  提示toast  ***/
@@ -317,6 +317,7 @@ const Chinese = {
     "设备卡号或ICCID为空":"设备卡号或ICCID为空",
     "设备未绑定":"设备未绑定",
     "设备不在线":"设备不在线",
+    "设备未注册到路由表":"设备未注册到路由表"
 };
 
 export default Chinese;

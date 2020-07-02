@@ -3,7 +3,7 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
- * @LastEditTime: 2020-07-01 15:52:54
+ * @LastEditTime: 2020-07-02 10:23:29
  */
 const English ={
    /***  提示toast  ***/
@@ -309,6 +309,7 @@ const English ={
     "设备卡号或ICCID为空":"Device IMEI or ICCID is null",
     "设备未绑定":"Device not bound",
     "设备不在线":"Device not online",
+    "设备未注册到路由表":"The device is not registered in the routing table"
 }
 
 export default English;

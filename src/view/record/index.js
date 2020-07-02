@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-07-01 09:33:46
+ * @LastEditTime: 2020-07-02 13:48:22
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -73,7 +73,7 @@ export default class Record extends Component {
             },
             {
                 title:'持续录音',
-                value:1,
+                value:30,
                 isChange:false
             },
         ],
