@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-28 16:06:41
+ * @LastEditTime: 2020-07-02 16:18:56
  */
 import React, {Component} from 'react';
 import {TouchableOpacity,Dimensions} from 'react-native';
@@ -236,13 +236,7 @@ export default class TrackUtils extends Component {
             data:data
         }).then((res)=>{
             console.log(res,'地址轨迹');
-            
-            let result = res.data;
-            result.forEach((res)=> {
-                let baidu = this.state.userMapType ? gps.GPSToChina(res.latitude,res.longitude): gps.GPSToBaidu(res.latitude,res.longitude);
-                res.latitude = baidu.lat;
-                res.longitude = baidu.lng;
-            });
+            let result = res.data || [];
             this.getTrackData(result);
         }).catch(()=>{
             Toast.remove(this.loading);
@@ -255,6 +249,11 @@ export default class TrackUtils extends Component {
     getTrackData = (result)=>{
         Toast.remove(this.loading);
         if(result.length>0){
+            result.forEach((res)=> {
+                let baidu = this.state.userMapType ? gps.GPSToChina(res.latitude,res.longitude): gps.GPSToBaidu(res.latitude,res.longitude);
+                res.latitude = baidu.lat;
+                res.longitude = baidu.lng;
+            });
             this.setState({
                 trackData:result
             },()=>{
@@ -448,10 +447,6 @@ export default class TrackUtils extends Component {
                     latitude:deviceMarker.latitude,
                     longitude :deviceMarker.longitude,
                 }]
-                // initialRegion:{
-                //     ...this.state.initialRegion,
-                //     ...deviceMarker
-                // }
             },()=>{
                 this.onViewArea(deviceMarker);
             });

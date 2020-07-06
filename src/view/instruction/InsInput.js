@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-06-22 15:38:52
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-03 11:58:37
  */
 import React, { Component } from 'react';
 import {View,Text,TextInput } from 'react-native';
@@ -69,10 +69,17 @@ export default class InsArrowButton extends Component {
     onBlur = () => {
         const {data,index} = this.props;
         const {rule} = data.content;
+        let ruleValue = null;//新增用来判断正则表达式
         data.value = this.state.inputValue;
+        ruleValue = this.state.inputValue;
+        if(data.value == ''){
+            ruleValue = ' ';
+        }else {
+            ruleValue = data.value;
+        }
         if(rule){
             let regExp = new RegExp(rule);//根据字符串生成正则
-            if(!regExp.test(data.value)){
+            if(!regExp.test(ruleValue)){
                 Toast.message(data.hint || I18n.t('您当前输入的格式有误'));
             }
         }

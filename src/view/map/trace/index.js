@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-29 17:32:08
+ * @LastEditTime: 2020-07-02 16:47:14
  */
 import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
@@ -93,7 +93,7 @@ export default class TraceUtils extends PositionUtils {
         let pullUpDownImg = this.state.pullState === 0 ? 'track_operating_expand' :'track_operating_contract';
         let deviceInfo = this.state.deviceInfo;
         return (
-            <View  activeOpacity={1} style={[MapStyles.box]} onLayout={this.infobox}>
+            <View  activeOpacity={1} style={[MapStyles.box]} onLayout={this.infoboxHeight}>
                 <TouchableOpacity  style={MapStyles.navigation}  onPress={()=>{
                     this.navigation();
                 }}>
@@ -281,6 +281,7 @@ export default class TraceUtils extends PositionUtils {
                     });
                     //谷歌地图可视范围
                     if(this.refs.GooglePosition){
+                        console.log(this.refs.GooglePosition,'this.refs.GooglePositionthis.refs.GooglePosition');
                         this.refs.GooglePosition.fitAllMarkers(this.state.visualRange);
                     }
                 });
@@ -329,12 +330,15 @@ export default class TraceUtils extends PositionUtils {
         });
     }
 
-    infobox = (e)=>{
+    /**
+     * 监听信息框动态高度
+     * 
+     */
+    infoboxHeight = (e)=>{
         this.setState({
             positionBtnHeight:e.nativeEvent.layout.height-(e.nativeEvent.layout.height-10),
             pullUpHeight:e.nativeEvent.layout.height
-        });
-        console.log(e.nativeEvent.layout,'信息框高度');
-        
+        });   
     }
+    
 }
