@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-07-03 11:58:37
+ * @LastEditTime: 2020-07-03 18:12:49
  */
 import React, { Component } from 'react';
 import {View,Text,TextInput } from 'react-native';
@@ -22,6 +22,7 @@ export default class InsArrowButton extends Component {
     render(){
         let {isShow} = this.props;
         let {content,value} = this.props.data;
+        let style = content.unit? {width:150}:{flex:1};
         return(
             <View>
                 {
@@ -33,7 +34,7 @@ export default class InsArrowButton extends Component {
                                 {
                                     content.viceText?<Text style={{fontSize:10}}>{I18n.t(content.viceText)}</Text>:null
                                 }
-                                <TextInput style={{marginLeft:30,width:150}} keyboardType={content.keyboardType || 'default'} onFocus={this.onFocus} onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={content.maxLength || 50} placeholder={I18n.t(content.placeholder)} defaultValue={value}></TextInput>
+                                <TextInput style={{marginLeft:30,...style}} keyboardType={content.keyboardType || 'default'} onFocus={this.onFocus} onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={content.maxLength || 50} placeholder={I18n.t(content.placeholder)} defaultValue={value}></TextInput>
                             </View>
                             <View>
                                 {
@@ -77,10 +78,14 @@ export default class InsArrowButton extends Component {
         }else {
             ruleValue = data.value;
         }
+        console.log(ruleValue);
+        
+        console.log(rule);
+        
         if(rule){
             let regExp = new RegExp(rule);//根据字符串生成正则
             if(!regExp.test(ruleValue)){
-                Toast.message(data.hint || I18n.t('您当前输入的格式有误'));
+                Toast.message(I18n.t(data.hint) || I18n.t('您当前输入的格式有误'));
             }
         }
         data.insValue = data.value;

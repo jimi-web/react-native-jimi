@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-28 11:28:55
+ * @LastEditTime: 2020-07-03 14:26:15
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
@@ -90,7 +90,7 @@ export default class InsModelSelect extends Component {
                      modelData.map((item,index) => {
                          return <TouchableOpacity key={index} activeOpacity={0.6}  style={{height:50,backgroundColor:'#fff'}} onPress={this.onDrawer.bind(this,item)}>
                              <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                                 <Text style={{fontSize:14}}>{item.text}</Text>
+                                 <Text style={{fontSize:14}}>{I18n.t(item.text)}</Text>
                              </View>
                          </TouchableOpacity >;
                      })

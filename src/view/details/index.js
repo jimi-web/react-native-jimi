@@ -97,8 +97,11 @@ export default class Details extends Component {
                 accessory:<Icon name={'list_copy'} size={14} style={Styles.accessory} />,
                 value:this.props.data.encoding,
                 onPress:()=>{
+                    if(!this.props.data.encoding){
+                        return
+                    }
                     Clipboard.setString(this.state.setUpList[3].value);
-                    Toast.message('IMEI复制成功','short','center');
+                    Toast.message(I18n.t('IMEI复制成功'),'short','center');
                 },
                 type:'encoding'
             },{
@@ -107,7 +110,7 @@ export default class Details extends Component {
                 accessory:this.props.data.simNo ? <Icon name={'list_copy'} size={14} style={Styles.accessory} /> : null,
                 value:this.props.data.simNo,
                 onPress:()=>{
-                    if(!this.state.setUpList[4].value){
+                    if(!this.props.data.simNo){
                         return
                     }
                     Clipboard.setString(this.state.setUpList[4].value);
@@ -120,7 +123,7 @@ export default class Details extends Component {
                 accessory:this.props.data.iccid ? <Icon name={'list_copy'} size={14} style={Styles.accessory} /> : null,
                 value:this.props.data.iccid,
                 onPress:()=>{
-                    if(!this.state.setUpList[5].value){
+                    if(!this.props.data.iccid){
                         return
                     }
                     Clipboard.setString(this.state.setUpList[5].value);

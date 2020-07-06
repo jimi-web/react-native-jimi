@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-30 11:33:15
+ * @LastEditTime: 2020-07-03 17:58:42
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -49,6 +49,13 @@ export default class GooglePosition extends PositionUtils {
                     onRegionChange={this.regionChange}
                     showsIndoors={true}
                     showsCompass={false}
+                    onPress={()=>{
+                        console.log('11111111111');
+                        
+                    }}
+                    onMarkerPress={()=>{
+                        
+                    }}
                     mapType={this.state.mapType}>
                     {this.markers()}
                     {this.myMarker()}
@@ -121,7 +128,7 @@ export default class GooglePosition extends PositionUtils {
                     source={this.props.mylocationOptions.image} />
                 <Callout >
                     <View style={{width:58}}>
-                        <Text>我的位置</Text>
+                        <Text>{I18n.t('我的位置')}</Text>
                     </View>
                 </Callout>
             </Marker>;
