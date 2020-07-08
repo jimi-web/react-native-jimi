@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-07-03 17:58:42
+ * @LastEditTime: 2020-07-07 17:56:15
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -84,8 +84,6 @@ export default class GooglePosition extends PositionUtils {
      * 设置中心点缩放
      */
     regionChange = (data) =>{
-        console.log(data,'datadatadatadata');
-        
         //避免与气泡冲突
         if(this.state.isInit){
             this.state.region = data;
@@ -98,6 +96,8 @@ export default class GooglePosition extends PositionUtils {
      * @param {String} name  marker的id名字
      */
     showInfoWindow= (name)=>{
+        console.log('显示气泡跟着跑');
+        
         if(this.refs[name]){
             setTimeout(() => {
                 this.refs[name].showCallout();
@@ -127,7 +127,7 @@ export default class GooglePosition extends PositionUtils {
                     style={this.props.mylocationOptions.style ? this.props.mylocationOptions.style:MapStyles.markerImg} 
                     source={this.props.mylocationOptions.image} />
                 <Callout >
-                    <View style={{width:58}}>
+                    <View style={{width:58,textAlgin:'center'}}>
                         <Text>{I18n.t('我的位置')}</Text>
                     </View>
                 </Callout>
@@ -160,7 +160,6 @@ export default class GooglePosition extends PositionUtils {
         return markers;
     };
 
- 
     /**
      *  可是可视范围内
      */

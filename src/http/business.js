@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-30 15:27:32
+ * @LastEditTime: 2020-07-07 10:54:13
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -250,28 +250,77 @@ export const getEncoding = () =>{
  /**
   * 流量卡
   */
+// export const goFlowCard = ({onSuccess,onFail})=>{
+//     console.log(I18n.isForeign,'I18n.isForeignI18n.isForeign');
+//     jmAjax({
+//         url:api.encodeUserInfo,
+//         method:'GET',
+//         encoding:true,
+//         encodingType:true,
+//         data:{
+//             apptype:'jmaxapp'
+//         }
+//     }).then((res)=>{
+//        if(I18n.isForeign){
+//            let lang = I18n.locale == 'zh-Hans'? 'cn' :'en';
+//            console.log(api.flowUrl+res.data+'&langType='+lang);
+           
+//             httpApp('jm_api.jumpThirdApp', {
+//                 appUrl:api.flowUrl+res.data+'&langType='+lang,
+//                 browserUrl:api.flowUrl+res.data+'&langType='+lang,
+//                 onSuccess: onSuccess,
+//                 // 请求失败
+//                 onFail:onFail
+//             });  
+//        }else {
+//             httpApp('jm_pay.loadPrepaidPage', {
+//                 url:api.flowUrl+res.data,
+//                 title:I18n.t('流量卡'),
+//                 navigationBarTextStyle:'black',
+//                 onSuccess: onSuccess,
+//                 // 请求失败
+//                 onFail:onFail
+//             });   
+//        }
+//     }); 
+// }
+
 export const goFlowCard = ({onSuccess,onFail})=>{
     jmAjax({
-        url:api.encodeUserInfo,
+        url:api.getIotCardUrl,
         method:'GET',
         encoding:true,
         encodingType:true,
-        data:{
-            apptype:'jmaxapp'
-        }
     }).then((res)=>{
-        httpApp('jm_pay.loadPrepaidPage', {
-            url:api.flowUrl+res.data,
-            title:I18n.t('流量卡'),
-            navigationBarTextStyle:'black',
-            onSuccess: onSuccess,
-            // 请求失败
-            onFail:onFail
-        }); 
+        console.log(res);
+        if(res.data){
+            let lang = I18n.locale == 'zh-Hans'? 'cn' :'en';
+            console.log(res.data+'&langType='+lang);
+            if(I18n.isForeign){
+                httpApp('jm_api.jumpThirdApp', {
+                    appUrl:res.data+'&langType='+lang,
+                    browserUrl:res.data+'&langType='+lang,
+                    onSuccess: onSuccess,
+                    // 请求失败
+                    onFail:onFail
+                }); 
+            }else {
+                httpApp('jm_pay.loadPrepaidPage', {
+                    url:res.data,
+                    title:'流量卡',
+                    navigationBarTextStyle:'black',
+                    onSuccess: onSuccess,
+                    // 请求失败
+                    onFail:onFail
+                }); 
+            }
+        }else {
+            Toast.message('暂不支持');
+        }
+    }).catch((res)=>{
+        console.log(res);
     }); 
 }
-
-
 
 
 

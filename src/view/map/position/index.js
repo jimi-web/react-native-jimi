@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-30 11:22:59
+ * @LastEditTime: 2020-07-07 18:03:18
  * */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,AsyncStorage} from 'react-native';
@@ -304,7 +304,7 @@ export default class PositionUtils extends Component {
                 },10);
             }
             //仅初始化会可视化两点坐标
-            if(!this.state.isInit){ 
+            if(!this.state.isInit || !this.state.isMyPosition){ 
                 console.log(this.state.isInit,'isInit');
                     this.setState({
                         region:{
