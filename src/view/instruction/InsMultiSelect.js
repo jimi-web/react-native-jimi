@@ -4,13 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-18 13:56:42
+ * @LastEditTime: 2020-06-22 15:04:03
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
-import {Switch,Icon,Toast} from '../../components/index';
+import {Icon} from '../../components/index';
 import baseStyle from '../baseStyle';
+import I18n from '../../language/index';
 
 export default class InsMultiSelect extends Component {
     constructor(props){
@@ -46,7 +46,7 @@ export default class InsMultiSelect extends Component {
         let element =  
         <View style={this.renderStyle()}>
             <View>
-                <Text style={{fontSize:14}}>{item.text}</Text>
+                <Text style={{fontSize:14}}>{I18n.t(item.text)}</Text>
             </View>
             <View>
                 {isSelect?<Icon name={'icon-gou'} color={`${baseStyle.mainColor}`}/> : null}

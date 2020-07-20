@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-19 18:18:47
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-10 16:21:42
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-22 17:36:05
  *
  */
 /**
@@ -13,6 +13,8 @@
 import {httpApp} from './basic'; 
 import {getEncoding} from './business'; 
 import Toast from '../components/index';
+import I18n from '../language/index';
+
 export const getSmallAppPath = ()=>{
     return new Promise((resolve,reject) => {
         httpApp('jm_file.getSmallAppPath',{
@@ -40,6 +42,8 @@ export const getFileList = (url)=>{
         getSmallAppPath().then(location => {
             getEncoding().then(data => {
                 const filePath = `${location.filePath}/${data.encoding}/${url}/`;
+                console.log(filePath,'获取文件来源');
+                
                 httpApp('jm_file.getFileList',{
                     filePath,
                     onSuccess:(res)=>{
@@ -161,7 +165,7 @@ export const saveVideoToAlbum = (url) => {
             onFail: (res) => {
                 console.log(res,'报错');
                 if(res.code == -330){
-                    return Toast.message('视频解析失败！')
+                    return Toast.message(I18n.t('视频解析失败'))
                 }
                 reject(res);
             },

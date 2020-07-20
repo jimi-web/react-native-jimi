@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:47:57
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 16:18:50
+ * @LastEditTime: 2020-06-28 16:49:22
  */
 
 import {createStackNavigator,createAppContainer} from 'react-navigation';
@@ -51,6 +51,7 @@ const getOptions = (title,navigation) => {
             title:navigation?navigation.state.params.I18n?navigation.state.params.I18n.t(title):title:title
         };
     }
+
     return {
         ...headerTitle,
         headerBackTitle:null,
@@ -154,7 +155,7 @@ const AppNavigator = createStackNavigator(
         },
         PullView:{
             screen:PullView,
-            navigationOptions:({ navigation }) => getOptions('上拉刷新下拉加载',navigation)        
+            navigationOptions:({ navigation }) => getOptions('上拉加载下拉刷新',navigation)        
         },        
         Switch:{
             screen:Switch,

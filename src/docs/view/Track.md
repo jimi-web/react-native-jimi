@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-18 14:31:34
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-10-17 18:25:06
+ * @LastEditTime: 2020-07-20 10:31:37
  -->
 
 # `Track` 地图轨迹
@@ -21,10 +21,14 @@
 |dimDd|Number| false | 7 |两时间最长的间隔天数 | 
 |polylineOptions|Object|false | 有默认属性| 整条轨迹的属性<br>　{<br>　　width:2, //线宽<br>　　color:'#50AE6F' //线颜色<br>}|
 |playPolylineOptions|Object|false | 有默认属性| 播放的轨迹的属性<br>　{<br>　　width:2, //线宽<br>　　color:'#50AE6F' //线颜色<br>}|
-|roadBtnStyle|Object|false | 有默认样式 |设置路况图标样式 <br> {width:100,height:100}|
-|mapTypeBtnStyle|Object|false | 有默认样式 |设置地图图标样式 <br> {width:100,height:100}|
 |getData|Function|false | 使用几米圈模板接口 | 轨迹点数据传入，具体方法写法参考下面例子|
 |playImg|Object|false | 有默认属性 |播放图标的改变,<br>{<br>　　play:require('../../../assets/track/play.png') //播放图标,<br>　　pause:require('../../../assets/track/pause.png') //暂停图标<br>}|
+|roadBtnOptions|Object|false | 有默认样式 |设置路况图标图标和样式 <br> - image:{on:'map_road-condition_on',off:'map_road-condition_off'} <br> - style:{} |
+|mapTypeBtnOptions|Object|false | 有默认样式 |设置地图图标和样式 <br> - image:{on:'map_cutover_off',off:'map_cutover_on'} <br> - style:{}|
+|startDate|String,Number |false | 默认当天| 开始时间| 
+|endDate|String,Number |false | 默认当天| 结束时间| 
+|controllerType|Number |false | 默认为0| 轨迹：0，打点：1| 
+
 
 ## Demo
 例子一，默认轨迹

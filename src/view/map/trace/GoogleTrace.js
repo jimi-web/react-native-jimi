@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:27
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 11:12:46
+ * @LastEditTime: 2020-07-11 17:59:22
  */
 import React, {Component} from 'react';
 import {View} from 'react-native';
@@ -30,18 +30,17 @@ export default class GoogleTrace extends TraceUtils {
     render(){
         return <View style={{flex:1}}>
             <GooglePosition
-                ref='GooglePosition'
+                ref={'GooglePosition'}
                 {...this.props}
                 onMyChange={this.onMyChange}
                 onDeviceChange={this.onDeviceChange}
                 ChangePositionBtn={this.ChangePositionBtn()}
+                visualRange={this.state.visualRange}
+                onCenter={this.onCenter}
                 // mapControls={this.polyline}
             >
                 {
                     this.polyline()
-                }
-                {
-                    this.props.children
                 }
             </GooglePosition>
             {
@@ -56,6 +55,9 @@ export default class GoogleTrace extends TraceUtils {
             {
                 this.drawerShare()
             }
+            {
+                this.props.children
+            }
         </View>;
     }
 
@@ -65,7 +67,7 @@ export default class GoogleTrace extends TraceUtils {
         return <Polyline
             strokeWidth={width}
             strokeColor={color}
-            coordinates={this.state.visualRange ? this.state.visualRange:[{latitude: 0, longitude: 0},{latitude: 0, longitude: 0}]}
+            coordinates={this.state.pointArr ? this.state.pointArr:[{latitude: 0, longitude: 0},{latitude: 0, longitude: 0}]}
         />;
     }    
 }

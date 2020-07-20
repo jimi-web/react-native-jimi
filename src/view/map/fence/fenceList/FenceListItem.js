@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-27 10:46:26
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-03 14:46:42
+ * @LastEditTime: 2020-06-30 11:44:19
  */
 import React, {Component} from 'react';
 import {View,Image,Text,TouchableOpacity} from 'react-native';
@@ -43,7 +43,7 @@ export default class FenceListItem extends Component {
             <View style={FenceStyles.info}>
                 <View style={FenceStyles.title}>
                     <Text style={FenceStyles.name}>{fenceTitle}</Text>
-                    <Text style={[FenceStyles.text,{width:80,textAlign:'right'}]}>{I18n.t('半径')+':'+distance(radius,true)}</Text>
+                    <Text style={[FenceStyles.text,{width:120,textAlign:'right'}]}>{I18n.t('半径')+':'+distance(radius,true)}</Text>
                 </View>
                 <View> 
                     <Text style={[FenceStyles.text,FenceStyles.address]}>{fenceAddress}</Text>

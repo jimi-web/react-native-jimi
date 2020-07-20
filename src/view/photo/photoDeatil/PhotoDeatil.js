@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:52:42
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-03-31 17:39:12
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-06-22 10:04:02
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
@@ -85,11 +85,11 @@ export default class PhotoDeatil extends Component {
                         <View style={Styles.bottomToolbars}>
                             <TouchableOpacity style={Styles.bottomToolbarsBtn} onPress={this.delete}>
                                 <Icon name={'photo_details_delete'} size={22}></Icon>
-                                <Text style={[Styles.bottomToolbarsText]}>删除</Text>
+                                <Text style={[Styles.bottomToolbarsText]}>{I18n.t('删除')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity  style={Styles.bottomToolbarsBtn} onPress={this.save} >
                                 <Icon name={'photo_details_save'} size={22}></Icon>
-                                <Text style={[Styles.bottomToolbarsText]}>保存至本地</Text>
+                                <Text style={[Styles.bottomToolbarsText]}>{I18n.t('保存至本地')}</Text>
                             </TouchableOpacity>
                         </View>
                     </BottomToolbars>:null

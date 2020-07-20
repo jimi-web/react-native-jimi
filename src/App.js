@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:05:47
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-04 14:42:50
+ * @LastEditTime: 2020-07-15 09:12:39
  */
 
 import React, {Component} from 'react';
@@ -17,7 +17,10 @@ import './libs/global';
 export default class App extends Component{
     componentWillMount() {
         //设置语言
-        I18n.setLanguage(this.props.language,{});
+        // I18n.isForeign = false;
+        I18n.setLanguage(null,{});
+        // I18n.isForeign = true;
+        // I18n.setLanguage('en',{});
     }
 
     render() {

@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-19 09:51:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 17:26:57
+ * @LastEditTime: 2020-06-18 16:23:57
  */
 import React from 'react';
 import { Image } from 'react-native';
@@ -13,6 +13,7 @@ import {Toast} from '../../components/index';
 import {jmAjax} from '../../http/business';
 import api from '../../api/index';
 import RNFS from 'react-native-fs';
+import I18n from '../../language/index';
 
 
 const succeedImg = <Image style={{width:38,height:38}} source={require('../../assets/photo/photo_save_success.png')}></Image>;
@@ -24,7 +25,7 @@ let save = null;
  * @param {Array} urlList 
  */
 export const batchFileDelete = (urlList,callBack)=>{
-    let del = Toast.loading(I18n.t('删除中')+'...')          
+    let del = Toast.loading(I18n.t('删除中'))          
     fileDeleteComm(del,urlList,callBack);
 };
 
@@ -158,7 +159,7 @@ export const queryDeviceVideoPicFile = (params)=>{
 
 export const downloadFile = (longList,filePath,videoType,callBack)=> {
     if(downloadFileIndex===0){
-        save = Toast.loading('保存中...');
+        save = Toast.loading(I18n.t('保存中'));
     }
     let longPhotoList = longList[downloadFileIndex];
     if(longPhotoList.isDown){
@@ -223,7 +224,7 @@ export const downloadFile = (longList,filePath,videoType,callBack)=> {
  * 删除照片
  */
 export const deleteDeviceVideoPicFile = (params)=>{
-        let del = Toast.loading(I18n.t('删除中')+'...')    
+        let del = Toast.loading(I18n.t('删除中'))    
         console.log(params);
         jmAjax({
             url:api.deleteDeviceVideoPicFile,

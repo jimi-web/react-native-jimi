@@ -3,14 +3,15 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-14 16:24:50
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-09 16:25:50
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
-import {Switch,Icon,Datepicker,Drawer} from '../../components/index';
+import {Icon,Datepicker,Drawer,TimePicker} from '../../components/index';
 import baseStyle from '../baseStyle';
+import {iphoneXStyle} from '../../libs/utils';
+import I18n from '../../language/index'
 
 export default class InsModelSelect extends Component {
     constructor(props){
@@ -19,16 +20,16 @@ export default class InsModelSelect extends Component {
     }
     render(){
         let {content,value} = this.props.data;
-        const valueText = content.modelData.find(item => {
+        const valueText = content.modelData? content.modelData.find(item => {
             return item.value === value
-        })
+        }):[];
         return <TouchableOpacity activeOpacity={0.6}  style={this.renderStyle()} onPress={this.onPress}>
             <View>
-                <Text style={{fontSize:14}}>{content.text}</Text>
-                {content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null}
+                <Text style={{fontSize:14}}>{I18n.t(content.text)}</Text>
+                {content.viceText?<Text style={{fontSize:10}}>{I18n.t(content.viceText)}</Text>:null}
             </View>
             <View style={{flexDirection:'row'}}>
-                <Text style={{marginRight:10}}>{valueText.text}</Text>
+                <Text style={{marginRight:10}}>{content.modelData?I18n.t(valueText.text):value}</Text>
                 <Icon name={'subordinate_arrow'} />
             </View>
         </TouchableOpacity >;
@@ -61,13 +62,23 @@ export default class InsModelSelect extends Component {
                     this.props.onPress && this.props.onPress(data,index);
                 }
             });
+        }else if(content.modelType == 'TimePicker'){
+            TimePicker.show({
+                onConfirm:(value)=>{
+                    data.value = value;
+                    if(data.insID){
+                        data.insValue = data.value;
+                    }
+                    this.props.onPress && this.props.onPress(data,index);
+                },
+                defaultValue:data.value
+            });     
         }
+
         if(content.modelType == 'Custom'){
             const element = this.renderDrawerElement(content);
             this.id = Drawer.open(element);
         }
-        
-        
     }
     /*
     *渲染底部抽屉
@@ -75,12 +86,12 @@ export default class InsModelSelect extends Component {
      renderDrawerElement = (arr) => {
          const modelData = arr.modelData;
          return (
-             <View style={{zIndex:999,backgroundColor:'#fff'}}>
+             <View style={{zIndex:999,backgroundColor:'#fff',paddingBottom:iphoneXStyle()}}>
                  {
                      modelData.map((item,index) => {
                          return <TouchableOpacity key={index} activeOpacity={0.6}  style={{height:50,backgroundColor:'#fff'}} onPress={this.onDrawer.bind(this,item)}>
                              <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                                 <Text style={{fontSize:14}}>{item.text}</Text>
+                                 <Text style={{fontSize:14}}>{I18n.t(item.text)}</Text>
                              </View>
                          </TouchableOpacity >;
                      })

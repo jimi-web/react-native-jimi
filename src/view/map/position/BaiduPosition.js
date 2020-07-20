@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:34:22
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-04 10:30:48
+ * @LastEditTime: 2020-06-29 11:33:02
  */
 import React, {Component} from 'react';
 import {View,Platform,TouchableOpacity,Image,Text,Dimensions} from 'react-native';
@@ -86,7 +86,6 @@ export default class BaiduPosition extends PositionUtils {
                 {
                     this.props.children
                 }
-
             </MapView> 
             {
                 this.roadBtn()
@@ -98,8 +97,8 @@ export default class BaiduPosition extends PositionUtils {
                 this.phonePointBtn(1)
             }
             {
-                this.props.children
-            }
+                this.customOverlay()
+            }              
         </View>;        
     }
 }

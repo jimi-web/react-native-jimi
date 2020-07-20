@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-08 17:02:08
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-04 09:54:45
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-06-22 15:05:28
  */
 import React, { Component } from 'react';
 import {
@@ -14,6 +14,7 @@ import {
     PanResponder
 } from 'react-native';
 import {Icon} from '../../components';
+import I18n from '../../language/index';
 const { width } = Dimensions.get('window');
 
 export default class InsStep extends Component {
@@ -45,9 +46,11 @@ export default class InsStep extends Component {
                 if(moveX < this.startX){
                     moveX = 0;
                 }
-                if(moveX > this.width + 10){
+                
+                if(moveX > this.width){
                     moveX = this.width;
                 }
+                console.log(moveX,this.width,'移动中')
                 this.setState({
                     moveX
                 });
@@ -81,7 +84,7 @@ export default class InsStep extends Component {
                     this.setState({
                         moveX
                     });
-                }, 10);
+                }, 5);
                 const {data,index} = this.props;
                 data.value = content.stepValue[this.index].value;
                 data.insValue = content.stepValue[this.index].value;
@@ -105,23 +108,25 @@ export default class InsStep extends Component {
         const {content} = this.props.data;
         return (
             <View style={this.renderStyle()}>
-                <View style={{position:'relative',width:'80%',height:40,justifyContent:'space-between',alginItems:'end',flexDirection:'row'}}>
+                <View style={{position:'relative',marginLeft:(width - this.width)  / 2,width:this.width,height:40,justifyContent:'space-between',alginItems:'end',flexDirection:'row'}}>
                     {
                         content.stepValue.map((item,index) => {
-                            return <Text style={{lineHeight:40}} key={index}>{item.text}</Text>;
+                            return <Text style={{lineHeight:40}} key={index}>{I18n.t(item.text)}</Text>;
                         })
                     }
                 </View>
-                <View {...this._panResponder.panHandlers} style={{position:'relative',width:'90%',height:40,justifyContent:'space-between',alginItems:'center',flexDirection:'row'}}>
-                    <View style={{width:'100%',height:2,backgroundColor:'#c7c7c7',position:'absolute',top:19,left:0}}></View>
-                    {
-                        content.stepValue.map((item,index) => {
-                            return <View key={index}>{
-                                this.renderElement(item,index)
-                            }</View>;
-                        })
-                    }
-                    <Icon style={{position:'absolute',left:this.state.moveX - 5,top:13}} name={'recording_list_play_slider'} />
+                <View style={{marginLeft:(width - this.width)  / 2}}>
+                    <View {...this._panResponder.panHandlers} style={{position:'relative',width:this.width,height:40,justifyContent:'space-between',alginItems:'center',flexDirection:'row'}}>
+                        <View style={{width:'100%',height:2,backgroundColor:'#c7c7c7',position:'absolute',top:19,left:0}}></View>
+                        {
+                            content.stepValue.map((item,index) => {
+                                return <View key={index}>{
+                                    this.renderElement(item,index)
+                                }</View>;
+                            })
+                        }
+                        <Icon style={{position:'absolute',left:this.state.moveX - 5,top:13}} name={'recording_list_play_slider'} />
+                    </View>
                 </View>
             </View>
         );

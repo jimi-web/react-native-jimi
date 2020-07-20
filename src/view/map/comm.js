@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-10-10 10:52:06
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 17:23:12
+ * @LastEditTime: 2020-07-01 11:20:37
  */
 import {jmAjax} from '../../http/business';
 import gps from '../../libs/coversionPoint';
@@ -38,13 +38,14 @@ export const getDevicePosition = (error)=> {
  */
 export const geocoder = (data)=> {
     let getData = {...data};
+    console.log(getData,'经纬度解析');
     return new Promise((resolve) => {
         jmAjax({
             url:api.geocoder,
             method:'GET',
             data:{
-                latitude:getData.latitude,
-                longitude:getData.longitude,
+                latitude:getData.gpsLatitude,//纬度
+                longitude:getData.gpsLongitude,//经度
             }
         }).then((res)=>{
             let result = res.data;
@@ -60,31 +61,28 @@ export const geocoder = (data)=> {
  */
 export const devicePosition = async(lastPoint={},lastAddress,userMapType,error)=> {
     let deviceInfo = await getDevicePosition(error);
+    console.log(deviceInfo,'设备信息');
     deviceInfo.gpsLatitude = deviceInfo.latitude;
     deviceInfo.gpsLongitude = deviceInfo.longitude;
     let info = '';
     if(deviceInfo.latitude){
+        let baidu = userMapType? gps.GPSToChina(deviceInfo.latitude,deviceInfo.longitude) :gps.GPSToBaidu(deviceInfo.latitude,deviceInfo.longitude);
+        deviceInfo.latitude = baidu.lat;
+        deviceInfo.longitude = baidu.lng;
         if(lastPoint.latitude){
             let distance = gps.distance(lastPoint.latitude,lastPoint.longitude,deviceInfo.latitude,deviceInfo.longitude);
             if(distance>10){
                 info = await geocoder(deviceInfo);
-                let baidu = userMapType? gps.GPSToChina(info.latitude,info.longitude) :gps.GPSToBaidu(info.latitude,info.longitude);
-                info.latitude = baidu.lat;
-                info.longitude = baidu.lng;
             }else {
                 deviceInfo.address = lastAddress;
                 info = deviceInfo;
             }
         }else{
             info = await geocoder(deviceInfo);
-            let baidu = userMapType? gps.GPSToChina(info.latitude,info.longitude) :gps.GPSToBaidu(info.latitude,info.longitude);
-            info.latitude = baidu.lat;
-            info.longitude = baidu.lng;
         } 
     }else {
         info = deviceInfo;
     }
-
     return info;
 };
 

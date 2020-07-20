@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-15 16:41:51
+ * @LastEditTime: 2020-06-18 10:18:30
  */
 import React,{Component} from 'react';
 import {View} from 'react-native';
@@ -21,7 +21,7 @@ export default class AddFence extends Component {
     render(){
         return <View style={{flex:1}}>
             {
-                I18n.locale === 'zh-Hans' ? <BaiduAddFence {...this.props} >
+                I18n.locale === 'zh-Hans' && !I18n.isForeign ? <BaiduAddFence {...this.props} >
                         {this.props.children}
                 </BaiduAddFence> : <GoogleAddFence {...this.props} >
                         {this.props.children}

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-04 18:22:20
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-06-22 15:32:44
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView} from 'react-native';
@@ -1002,7 +1002,7 @@ export default class Instruction extends Component {
                 border:true,
                 data:{
                     isButton:true,
-                    instruction:'MODE,ins1ins2ins3#',
+                    instruction:'MODE,ins1ins2ins3ins4#',
                     hint:'设置设备工作模式',
                     instructionArr:[
                         {
@@ -1036,7 +1036,7 @@ export default class Instruction extends Component {
                             type:'modelSelect',
                             value:10,
                             insID:'ins2',
-                            insValue:'10秒钟',
+                            insValue:10,
                             content:{
                                 text:'请选择时间',
                                 modelType:'Custom',
@@ -1078,9 +1078,62 @@ export default class Instruction extends Component {
                             type:'modelSelect',
                             value:7200,
                             insID:'ins3',
-                            insValue:'2小时',
+                            insValue:7200,
                             content:{
                                 text:'请选择时间',
+                                modelType:'Custom',
+                                modelData:[
+                                    {
+                                        text:'5分钟',
+                                        value:300
+                                    },
+                                    {
+                                        text:'10分钟',
+                                        value:600
+                                    },
+                                    {
+                                        text:'20分钟',
+                                        value:1200
+                                    },
+                                    {
+                                        text:'30分钟',
+                                        value:1800
+                                    },
+                                    {
+                                        text:'1小时',
+                                        value:3600
+                                    },
+                                    {
+                                        text:'2小时',
+                                        value:7200
+                                    },
+                                    {
+                                        text:'5小时',
+                                        value:18000
+                                    },
+                                    {
+                                        text:'12小时',
+                                        value:43200
+                                    },
+                                    {
+                                        text:'24小时',
+                                        value:86400
+                                    },
+                                ]
+                            }
+                        },
+                        {
+                            type:'title',
+                        },                       
+                        {
+                            contral:[0,3],
+                            contralValue:['2,',[3600,18000,1200]],
+                            type:'modelSelect',
+                            value:7200,
+                            insID:'ins4',
+                            insValue:7200,
+                            content:{
+                                text:'时间单位',
                                 modelType:'Custom',
                                 modelData:[
                                     {
@@ -1164,6 +1217,9 @@ export default class Instruction extends Component {
                 }
             }
         ]
+        this.state = {
+            data:[]
+        }
         
     }
     render(){

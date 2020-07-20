@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2020-04-10 14:42:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 15:12:18
+ * @LastEditTime: 2020-06-23 17:47:39
  */
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
@@ -13,8 +13,7 @@ import Video from '../photo/photoDeatil/Video';
 import {Icon} from '../../components/index';
 import BottomToolbars from '../components/BottomToolbars';
 import {Modal} from '../../components/index';
-import {createTheFolder,fileDelete,saveToAlbum,saveVideoToAlbum} from '../../http/index';
-import {batchFileDelete,batchSaveToAlbum,deleteDeviceVideoPicFile,downloadFile} from '../photo/file';
+import {fileDelete,saveToAlbum,saveVideoToAlbum} from '../../http/index';
 import PropTypes from 'prop-types';
 import Toast from 'teaset/components/Toast/Toast';
 
@@ -121,7 +120,7 @@ export default class MediaDetails extends Component {
     delete = ()=>{
         const {data} = this.props;
         Modal.dialog({
-            contentText:I18n.t('是否删除该文件?'),
+            contentText:I18n.t('是否删除该文件'),
             onConfirm:() => {
                 fileDelete([data.url]).then(res => {
                     Toast.message(I18n.t('删除成功'));

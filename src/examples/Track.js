@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-10 11:02:33
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 11:28:04
+ * @LastEditTime: 2020-07-20 13:50:52
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -59,7 +59,19 @@ export default class Track extends Component {
                     
                     
             } */}
-            <Jimi.Track  
+            <Jimi.Track
+                roadBtnOptions={{
+                    image:{
+                        on:'map_road-condition_on',
+                        off:'map_road-condition_off',
+                    },
+                    style:{
+                        width:35,
+                        height:35,
+                        backgroundColor:'red'
+                    }
+                }}
+                controllerType={1}
                 mapTypeBtnStyle={styles.set}
             >
                 {

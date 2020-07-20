@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:02:31
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-15 16:02:47
+ * @LastEditTime: 2020-07-01 13:35:04
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Text,ScrollView,DeviceEventEmitter,Keyboard} from 'react-native';
@@ -338,7 +338,6 @@ export default class AddFenceUtils extends Component {
         }else{
             let deviceInfo = await devicePosition('','',this.state.userMapType);
             this.editFenceDefaultValue(deviceInfo);
-            
         }
     }
 
@@ -355,12 +354,12 @@ export default class AddFenceUtils extends Component {
         }).then((res)=>{
             let data = res.data;
             let baidu =  this.state.userMapType? gps.GPSToChina(data.latitude,data.longitude):gps.GPSToBaidu(data.latitude,data.longitude);
-            
             //编辑赋值
             this.setState({
                 deviceInfo:deviceInfo.latitude?deviceInfo:null,
                 fencePoint:{
-                    ...this.state.fencePoint,
+                    latitudeDelta:this.getGoogleZoom(data.radius*2*3),
+                    longitudeDelta:this.getGoogleZoom(data.radius*2*2),
                     latitude:baidu.lat,
                     longitude:baidu.lng  
                 },
@@ -444,8 +443,6 @@ export default class AddFenceUtils extends Component {
      * 搜索框值返回事件
      */
     onChangeText = (value)=> {
-        console.log(value);
-        
         if(!value){
             this.setState({
                 addressList:[],
@@ -531,6 +528,8 @@ export default class AddFenceUtils extends Component {
         if(this.state.isValuation){
             this.setState({
                 fencePoint:{
+                    latitudeDelta:params.latitudeDelta,
+                    longitudeDelta:params.longitudeDelta,             
                     latitude:this.fomatFloat(params.latitude,6),
                     longitude:this.fomatFloat(params.longitude,6)
                 }
@@ -542,7 +541,7 @@ export default class AddFenceUtils extends Component {
             } :gps.baiduToChina(params.latitude,params.longitude);
             let chinaToGPS = gps.chinaToGPS(china.lat,china.lng);
             //解析地址
-            geocoder({latitude:chinaToGPS.lat,longitude:chinaToGPS.lng}).then((res)=>{
+            geocoder({gpsLatitude:chinaToGPS.lat,gpsLongitude:chinaToGPS.lng}).then((res)=>{
                 this.setState({
                     fenceAddress:res.address
                 });

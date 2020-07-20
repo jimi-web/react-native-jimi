@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-25 11:12:20
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-11 17:26:21
+ * @LastEditTime: 2020-06-28 14:19:58
  */
 import React, {Component} from 'react';
 import {View,Image,ScrollView,Text,TouchableOpacity,DeviceEventEmitter} from 'react-native';
@@ -82,7 +82,7 @@ export default class FenceList extends Component {
                             })
                         }
                         <View style={FenceStyles.space}></View>
-                    </ScrollView>: <Empty />
+                    </ScrollView>: <Empty text={I18n.t('暂无内容')} />
                    
           
             }
@@ -102,7 +102,7 @@ export default class FenceList extends Component {
                     <View style={[FenceStyles.btnItem,{paddingTop:8}]}>
                         {
                             this.state.fenceList.length>0 ?
-                                <TouchableOpacity onPress={()=>this.onSelect(true)}>
+                                <TouchableOpacity onPress={()=>this.onSelect(true)}  style={{alignItems:'center'}}>
                                     <Icon name={'operating_select_disable'} size={20} />
                                     <Text style={{fontSize:10,marginTop:2,color:'#979797'}}>{I18n.t('选择')}</Text>
                                 </TouchableOpacity>
@@ -268,7 +268,7 @@ export default class FenceList extends Component {
 
     
     del = ()=>{
-        this.loading = Toast.loading(I18n.t('删除中')+'...');
+        this.loading = Toast.loading(I18n.t('删除中'));
         let delId = [];//给后台删除的数据
         let delList = this.state.delList;
         let fenceList = this.state.fenceList;

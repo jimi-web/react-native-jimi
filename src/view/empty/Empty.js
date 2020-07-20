@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-11-25 15:32:34
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-04 15:33:24
+ * @LastEditTime: 2020-07-09 16:47:43
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity} from 'react-native';
@@ -30,20 +30,18 @@ export default class Empty extends Component {
     }
 
     render() {
-        return <View style={{flex:1}}>
-                <View style={[Styles.imgStyle,this.props.imgStyle]}>
+        return  <View style={[Styles.imgStyle,this.props.imgStyle]}>
                     <Image source={this.props.source} />
                    {this.renderDetail()}
-                </View>
-            {this.props.children}
-        </View>;
+                </View>;
+   
     }
 
     renderDetail = ()=>{
         let detail = this.props.text;
         if(typeof this.props.text === 'string'){
             if(this.props.text === 'upDate'){
-            detail =  <TouchableOpacity style={Styles.btn} onPress={this.props.onPress}><Text style={{color:'#6f6e6e',fontSize:12}}>{I18n.t('重新加载')}</Text></TouchableOpacity>;
+            detail =  <TouchableOpacity style={Styles.btn} onPress={this.props.onPress}><Text style={{color:'#6f6e6e',fontSize:12}}>{I18n.t('点击重新加载')}</Text></TouchableOpacity>;
             }else{
                 detail =  <Text style={Styles.emptyText}>{this.props.text}</Text>
             }

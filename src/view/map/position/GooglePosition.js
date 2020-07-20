@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-15 10:52:10
+ * @LastEditTime: 2020-07-11 17:11:57
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';
@@ -41,7 +41,7 @@ export default class GooglePosition extends PositionUtils {
                     }}
                     provider={Platform.OS === 'ios'?undefined:'google'}
                     initialRegion={this.props.initialRegion}
-                    region={this.state.region}
+                    region={this.props.visualRange ? this.props.visualRange:this.state.region}
                     loadingEnabled={true}
                     minZoomLevel={0}
                     maxZoomLevel={20}
@@ -49,13 +49,19 @@ export default class GooglePosition extends PositionUtils {
                     onRegionChange={this.regionChange}
                     showsIndoors={true}
                     showsCompass={false}
+                    onPress={()=>{
+                        console.log('11111111111');
+                        
+                    }}
+                    onMarkerPress={()=>{
+                        
+                    }}
                     mapType={this.state.mapType}>
                     {this.markers()}
                     {this.myMarker()}
                     {
-                        // this.props.mapControls? this.props.mapControls():null
                         this.props.children
-                    }
+                    } 
                 </MapView>
                 {/* 按钮功能 */}
                 {
@@ -66,10 +72,10 @@ export default class GooglePosition extends PositionUtils {
                 }
                 {
                     this.phonePointBtn()
-                }
+                }   
                 {
-                    this.props.children
-                }                    
+                    this.customOverlay()
+                }             
             </View>
         );
     }
@@ -78,8 +84,6 @@ export default class GooglePosition extends PositionUtils {
      * 设置中心点缩放
      */
     regionChange = (data) =>{
-        console.log(data,'datadatadatadata');
-        
         //避免与气泡冲突
         if(this.state.isInit){
             this.state.region = data;
@@ -92,6 +96,8 @@ export default class GooglePosition extends PositionUtils {
      * @param {String} name  marker的id名字
      */
     showInfoWindow= (name)=>{
+        console.log('显示气泡跟着跑');
+        
         if(this.refs[name]){
             setTimeout(() => {
                 this.refs[name].showCallout();
@@ -121,8 +127,8 @@ export default class GooglePosition extends PositionUtils {
                     style={this.props.mylocationOptions.style ? this.props.mylocationOptions.style:MapStyles.markerImg} 
                     source={this.props.mylocationOptions.image} />
                 <Callout >
-                    <View style={{width:58}}>
-                        <Text>我的位置</Text>
+                    <View style={{width:58,textAlgin:'center'}}>
+                        <Text>{I18n.t('我的位置')}</Text>
                     </View>
                 </Callout>
             </Marker>;
@@ -140,7 +146,7 @@ export default class GooglePosition extends PositionUtils {
                 coordinate={this.state.markerPoint}
             >
                 <Image 
-                    style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction+'deg'}]}]} 
+                    style={[this.props.deviceMarkerOptions.style ? this.props.deviceMarkerOptions.style:MapStyles.markerImg,{transform:[{rotate:this.state.locationData.direction?this.state.locationData.direction+'deg':'0deg'}]}]} 
                     source={this.props.deviceMarkerOptions.image? this.props.deviceMarkerOptions.image :require('../../../assets/map/device.png') }/>
                 {
                     this.props.markerInfoWindow.visible ? 
@@ -154,7 +160,6 @@ export default class GooglePosition extends PositionUtils {
         return markers;
     };
 
- 
     /**
      *  可是可视范围内
      */

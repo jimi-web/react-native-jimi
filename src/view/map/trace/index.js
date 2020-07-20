@@ -4,10 +4,10 @@
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-02 18:09:16
+ * @LastEditTime: 2020-07-11 18:12:36
  */
 import React from 'react';
-import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage} from 'react-native';
+import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage,Dimensions} from 'react-native';
 import {Theme,Icon} from '../../../components/index';
 import PropTypes from 'prop-types';
 import {httpApp,getEncoding} from '../../../http/index';
@@ -34,6 +34,7 @@ export default class TraceUtils extends PositionUtils {
         onDeviceChange:PropTypes.func,
         onMyChange:PropTypes.func,//我的位置改变监听事件
         ChangePositionBtn:PropTypes.object,
+        isShareBtn:PropTypes.bool
     };
 
     static defaultProps = {
@@ -47,23 +48,26 @@ export default class TraceUtils extends PositionUtils {
         shareUrl:api.shareUrl,
         shareTitle:'我的实时位置',
         shareText:'点击查看我现在在哪里吧！',
-        ChangePositionBtn:{}
+        ChangePositionBtn:{},
+        isShareBtn:true
     };
 
 
     constructor(props) {
         super(props);
         this.state = {
-            visualRange:[],//可视区域
+            visualRange:null,//可视区域
+            pointArr:[],
             deviceMarker:null,
             myMarker:null,
             deviceInfo:{},//设备信息
             asyncStorageAeviceName:'',
-            pullUpHeight:isIphoneX()?iphoneXHeight(80):80,//上拉框高度
+            pullUpHeight:90,//上拉框高度
             touchStart:null,
             pullState:0,//0为默认高度，1为上拉
             positionBtnHeight:10,//定位高度
             distance:0,//两点间的距离
+            isMyPosition:false,
         };
     }
 
@@ -91,7 +95,7 @@ export default class TraceUtils extends PositionUtils {
         let pullUpDownImg = this.state.pullState === 0 ? 'track_operating_expand' :'track_operating_contract';
         let deviceInfo = this.state.deviceInfo;
         return (
-            <View  activeOpacity={1} style={[MapStyles.box,{height:this.state.pullUpHeight}]}>
+            <View  activeOpacity={1} style={[MapStyles.box]} onLayout={this.infobox}>
                 <TouchableOpacity  style={MapStyles.navigation}  onPress={()=>{
                     this.navigation();
                 }}>
@@ -109,9 +113,9 @@ export default class TraceUtils extends PositionUtils {
                         <Text style={MapStyles.title}>{deviceInfo.deviceName?deviceInfo.deviceName:this.state.asyncStorageAeviceName}</Text>
                     </View> 
                     <View style={[MapStyles.item,MapStyles.state]}>
-                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).color,paddingTop:1}]}>{deviceInfo.deviceStatus?this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).text:'离线'}</Text>
+                        <Text style={[MapStyles.text,{color:this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).color,paddingTop:1}]}>{deviceInfo.deviceStatus?I18n.t(this.deviceState(deviceInfo.deviceStatus,deviceInfo.deviceStatusName).text):I18n.t('离线')}</Text>
                         <Text style={MapStyles.line}>|</Text>
-                        <Text style={MapStyles.text}>{I18n.t('距离')}{this.state.distance? distance(this.state.distance):0+'m'}</Text>
+                        <Text style={MapStyles.text}>{I18n.t('距离')}:{this.state.distance? distance(this.state.distance):0+'m'}</Text>
                         <Text style={MapStyles.line}>|</Text>
                         <Text style={MapStyles.text}>{deviceInfo.posType?I18n.t(this.posType(deviceInfo).text):I18n.t('无')}</Text>
                         <Text style={MapStyles.line}>|</Text>
@@ -140,12 +144,12 @@ export default class TraceUtils extends PositionUtils {
      * 路况按钮
      */
     shareBtn = ()=> {
-        return <TouchableOpacity style={[Styles.btn,Styles.shareBtn,this.props.shareBtnStyle]}  activeOpacity={0.5} onPress={()=>{
+        return this.props.isShareBtn ?<TouchableOpacity style={[Styles.btn,Styles.shareBtn,this.props.shareBtnStyle]}  activeOpacity={0.5} onPress={()=>{
             this.share.show();
         }}>
             <Icon name={'track_map_share'} size={'100%'} />
             {/* <Image style={Styles.btnImg} source={require('../../../assets/trace/track_map_share.png')} /> */}
-        </TouchableOpacity>;
+        </TouchableOpacity>:null;
     }
 
     /**
@@ -169,7 +173,7 @@ export default class TraceUtils extends PositionUtils {
      * 将地图顶置上去
      */
     whitespace =()=>{
-        return <View style={[MapStyles.whitespace,{height:isIphoneX()?iphoneXHeight(90):90}]}></View>;
+        return <View style={[MapStyles.whitespace,{height:this.state.pullUpHeight}]}></View>;
     }
 
 
@@ -208,17 +212,13 @@ export default class TraceUtils extends PositionUtils {
 
     pullUp = ()=>{
         this.setState({
-            pullUpHeight:isIphoneX()?iphoneXHeight(180):180,
             pullState:1,
-            positionBtnHeight:100
         });
     }
 
     pulldown = ()=>{
         this.setState({
-            pullUpHeight:isIphoneX()?iphoneXHeight(80):80,
             pullState:0,
-            positionBtnHeight:10
         });  
     }
 
@@ -260,7 +260,11 @@ export default class TraceUtils extends PositionUtils {
     /**
      * 更新数据
      */
+    /**
+     * 更新数据
+     */
     update =(data,key)=> {
+        console.log('数据更新');
         let result = data;
         this.setState({
             [key]:{
@@ -270,25 +274,60 @@ export default class TraceUtils extends PositionUtils {
         },()=>{
             let deviceMarker = this.state.deviceMarker;
             let myMarker = this.state.myMarker;
+
+            let pointArr = [...this.state.pointArr];
+            pointArr.push(deviceMarker);
+            
             if(deviceMarker && myMarker){
-                //百度可视范围直接传值
-                let visualRange = [...this.state.visualRange];
-                visualRange.push(deviceMarker);
-                
+                if(!this.state.isMyPosition){
+                    if(this.refs.GooglePosition){
+                        console.log('1111111111111111');
+                        this.onViewArea(deviceMarker);
+                    }else {
+                        this.setState({
+                            visualRange:[deviceMarker],
+                        })
+                    }
+                }else {
+                    // if(this.refs.GooglePosition){
+                    //     this.setState({
+                    //         visualRange:{
+                    //             latitudeDelta:0.09,
+                    //             longitudeDelta:0.04,
+                    //             ...myMarker
+                    //         }
+                    //     });
+                    // }
+                }
+
                 this.setState({
-                    visualRange:visualRange,
+                    pointArr
                 },()=>{
                     this.setState({
-                        distance:countTotalTrack(this.state.visualRange)
+                        distance:countTotalTrack(pointArr)
                     });
-                    //谷歌地图可视范围
-                    if(this.refs.GooglePosition){
-                        this.refs.GooglePosition.fitAllMarkers(this.state.visualRange);
-                    }
                 });
             }
         });
     }
+
+    /**
+     * 可视区域（仅限谷歌）
+     */
+    onViewArea =(point)=> {
+        const dimensions = Dimensions.get('window');//获取屏幕大小
+        this.refs.GooglePosition.map.pointForCoordinate(point).then(coordinate => {
+            if(coordinate.x < 10 || coordinate.y < 10 || coordinate.x > dimensions.width - 10 || coordinate.x > dimensions.height * 0.7 - 10){
+                this.setState({
+                    visualRange:{
+                        latitudeDelta:0.09,
+                        longitudeDelta:0.04,
+                        ...point
+                    },
+                })
+            }
+        });    
+    }    
 
     /**
      * 切换位置样式设置
@@ -331,5 +370,34 @@ export default class TraceUtils extends PositionUtils {
         });
     }
 
+    infobox = (e)=>{
+        this.setState({
+            positionBtnHeight:e.nativeEvent.layout.height-(e.nativeEvent.layout.height-10),
+            pullUpHeight:e.nativeEvent.layout.height
+        });
+    }
 
+    onCenter = (isMyPosition)=> {
+        console.log(isMyPosition);
+        if(this.refs.GooglePosition){
+            let visualRange = isMyPosition ? {
+                latitudeDelta:0.09,
+                longitudeDelta:0.04,
+                ...this.state.myMarker
+            }:{
+                latitudeDelta:0.09,
+                longitudeDelta:0.04,
+                ...this.state.deviceMarker
+            }
+            this.setState({
+                visualRange:visualRange
+            },()=>{
+                console.log(visualRange,'喜喜喜喜喜喜');
+            });
+        }
+
+        this.setState({
+            isMyPosition:isMyPosition
+        });
+    }
 }

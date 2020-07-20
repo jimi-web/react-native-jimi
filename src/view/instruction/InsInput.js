@@ -4,13 +4,13 @@
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-17 15:38:25
+ * @LastEditTime: 2020-07-03 18:12:49
  */
 import React, { Component } from 'react';
-import {View,Text,TouchableOpacity,TextInput } from 'react-native';
-import PropTypes from 'prop-types';
-import {Switch,Icon,Toast} from '../../components/index';
+import {View,Text,TextInput } from 'react-native';
+import {Toast} from '../../components/index';
 import baseStyle from '../baseStyle';
+import I18n from '../../language/index'
 
 export default class InsArrowButton extends Component {
     constructor(props){
@@ -22,6 +22,7 @@ export default class InsArrowButton extends Component {
     render(){
         let {isShow} = this.props;
         let {content,value} = this.props.data;
+        let style = content.unit? {width:150}:{flex:1};
         return(
             <View>
                 {
@@ -29,15 +30,15 @@ export default class InsArrowButton extends Component {
 
                         <View style={this.renderStyle()}>
                             <View style={{flexDirection:'row',alignItems:'center'}}>
-                                <Text style={{fontSize:14}}>{content.text}</Text>
+                                <Text style={{fontSize:14}}>{I18n.t(content.text)}</Text>
                                 {
-                                    content.viceText?<Text style={{fontSize:10}}>{content.viceText}</Text>:null
+                                    content.viceText?<Text style={{fontSize:10}}>{I18n.t(content.viceText)}</Text>:null
                                 }
-                                <TextInput style={{marginLeft:30,width:150}} keyboardType={content.keyboardType || 'default'} onFocus={this.onFocus} onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={content.maxLength || 50} placeholder={content.placeholder} defaultValue={value}></TextInput>
+                                <TextInput style={{marginLeft:30,...style}} keyboardType={content.keyboardType || 'default'} onFocus={this.onFocus} onBlur={this.onBlur} onChangeText={(inputValue) => this.setState({inputValue})} autoComplete={content.type?content.type:'off'} maxLength={content.maxLength || 50} placeholder={I18n.t(content.placeholder)} defaultValue={value}></TextInput>
                             </View>
                             <View>
                                 {
-                                    content.unit?<Text style={{marginLeft:10,color:'#C7C7C7',fontSize:14}}>{content.unit}</Text>:null
+                                    content.unit?<Text style={{marginLeft:10,color:'#C7C7C7',fontSize:14}}>{I18n.t(content.unit)}</Text>:null
                                 }
                             </View>
                         </View >
@@ -69,11 +70,22 @@ export default class InsArrowButton extends Component {
     onBlur = () => {
         const {data,index} = this.props;
         const {rule} = data.content;
+        let ruleValue = null;//新增用来判断正则表达式
         data.value = this.state.inputValue;
+        ruleValue = this.state.inputValue;
+        if(data.value == ''){
+            ruleValue = ' ';
+        }else {
+            ruleValue = data.value;
+        }
+        console.log(ruleValue);
+        
+        console.log(rule);
+        
         if(rule){
             let regExp = new RegExp(rule);//根据字符串生成正则
-            if(!regExp.test(data.value)){
-                Toast.message(data.hint || I18n.t('您当前输入的格式有误')+'！');
+            if(!regExp.test(ruleValue)){
+                Toast.message(I18n.t(data.hint) || I18n.t('您当前输入的格式有误'));
             }
         }
         data.insValue = data.value;

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-12-27 17:43:23
- * @LastEditors  : liujinyuan
- * @LastEditTime : 2020-01-13 10:05:45
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-10 13:42:47
  */
 import React,{Component} from 'react';
 import {View,StyleSheet,Text,Dimensions} from 'react-native';
