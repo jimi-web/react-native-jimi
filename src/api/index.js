@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-06 15:42:52
- * @LastEditors: liujinyuan
- * @LastEditTime: 2020-04-21 17:28:04
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-16 16:56:59
  */
 
 //后台地址
@@ -33,7 +33,8 @@ const serverUrl = {
     alarmList:'/locator/alarm/setting/list',//报警列表
     enableState:'/locator/alarm/setting/enableState',//修改报警状态
     alarmMode:'/locator/alarm/setting/mode',//获取报警方式的设置信息
-    setAlarmState:'/locator/alarm/setting/state'//设置报警方式状
+    setAlarmState:'/locator/alarm/setting/state',//设置报警方式状
+    getIotCardUrl:'/sim/getIotCardUrl',//获取加密流量卡加密信息
 };
 
 

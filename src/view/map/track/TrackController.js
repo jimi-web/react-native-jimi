@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-19 15:17:13
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-23 13:57:56
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-07-20 18:23:11
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,Slider} from 'react-native';
@@ -99,7 +99,6 @@ export default class Track extends Component {
                            <Icon  name={this.state.playOptionImg}  size={48} />:
                            <Image style={{width:48,height:48}} source={this.state.playOptionImg} />
                         }
-                       
                     </TouchableOpacity>   
                     <TouchableOpacity activeOpacity={1} onPress={this.onSpeed}>
                         <Icon  name={this.state.speedOption.img}  size={22} />

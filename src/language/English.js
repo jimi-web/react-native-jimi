@@ -3,7 +3,7 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
- * @LastEditTime: 2020-07-02 10:23:29
+ * @LastEditTime: 2020-07-20 17:40:54
  */
 const English ={
    /***  提示toast  ***/
@@ -27,6 +27,7 @@ const English ={
     //其他
     "IMEI复制成功":"IMEI copied",
     "ICCID复制成功":"ICCID copied",
+    'SIM卡号复制成功':'SIM Number copied',
     "修改中":"Modifying...",
     "修改成功":"Modified",
     "拍摄成功":"Taken",
@@ -309,7 +310,10 @@ const English ={
     "设备卡号或ICCID为空":"Device IMEI or ICCID is null",
     "设备未绑定":"Device not bound",
     "设备不在线":"Device not online",
-    "设备未注册到路由表":"The device is not registered in the routing table"
+    "设备未注册到路由表":"The device is not registered in the routing table",
+    "该设备暂不支持流量查询":"The device does not support traffic query",
+    "我的位置":"Me",
+    "无效参数":"Invalid arameter"
 }
 
 export default English;

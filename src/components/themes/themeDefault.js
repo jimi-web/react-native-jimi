@@ -4,7 +4,7 @@
  * @Author: liujinyuan
  * @Date: 2019-08-08 15:12:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-12 13:35:20
+ * @LastEditTime: 2020-07-09 14:09:33
  */
 import {PixelRatio} from 'react-native';
 
@@ -130,4 +130,8 @@ export default {
 
     //iconTable
     iconActiveBgColor:mainColor,
+
+    // 
+    sliderMaximumTrackTintColor:'#E8ECF5',
+    sliderMinimumTrackTintColor:mainColor
 };

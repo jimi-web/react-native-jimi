@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 10:36:46
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-30 11:34:13
+ * @LastEditTime: 2020-07-15 18:26:28
  */
 
 import React, {Component} from 'react';
@@ -13,7 +13,6 @@ import MapView,{Marker,Polyline} from 'react-native-maps';
 import Styles from '../style/base';
 import MapStyles from '../style/track';
 import TrackUtils from './index';
-import Controller from './TrackController';
 import PropTypes from 'prop-types';
 
 export default class GoogleTrack extends TrackUtils { 
@@ -56,13 +55,17 @@ export default class GoogleTrack extends TrackUtils {
                 >
                     {this.startMarker()}
                     {this.endMarker()}
-                    {this.deviceMarker()}
-                    {this.allPolyline()}
-                    {this.playPolyline()}
+                    {/* {this.deviceMarker()} */}
+                    {/* {this.allPolyline()}
+                    {this.playPolyline()} */}
+                    {
+                        this.dotting()
+                    }
                 </MapView>
-                <View style={MapStyles.bottomContent}>
-                    {this.controller()}
-                </View>
+               
+                {
+                    this.controller()
+                }
                 {
                     this.roadBtn()
                 }
@@ -161,5 +164,19 @@ export default class GoogleTrack extends TrackUtils {
     onRegionChange =(data)=> {
         this.state.initialRegion = data;
     }
- 
+
+    /**
+     * 打点
+     */
+    dotting = ()=>{
+        return this.state.pointArr.map((item,index)=>{
+                return  <Marker
+                        coordinate={item}
+                    >
+                <ImageBackground source={image} style={styles.image}>
+                        <Text style={styles.text}>{index}</Text>
+                </ImageBackground>
+            </Marker>
+            })
+    }    
 }

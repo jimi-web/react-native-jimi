@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-19 14:41:43
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-09 17:06:43
+ * @LastEditTime: 2020-07-20 11:04:56
  */
 import {StyleSheet,Dimensions} from 'react-native';
 import {Theme} from '../../../components/index';
@@ -170,8 +170,117 @@ const MapStyles =  StyleSheet.create({
     startEndImg :{
         width:Theme.startEndImgWidth,
         height:Theme.startEndImgHeight,
+    },
+    markerController:{
+        position:'absolute',
+        bottom:0,
+        width:width,
+    },
+    panel:{
+        borderRadius:12,
+        backgroundColor:'#fff',
+        marginLeft:16,
+        marginRight:16,
+        paddingLeft:16,
+        paddingRight:16
+    },
+    player:{
+        marginTop:8,
+        marginBottom:16,
+        paddingTop:16,
+        paddingBottom:18
+    },
+    iconDown:{
+        height:32,
+        alignItems:'center'
+    },
+    info:{
+        paddingBottom:16
+    },  
+    address:{
+        marginBottom:4,
+        color:'#181E28',
+        fontSize:14
+    },
+    date:{
+        color:'#5A6482',
+        fontSize:14
+    },
+    mainInfo:{
+        flex:1,
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        marginBottom:12
+    },
+    playDate:{
+        flex:1,
+        fontSize:18,
+        color:'#181E28',
+    },
+    speedPerHour:{
+        flex:1,
+        color:'#5A6482',
+        fontSize:14,
+        textAlign:'right'
+    },
+    Slider:{
+        marginLeft:39,
+        marginRight:39
+    },
+    operatingBtn:{
+        flex:1,
+        flexDirection:'row',
+        // justifyContent:'center',
+        alignItems:'center',
+        marginTop:12,
+    },
+    iconReplay:{
+        flex:1,
+        alignItems:'flex-end',
+    },  
+    iconStop:{
+        flex:1,
+        alignItems:'center',
+    },
+    iconSpeed:{
+        flex:1,
+        flexDirection:'row',
+        alignItems:'center',
+    },
+    speedText:{
+        marginLeft:2,
+        fontSize:16,
+        color:'#8690A9'
+    },
+    defaultMarker :{
+        width:32,
+        height:32,
+        top:-32,
+        left:0,
+    },
+    specialMarker:{
+        width:48,
+        height:48,
+        top:-48,
+        left:0,       
+    },
+    markerIcon : {
+        width:'100%',
+        height:'100%',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    markerIconText:{
+        marginTop:-2,
+        color:'#3D7DFF',
+        fontSize:14
+    },
+    specialMarkerIconText:{
+        marginTop:-3,
+        color:'#fff',
+        fontSize:14
     }
-    
 });
 
 export default MapStyles;

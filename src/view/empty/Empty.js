@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-11-25 15:32:34
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-28 11:55:08
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-07-20 17:41:04
  */
 import React, {Component} from 'react';
 import {View,Image,Text,StyleSheet,TouchableOpacity} from 'react-native';
@@ -20,7 +20,7 @@ export default class Empty extends Component {
 
     static defaultProps = {
         source:require('../../assets/fence/list_empty.png'),
-        text:'暂无内容',
+        text:'',
         imgStyle:{}
     }
 
@@ -30,13 +30,11 @@ export default class Empty extends Component {
     }
 
     render() {
-        return <View style={{flex:1}}>
-                <View style={[Styles.imgStyle,this.props.imgStyle]}>
+        return  <View style={[Styles.imgStyle,this.props.imgStyle]}>
                     <Image source={this.props.source} />
                    {this.renderDetail()}
-                </View>
-            {this.props.children}
-        </View>;
+                </View>;
+   
     }
 
     renderDetail = ()=>{

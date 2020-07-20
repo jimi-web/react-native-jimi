@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:50:38
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-07-02 10:23:54
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-07-20 17:40:40
  */
 const Chinese = {   
     /***  提示toast  ***/
@@ -29,6 +29,7 @@ const Chinese = {
     //其他
     'IMEI复制成功':'IMEI复制成功',
     'ICCID复制成功':'ICCID复制成功',
+    'SIM卡号复制成功':'SIM卡号复制成功',
     '修改中':'修改中...',
     '修改成功':'修改成功',
     '拍摄成功':'拍摄成功',
@@ -317,7 +318,10 @@ const Chinese = {
     "设备卡号或ICCID为空":"设备卡号或ICCID为空",
     "设备未绑定":"设备未绑定",
     "设备不在线":"设备不在线",
-    "设备未注册到路由表":"设备未注册到路由表"
+    "设备未注册到路由表":"设备未注册到路由表",
+    "该设备暂不支持流量查询":"该设备暂不支持流量查询",
+    "我的位置":"我的位置",
+    "无效参数":"无效参数"
 };
 
 export default Chinese;

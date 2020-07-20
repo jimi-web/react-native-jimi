@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:30:32
  * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-29 11:36:58
+ * @LastEditTime: 2020-07-20 10:48:07
  */
 import React, {Component} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity} from 'react-native';
@@ -79,6 +79,17 @@ export default class Position extends Component {
                     </Jimi.BaiduPosition>
             } */}
             <Jimi.Position
+                roadBtnOptions={{
+                    image:{
+                        on:'map_road-condition_on',
+                        off:'map_road-condition_off',
+                    },
+                    style:{
+                        width:35,
+                        height:35,
+                        backgroundColor:'red'
+                    }
+                }}            
                 onMapClick={()=>{
                     console.log('点击事件');
                     this.map.upDate && this.map.upDate();

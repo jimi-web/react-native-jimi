@@ -4,7 +4,7 @@
  * @Author: xieruizhi
  * @Date: 2019-09-02 14:09:39
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-03 15:45:28
+ * @LastEditTime: 2020-07-20 10:25:19
  -->
 
 
@@ -21,6 +21,8 @@
 |谷歌地图[MapView props...](https://github.com/react-native-community/react-native-maps/blob/master/docs/mapview.md)|无|无|无|继承了谷歌地图地图所有属性|
 |mapType|String| false | 'standard'|地图类型 <br>- standard: 标准 <br>- satellite: 卫星| 
 |initialRegion|Object|false | 有默认值 |地图初始化地区 <br> {<br>　　latitude: 22.596904,<br>　　longitude:113.936674,<br>　　latitudeDelta:0.0922,<br>　　longitudeDelta:0.0421<br>} | 
+|isVoltage|Bool|false | true|是否开启电压 <br>true && false|
+|powerShow|Bool|false | true|是否开启电量相关功能 <br>true && false|
 |trafficEnabled|Bool|false | false|是否打开路况图层 <br>true && false| 
 |isRefresh|Bool|false | true|是否刷新定位信息 <br>true && false|
 |refreshTime|Number|false | 15000|定位信息更新时间|
@@ -28,9 +30,9 @@
 |mylocationOptions|Object|false | 有默认属性 |我的位置点属性,只有谷歌地图能自定义样式 style，百度传无效 <br>{ <br>　　style:{width:100,height:100},<br>　　image:require('./../../assets/map/oldMan.png')<br>}|
 |ChangePositionBtn|Object|false | 有默认属性 |我的位置和自定义标记的图标设置<br>-style: 自定义样式<br>-markerImg: 自定义标记图标 <br>-myPositionImg: 自定义我的位置图标<br>{<br>style:{width:100,height:100}<br>markerImg:require('./../../assets/map/equipment.png'),<br>myPositionImg:require('./../../assets/map/old.png')<br>}|
 |getData|Function|false | 使用几米圈模板接口 | 设置定位信息，具体方法写法参考下面例子|
-|markerInfoWindow|Object|false | 有默认属性|自定义inforWindow属性<br>- isCustom:是否自定义(百度地图无需传)<br>- markerInfo:自定义内容<br>{<br>　　isCustom:false,<br>　　markerInfo:()=>{}<br>}|
-|roadBtnStyle|Object|false | 有默认样式 |设置路况图标样式 <br> {width:100,height:100}|
-|mapTypeBtnStyle|Object|false | 有默认样式 |设置地图图标样式 <br> {width:100,height:100}|
+|markerInfoWindow|Object|false | 有默认属性|自定义inforWindow属性<br>- isCustom:是否自定义(百度地图无需传) <br>- visible:是否显示infowindow<br>- markerInfo:自定义内容<br>{<br>　　isCustom:false,<br>　　markerInfo:()=>{}<br>}|
+|roadBtnOptions|Object|false | 有默认样式 |设置路况图标图标和样式 <br> - image:{on:'map_road-condition_on',off:'map_road-condition_off'} <br> - style:{} |
+|mapTypeBtnOptions|Object|false | 有默认样式 |设置地图图标和样式 <br> - image:{on:'map_cutover_off',off:'map_cutover_on'} <br> - style:{}|
 |children|Function|false | 无 |在地图里其他插件子元素，如Marker，Circle，Polyline 等等 | 
 
 
@@ -39,6 +41,8 @@
 |---|---|---|
 |onDeviceChange|设备信息（参考几米圈定位信息接口）|当更新设备信息时会调用|
 |onMyChange|我的位置坐标|当更我的位置时会调用|
+|onUserMapType|使用的地图，0为百度，1为谷歌|监听当前地图|
+|onCenter|true:我的位置，false:设备位置|监听地图中心位置是在设备还是我的位置|
 
 ## Static Methods
 | Method | Params | Returns | Notes |

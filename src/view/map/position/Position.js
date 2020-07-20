@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-29 11:19:41
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-07-20 18:21:53
  */
 import React,{Component} from 'react';
 import {View} from 'react-native';
@@ -13,8 +13,6 @@ import GooglePosition from './GooglePosition';
 
 
 export default class Position extends Component { 
-
-
     render(){
         return <View style={{flex:1}}>
             {

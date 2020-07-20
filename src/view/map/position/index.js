@@ -3,8 +3,8 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-30 11:22:59
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-07-20 10:13:57
  * */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,AsyncStorage} from 'react-native';
@@ -31,16 +31,33 @@ export default class PositionUtils extends Component {
         getData:PropTypes.func,//获取定位信息
         customItem:PropTypes.func,//在地图上自定义其他元素
         markerInfoWindow:PropTypes.object,//infoWindow
-        roadBtnStyle:PropTypes.object,//路况样式
-        mapTypeBtnStyle:PropTypes.object,//地图类型样式
+        // roadBtnStyle:PropTypes.object,//路况样式
+        // mapTypeBtnStyle:PropTypes.object,//地图类型样式
         mapControls:PropTypes.func,//添加地图控件
         onDeviceChange:PropTypes.func,//设备位置改变监听事件
         onMyChange:PropTypes.func,//我的位置改变监听事件
         powerShow:PropTypes.bool,//是否开启电量相关功能
         isVoltage:PropTypes.bool,//是否开启电压（受powerShow控制）
-        onUserMapType:PropTypes.func
+        onUserMapType:PropTypes.func,
+        onCenter:PropTypes.func,
+        roadBtnOptions:PropTypes.object,//路况样式设置
+        mapTypeBtnOptions:PropTypes.object,//地图类型设置
     };
     static defaultProps = {
+        roadBtnOptions:{
+            image:{
+                on:'map_road-condition_on',
+                off:'map_road-condition_off',
+            },
+            style:Styles.btn
+        },
+        mapTypeBtnOptions:{
+            image:{
+                on:'map_cutover_off',
+                off:'map_cutover_on',
+            },
+            style:Styles.btn            
+        },
         trafficEnabled:false,
         mapType:'standard',
         initialRegion:{
@@ -76,11 +93,12 @@ export default class PositionUtils extends Component {
             visible:true
         },
         customItem:null,
-        roadBtnStyle:Styles.btn,
-        mapTypeBtnStyle:Styles.btn,
+        // roadBtnStyle:Styles.btn,
+        // mapTypeBtnStyle:Styles.btn,
         powerShow:false,
         isVoltage:true,
-        onUserMapType:()=>{}
+        onUserMapType:()=>{},
+        onCenter:()=>{}
     };
 
     constructor(props) {
@@ -190,6 +208,8 @@ export default class PositionUtils extends Component {
                     ...region
                 }
             });
+
+            this.props.onCenter(type);
             //google气泡切换暂时停用,多次点击会产生偏移
             // let openName = type ? 'myMarker' :'markers';
             // this.showInfoWindow(openName);//显示气泡
@@ -304,7 +324,7 @@ export default class PositionUtils extends Component {
                 },10);
             }
             //仅初始化会可视化两点坐标
-            if(!this.state.isInit){ 
+            if(!this.state.isInit || !this.state.isMyPosition){ 
                 console.log(this.state.isInit,'isInit');
                     this.setState({
                         region:{
@@ -396,7 +416,7 @@ export default class PositionUtils extends Component {
      */
     deviceState =(deviceStatus,name)=>{
         let stateOject = null;
-        let colorArray = [{text:'离线',color:'#000'},{text:'在线',color:'#13A887'},{text:'休眠',color:'#000'}];
+        let colorArray = [{text:I18n.t('离线'),color:'#000'},{text:I18n.t('在线'),color:'#13A887'},{text:I18n.t('休眠'),color:'#000'}];
         stateOject = deviceStatus ? colorArray[deviceStatus]:colorArray[0];
         stateOject = stateOject ? stateOject:colorArray[0];
         if(name){
@@ -441,10 +461,8 @@ export default class PositionUtils extends Component {
      * 路况按钮
      */
     roadBtn = ()=> {
-        return <TouchableOpacity style={[Styles.btn,Styles.roadBtn,this.props.roadBtnStyle]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled},()=>{
-            
-        })}>
-            <Icon name={this.state.trafficEnabled?'map_road-condition_on':'map_road-condition_off'} size={'100%'} />
+        return <TouchableOpacity style={[Styles.btn,Styles.roadBtn,this.props.roadBtnOptions.style]}  activeOpacity={1} onPress={() => this.setState({trafficEnabled:!this.state.trafficEnabled})}>
+             <Icon name={this.state.trafficEnabled?this.props.roadBtnOptions.image.on:this.props.roadBtnOptions.image.off} size={'100%'} />
         </TouchableOpacity>;
     }
 
@@ -452,8 +470,8 @@ export default class PositionUtils extends Component {
      * 地图类型按钮
      */
     mapTypeBtn = ()=> {
-        return <TouchableOpacity style={[Styles.btn,Styles.mapTypeBtn,this.props.mapTypeBtnStyle]}   activeOpacity={1} onPress={this.setMapType}>
-            <Icon name={this.state.mapType==='standard'?'map_cutover_off':'map_cutover_on'} size={'100%'} />
+        return <TouchableOpacity style={[Styles.btn,Styles.mapTypeBtn,this.props.mapTypeBtnOptions.style]}   activeOpacity={1} onPress={this.setMapType}>
+            <Icon name={this.state.mapType==='standard'?this.props.mapTypeBtnOptions.image.off:this.props.mapTypeBtnOptions.image.on} size={'100%'} />
         </TouchableOpacity>; 
     }
 

@@ -3,13 +3,14 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-06-28 11:28:55
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-07-20 17:41:42
  */
 import React, { Component } from 'react';
 import {View,Text,TouchableOpacity } from 'react-native';
 import {Icon,Datepicker,Drawer,TimePicker} from '../../components/index';
 import baseStyle from '../baseStyle';
+import {iphoneXStyle} from '../../libs/utils';
 import I18n from '../../language/index'
 
 export default class InsModelSelect extends Component {
@@ -85,12 +86,12 @@ export default class InsModelSelect extends Component {
      renderDrawerElement = (arr) => {
          const modelData = arr.modelData;
          return (
-             <View style={{zIndex:999,backgroundColor:'#fff'}}>
+             <View style={{zIndex:999,backgroundColor:'#fff',paddingBottom:iphoneXStyle()}}>
                  {
                      modelData.map((item,index) => {
                          return <TouchableOpacity key={index} activeOpacity={0.6}  style={{height:50,backgroundColor:'#fff'}} onPress={this.onDrawer.bind(this,item)}>
                              <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                                 <Text style={{fontSize:14}}>{item.text}</Text>
+                                 <Text style={{fontSize:14}}>{I18n.t(item.text)}</Text>
                              </View>
                          </TouchableOpacity >;
                      })

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-09-12 11:40:33
- * @LastEditors: xieruizhi
- * @LastEditTime: 2020-07-02 13:48:22
+ * @LastEditors: liujinyuan
+ * @LastEditTime: 2020-07-20 18:23:21
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList,TouchableOpacity ,AsyncStorage,ActivityIndicator,AppState,Platform } from 'react-native';
@@ -250,21 +250,45 @@ export default class Record extends Component {
             encodingType: true,
             data: params
         }).then(res => {
+            console.log(res,'获取录音文件');
             this.setState({
                 refreshing:false
             });
             if (res.code) {
                 return;
             }
-            this.totalPage = res.data.totalPage;
-            const serverParams = {
-                pageNum:res.data.currentPage,
-                pageSize:res.data.pageSize
-            };
-            const initFile = this.state.initFile.concat(res.data.result);
-            this.ftmRecord(initFile,serverParams);
+
+            if(params.pageNum == 1){
+                this.setState({
+                    initFile:[],
+                    recordList:[],                 
+                },()=>{
+                    this.setRecordingData(res);
+                });
+            }else {
+                this.setRecordingData(res);
+            }
+        }).catch(()=>{
+            this.setState({
+                refreshing:false
+            });
         });
     }
+
+    /**
+     * 设置录音信息
+     */
+    setRecordingData = (res)=> {
+        this.totalPage = res.data.totalPage;
+        const serverParams = {
+            pageNum:res.data.currentPage,
+            pageSize:res.data.pageSize
+        };
+        const initFile = this.state.initFile.concat(res.data.result);
+        this.ftmRecord(initFile,serverParams);
+    }
+
+
     /**
      * 处理录音类型
      */
@@ -507,8 +531,8 @@ export default class Record extends Component {
     render() {
         return (
             <View style={[{ backgroundColor: '#f7f7f7', flex: 1,position:'relative' }]}>
-                {
-                    this.state.refreshing || this.state.recordList.length ? 
+                {/* {
+                    this.state.refreshing || this.state.recordList.length ?  */}
                         <FlatList
                             style={{marginBottom:55}}
                             refreshing={this.state.refreshing}
@@ -519,9 +543,9 @@ export default class Record extends Component {
                             onEndReachedThreshold={0.2}
                             ListFooterComponent={this.renderFooter}
                         />
-                        :
-                        this.renderLoading()
-                }
+                        {
+                           !this.state.recordList.length ?this.renderLoading():null
+                        }
                 <RecordControl
                     isPlay={this.state.isPlay}
                     isOpenSelect={this.state.isOpenSelect}
@@ -544,7 +568,13 @@ export default class Record extends Component {
      * 刷新数据
      */
     onRefresh = () => {
+        if(this.state.refreshing){
+            return;
+        }
         if(this.state.isPlay){
+            this.setState({
+                refreshing:false
+            });
             return Toast.message(I18n.t('当前录音正在播放'));
         }
         const pageNum = 1;
@@ -555,14 +585,17 @@ export default class Record extends Component {
         // this.setState({
         //     refreshing:true
         // });
-        this.state.initFile = [];
-        this.state.recordList = [];
+        // this.state.initFile = [];
+        // this.state.recordList = [];
         this.getServerRecordFile(params);
     }
     /**
      * 滚动到底部
      */
     onEndReached = (number) => {
+        if(this.state.refreshing){
+            return;
+        }
         if(number.distanceFromEnd < -25){
             return;
         }
@@ -658,12 +691,11 @@ export default class Record extends Component {
                     recordList
                 });
             }
-
         })
-            .catch(err => {
-                //下载出错时执行
-                console.log('下载失败');
-            });
+        .catch(err => {
+            //下载出错时执行
+            console.log('下载失败');
+        });
     };
     /**
      * 下载录音
@@ -923,8 +955,8 @@ export default class Record extends Component {
                         pageSize:10
                     };
                     setTimeout(() => {
-                        this.state.recordList = [];
-                        this.state.initFile = [];
+                        // this.state.recordList = [];
+                        // this.state.initFile = [];
                         this.getServerRecordFile(listParams);
                     },10000);
                 }
@@ -955,8 +987,8 @@ export default class Record extends Component {
                             pageSize:10
                         };
                         setTimeout(() => {
-                            this.state.recordList = [];
-                            this.state.initFile = [];
+                            // this.state.recordList = [];
+                            // this.state.initFile = [];
                             this.getServerRecordFile(listParams);
                         },10000);
                         Toast.message(I18n.t('设备上传中，请耐心等待'));
@@ -1021,8 +1053,7 @@ export default class Record extends Component {
                     recordList,
                     isOpenSelect:type
                 });
-            }
-            
+            }  
         }
     }
     /**

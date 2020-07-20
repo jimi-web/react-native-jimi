@@ -4,11 +4,12 @@
  * @Author: xieruizhi
  * @Date: 2019-09-29 14:37:13
  * @LastEditors: xieruizhi
- * @LastEditTime: 2019-12-10 16:23:53
+ * @LastEditTime: 2020-07-07 17:46:22
  */
 import {StyleSheet,Dimensions} from 'react-native';
 import {isIphoneX,iphoneXHeight} from '../../../libs/utils';
 import Theme from '../../../components/themes/index';
+import { translate } from 'i18n-js';
 const {width} = Dimensions.get('window');
 
 const AddFenceStyles =  StyleSheet.create({
@@ -37,8 +38,6 @@ const AddFenceStyles =  StyleSheet.create({
         borderTopRightRadius:3,
         borderBottomRightRadius:3,
         justifyContent:'center'
-
-
     },
     map:{
         flex:1,
@@ -116,7 +115,7 @@ const AddFenceStyles =  StyleSheet.create({
     },
     zooming:{
         position:'absolute',
-        top:85,
+        top:20,
         right:20,
         height:337,
         alignItems:'center',
