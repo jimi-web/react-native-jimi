@@ -3,8 +3,13 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
+<<<<<<< HEAD
  * @LastEditors: liujinyuan
  * @LastEditTime: 2020-07-20 10:13:57
+=======
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-07 18:03:18
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
  * */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Image,Text,AsyncStorage} from 'react-native';

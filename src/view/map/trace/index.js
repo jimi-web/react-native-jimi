@@ -3,8 +3,13 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-19 11:49:16
+<<<<<<< HEAD
  * @LastEditors: liujinyuan
  * @LastEditTime: 2020-07-20 18:22:49
+=======
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-06 10:45:28
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
  */
 import React from 'react';
 import {View,TouchableOpacity,Image,Text,PanResponder,AsyncStorage,Dimensions} from 'react-native';
@@ -375,6 +380,7 @@ export default class TraceUtils extends PositionUtils {
             positionBtnHeight:e.nativeEvent.layout.height-(e.nativeEvent.layout.height-10),
             pullUpHeight:e.nativeEvent.layout.height
         });
+<<<<<<< HEAD
     }
 
     onCenter = (isMyPosition)=> {
@@ -399,5 +405,8 @@ export default class TraceUtils extends PositionUtils {
         this.setState({
             isMyPosition:isMyPosition
         });
+=======
+        console.log(e.nativeEvent.layout,'信息框高度');   
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
     }
 }

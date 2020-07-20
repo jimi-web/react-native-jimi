@@ -3,8 +3,13 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-08-12 09:36:35
+<<<<<<< HEAD
  * @LastEditors: liujinyuan
  * @LastEditTime: 2020-07-20 17:42:56
+=======
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-07 17:56:15
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
  */
 import React from 'react';
 import {View,Platform,Image,Text} from 'react-native';

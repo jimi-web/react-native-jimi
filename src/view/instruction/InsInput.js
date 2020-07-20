@@ -3,8 +3,13 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2020-01-07 10:04:51
+<<<<<<< HEAD
  * @LastEditors: liujinyuan
  * @LastEditTime: 2020-07-20 17:41:32
+=======
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-03 18:12:49
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
  */
 import React, { Component } from 'react';
 import {View,Text,TextInput } from 'react-native';

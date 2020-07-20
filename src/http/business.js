@@ -3,8 +3,13 @@
  * @version: 1.0.0
  * @Author: liujinyuan
  * @Date: 2019-08-05 17:13:40
+<<<<<<< HEAD
  * @LastEditors: liujinyuan
  * @LastEditTime: 2020-07-20 17:40:05
+=======
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-07 10:54:13
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
  */
 import { httpApp,getObject } from './basic';
 import {Toast} from 'teaset';
@@ -295,6 +300,10 @@ export const goFlowCard = ({onSuccess,onFail})=>{
         console.log(res);
         if(res.data){
             let lang = I18n.locale == 'zh-Hans'? 'cn' :'en';
+<<<<<<< HEAD
+=======
+            console.log(res.data+'&langType='+lang);
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
             if(I18n.isForeign){
                 httpApp('jm_api.jumpThirdApp', {
                     appUrl:res.data+'&langType='+lang,

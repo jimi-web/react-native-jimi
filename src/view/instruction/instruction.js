@@ -3,8 +3,13 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-12-29 13:57:55
+<<<<<<< HEAD
  * @LastEditors: liujinyuan
  * @LastEditTime: 2020-07-20 17:42:50
+=======
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-03 14:30:05
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
  */
 import React, { Component } from 'react';
 import {View,Text,ScrollView,ActivityIndicator} from 'react-native';

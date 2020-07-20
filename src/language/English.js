@@ -3,7 +3,11 @@
  * @version: 
  * @Author: liujinyuan
  * @Date: 2019-04-03 19:55:34
+<<<<<<< HEAD
  * @LastEditTime: 2020-07-20 17:40:54
+=======
+ * @LastEditTime: 2020-07-08 10:40:38
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
  */
 const English ={
    /***  提示toast  ***/

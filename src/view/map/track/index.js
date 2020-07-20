@@ -3,8 +3,13 @@
  * @version: 
  * @Author: xieruizhi
  * @Date: 2019-09-03 10:32:27
+<<<<<<< HEAD
  * @LastEditors: liujinyuan
  * @LastEditTime: 2020-07-20 18:23:00
+=======
+ * @LastEditors: xieruizhi
+ * @LastEditTime: 2020-07-02 16:18:56
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
  */
 import React, {Component} from 'react';
 import {View,TouchableOpacity,Dimensions} from 'react-native';
@@ -301,6 +306,10 @@ export default class TrackUtils extends Component {
             encodingType:true,
             data:data
         }).then((res)=>{
+<<<<<<< HEAD
+=======
+            console.log(res,'地址轨迹');
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
             let result = res.data || [];
             this.getTrackData(result);
         }).catch(()=>{
@@ -315,8 +324,11 @@ export default class TrackUtils extends Component {
         Toast.remove(this.loading);
         if(result.length>0){
             result.forEach((res)=> {
+<<<<<<< HEAD
                 res.gpsLatitude = res.latitude;
                 res.gpsLongitude = res.longitude;
+=======
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
                 let baidu = this.state.userMapType ? gps.GPSToChina(res.latitude,res.longitude): gps.GPSToBaidu(res.latitude,res.longitude);
                 res.latitude = baidu.lat;
                 res.longitude = baidu.lng;
@@ -574,8 +586,15 @@ export default class TrackUtils extends Component {
                 progress:currentProgress,
                 pointArr:pointArr,
                 deviceMarker:deviceMarker,
+<<<<<<< HEAD
                 visualRange:this.props.controllerType? [trackData[currentProgress-1]]:[deviceMarker],
                 markerArr:markerArr
+=======
+                visualRange:[{
+                    latitude:deviceMarker.latitude,
+                    longitude :deviceMarker.longitude,
+                }]
+>>>>>>> d0ec6cce4bda8c6c63736d619b74440f92df8904
             },()=>{
                 this.onViewArea(deviceMarker);
             });
